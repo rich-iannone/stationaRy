@@ -62,8 +62,26 @@ generate_NAPS_CSV <- function(subdir = NULL,
                               all_data = FALSE) {
 
 # Get vector with list of all hourly files
-files <- list.files(path = paste("./", subdir, "/", sep = ''), 
-                    pattern = "[0-9a-zA-Z/.]hly")
+files <- ifelse(all_data = "TRUE" & is.null(pollutant),
+                list.files(path = paste("./", subdir, "/", sep = ''), 
+                pattern = "^[0-9a-zA-Z/.]*hly"), NULL)
+
+# Get vector with list of all hourly files by pollutant
+files <- ifelse(all_data = "TRUE" & !is.null(pollutant),
+                list.files(path = paste("./", subdir, "/", sep = ''), 
+                           pattern = "^[0-9]*", pollutant, ".hly"), NULL)
+
+# Get vector with list of hourly files selected by year
+files <- ifelse(!is.null(year) & all_data == FALSE,
+                list.files(path = paste("./", subdir, "/", sep = ''), 
+                pattern = paste("^", year, "[0-9a-zA-Z/.]*hly", sep = '')), NULL)
+
+# Get vector with list of hourly files selected by year and pollutant
+files <- ifelse(!is.null(year) & !is.null(pollutant) & all_data == FALSE,
+                list.files(path = paste("./", subdir, "/", sep = ''), 
+                           pattern = paste("^", year, pollutant, ".hly", sep = '')), NULL)
+
+
 
 # Specify column widths for text fields in each hourly file
 column.widths <- c(3, 6, 4, 2, 2,
