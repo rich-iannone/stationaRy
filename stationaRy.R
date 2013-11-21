@@ -54,7 +54,12 @@ station_info
 }
 
 # Generate CSV files from NAPS hourly (.hly) data files
-generate_NAPS_CSV <- function(subdir = NULL) {
+generate_NAPS_CSV <- function(subdir = NULL,
+                              year = NULL,
+                              pollutant = NULL,
+                              type = NULL,
+                              NapsID = NULL,
+                              all_data = FALSE) {
 
 # Get vector with list of all hourly files
 files <- list.files(path = paste("./", subdir, "/", sep = ''), 
