@@ -1,12 +1,3 @@
-# These steps take those .hly files (from the NAPS archive) from the working directory
-# and allow for an unfolding of that data into a proper data frame with POSIXct times
-#
-# This is at a very early stage, so, no time zone support yet (all LST data)
-
-require(gdata)
-require(plyr)
-require(ggplot2)
-require(ggmap)
 
 # Generate a data file that contains a list of a stations in the year range specified
 # This function requires NAPS data Excel files for the entire period specified
