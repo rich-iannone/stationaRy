@@ -1,3 +1,27 @@
+# Read in 2011 Canada Census Data
+census_can_2011 <- read.csv("98-316-XWE2011001-201.CSV", header = TRUE, skip = 1)
+nrow(census_can_2011) # 73199 rows
+summary(census_can_2011)
+
+municipality_names <- unique(census_can_2011$CMACA_Name)
+length(municipality_names) #156
+
+census_can_2011_pop <- census_can_2011[which(census_can_2011$Characteristics == 
+                                               "Population in 2011"), ]
+nrow(census_can_2011_pop) #155
+row.names(census_can_2011_pop) <- NULL
+census_can_2011_pop$Geo_Code <- NULL
+census_can_2011_pop$Prov_Name <- NULL
+census_can_2011_pop$Topic <- NULL
+census_can_2011_pop$Characteristics <- NULL
+census_can_2011_pop$Note <- NULL
+census_can_2011_pop$Flag_Total <- NULL
+census_can_2011_pop$Male <- NULL
+census_can_2011_pop$Flag_Male <- NULL
+census_can_2011_pop$Female <- NULL
+census_can_2011_pop$Flag_Female <- NULL
+census_can_2011_pop$Female <- NULL
+census_can_2011_pop$X <- NULL
 
 # Generate a data file that contains a list of a stations in the year range specified
 # This function requires NAPS data Excel files for the entire period specified
