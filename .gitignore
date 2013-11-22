@@ -4,3 +4,7 @@
 *-Ex.R
 *.Rproj
 .Rproj.user
+*.png
+*.csv
+*.CSV
+stationaRy.R
