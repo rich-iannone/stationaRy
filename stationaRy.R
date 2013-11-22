@@ -175,5 +175,46 @@ rm(k)
 }
 
 # Function for mapping stations
-map_station_list <- function(subdir = NULL) {
+map_station_list <- function(all_stations = TRUE,
+                             latN = NULL,
+                             latS = NULL,
+                             longW = NULL,
+                             longE = NULL) {
+
+require(ggmap)
+require(raster)
+  
+if (all_stations == TRUE) {
+  latN <- 80
+  latS <- 41
+  longW <- -135 
+  longE <- -50
+} else { NULL }
+  
+
+# Determine the center of the map using the mid-points of the bounding lat/long coordinates
+mid_pt_lat <- (latN + latS) / 2
+mid_pt_long <- (longW + longE) / 2
+
+# Define the map using the 'ggmap' package
+the_map <- get_map(location = c(mid_pt_long, mid_pt_lat), zoom = 3,
+                   maptype = 'hybrid')
+
+map <- ggmap(the_map) + 
+  geom_point(data = read.csv("station_info.csv", header = TRUE),
+             aes(x = read.csv("station_info.csv", header = TRUE)$Longitude,
+                 y = read.csv("station_info.csv", header = TRUE)$Latitude),
+             size = 3) +
+  #geom_text(data = read.csv("station_info.csv", header = TRUE),
+  #          aes(x = read.csv("station_info.csv", header = TRUE)$Longitude + 0.005, 
+  #              y = read.csv("station_info.csv", header = TRUE)$Latitude, label = NapsID,
+  #              hjust = 0, vjust = 0), size = 3) +
+  #coord_equal() +
+  labs(x = "Longitude") +
+  labs(y = "Latitude") +
+  labs(title = "Plot of NAPS Stations")
+map
+
+}
+
 
