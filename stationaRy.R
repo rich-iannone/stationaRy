@@ -1,4 +1,7 @@
 # Read in 2011 Canada Census Data
+# Data file from: http://www12.statcan.gc.ca/census-recensement/2011/dp-pd/prof/
+# details/download-telecharger/comprehensive/comp-csv-tab-dwnld-tlchrgr.cfm?Lang=E
+# Selected 'Census metropolitan areas and census agglomerations' and 'CSV' to obtain
 census_can_2011 <- read.csv("98-316-XWE2011001-201.CSV", header = TRUE, skip = 1)
 nrow(census_can_2011) # 73199 rows
 summary(census_can_2011)
