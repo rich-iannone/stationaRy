@@ -6,43 +6,44 @@ generate_NAPS_stations <- function(year_start = 1974,
                                    year_end = 2011,
                                    subdir = NULL) {
   
-  # Define the sequence of year; pre-allocate an empty list of the length of the sequence
-  year_sequence <- seq(year_start, year_end, 1)
-  summaries <- vector("list", length(year_sequence))
+# Define the sequence of year; pre-allocate an empty list of the length of the sequence
+year_sequence <- seq(year_start, year_end, 1)
+summaries <- vector("list", length(year_sequence))
   
-  # Create list of data frames and insert year as extra column for each df
-  # Read in the summary data from the Excel files from 1974-
-  # Add year to column of each data frame
-  for (i in year_sequence) {
-    summaries[[i-year_sequence[1]+1]] <- 
-      read.xls(paste(subdir, "/", "AnnualPercentDataAvailability",i,".xls", sep = ""), sheet = 2,
-               method = "csv")
-    summaries[[i-year_sequence[1]+1]]$year <- i
-  }
+# Create list of data frames and insert year as extra column for each df
+# Read in the summary data from the Excel files from 1974-
+# Add year to column of each data frame
+for (i in year_sequence) {
+  summaries[[i-year_sequence[1]+1]] <- 
+    read.xls(paste(subdir, "/", "AnnualPercentDataAvailability",i,".xls", sep = ""), sheet = 2,
+             method = "csv")
+  summaries[[i-year_sequence[1]+1]]$year <- i
+}
   
-  # Combine list of data frames using 'rbind.fill' function from the plyr packages
-  summaries.large.df <- rbind.fill(summaries)
+# Combine list of data frames using 'rbind.fill' function from the plyr packages
+summaries.large.df <- rbind.fill(summaries)
+
+# Create data frame, 'station_info" that shows just the station information
+station_info <- merge(aggregate(year ~ NapsID, data = summaries.large.df, FUN = max),
+                      summaries.large.df)
+station_info$year <- NULL
+station_info$O3 <- NULL
+station_info$NO2 <- NULL
+station_info$NO <- NULL
+station_info$NOx <- NULL
+station_info$SO2 <- NULL
+station_info$CO <- NULL
+station_info$TEOM.PM25 <- NULL
+station_info$TEOM.PM10 <- NULL
+station_info$BAM.PM25 <- NULL
+station_info$SES.PM25 <- NULL
+station_info$FDMS.PM25 <- NULL
+station_info$BAM35.PM25 <- NULL
+station_info$SHARP.PM25 <- NULL
   
-  # Create data frame, 'station_info" that shows just the station information
-  station_info <- merge(aggregate(year ~ NapsID, data = summaries.large.df, FUN = max),
-                        summaries.large.df)
-  station_info$year <- NULL
-  station_info$O3 <- NULL
-  station_info$NO2 <- NULL
-  station_info$NO <- NULL
-  station_info$NOx <- NULL
-  station_info$SO2 <- NULL
-  station_info$CO <- NULL
-  station_info$TEOM.PM25 <- NULL
-  station_info$TEOM.PM10 <- NULL
-  station_info$BAM.PM25 <- NULL
-  station_info$SES.PM25 <- NULL
-  station_info$FDMS.PM25 <- NULL
-  station_info$BAM35.PM25 <- NULL
-  station_info$SHARP.PM25 <- NULL
-  
-  write.csv(station_info, file = "station_info.csv", row.names = FALSE)
-  station_info
+# Write CSV file 'station_info.csv' to working directory
+write.csv(station_info, file = "station_info.csv", row.names = FALSE)
+station_info
 }
 
 
@@ -80,7 +81,6 @@ for (i in 1:nrow(station_info)) {
 
 # Write CSV file 'station_info_plus.csv' to working directory
 write.csv(station_info, file = "station_info_plus.csv", row.names = FALSE)
-
 station_info
 }
 
