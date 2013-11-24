@@ -58,9 +58,6 @@ station_info$Population <- rep(-1, times = nrow(station_info))
 populations <- read.csv(file = "Canada_population_area_2011.csv",
                         header = TRUE, stringsAsFactors = FALSE)
 
-# Check for agreement between city names 
-summary(station_info$STA_City %in% populations$Census_Subdivision) # 333 FALSE, 202 TRUE
-
 # There is an issue with exact matching of place names
 # Remove periods and apostrophes from city fields in both data frames
 station_info$STA_City <- gsub("\\.", "", station_info$STA_City)
