@@ -214,9 +214,9 @@ the_map <- get_map(location = c(mid_pt_long, mid_pt_lat), zoom = 3,
                    maptype = 'hybrid')
 
 map <- ggmap(the_map) + 
-  geom_point(data = read.csv("station_info.csv", header = TRUE),
-             aes(x = read.csv("station_info.csv", header = TRUE)$Longitude,
-                 y = read.csv("station_info.csv", header = TRUE)$Latitude),
+  geom_point(data = read.csv("station_info_plus.csv", header = TRUE),
+             aes(x = read.csv("station_info_plus.csv", header = TRUE)$Longitude,
+                 y = read.csv("station_info_plus.csv", header = TRUE)$Latitude),
              size = 3) +
   #geom_text(data = read.csv("station_info.csv", header = TRUE),
   #          aes(x = read.csv("station_info.csv", header = TRUE)$Longitude + 0.005, 
