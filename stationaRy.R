@@ -59,32 +59,34 @@ populations <- read.csv(file = "Canada_population_area_2011.csv",
                         header = TRUE, stringsAsFactors = FALSE)
 
 # Check for agreement between city names 
-summary(stations$STA_City %in% populations$Census_Subdivision) # 333 FALSE, 202 TRUE
+summary(station_info$STA_City %in% populations$Census_Subdivision) # 333 FALSE, 202 TRUE
 
 # There is an issue with exact matching of place names
 # Remove periods and apostrophes from city fields in both data frames
-stations$STA_City <- gsub("\\.", "", stations$STA_City)
+station_info$STA_City <- gsub("\\.", "", station_info$STA_City)
 populations$Census_Subdivision <- gsub("\\.", "", populations$Census_Subdivision)
 
-stations$STA_City <- gsub("'", "", stations$STA_City)
+station_info$STA_City <- gsub("'", "", station_info$STA_City)
 populations$Census_Subdivision <- gsub("'", "", populations$Census_Subdivision)
 
-stations$STA_City <- gsub(" [C|c]ity", "", stations$STA_City)
+station_info$STA_City <- gsub(" [C|c]ity", "", station_info$STA_City)
 populations$Census_Subdivision <- gsub(" [C|c]ity", "", populations$Census_Subdivision)
 
-summary(stations$STA_City %in% populations$Census_Subdivision) # 56 FALSE, 479 TRUE
+# summary(station_info$STA_City %in% populations$Census_Subdivision) # 56 FALSE, 479 TRUE
 
-
-for (i in 1:nrow(stations)) {
-  city <- tolower(stations[i,3])
+for (i in 1:nrow(station_info)) {
+  city <- tolower(station_info[i,3])
   pop <- populations[(1:dim(populations)[1])[tolower(populations[,1]) == city] ,4]
-  stations[i,8] <- ifelse(length(pop) == 0, -1, pop)
+  station_info[i,8] <- ifelse(length(pop) == 0, -1, pop)
 }
-stations
 
-# Generate a data file that contains a list of a stations in the year range specified
-# This function requires NAPS data Excel files for the entire period specified
+# Write CSV file 'station_info_plus.csv' to working directory
+write.csv(station_info, file = "station_info_plus.csv", row.names = FALSE)
 
+station_info
+}
+
+#-----------------------#
 
 # Generate CSV files from NAPS hourly (.hly) data files
 generate_NAPS_CSV <- function(subdir = NULL,
