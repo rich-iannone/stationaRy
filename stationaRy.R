@@ -72,8 +72,6 @@ populations$Census_Subdivision <- gsub("'", "", populations$Census_Subdivision)
 station_info$STA_City <- gsub(" [C|c]ity", "", station_info$STA_City)
 populations$Census_Subdivision <- gsub(" [C|c]ity", "", populations$Census_Subdivision)
 
-# summary(station_info$STA_City %in% populations$Census_Subdivision) # 56 FALSE, 479 TRUE
-
 for (i in 1:nrow(station_info)) {
   city <- tolower(station_info[i,3])
   pop <- populations[(1:dim(populations)[1])[tolower(populations[,1]) == city] ,4]
