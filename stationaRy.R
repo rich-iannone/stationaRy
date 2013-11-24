@@ -88,7 +88,7 @@ station_info
 
 #-----------------------#
 
-# Generate CSV files from NAPS hourly (.hly) data files
+# Function for generating CSV files from NAPS hourly (.hly) data files
 generate_NAPS_CSV <- function(subdir = NULL,
                               year = NULL,
                               pollutant = NULL,
