@@ -45,11 +45,17 @@ generate_NAPS_stations <- function(year_start = 1974,
   station_info
 }
 
-stations <- read.csv(file = "station_info.csv", header = TRUE, stringsAsFactors = FALSE)
-# Add 'Population' column to 'stations' data frame
-stations$Population <- rep(-1, times = nrow(stations))
 
-populations <- read.csv(file = "top100_canada_population_2011.csv",
+#-----------------------#
+
+# Function for taking "station_info.csv" and amending it with current census data
+regenerate_NAPS_stations <- function(){
+
+station_info <- read.csv(file = "station_info.csv", header = TRUE, stringsAsFactors = FALSE)
+# Add 'Population' column to 'station_info' data frame
+station_info$Population <- rep(-1, times = nrow(station_info))
+
+populations <- read.csv(file = "Canada_population_area_2011.csv",
                         header = TRUE, stringsAsFactors = FALSE)
 
 # Check for agreement between city names 
