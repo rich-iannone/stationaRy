@@ -116,8 +116,6 @@ files <- ifelse(!is.null(year) & !is.null(pollutant) & all_data == FALSE,
                 list.files(path = paste("./", subdir, "/", sep = ''), 
                            pattern = paste("^", year, pollutant, ".hly", sep = '')), NULL)
 
-
-
 # Specify column widths for text fields in each hourly file
 column.widths <- c(3, 6, 4, 2, 2,
                    4, 4, 4, 4, 4,
@@ -187,12 +185,10 @@ rm(hours)
 rm(time)
 }
 
-# Extra clean up
-rm(i)
-rm(j)
-rm(k)
 
 }
+
+#-----------------------#
 
 # Function for mapping stations
 map_station_list <- function(all_stations = TRUE,
