@@ -40,7 +40,9 @@ station_info$SES.PM25 <- NULL
 station_info$FDMS.PM25 <- NULL
 station_info$BAM35.PM25 <- NULL
 station_info$SHARP.PM25 <- NULL
-  
+
+
+
 # Write CSV file 'station_info.csv' to working directory
 write.csv(station_info, file = "station_info.csv", row.names = FALSE)
 station_info
@@ -222,7 +224,4 @@ rm(hours)
 rm(time)
 }
 }
-
-
-
 
