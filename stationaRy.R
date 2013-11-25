@@ -60,6 +60,15 @@ station_info$Population <- rep(-1, times = nrow(station_info))
 populations <- read.csv(file = "Canada_population_area_2011.csv",
                         header = TRUE, stringsAsFactors = FALSE)
 
+# Add 'Population' column to 'station_info' data frame
+station_info$Population <- rep(NA, times = nrow(station_info))
+
+# Add 'Land_Area..km2' column to 'station_info' data frame
+station_info$Land_Area..km2 <- rep(NA, times = nrow(station_info))
+
+# Add 'STA_Province' column to 'station_info' data frame
+station_info$STA_Province <- rep(NA, times = nrow(station_info))
+
 # There is an issue with exact matching of place names
 # Remove periods and apostrophes from city fields in both data frames
 station_info$STA_City <- gsub("\\.", "", station_info$STA_City)
