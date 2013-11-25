@@ -82,8 +82,12 @@ populations$Census_Subdivision <- gsub(" [C|c]ity", "", populations$Census_Subdi
 
 for (i in 1:nrow(station_info)) {
   city <- tolower(station_info[i,3])
+  prov <- populations[(1:dim(populations)[1])[tolower(populations[,1]) == city] ,2]
+  area <- populations[(1:dim(populations)[1])[tolower(populations[,1]) == city] ,3]
   pop <- populations[(1:dim(populations)[1])[tolower(populations[,1]) == city] ,4]
-  station_info[i,8] <- ifelse(length(pop) == 0, -1, pop)
+  station_info[i,8] <- as.integer(ifelse(length(pop) == 0, NA, pop))
+  station_info[i,9] <- as.numeric(ifelse(length(pop) == 0, NA, area))
+  station_info[i,10] <- ifelse(length(pop) == 0, NA, prov)
 }
 
 # Correct erroneous longitude value for station 64301 (Longwoods, ON)
