@@ -86,6 +86,12 @@ for (i in 1:nrow(station_info)) {
   station_info[i,8] <- ifelse(length(pop) == 0, -1, pop)
 }
 
+# Correct erroneous longitude value for station 64301 (Longwoods, ON)
+station_info[417,5] <- -8.148056e+01 
+
+# Correct erroneous longitude value for station 80801 (Pense, SK)
+station_info[459,5] <- -1.049833e+02
+
 # Write CSV file 'station_info_plus.csv' to working directory
 write.csv(station_info, file = "station_info_plus.csv", row.names = FALSE)
 station_info
