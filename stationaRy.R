@@ -53,10 +53,12 @@ station_info
 # Function for taking "station_info.csv" and amending it with current census data
 regenerate_NAPS_stations <- function(){
 
+# Read CSV file "station_info.csv" (generated from 'generate_NAPS_stations' function)
 station_info <- read.csv(file = "station_info.csv", header = TRUE, stringsAsFactors = FALSE)
 # Add 'Population' column to 'station_info' data frame
 station_info$Population <- rep(-1, times = nrow(station_info))
 
+# Read CSV file "Canada_population_area_2011.csv" (using Canada Census Data - 2011)
 populations <- read.csv(file = "Canada_population_area_2011.csv",
                         header = TRUE, stringsAsFactors = FALSE)
 
