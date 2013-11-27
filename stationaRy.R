@@ -244,3 +244,120 @@ rm(time)
 }
 }
 
+#-----------------------#
+
+
+
+
+# Generate data completeness statistics from processed NAPS data files
+generate_data_complete_CSV <- function(pollutant = NULL,
+                                       all_years = TRUE,
+                                       file_path = NULL) {
+
+# file_path <- "~/Documents/R (Working)"
+# pollutant <- "NO"
+# 
+#  test:
+#  generate_data_complete_CSV(pollutant = "NO", file_path = "~/Documents/R (Working)")
+#
+  
+file_path <- ifelse(is.null(file_path), getwd(), file_path)
+  
+require(lubridate)
+
+if (pollutant == "O3") {
+  file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9]O3\\.csv") 
+} else if (pollutant == "NO") {
+  file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9]NO\\.csv")   
+} else if (pollutant == "NO2") {
+  file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9]NO2\\.csv")
+} else if (pollutant == "PM25") {
+  file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9][0-9A-Z]*PM25\\.csv")
+} else if (pollutant == "PM10") {
+  file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9][0-9A-Z]*PM10\\.csv")
+} else {stop("No data selected.")}
+
+# Generate file list for selected pollutant
+for (i in 1:length(file_list)){
+df <- read.csv(file = paste(file_path, "/", file_list[i], sep = ''),
+               header = TRUE, stringsAsFactors = FALSE)
+df$time <- as.POSIXct(df$time)
+
+# get number of stations
+no_stations <- length(unique(df$STATION))
+
+# get year
+year <- round(mean(year(df$time)))
+
+# get compound measured
+pollutant <- gsub("([A-Z0-9]*)\\.conc","\\1",colnames(df)[3])
+
+# get vector list of stations
+station_list <- mat.or.vec(nr = no_stations, nc = 1)
+station_list <- unique(df$STATION)
+
+# For each station determine the data completeness for the year
+# Initialize file for writing
+cat("Year,Pollutant,NapsID,Data_Completeness_Year..%,",
+    "Data_Completeness_Q1..%,Data_Completeness_Q2..%,",
+    "Data_Completeness_Q3..%,Data_Completeness_Q4..%",
+    file = paste(year,"_",pollutant,"_data_completeness.csv", sep = ''), sep = '')
+cat("", file = paste(year,"_",pollutant,"_data_completeness.csv", sep = ''),
+    sep = "\n", append = TRUE)
+for (j in 1:length(station_list)){
+  df.station <- subset(df, df$STATION == station_list[j])
+  completeness_year <- 
+        round(((nrow(df.station) - sum(is.na(df.station[,3])))/
+                ifelse(leap_year(year), 8784, 8760))
+                *100,
+                digits = 2)
+  
+  rows.Q1 <- nrow(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-01-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-03-31 23:00", sep = ''))))
+  NA.Q1 <- sum(is.na(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-01-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-03-31 23:00", sep = '')))[,3]))
+  hours.Q1 <- as.integer(as.POSIXct(paste(year, "-03-31 23:00", sep = ''))-
+                         as.POSIXct(paste(year, "-01-01 00:00", sep = '')))*24
+  completeness.Q1 <- round(((rows.Q1 - NA.Q1)/hours.Q1)*100, digits = 2)
+  
+  rows.Q2 <- nrow(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-04-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-06-30 23:00", sep = ''))))
+  NA.Q2 <- sum(is.na(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-04-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-06-30 23:00", sep = '')))[,3]))
+  hours.Q2 <- as.integer(as.POSIXct(paste(year, "-06-30 23:00", sep = ''))-
+                         as.POSIXct(paste(year, "-04-01 00:00", sep = '')))*24
+  completeness.Q2 <- round(((rows.Q2 - NA.Q2)/hours.Q2)*100, digits = 2)
+
+  rows.Q3 <- nrow(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-07-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-09-30 23:00", sep = ''))))
+  NA.Q3 <- sum(is.na(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-07-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-09-30 23:00", sep = '')))[,3]))
+  hours.Q3 <- as.integer(as.POSIXct(paste(year, "-09-30 23:00", sep = ''))-
+                         as.POSIXct(paste(year, "-07-01 00:00", sep = '')))*24
+  completeness.Q3 <- round(((rows.Q3 - NA.Q3)/hours.Q3)*100, digits = 2)
+  
+  rows.Q4 <- nrow(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-10-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-12-31 23:00", sep = ''))))
+  NA.Q4 <- sum(is.na(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-10-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-12-31 23:00", sep = '')))[,3]))
+  hours.Q4 <- as.integer(as.POSIXct(paste(year, "-12-31 23:00", sep = ''))-
+                         as.POSIXct(paste(year, "-10-01 00:00", sep = '')))*24
+  completeness.Q4 <- round(((rows.Q4 - NA.Q4)/hours.Q4)*100, digits = 2)
+
+  cat(year,",",pollutant,",",station_list[j],",",completeness_year,",",
+      completeness.Q1,",",completeness.Q2,",",completeness.Q3,",",completeness.Q4,
+      file = paste(year,"_",pollutant,"_data_completeness.csv", sep = ''),
+      sep = "", append = TRUE)
+  cat("", file = paste(year,"_",pollutant,"_data_completeness.csv", sep = ''),
+      sep = "\n", append = TRUE)
+}
+}
+}
