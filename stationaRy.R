@@ -96,6 +96,16 @@ station_info[417,5] <- -8.148056e+01
 # Correct erroneous longitude value for station 80801 (Pense, SK)
 station_info[459,5] <- -1.049833e+02
 
+# Attach a column ('STA_Class') to the data frame with categorical population ranges
+# Use 'cut' to classify stations by population and to add factors
+station_info$STA_Class <- cut(station_info$Population,
+                              breaks = c(-Inf, 0, 100000, 500000, Inf),
+                              labels = c("NU", "SU", "U", "LU"))
+
+# Stations with population of NA are all remote, non-urban sites
+# Target NA values generated from classification scheme and replace with "NU"
+station_info$STA_Class[is.na(station_info$STA_Class)] <- "NU"
+
 # Write CSV file 'station_info_plus.csv' to working directory
 write.csv(station_info, file = "station_info_plus.csv", row.names = FALSE)
 station_info
