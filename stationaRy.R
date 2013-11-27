@@ -289,7 +289,7 @@ if (pollutant == "O3") {
   file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9][0-9A-Z]*PM10\\.csv")
 } else {stop("No data selected.")}
 
-# Generate file list for selected pollutant
+# Loop through reading in CSV files; convert time column back to POSIXct time objects
 for (i in 1:length(file_list)){
 df <- read.csv(file = paste(file_path, "/", file_list[i], sep = ''),
                header = TRUE, stringsAsFactors = FALSE)
