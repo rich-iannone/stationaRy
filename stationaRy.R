@@ -310,9 +310,9 @@ station_list <- unique(df$STATION)
 
 # For each station determine the data completeness for the year
 # Initialize file for writing
-cat("Year,Pollutant,NapsID,Data_Completeness_Year..%,",
-    "Data_Completeness_Q1..%,Data_Completeness_Q2..%,",
-    "Data_Completeness_Q3..%,Data_Completeness_Q4..%",
+cat("Year,Pollutant,NapsID,Data_Y%,",
+    "Data_Q1%,Data_Q2%,",
+    "Data_Q3%,Data_Q4%",
     file = paste(year,"_",pollutant,"_data_completeness.csv", sep = ''), sep = '')
 cat("", file = paste(year,"_",pollutant,"_data_completeness.csv", sep = ''),
     sep = "\n", append = TRUE)
