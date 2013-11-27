@@ -124,8 +124,8 @@ require(ggmap)
 require(raster)
   
 if (all_stations == TRUE) {
-  latN <- 80
-  latS <- 41
+  latN <- 82
+  latS <- 45
   longW <- -135 
   longE <- -50
 } else { NULL }
