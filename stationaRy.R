@@ -302,8 +302,8 @@ no_stations <- length(unique(df$STATION))
 # get year
 year <- round(mean(year(df$time)))
 
-# get compound measured
-pollutant <- gsub("([A-Z0-9]*)\\.conc","\\1",colnames(df)[3])
+# get compound instrument/measured
+measure <- gsub("([A-Z0-9]*)\\.conc","\\1",colnames(df)[3])
 
 # get vector list of stations
 station_list <- mat.or.vec(nr = no_stations, nc = 1)
@@ -314,8 +314,8 @@ station_list <- unique(df$STATION)
 cat("Year,Pollutant,NapsID,Data_Y%,",
     "Data_Q1%,Data_Q2%,",
     "Data_Q3%,Data_Q4%",
-    file = paste(year,"_",pollutant,"_data_completeness.csv", sep = ''), sep = '')
-cat("", file = paste(year,"_",pollutant,"_data_completeness.csv", sep = ''),
+    file = paste(year,"_",measure,"_data_completeness.csv", sep = ''), sep = '')
+cat("", file = paste(year,"_",measure,"_data_completeness.csv", sep = ''),
     sep = "\n", append = TRUE)
 for (j in 1:length(station_list)){
   df.station <- subset(df, df$STATION == station_list[j])
@@ -364,12 +364,10 @@ for (j in 1:length(station_list)){
   hours.Q4 <- as.integer(as.POSIXct(paste(year, "-12-31 23:00", sep = ''))-
                          as.POSIXct(paste(year, "-10-01 00:00", sep = '')))*24
   completeness.Q4 <- round(((rows.Q4 - NA.Q4)/hours.Q4)*100, digits = 2)
-
-  cat(year,",",pollutant,",",station_list[j],",",completeness_year,",",
       completeness.Q1,",",completeness.Q2,",",completeness.Q3,",",completeness.Q4,
-      file = paste(year,"_",pollutant,"_data_completeness.csv", sep = ''),
+      file = paste(year,"_",measure,"_data_completeness.csv", sep = ''),
       sep = "", append = TRUE)
-  cat("", file = paste(year,"_",pollutant,"_data_completeness.csv", sep = ''),
+  cat("", file = paste(year,"_",measure,"_data_completeness.csv", sep = ''),
       sep = "\n", append = TRUE)
 }
 }
