@@ -165,12 +165,12 @@ generate_NAPS_CSV <- function(subdir = NULL,
                               all_data = FALSE) {
 
 # Get vector with list of all hourly files
-files <- ifelse(all_data = "TRUE" & is.null(pollutant),
+files <- ifelse(all_data == "TRUE" & is.null(pollutant),
                 list.files(path = paste("./", subdir, "/", sep = ''), 
                 pattern = "^[0-9a-zA-Z/.]*hly"), NULL)
 
 # Get vector with list of all hourly files by pollutant
-files <- ifelse(all_data = "TRUE" & !is.null(pollutant),
+files <- ifelse(all_data == "TRUE" & !is.null(pollutant),
                 list.files(path = paste("./", subdir, "/", sep = ''), 
                            pattern = "^[0-9]*", pollutant, ".hly"), NULL)
 
