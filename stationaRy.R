@@ -266,8 +266,8 @@ generate_data_complete_CSV <- function(pollutant = NULL,
                                        all_years = TRUE,
                                        file_path = NULL) {
 
-# file_path <- "~/Documents/R (Working)"
-# pollutant <- "NO"
+#file_path <- "~/Documents/R (Working)"
+#pollutant <- "PM25"
 # 
 #  test:
 #  generate_data_complete_CSV(pollutant = "NO", file_path = "~/Documents/R (Working)")
@@ -277,6 +277,7 @@ file_path <- ifelse(is.null(file_path), getwd(), file_path)
   
 require(lubridate)
 
+# Generate file list for selected pollutant
 if (pollutant == "O3") {
   file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9]O3\\.csv") 
 } else if (pollutant == "NO") {
