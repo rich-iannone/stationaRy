@@ -449,7 +449,8 @@ for (j in 1:length(station_list)){
 #   } else {stop("No data selected.")}
   
   cat(year,",",measure,",",station_list[j],",",completeness_year,",",
-      completeness.Q1,",",completeness.Q2,",",completeness.Q3,",",completeness.Q4,
+      completeness.Q1,",",completeness.Q2,",",completeness.Q3,",",completeness.Q4,",",
+      mean.year,",",mean.Q1,",",mean.Q2,",",mean.Q3,",",mean.Q4,      
       file = paste(year,"_",measure,"_data_completeness.csv", sep = ''),
       sep = "", append = TRUE)
   cat("", file = paste(year,"_",measure,"_data_completeness.csv", sep = ''),
