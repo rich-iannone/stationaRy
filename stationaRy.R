@@ -313,7 +313,9 @@ station_list <- unique(df$STATION)
 # Initialize file for writing
 cat("Year,Pollutant,NapsID,Data_Y%,",
     "Data_Q1%,Data_Q2%,",
-    "Data_Q3%,Data_Q4%",
+    "Data_Q3%,Data_Q4%,",
+    "Mean_Year,",
+    "Mean_Q1,Mean_Q2,Mean_Q3,Mean_Q4",
     file = paste(year,"_",measure,"_data_completeness.csv", sep = ''), sep = '')
 cat("", file = paste(year,"_",measure,"_data_completeness.csv", sep = ''),
     sep = "\n", append = TRUE)
