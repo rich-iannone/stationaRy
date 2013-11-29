@@ -327,6 +327,8 @@ for (j in 1:length(station_list)){
                 *100,
                 digits = 2)
   
+  mean.year <- mean(df.station[,3], na.rm = TRUE)
+    
   rows.Q1 <- nrow(subset(df.station,
                       time >= as.POSIXct(paste(year, "-01-01 00:00", sep = '')) &
                       time <= as.POSIXct(paste(year, "-03-31 23:00", sep = ''))))
@@ -336,6 +338,10 @@ for (j in 1:length(station_list)){
   hours.Q1 <- as.integer(as.POSIXct(paste(year, "-03-31 23:00", sep = ''))-
                          as.POSIXct(paste(year, "-01-01 00:00", sep = '')))*24
   completeness.Q1 <- round(((rows.Q1 - NA.Q1)/hours.Q1)*100, digits = 2)
+  mean.Q1 <- mean(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-01-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-03-31 23:00", sep = '')))[,3],
+                      na.rm = TRUE) 
   
   rows.Q2 <- nrow(subset(df.station,
                       time >= as.POSIXct(paste(year, "-04-01 00:00", sep = '')) &
@@ -346,6 +352,10 @@ for (j in 1:length(station_list)){
   hours.Q2 <- as.integer(as.POSIXct(paste(year, "-06-30 23:00", sep = ''))-
                          as.POSIXct(paste(year, "-04-01 00:00", sep = '')))*24
   completeness.Q2 <- round(((rows.Q2 - NA.Q2)/hours.Q2)*100, digits = 2)
+  mean.Q2 <- mean(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-04-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-06-30 23:00", sep = '')))[,3],
+                      na.rm = TRUE)
 
   rows.Q3 <- nrow(subset(df.station,
                       time >= as.POSIXct(paste(year, "-07-01 00:00", sep = '')) &
@@ -356,6 +366,10 @@ for (j in 1:length(station_list)){
   hours.Q3 <- as.integer(as.POSIXct(paste(year, "-09-30 23:00", sep = ''))-
                          as.POSIXct(paste(year, "-07-01 00:00", sep = '')))*24
   completeness.Q3 <- round(((rows.Q3 - NA.Q3)/hours.Q3)*100, digits = 2)
+  mean.Q3 <- mean(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-07-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-09-30 23:00", sep = '')))[,3],
+                      na.rm = TRUE)
   
   rows.Q4 <- nrow(subset(df.station,
                       time >= as.POSIXct(paste(year, "-10-01 00:00", sep = '')) &
@@ -366,6 +380,11 @@ for (j in 1:length(station_list)){
   hours.Q4 <- as.integer(as.POSIXct(paste(year, "-12-31 23:00", sep = ''))-
                          as.POSIXct(paste(year, "-10-01 00:00", sep = '')))*24
   completeness.Q4 <- round(((rows.Q4 - NA.Q4)/hours.Q4)*100, digits = 2)
+  mean.Q4 <- mean(subset(df.station,
+                      time >= as.POSIXct(paste(year, "-10-01 00:00", sep = '')) &
+                      time <= as.POSIXct(paste(year, "-12-31 23:00", sep = '')))[,3],
+                      na.rm = TRUE)
+  
   
   if (pollutant == "O3") {
     file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9]O3\\.csv") 
