@@ -299,10 +299,10 @@ df$time <- as.POSIXct(df$time)
 # get number of stations
 no_stations <- length(unique(df$STATION))
 
-# get year
+# inspect dataset to verify the year 
 year <- round(mean(year(df$time)))
 
-# get compound instrument/measured
+# get name of compound (which if PM, is combined with the measurement instrument)
 measure <- gsub("([A-Z0-9]*)\\.conc","\\1",colnames(df)[3])
 
 # get vector list of stations
