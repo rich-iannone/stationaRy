@@ -261,10 +261,10 @@ rm(time)
 
 
 
-# Generate data completeness statistics from processed NAPS data files
-generate_data_complete_CSV <- function(pollutant = NULL,
-                                       all_years = TRUE,
-                                       file_path = NULL) {
+# Generate summary statistics by year from processed NAPS data files
+year_summary_CSV <- function(pollutant = NULL,
+                             all_years = TRUE,
+                             file_path = NULL) {
 
 #file_path <- "~/Documents/R (Working)"
 #pollutant <- "PM25"
