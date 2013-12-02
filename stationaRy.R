@@ -42,7 +42,6 @@ station_info$BAM35.PM25 <- NULL
 station_info$SHARP.PM25 <- NULL
 
 
-
 # Write CSV file 'station_info.csv' to working directory
 write.csv(station_info, file = "station_info.csv", row.names = FALSE)
 station_info
@@ -258,10 +257,7 @@ rm(time)
 
 #-----------------------#
 
-
-
-
-# Generate summary statistics by year from processed NAPS data files
+# Function for generating summary statistics by year from processed NAPS data files
 year_summary_CSV <- function(pollutant = NULL,
                              all_years = TRUE,
                              file_path = NULL) {
