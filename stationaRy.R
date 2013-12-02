@@ -20,7 +20,7 @@ for (i in year_sequence) {
   summaries[[i-year_sequence[1]+1]]$year <- i
 }
   
-# Combine list of data frames using 'rbind.fill' function from the plyr packages
+# Combine list of data frames using 'rbind.fill' function from the 'plyr' package
 summaries.large.df <- rbind.fill(summaries)
 
 # Create data frame, 'station_info" that shows just the station information
@@ -40,7 +40,6 @@ station_info$SES.PM25 <- NULL
 station_info$FDMS.PM25 <- NULL
 station_info$BAM35.PM25 <- NULL
 station_info$SHARP.PM25 <- NULL
-
 
 
 # Write CSV file 'station_info.csv' to working directory
@@ -258,10 +257,7 @@ rm(time)
 
 #-----------------------#
 
-
-
-
-# Generate summary statistics by year from processed NAPS data files
+# Function for generating summary statistics by year from processed NAPS data files
 year_summary_CSV <- function(pollutant = NULL,
                              all_years = TRUE,
                              file_path = NULL) {
