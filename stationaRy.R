@@ -117,7 +117,8 @@ map_station_list <- function(all_stations = TRUE,
                              latN = NULL,
                              latS = NULL,
                              longW = NULL,
-                             longE = NULL) {
+                             longE = NULL,
+                             zoom = 3) {
 
 require(ggmap)
 require(raster)
@@ -127,6 +128,7 @@ if (all_stations == TRUE) {
   latS <- 45
   longW <- -135 
   longE <- -50
+  zoom <- 3
 } else { NULL }
   
 # Determine the center of the map using the mid-points of the bounding lat/long coordinates
@@ -134,7 +136,7 @@ mid_pt_lat <- (latN + latS) / 2
 mid_pt_long <- (longW + longE) / 2
   
 # Define the map using the 'ggmap' package
-the_map <- get_map(location = c(mid_pt_long, mid_pt_lat), zoom = 3,
+the_map <- get_map(location = c(mid_pt_long, mid_pt_lat), zoom = zoom,
                    maptype = 'roadmap')
   
 map <- ggmap(the_map, legend = "right") + 
