@@ -262,7 +262,13 @@ rm(time)
 # Function for generating summary statistics by year from processed NAPS data files
 year_summary_CSV <- function(pollutant = NULL,
                              all_years = TRUE,
-                             file_path = NULL) {
+                             year_range = NULL,
+                             file_path = NULL,
+                             quarter_bounds = c("01-01 00:00", "03-31 23:00",
+                                                "04-01 00:00", "06-30 23:00",
+                                                "07-01 00:00", "09-30 23:00",
+                                                "10-01 00:00", "12-31 23:00")
+                             ) {
 
 #file_path <- "~/Documents/R (Working)"
 #pollutant <- "PM25"
