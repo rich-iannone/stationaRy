@@ -299,10 +299,27 @@ if (pollutant == "O3") {
   file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9][0-9A-Z]*PM10\\.csv")
 } else {stop("No data selected.")}
 
+# If a year range or single year is provided, capture start and end year boundaries
+if (!is.null(year_range)) {
+  start_year_range <- substr(as.character(year_range), 1, 4)
+  end_year_range <- substr(as.character(year_range), 6, 9)
+} else if (!is.null(single_year)) {
+  start_year_range <- substr(as.character(single_year), 1, 4)
+  end_year_range <- substr(as.character(single_year), 1, 4)
+}
+
+# Set up a filtered file list object
+filtered_file_list <- mat.or.vec(nr = length(start_year_range:end_year_range), nc = 1)
+
 # Filter file list by selected year range
 if (!is.null(year_range)) {
-  
+  for (i in start_year_range:end_year_range) {
+    filtered_file_list[i - as.numeric(start_year_range) + 1] <- file_list[grep(i, file_list)]
+  }
 }
+
+# If 'all_years' argument is FALSE, write 'filtered_file_list' to 'file_list'
+if (all_years == FALSE) file_list <- filtered_file_list
 
 # Loop through reading in CSV files; convert time column back to POSIXct time objects
 for (i in 1:length(file_list)){
