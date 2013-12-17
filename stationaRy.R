@@ -267,14 +267,13 @@ year_summary_CSV <- function(pollutant = NULL,
                              quarter_bounds = c("01-01 00:00", "03-31 23:00",
                                                 "04-01 00:00", "06-30 23:00",
                                                 "07-01 00:00", "09-30 23:00",
-                                                "10-01 00:00", "12-31 23:00")
-                             ) {
+                                                "10-01 00:00", "12-31 23:00")) {
 
 #file_path <- "~/Documents/R (Working)"
 #pollutant <- "PM25"
 # 
 #  test:
-#  generate_data_complete_CSV(pollutant = "NO", file_path = "~/Documents/R (Working)")
+#  year_summary_CSV(pollutant = "NO", file_path = "~/Documents/R (Working)")
 #
   
 file_path <- ifelse(is.null(file_path), getwd(), file_path)
@@ -293,6 +292,9 @@ if (pollutant == "O3") {
 } else if (pollutant == "PM10") {
   file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9][0-9A-Z]*PM10\\.csv")
 } else {stop("No data selected.")}
+
+# Filter file list by selected year range
+
 
 # Loop through reading in CSV files; convert time column back to POSIXct time objects
 for (i in 1:length(file_list)){
@@ -321,8 +323,10 @@ cat("Year,Pollutant,NapsID,Data_Y%,",
     "Mean_Year,",
     "Mean_Q1,Mean_Q2,Mean_Q3,Mean_Q4",
     file = paste(year,"_",measure,"_data_completeness.csv", sep = ''), sep = '')
+
 cat("", file = paste(year,"_",measure,"_data_completeness.csv", sep = ''),
     sep = "\n", append = TRUE)
+
 for (j in 1:length(station_list)){
   df.station <- subset(df, df$STATION == station_list[j])
   completeness_year <- 
