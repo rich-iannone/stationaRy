@@ -269,8 +269,14 @@ year_summary_CSV <- function(pollutant = NULL,
                                                 "07-01 00:00", "09-30 23:00",
                                                 "10-01 00:00", "12-31 23:00")) {
 
+#pollutant <- "NO"
+#all_years <- FALSE
+#year_range <- "2000-2002"
 #file_path <- "~/Documents/R (Working)"
-#pollutant <- "PM25"
+#quarter_bounds = c("01-01 00:00", "03-31 23:00",
+#                   "04-01 00:00", "06-30 23:00",
+#                   "07-01 00:00", "09-30 23:00",
+#                   "10-01 00:00", "12-31 23:00")
 # 
 #  test:
 #  year_summary_CSV(pollutant = "NO", file_path = "~/Documents/R (Working)")
@@ -294,7 +300,9 @@ if (pollutant == "O3") {
 } else {stop("No data selected.")}
 
 # Filter file list by selected year range
-
+if (!is.null(year_range)) {
+  
+}
 
 # Loop through reading in CSV files; convert time column back to POSIXct time objects
 for (i in 1:length(file_list)){
