@@ -347,9 +347,9 @@ cat("Year,Pollutant,NapsID,Data_Y%,",
     "Data_Q3%,Data_Q4%,",
     "Mean_Year,",
     "Mean_Q1,Mean_Q2,Mean_Q3,Mean_Q4",
-    file = paste(year,"_",measure,"_data_completeness.csv", sep = ''), sep = '')
+    file = paste(year,"_",measure,"_data_summary.csv", sep = ''), sep = '')
 
-cat("", file = paste(year,"_",measure,"_data_completeness.csv", sep = ''),
+cat("", file = paste(year,"_",measure,"_data_summary.csv", sep = ''),
     sep = "\n", append = TRUE)
 
 for (j in 1:length(station_list)){
