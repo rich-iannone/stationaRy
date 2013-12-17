@@ -354,6 +354,9 @@ cat("Year,Pollutant,NapsID,Data_Y%,",
 cat("", file = paste(year,"_",measure,"_data_summary.csv", sep = ''),
     sep = "\n", append = TRUE)
 
+# Branch these analyses into different types depending on the 'pollutant' value
+# Ultimately will create separate function to calculate
+
 for (j in 1:length(station_list)){
   df.station <- subset(df, df$STATION == station_list[j])
   completeness_year <- 
@@ -362,62 +365,85 @@ for (j in 1:length(station_list)){
                 *100,
                 digits = 2)
   
+  # Calculate the mean for the year
   mean.year <- mean(df.station[,3], na.rm = TRUE)
     
+  # Determine the number of rows of data for Q1
   rows.Q1 <- nrow(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-01-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-03-31 23:00", sep = ''))))
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[1], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[2], sep = ''))))
+  
+  # Determine the number of NA values for Q1
   NA.Q1 <- sum(is.na(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-01-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-03-31 23:00", sep = '')))[,3]))
-  hours.Q1 <- as.integer(as.POSIXct(paste(year, "-03-31 23:00", sep = ''))-
-                         as.POSIXct(paste(year, "-01-01 00:00", sep = '')))*24
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[1], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[2], sep = '')))[,3]))
+  
+  # Determine the number of hours in Q1
+  hours.Q1 <- as.integer(as.POSIXct(paste(year, "-", quarter_bounds[2], sep = ''))-
+                         as.POSIXct(paste(year, "-", quarter_bounds[1], sep = '')))*24
+  
+  # Determine the data completeness in Q1
   completeness.Q1 <- round(((rows.Q1 - NA.Q1)/hours.Q1)*100, digits = 2)
+  
+  # Calculate the mean value
   mean.Q1 <- mean(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-01-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-03-31 23:00", sep = '')))[,3],
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[1], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[2], sep = '')))[,3],
                       na.rm = TRUE) 
   
+  # Determine the number of rows of data for Q2
   rows.Q2 <- nrow(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-04-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-06-30 23:00", sep = ''))))
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[3], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[4], sep = ''))))
+  
   NA.Q2 <- sum(is.na(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-04-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-06-30 23:00", sep = '')))[,3]))
-  hours.Q2 <- as.integer(as.POSIXct(paste(year, "-06-30 23:00", sep = ''))-
-                         as.POSIXct(paste(year, "-04-01 00:00", sep = '')))*24
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[3], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[4], sep = '')))[,3]))
+  
+  hours.Q2 <- as.integer(as.POSIXct(paste(year, "-", quarter_bounds[4], sep = ''))-
+                         as.POSIXct(paste(year, "-", quarter_bounds[3], sep = '')))*24
+  
   completeness.Q2 <- round(((rows.Q2 - NA.Q2)/hours.Q2)*100, digits = 2)
+  
   mean.Q2 <- mean(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-04-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-06-30 23:00", sep = '')))[,3],
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[3], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[4], sep = '')))[,3],
                       na.rm = TRUE)
 
   rows.Q3 <- nrow(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-07-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-09-30 23:00", sep = ''))))
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[5], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[6], sep = ''))))
+  
   NA.Q3 <- sum(is.na(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-07-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-09-30 23:00", sep = '')))[,3]))
-  hours.Q3 <- as.integer(as.POSIXct(paste(year, "-09-30 23:00", sep = ''))-
-                         as.POSIXct(paste(year, "-07-01 00:00", sep = '')))*24
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[5], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[6], sep = '')))[,3]))
+  
+  hours.Q3 <- as.integer(as.POSIXct(paste(year, "-", quarter_bounds[6], sep = ''))-
+                         as.POSIXct(paste(year, "-", quarter_bounds[5], sep = '')))*24
+  
   completeness.Q3 <- round(((rows.Q3 - NA.Q3)/hours.Q3)*100, digits = 2)
+  
   mean.Q3 <- mean(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-07-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-09-30 23:00", sep = '')))[,3],
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[5], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[6], sep = '')))[,3],
                       na.rm = TRUE)
   
   rows.Q4 <- nrow(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-10-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-12-31 23:00", sep = ''))))
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[7], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[8], sep = ''))))
+  
   NA.Q4 <- sum(is.na(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-10-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-12-31 23:00", sep = '')))[,3]))
-  hours.Q4 <- as.integer(as.POSIXct(paste(year, "-12-31 23:00", sep = ''))-
-                         as.POSIXct(paste(year, "-10-01 00:00", sep = '')))*24
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[7], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[8], sep = '')))[,3]))
+  
+  hours.Q4 <- as.integer(as.POSIXct(paste(year, "-", quarter_bounds[8], sep = ''))-
+                         as.POSIXct(paste(year, "-", quarter_bounds[7], sep = '')))*24
+  
   completeness.Q4 <- round(((rows.Q4 - NA.Q4)/hours.Q4)*100, digits = 2)
+  
   mean.Q4 <- mean(subset(df.station,
-                      time >= as.POSIXct(paste(year, "-10-01 00:00", sep = '')) &
-                      time <= as.POSIXct(paste(year, "-12-31 23:00", sep = '')))[,3],
+                      time >= as.POSIXct(paste(year, "-", quarter_bounds[7], sep = '')) &
+                      time <= as.POSIXct(paste(year, "-", quarter_bounds[8], sep = '')))[,3],
                       na.rm = TRUE)
   
 #   if (pollutant == "O3") {
