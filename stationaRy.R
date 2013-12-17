@@ -274,7 +274,7 @@ year_summary_CSV <- function(pollutant = NULL,
 #pollutant <- "PM25"
 # 
 #  test:
-#  generate_data_complete_CSV(pollutant = "NO", file_path = "~/Documents/R (Working)")
+#  year_summary_CSV(pollutant = "NO", file_path = "~/Documents/R (Working)")
 #
   
 file_path <- ifelse(is.null(file_path), getwd(), file_path)
@@ -293,6 +293,9 @@ if (pollutant == "O3") {
 } else if (pollutant == "PM10") {
   file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9][0-9A-Z]*PM10\\.csv")
 } else {stop("No data selected.")}
+
+# Filter file list by selected year range
+
 
 # Loop through reading in CSV files; convert time column back to POSIXct time objects
 for (i in 1:length(file_list)){
