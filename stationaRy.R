@@ -261,7 +261,8 @@ rm(time)
 
 # Function for generating summary statistics by year from processed NAPS data files
 year_summary_CSV <- function(pollutant = NULL,
-                             all_years = TRUE,
+                             all_years = FALSE,
+                             single_year = NULL,
                              year_range = NULL,
                              file_path = NULL,
                              quarter_bounds = c("01-01 00:00", "03-31 23:00",
@@ -269,14 +270,15 @@ year_summary_CSV <- function(pollutant = NULL,
                                                 "07-01 00:00", "09-30 23:00",
                                                 "10-01 00:00", "12-31 23:00")) {
 
-#pollutant <- "NO"
-#all_years <- FALSE
-#year_range <- "2000-2002"
-#file_path <- "~/Documents/R (Working)"
-#quarter_bounds = c("01-01 00:00", "03-31 23:00",
-#                   "04-01 00:00", "06-30 23:00",
-#                   "07-01 00:00", "09-30 23:00",
-#                   "10-01 00:00", "12-31 23:00")
+pollutant <- "NO"
+all_years <- FALSE
+#single_year <- 2000
+year_range <- "2000-2002"
+file_path <- "~/Documents/R (Working)"
+quarter_bounds = c("01-01 00:00", "03-31 23:00",
+                  "04-01 00:00", "06-30 23:00",
+                  "07-01 00:00", "09-30 23:00",
+                  "10-01 00:00", "12-31 23:00")
 # 
 #  test:
 #  year_summary_CSV(pollutant = "NO", file_path = "~/Documents/R (Working)")
