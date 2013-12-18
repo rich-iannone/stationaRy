@@ -57,5 +57,12 @@ year_summary_PM25 <- function(all_years = FALSE,
     rm(nam)
     rm(list = ls(pattern = "file_list."))
   }
+  
+  # If 'single_year' specified, filter the list to only include objects of the specified year
+  if (all_years == FALSE & !is.null(single_year) & is.null(year_range)) {
+    assign("file_list", list.files(path = file_path, 
+                                   pattern = paste("^",single_year,"[0-9A-Z]*PM25\\.csv", sep = '')))
+    
+  }
     
     
