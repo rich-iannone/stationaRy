@@ -7,4 +7,5 @@
 *.png
 *.csv
 *.CSV
+.RData
 stationaRy.R
