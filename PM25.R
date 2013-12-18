@@ -64,6 +64,75 @@ year_summary_PM25 <- function(all_years = FALSE,
                                    pattern = paste("^",single_year,"[0-9A-Z]*PM25\\.csv", sep = '')))
     
   }
+  
+  
+  # Loop through reading in CSV files; convert time column back to POSIXct time objects
+  for (i in 1:length(file_list)){
+    df <- read.csv(file = paste(file_path, "/", file_list[i], sep = ''),
+                   header = TRUE, stringsAsFactors = FALSE)
+    df$time <- as.POSIXct(df$time)
+    
+    # get number of stations
+    no_stations <- length(unique(df$STATION))
+    
+    # inspect dataset to verify the year 
+    year <- round(mean(year(df$time)))
+    
+    # get name of compound (which if PM, is combined with the measurement instrument)
+    # measure <- gsub("([A-Z0-9]*)\\.conc","\\1",colnames(df)[3])
+    
+    # get vector list of stations for analysis
+    station_list <- mat.or.vec(nr = no_stations, nc = 1)
+    station_list <- unique(df$STATION)
+
+
+
+
+
+
+# # Get test data from CSV
+# pm25data <- read.csv("~/Documents/R (Working)/2010BAMPM25.csv", header = TRUE)
+# 
+# 
+# 
+# 
+# # Get a single station
+# pm25data <- subset(pm25data, pm25data$STATION == 80110)
+
+
+# The data required to calculate a PM2.5 24-hour metric value for a station therefore includes:
+# i.  The daily average (midnight to midnight local time) PM2.5 concentration for each 
+#     day of a given year; and
+# ii. The annual average of the daily 24hr-PM2.5 for the given year
+
+# Calculate the daily average for year of data file, make a vector list of averages
+
+
+# Initialize the output file for writing
+cat("Year,Pollutant,NapsID,Valid_Daily_Averages,Annual_pm25_98P,",
+    "Q1.Complete_%,Q2.Complete_%,",
+    "Q3.Complete_%,Q4.Complete_%,",
+    "Is_98P_Valid,Annual_pm25_98P_Exceed,",
+    "pm25_98P_flag",
+    file = paste(year,"_",measure,"_data_summary.csv", sep = ''), sep = '')
+
+cat("", file = paste(year,"_",measure,"_data_summary.csv", sep = ''),
+    sep = "\n", append = TRUE)
+
+# Determine number of days in year
+days_in_year <- yday(as.POSIXct(paste(year, "-12-31", sep = ''),
+                                origin = "1970-01-01", tz = "GMT"))
+
+# Initialize matrix with (1) year, (2) day of year, (3) date, (4) number of dataset
+# rows in a day, (5) number of NA values in a day, (6) number of valid observations in
+# a day, and (7) daily average  
+pm25_daily_averages <- as.data.frame(mat.or.vec(nr = days_in_year, nc = 7))
+colnames(pm25_daily_averages) <- c("year", "day_of_year", "date", "rows_in_day", "NA_in_day",
+                                   "valid_obs_in_day", "daily_average")
+
+# Convert 'date' vector into class of POSIXct
+pm25data$time <- as.POSIXct(pm25data$time)
+
 # Loop through all days in year and put calculated values in initialized data frame
 for (i in 1:days_in_year) {
   
