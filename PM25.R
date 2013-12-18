@@ -25,5 +25,7 @@ year_summary_PM25 <- function(all_years = FALSE,
   
   file_path <- ifelse(is.null(file_path), getwd(), file_path)
 
+  # Add require statement
+  require(lubridate)
     
     
