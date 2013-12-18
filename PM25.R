@@ -27,5 +27,12 @@ year_summary_PM25 <- function(all_years = FALSE,
 
   # Add require statement
   require(lubridate)
+  
+  # Generate the appropriate file list depending on the options chosen
+  #
+  # Generate file list for selected pollutant for all years
+  if (all_years == TRUE & is.null(single_year) & is.null(year_range)) file_list <- 
+    list.files(path = file_path, 
+               pattern = "^[0-9][0-9][0-9][0-9][0-9A-Z]*PM25\\.csv")
     
     
