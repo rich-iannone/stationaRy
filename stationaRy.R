@@ -460,12 +460,14 @@ for (j in 1:length(station_list)){
                       time <= as.POSIXct(paste(year, "-", quarter_bounds[8], sep = '')))[,3],
                       na.rm = TRUE)
   
-  
+  # Place values in row of output CSV file
   cat(year,",",measure,",",station_list[j],",",completeness_year,",",
       completeness.Q1,",",completeness.Q2,",",completeness.Q3,",",completeness.Q4,",",
       mean.year,",",mean.Q1,",",mean.Q2,",",mean.Q3,",",mean.Q4,      
       file = paste(year,"_",measure,"_data_summary.csv", sep = ''),
       sep = "", append = TRUE)
+  
+  # Add linebreak to CSV file after writing line
   cat("", file = paste(year,"_",measure,"_data_summary.csv", sep = ''),
       sep = "\n", append = TRUE)
 }
