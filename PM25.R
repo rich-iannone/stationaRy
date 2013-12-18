@@ -281,5 +281,27 @@ does_annual_pm25_98P_exceed <- ifelse(annual_pm25_98P > 30, TRUE, FALSE)
 if (does_annual_pm25_98P_exceed == TRUE &
       data_complete_year == TRUE &
       data_complete_quarter == FALSE) pm25_98P_flag <- "based on incomplete data"
+
+
+
+cat("Year,Pollutant,NapsID,Valid_Daily_Averages,Annual_pm25_98P,",
+    "Q1.Complete_%,Q2.Complete_%,",
+    "Q3.Complete_%,Q4.Complete_%,",
+    "Is_98P_Valid,Annual_pm25_98P_Exceed,",
+    "pm25_98P_flag",
+    file = paste(year,"_",measure,"_data_summary.csv", sep = ''), sep = '')
+
+# Place values in row of output CSV file
+cat(year,",",measure,",",station_list[j],",",completeness_year,",",
+    completeness.Q1,",",completeness.Q2,",",completeness.Q3,",",completeness.Q4,",",
+    mean.year,",",mean.Q1,",",mean.Q2,",",mean.Q3,",",mean.Q4,      
+    file = paste(year,"_",measure,"_data_summary.csv", sep = ''),
+    sep = "", append = TRUE)
+
+# Add linebreak to CSV file after writing line
+cat("", file = paste(year,"_",measure,"_data_summary.csv", sep = ''),
+    sep = "\n", append = TRUE)
+
+    
     
     
