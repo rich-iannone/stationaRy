@@ -460,68 +460,6 @@ for (j in 1:length(station_list)){
                       time <= as.POSIXct(paste(year, "-", quarter_bounds[8], sep = '')))[,3],
                       na.rm = TRUE)
   
-#   if (pollutant == "O3") {
-#     file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9]O3\\.csv") 
-#   } else if (pollutant == "NO") {
-#     mean_year <- mean(df.station[,3], na.rm = TRUE)
-#     df.station.Q1 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-01-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-03-31 23:00", sep = '')))
-#     mean_Q1 <- ifelse(length(df.station.Q1 > 2 &
-#                              !all(is.na(df.station.Q1[,3]))),
-#                              mean(df.station.Q1[,3], na.rm = TRUE), NA)
-#     df.station.Q2 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-04-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-06-30 23:00", sep = '')))
-#     mean_Q2 <- ifelse(length(df.station.Q2 > 2), mean(df.station.Q2[,3], na.rm = TRUE), NA)
-#     df.station.Q3 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-07-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-09-30 23:00", sep = '')))
-#     mean_Q3 <- ifelse(length(df.station.Q3 > 2), mean(df.station.Q3[,3], na.rm = TRUE), NA)
-#     df.station.Q4 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-10-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-12-31 23:00", sep = '')))
-#     mean_Q4 <- ifelse(length(df.station.Q4 > 2), mean(df.station.Q4[,3], na.rm = TRUE), NA)
-#       
-#   } else if (pollutant == "NO2") {
-#     mean_year <- mean(df.station[,3], na.rm = TRUE)
-#     df.station.Q1 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-01-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-03-31 23:00", sep = '')))
-#     mean_Q1 <- ifelse(length(df.station.Q1 > 2), mean(df.station.Q1[,3], na.rm = TRUE), NA)
-#     df.station.Q2 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-04-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-06-30 23:00", sep = '')))
-#     mean_Q2 <- ifelse(length(df.station.Q2 > 2), mean(df.station.Q2[,3], na.rm = TRUE), NA)
-#     df.station.Q3 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-07-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-09-30 23:00", sep = '')))
-#     mean_Q3 <- ifelse(length(df.station.Q3 > 2), mean(df.station.Q3[,3], na.rm = TRUE), NA)
-#     df.station.Q4 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-10-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-12-31 23:00", sep = '')))
-#     mean_Q4 <- ifelse(length(df.station.Q4 > 2), mean(df.station.Q3[,3], na.rm = TRUE), NA)
-#   } else if (pollutant == "PM25") {
-#     mean_year <- mean(df.station[,3], na.rm = TRUE)
-#     df.station.Q1 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-01-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-03-31 23:00", sep = '')))
-#     mean_Q1 <- ifelse(length(df.station.Q1 > 2), mean(df.station.Q1[,3], na.rm = TRUE), NA)
-#     df.station.Q2 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-04-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-06-30 23:00", sep = '')))
-#     mean_Q2 <- ifelse(length(df.station.Q2 > 2), mean(df.station.Q2[,3], na.rm = TRUE), NA)
-#     df.station.Q3 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-07-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-09-30 23:00", sep = '')))
-#     mean_Q3 <- ifelse(length(df.station.Q3 > 2), mean(df.station.Q3[,3], na.rm = TRUE), NA)
-#     df.station.Q4 <- subset(df.station,
-#                             time >= as.POSIXct(paste(year, "-10-01 00:00", sep = '')) &
-#                             time <= as.POSIXct(paste(year, "-12-31 23:00", sep = '')))
-#     mean_Q4 <- ifelse(length(df.station.Q4 > 2), mean(df.station.Q4[,3], na.rm = TRUE), NA)
-#   } else if (pollutant == "PM10") {
-#     file_list <- list.files(path = file_path, pattern = "^[0-9][0-9][0-9][0-9][0-9A-Z]*PM10\\.csv")
-#   } else {stop("No data selected.")}
   
   cat(year,",",measure,",",station_list[j],",",completeness_year,",",
       completeness.Q1,",",completeness.Q2,",",completeness.Q3,",",completeness.Q4,",",
