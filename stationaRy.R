@@ -273,7 +273,7 @@ year_summary_CSV <- function(pollutant = NULL,
 pollutant <- "NO"
 all_years <- FALSE
 #single_year <- 2000
-year_range <- "2000-2002"
+year_range <- "2000-2001"
 file_path <- "~/Documents/R (Working)"
 quarter_bounds = c("01-01 00:00", "03-31 23:00",
                   "04-01 00:00", "06-30 23:00",
