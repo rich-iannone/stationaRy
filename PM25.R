@@ -272,18 +272,15 @@ year_summary_PM25 <- function(all_years = FALSE,
       
       does_annual_pm25_98P_exceed <- ifelse(annual_pm25_98P > 30, TRUE, FALSE)
       
-      if (does_annual_pm25_98P_exceed == TRUE &
+      pm25_98P_flag <- ifelse(does_annual_pm25_98P_exceed == TRUE &
             data_complete_year == TRUE &
-            data_complete_quarter == FALSE) pm25_98P_flag <- "based on incomplete data"
-      
-      
-      
       cat("Year,Pollutant,NapsID,Valid_Daily_Averages,Annual_pm25_98P,",
           "Q1.Complete_%,Q2.Complete_%,",
           "Q3.Complete_%,Q4.Complete_%,",
           "Is_98P_Valid,Annual_pm25_98P_Exceed,",
           "pm25_98P_flag",
           file = paste(year,"_",measure,"_data_summary.csv", sep = ''), sep = '')
+            data_complete_quarter == FALSE, "based on incomplete data", "")
       
       # Place values in row of output CSV file
       cat(year,",",measure,",",station_list[j],",",completeness_year,",",
