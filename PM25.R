@@ -18,7 +18,7 @@ year_summary_PM25 <- function(all_years = FALSE,
                      "10-01", "12-31")
   # 
   #  test:
-  #  year_summary_CSV(pollutant = "NO", file_path = "~/Documents/R (Working)")
+  #  year_summary_PM25(single_year = 2001, file_path = "~/Documents/R (Working)")
   #
   
   file_path <- ifelse(is.null(file_path), getwd(), file_path)
