@@ -24,7 +24,7 @@ year_summary_PM25 <- function(all_years = FALSE,
   #
   
   file_path <- ifelse(is.null(file_path), getwd(), file_path)
-
+  
   # Add require statement
   require(lubridate)
   
@@ -47,7 +47,7 @@ year_summary_PM25 <- function(all_years = FALSE,
     # Combine vector lists
     list <- vector("list", length(ls(pattern = "file_list.")))
     for (j in 1:length(ls(pattern = "file_list."))) {
-    list[j] <- list(get(ls(pattern = "file_list.")[j]))
+      list[j] <- list(get(ls(pattern = "file_list.")[j]))
     }
     file_list <- unlist(list)
     # Remove temp objects
