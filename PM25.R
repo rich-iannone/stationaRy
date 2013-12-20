@@ -87,6 +87,18 @@ year_summary_PM25 <- function(all_years = FALSE,
     
     # get vector list of stations for analysis
     station_list <- mat.or.vec(nr = no_stations, nc = 1)
+    station_list <- unique(df$STATION)    
+       
+    # Initialize the output file for writing
+    if (i == 1) {
+      cat("Year,Pollutant,Method,NapsID,Valid_Daily_Averages,Annual_pm25_98P,",
+          "Q1.Complete_%,Q2.Complete_%,",
+          "Q3.Complete_%,Q4.Complete_%,",
+          "Is_98P_Valid,Annual_pm25_98P_Exceed,",
+          "pm25_98P_flag",
+          file = paste(measure,"_data_summary.csv", sep = ''), sep = '')
+      cat("", file = paste(measure,"_data_summary.csv", sep = ''),
+          sep = "\n", append = TRUE)}
     
     # The data required to calculate a PM2.5 24-hour metric value for a station therefore includes:
     # i.  The daily average (midnight to midnight local time) PM2.5 concentration for each 
