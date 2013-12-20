@@ -121,9 +121,8 @@ year_summary_PM25 <- function(all_years = FALSE,
               *100,
               digits = 2)
       
-      
       # Loop through all days in year and put calculated values in initialized data frame
-      for (i in 1:days_in_year) {
+      for (k in 1:days_in_year) {
         
         # inspect dataset to verify the year 
         year <- round(mean(year(df.station$time)))
@@ -133,60 +132,60 @@ year_summary_PM25 <- function(all_years = FALSE,
                                         origin = "1970-01-01", tz = "GMT"))
         
         # Insert the year in the 'year' column
-        pm25_daily_averages[i,1] <- year
+        pm25_daily_averages[k,1] <- year
         
         # Insert the day in the 'day' column
-        pm25_daily_averages[i,2] <- i
+        pm25_daily_averages[k,2] <- k
         
         # Insert the date in the 'date' column
-        pm25_daily_averages[i,3] <- as.POSIXct((i - 1) * 24 * 3600,
+        pm25_daily_averages[k,3] <- as.POSIXct((k - 1) * 24 * 3600,
                                                origin = paste(year, "-01-01 00:00", sep = ''),
                                                tz = "GMT")
         
         # Calculate the data completeness as hours per day with a PM2.5 value
         #
         # Count the number of rows in dataset for a given day
-        pm25_daily_averages[i,4] <- 
-          nrow(subset(pm25data,
+        pm25_daily_averages[k,4] <- 
+          nrow(subset(df.station,
                       time >= as.POSIXct(paste(year, "-01-01", sep = '')) +
-                        ((i - 1) * (3600 * 24)) &
+                        ((k - 1) * (3600 * 24)) &
                         time < as.POSIXct(paste(year, "-01-01", sep = '')) +
-                        ((i + 1 - 1) * (3600 * 24))))
+                        ((k + 1 - 1) * (3600 * 24))))
         
-        if(i == days_in_year) pm25_daily_averages[i,4] <-
-          nrow(subset(pm25data,
+        if(k == days_in_year) pm25_daily_averages[k,4] <-
+          nrow(subset(df.station,
                       time >= as.POSIXct(paste(year, "-12-31", sep = '')) &
                         time < as.POSIXct(paste(year, "-12-31 23:59:59", sep = ''))))
         
         # Count the number of NA values in dataset for a given day
-        pm25_daily_averages[i,5] <-
-          sum(is.na(subset(pm25data,
+        pm25_daily_averages[k,5] <-
+          sum(is.na(subset(df.station,
                            time >= as.POSIXct(paste(year, "-01-01", sep = '')) +
-                             ((i - 1) * (3600 * 24)) &
+                             ((k - 1) * (3600 * 24)) &
                              time < as.POSIXct(paste(year, "-01-01", sep = '')) +
-                             ((i + 1 - 1) * (3600 * 24)))[,3]))
+                             ((k + 1 - 1) * (3600 * 24)))[,3]))
         
-        if(i == days_in_year) pm25_daily_averages[i,5] <-
-          sum(is.na(subset(pm25data,
+        if(k == days_in_year) pm25_daily_averages[k,5] <-
+          sum(is.na(subset(df.station,
                            time >= as.POSIXct(paste(year, "-12-31", sep = '')) &
                              time < as.POSIXct(paste(year, "-12-31 23:59:59", sep = '')))[,3]))
         
         # Calculate the number of valid measurements for a given day
-        pm25_daily_averages[i,6] <- pm25_daily_averages[i,4] - pm25_daily_averages[i,5]
+        pm25_daily_averages[k,6] <- pm25_daily_averages[k,4] - pm25_daily_averages[k,5]
         
         # Calculate the daily average, put into column 7 ('daily_average')
-        pm25_daily_averages[i,7] <- 
-          ifelse(pm25_daily_averages[i,6] >= 18,
-                 round(mean(subset(pm25data,
+        pm25_daily_averages[k,7] <- 
+          ifelse(pm25_daily_averages[k,6] >= 18,
+                 round(mean(subset(df.station,
                                    time >= as.POSIXct(paste(year, "-01-01", sep = '')) +
-                                     ((i - 1) * (3600 * 24)) &
+                                     ((k - 1) * (3600 * 24)) &
                                      time < as.POSIXct(paste(year, "-01-01", sep = '')) +
-                                     ((i + 1 - 1) * (3600 * 24)))[,3],
+                                     ((k + 1 - 1) * (3600 * 24)))[,3],
                             na.rm = TRUE), digits = 1), NA)
         
-        if(i == days_in_year) pm25_daily_averages[i,7] <-
-          ifelse(pm25_daily_averages[i,6] >= 18,
-                 round(mean(subset(pm25data,
+        if(k == days_in_year) pm25_daily_averages[k,7] <-
+          ifelse(pm25_daily_averages[k,6] >= 18,
+                 round(mean(subset(df.station,
                                    time >= as.POSIXct(paste(year, "-12-31", sep = '')) &
                                      time < as.POSIXct(paste(year, "-12-31 23:59:59", sep = '')))[,3],
                             na.rm = TRUE), digits = 1), NA)
