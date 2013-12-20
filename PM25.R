@@ -1,15 +1,13 @@
 
 year_summary_PM25 <- function(all_years = FALSE,
-                             single_year = NULL,
-                             year_range = NULL,
-                             file_path = NULL,
-                             quarter_bounds = c("01-01 00:00", "03-31 23:00",
-                                                "04-01 00:00", "06-30 23:00",
-                                                "07-01 00:00", "09-30 23:00",
-                                                "10-01 00:00", "12-31 23:00")) {
-  
-  measure <- "PM25"
-  
+                              single_year = NULL,
+                              year_range = NULL,
+                              file_path = NULL,
+                              quarter_bounds = c("01-01", "03-31",
+                                                 "04-01", "06-30",
+                                                 "07-01", "09-30",
+                                                 "10-01", "12-31")) {
+    
   all_years <- FALSE
   single_year <- NULL
   year_range <- "2001-2003"
