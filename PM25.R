@@ -66,17 +66,6 @@ year_summary_PM25 <- function(all_years = FALSE,
   }
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   # Loop through reading in CSV files; convert time column back to POSIXct time objects
   for (i in 1:length(file_list)){
     df <- read.csv(file = paste(file_path, "/", file_list[1], sep = ''),
