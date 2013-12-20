@@ -274,19 +274,20 @@ year_summary_PM25 <- function(all_years = FALSE,
       
       pm25_98P_flag <- ifelse(does_annual_pm25_98P_exceed == TRUE &
             data_complete_year == TRUE &
-      cat("Year,Pollutant,NapsID,Valid_Daily_Averages,Annual_pm25_98P,",
-          "Q1.Complete_%,Q2.Complete_%,",
-          "Q3.Complete_%,Q4.Complete_%,",
-          "Is_98P_Valid,Annual_pm25_98P_Exceed,",
-          "pm25_98P_flag",
-          file = paste(year,"_",measure,"_data_summary.csv", sep = ''), sep = '')
             data_complete_quarter == FALSE, "based on incomplete data", "")
       
       # Place values in row of output CSV file
-      cat(year,",",measure,",",station_list[j],",",completeness_year,",",
-          completeness.Q1,",",completeness.Q2,",",completeness.Q3,",",completeness.Q4,",",
-          mean.year,",",mean.Q1,",",mean.Q2,",",mean.Q3,",",mean.Q4,      
-          file = paste(year,"_",measure,"_data_summary.csv", sep = ''),
+      cat(year,",",measure,",",method,",",station_list[j],",",
+          number_of_valid_pm25_daily_averages,",",
+          annual_pm25_98P,",",
+          Q1.complete,",",
+          Q2.complete,",",
+          Q3.complete,",",
+          Q4.complete,",",
+          is_98P_valid,",",
+          does_annual_pm25_98P_exceed,",",
+          pm25_98P_flag,      
+          file = paste(measure,"_data_summary.csv", sep = ''),
           sep = "", append = TRUE)
       
       # Add linebreak to CSV file after writing line
