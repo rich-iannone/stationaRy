@@ -187,7 +187,8 @@ year_summary_PM25 <- function(all_years = FALSE,
           ifelse(pm25_daily_averages[k,6] >= 18,
                  round(mean(subset(df.station,
                                    time >= as.POSIXct(paste(year, "-12-31", sep = '')) &
-                                     time < as.POSIXct(paste(year, "-12-31 23:59:59", sep = '')))[,3],
+                                     time < as.POSIXct(paste(year, "-12-31 23:59:59",
+                                                             sep = '')))[,3],
                             na.rm = TRUE), digits = 1), NA)
         
         # Convert any NaN values in the data frame to NA for consistency
