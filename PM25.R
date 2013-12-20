@@ -21,6 +21,8 @@ year_summary_PM25 <- function(all_years = FALSE,
   #  year_summary_PM25(single_year = 2001, file_path = "~/Documents/R (Working)")
   #
   
+  measure <- "PM25"
+  
   file_path <- ifelse(is.null(file_path), getwd(), file_path)
   
   # Add require statement
