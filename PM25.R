@@ -82,6 +82,8 @@ year_summary_PM25 <- function(all_years = FALSE,
     days_in_year <- yday(as.POSIXct(paste(year, "-12-31", sep = ''),
                                     origin = "1970-01-01", tz = "GMT"))
     
+    # get method of PM25 collection (e.g., BAM, TEOM, SES, FDMS, BAM35, SHARP, etc.)
+    method <- gsub("^[0-9][0-9][0-9][0-9]([A-Z0-9]*)PM25\\.csv", "\\1", file_list[i])
     
     # get vector list of stations for analysis
     station_list <- mat.or.vec(nr = no_stations, nc = 1)
