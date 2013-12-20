@@ -126,7 +126,7 @@ year_summary_PM25 <- function(all_years = FALSE,
       for (i in 1:days_in_year) {
         
         # inspect dataset to verify the year 
-        year <- round(mean(year(pm25data$time)))
+        year <- round(mean(year(df.station$time)))
         
         # Determine number of days in year
         days_in_year <- yday(as.POSIXct(paste(year, "-12-31", sep = ''),
