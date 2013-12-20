@@ -87,17 +87,6 @@ year_summary_PM25 <- function(all_years = FALSE,
     
     # get vector list of stations for analysis
     station_list <- mat.or.vec(nr = no_stations, nc = 1)
-    station_list <- unique(df$STATION)
-    
-    # # Get test data from CSV
-    # pm25data <- read.csv("~/Documents/R (Working)/2010BAMPM25.csv", header = TRUE)
-    # 
-    # 
-    # 
-    # 
-    # # Get a single station
-    # pm25data <- subset(pm25data, pm25data$STATION == 80110)
-    
     
     # The data required to calculate a PM2.5 24-hour metric value for a station therefore includes:
     # i.  The daily average (midnight to midnight local time) PM2.5 concentration for each 
