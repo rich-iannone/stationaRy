@@ -104,23 +104,7 @@ year_summary_PM25 <- function(all_years = FALSE,
     # i.  The daily average (midnight to midnight local time) PM2.5 concentration for each 
     #     day of a given year; and
     # ii. The annual average of the daily 24hr-PM2.5 for the given year
-    
-    # Calculate the daily average for year of data file, make a vector list of averages
-    
-    
-    # Initialize the output file for writing
-    cat("Year,Pollutant,NapsID,Valid_Daily_Averages,Annual_pm25_98P,",
-        "Q1.Complete_%,Q2.Complete_%,",
-        "Q3.Complete_%,Q4.Complete_%,",
-        "Is_98P_Valid,Annual_pm25_98P_Exceed,",
-        "pm25_98P_flag",
-        file = paste(year,"_",measure,"_data_summary.csv", sep = ''), sep = '')
-    
-    cat("", file = paste(year,"_",measure,"_data_summary.csv", sep = ''),
-        sep = "\n", append = TRUE)
-    
-    
-    
+    #
     # Initialize matrix with (1) year, (2) day of year, (3) date, (4) number of dataset
     # rows in a day, (5) number of NA values in a day, (6) number of valid observations in
     # a day, and (7) daily average  
