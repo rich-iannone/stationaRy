@@ -78,6 +78,10 @@ year_summary_PM25 <- function(all_years = FALSE,
     # inspect dataset to verify the year 
     year <- round(mean(year(df$time)))
     
+    # Determine number of days in year
+    days_in_year <- yday(as.POSIXct(paste(year, "-12-31", sep = ''),
+                                    origin = "1970-01-01", tz = "GMT"))
+    
     
     # get vector list of stations for analysis
     station_list <- mat.or.vec(nr = no_stations, nc = 1)
