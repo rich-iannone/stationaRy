@@ -112,12 +112,6 @@ year_summary_PM25 <- function(all_years = FALSE,
     colnames(pm25_daily_averages) <- c("year", "day_of_year", "date", "rows_in_day", "NA_in_day",
                                        "valid_obs_in_day", "daily_average")
     
-    
-    
-    # Convert 'date' vector into class of POSIXct
-    pm25data$time <- as.POSIXct(pm25data$time)
-    
-    
     # Loop through all stations in each file
     for (j in 1:length(station_list)){
       df.station <- subset(df, df$STATION == station_list[j])
