@@ -291,7 +291,7 @@ year_summary_PM25 <- function(all_years = FALSE,
           sep = "", append = TRUE)
       
       # Add linebreak to CSV file after writing line
-      cat("", file = paste(year,"_",measure,"_data_summary.csv", sep = ''),
+      cat("", file = paste(measure,"_data_summary.csv", sep = ''),
           sep = "\n", append = TRUE)
       
       
