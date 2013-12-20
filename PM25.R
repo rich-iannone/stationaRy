@@ -100,7 +100,7 @@ year_summary_PM25 <- function(all_years = FALSE,
       cat("", file = paste(measure,"_data_summary.csv", sep = ''),
           sep = "\n", append = TRUE)}
     
-    # The data required to calculate a PM2.5 24-hour metric value for a station therefore includes:
+    # The data required to calculate a PM2.5 24-hour metric value for a station includes:
     # i.  The daily average (midnight to midnight local time) PM2.5 concentration for each 
     #     day of a given year; and
     # ii. The annual average of the daily 24hr-PM2.5 for the given year
