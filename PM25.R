@@ -299,7 +299,7 @@ year_summary_PM25 <- function(all_years = FALSE,
     }
     
     # Close outer for loop, looping through reads of CSV files
-  }   
+  } 
   
   # Close function 
 }
