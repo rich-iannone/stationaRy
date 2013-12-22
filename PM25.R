@@ -9,8 +9,8 @@ year_summary_PM25 <- function(all_years = FALSE,
                                                  "10-01", "12-31")) {
     
   all_years <- FALSE
-  single_year <- 2001
-  year_range <- NULL
+  single_year <- NULL
+  year_range <- "1998-2012"
   file_path <- "~/Documents/R (Working)"
   quarter_bounds = c("01-01", "03-31",
                      "04-01", "06-30",
