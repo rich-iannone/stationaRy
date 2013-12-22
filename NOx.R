@@ -20,7 +20,7 @@ year_summary_NOx <- function(all_years = FALSE,
   
   # 
   #  test:
-  #  year_summary_PM25(single_year = 2001, file_path = "~/Documents/R (Working)")
+  #  year_summary_NOx(single_year = 2001, file_path = "~/Documents/R (Working)")
   #
   
   measure <- "NOx"
