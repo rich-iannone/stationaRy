@@ -32,6 +32,8 @@ year_summary_O3 <- function(all_years = FALSE,
   
   file_path <- ifelse(is.null(file_path), getwd(), file_path)
   
+  # Add require statement
+  require(lubridate)
   
   
   
