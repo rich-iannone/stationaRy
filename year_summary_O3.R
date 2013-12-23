@@ -42,6 +42,28 @@ year_summary_O3 <- function(all_years = FALSE,
     list.files(path = file_path, 
                pattern = "^[0-9][0-9][0-9][0-9][0-9A-Z]*O3\\.csv")
   
+  # If a year range of years is provided, capture start and end year boundaries
+  if (all_years == FALSE & is.null(single_year) & !is.null(year_range)) {
+    start_year_range <- substr(as.character(year_range), 1, 4)
+    end_year_range <- substr(as.character(year_range), 6, 9)
+    for (i in start_year_range:end_year_range) {
+      nam <- paste("file_list", i, sep = ".")
+      assign(nam, list.files(path = file_path, 
+                             pattern = paste("^",i,"[0-9A-Z]*O3\\.csv", sep = '')))
+    }
+    # Combine vector lists
+    list <- vector("list", length(ls(pattern = "file_list.")))
+    for (j in 1:length(ls(pattern = "file_list."))) {
+      list[j] <- list(get(ls(pattern = "file_list.")[j]))
+    }
+    file_list <- unlist(list)
+    # Remove temp objects
+    rm(list)
+    rm(i)
+    rm(j)
+    rm(nam)
+    rm(list = ls(pattern = "file_list."))
+  }
   
   
 }
