@@ -89,4 +89,15 @@ year_summary_O3 <- function(all_years = FALSE,
     station_list <- mat.or.vec(nr = no_stations, nc = 1)
     station_list <- unique(df$STATION)    
     
+    # Initialize the output file for writing
+    if (i == 1) {
+      cat("Year,Pollutant,NapsID,",
+          "Annual_O3_Average_Daily_8_hr_Max,",
+          "Annual_O3_4th_Highest,",
+          "Q2_Q3.Complete_%,",
+          "Is_Annual_O3_4th_Highest_Valid,Annual_O3_4th_Highest_Exceed,",
+          "Annual_O3_4th_Highest_Flag",
+          file = paste(measure,"_data_summary.csv", sep = ''), sep = '')
+      cat("", file = paste(measure,"_data_summary.csv", sep = ''),
+          sep = "\n", append = TRUE) }
 }
