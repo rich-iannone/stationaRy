@@ -250,4 +250,11 @@ year_summary_O3 <- function(all_years = FALSE,
         # Calculate the number of valid measurements for a given day
         O3_8hr_rolling_averages[k,6] <-
           O3_8hr_rolling_averages[k,4] - O3_8hr_rolling_averages[k,5]
+        
+        # Calculate the maximum of 8-hour daily average, put into column 7
+        # ('O3_max_daily_8hr_rolling_average')
+        O3_8hr_rolling_averages[k,7] <- 
+          ifelse(O3_8hr_rolling_averages[k,6] >= 18,
+                 round(mean(subset(O3_8hr_rolling_averages, day_of_year == k)[,8],
+                            na.rm = TRUE), digits = 1), NA)
 }
