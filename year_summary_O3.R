@@ -84,4 +84,9 @@ year_summary_O3 <- function(all_years = FALSE,
     
     # inspect dataset to verify the year 
     year <- round(mean(year(df$time)))
+    
+    # Determine number of days in year
+    days_in_year <- yday(as.POSIXct(paste(year, "-12-31", sep = ''),
+                                    origin = "1970-01-01", tz = "GMT"))
+    
 }
