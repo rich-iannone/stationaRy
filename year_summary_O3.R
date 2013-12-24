@@ -294,4 +294,7 @@ year_summary_O3 <- function(all_years = FALSE,
                                                           as.Date(paste(year, "-04-01", sep = ''))))) * 100
       
       
+      # Set the data completeness boolean to TRUE if the percentage of valid days in the
+      # specified period is greater than or equal to 75%
+      data_complete_year <- ifelse(percent_valid_O3_daily_averages >= 75, TRUE, FALSE)
 }
