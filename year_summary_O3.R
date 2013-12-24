@@ -269,4 +269,15 @@ year_summary_O3 <- function(all_years = FALSE,
       # Calculate the annual average of the highest daily 8hr-O3-max for the year
       average_annual_of_daily_8hr_O3_max <- mean(O3_8hr_rolling_averages$O3_8hr_rolling_average,
                                                  na.rm = TRUE)
+      
+      # Calculate the 4th highest daily 8hr-O3-max for the year by conducting a decreasing
+      # sort of the maximum of daily rolling 8-hr averages and then accessing the 4th item in
+      # that vector list
+      
+      O3_8hr_rolling_averages_sort_descending <-
+        sort(O3_8hr_rolling_averages$O3_8hr_rolling_average, decreasing = TRUE, na.last = NA)
+      
+      annual_4th_highest_daily_8hr_O3_max <- O3_8hr_rolling_averages_sort_descending[4]
+      
+      
 }
