@@ -280,4 +280,10 @@ year_summary_O3 <- function(all_years = FALSE,
       annual_4th_highest_daily_8hr_O3_max <- O3_8hr_rolling_averages_sort_descending[4]
       
       
+      # Determine number of valid daily 8hr-O3-max in the combined 2nd and 3rd quarters
+      # (April 1 to September 30)
+      number_of_valid_O3_daily_averages <- sum(!is.na(subset(
+        O3_8hr_rolling_averages,
+        date >= as.POSIXct(paste(year, "-04-01", sep = '')) &
+          date < as.POSIXct(paste(year, "-10-01", sep = '')))[,8]))
 }
