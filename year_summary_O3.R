@@ -260,4 +260,10 @@ year_summary_O3 <- function(all_years = FALSE,
         
         # Close inner loop for station days
       }
+      
+      # Convert any NaN values in the data frame to NA for consistency
+      O3_8hr_rolling_averages <- as.data.frame(rapply(O3_8hr_rolling_averages,
+                                                      f = function(x) ifelse(is.nan(x), NA, x),
+                                                      how = "replace"))
+      
 }
