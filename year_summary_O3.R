@@ -187,4 +187,14 @@ year_summary_O3 <- function(all_years = FALSE,
                         time >= as.POSIXct(paste(year, "-01-01", sep = '')) +
                         ((m - 8) * 3600)))
         
+        
+        # Count the number of NA values in dataset for a given 8-hour averaging period
+        O3_8hr_rolling_averages[m, 6] <- 
+          sum(is.na(subset(df.station,
+                           time <= as.POSIXct(paste(year, "-01-01", sep = '')) +
+                             ((m - 1) * 3600) &
+                             time >= as.POSIXct(paste(year, "-01-01", sep = '')) +
+                             ((m - 8) * 3600)  
+          )[,3]))
+        
 }
