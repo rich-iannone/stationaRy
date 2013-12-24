@@ -226,4 +226,7 @@ year_summary_O3 <- function(all_years = FALSE,
       
       # Loop through all days in year and put calculated values in initialized data frame
       for (k in 1:days_in_year) {
+        
+        # Insert the year in the 'year' column
+        O3_8hr_rolling_averages[k,1] <- year
 }
