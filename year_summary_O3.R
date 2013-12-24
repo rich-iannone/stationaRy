@@ -213,4 +213,14 @@ year_summary_O3 <- function(all_years = FALSE,
                             na.rm = TRUE), digits = 1), NA)
       }
       
+      # Initialize matrix with (1) year, (2) day of year, (3) the date, 
+      # (4) number of dataset rows in a day, (5) number of NA values in a day,
+      # (6) number of valid observations in a day, and (7) maximum of ozone daily 8-hour
+      # rolling averages 
+      O3_max_daily_8hr_rolling_averages <- as.data.frame(mat.or.vec(nr = days_in_year, nc = 7))
+      colnames(O3_max_daily_8hr_rolling_averages) <- c("year", "day_of_year",
+                                                       "date", "rows_in_day", "NA_in_day",
+                                                       "valid_obs_in_day",
+                                                       "O3_max_daily_8hr_rolling_average")
+      class(O3_max_daily_8hr_rolling_averages$date) = c('Date')
 }
