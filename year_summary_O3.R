@@ -81,4 +81,7 @@ year_summary_O3 <- function(all_years = FALSE,
     
     # get number of stations
     no_stations <- length(unique(df$STATION))
+    
+    # inspect dataset to verify the year 
+    year <- round(mean(year(df$time)))
 }
