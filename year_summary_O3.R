@@ -89,4 +89,6 @@ year_summary_O3 <- function(all_years = FALSE,
     days_in_year <- yday(as.POSIXct(paste(year, "-12-31", sep = ''),
                                     origin = "1970-01-01", tz = "GMT"))
     
+    # Determine number of hours in year
+    hours_in_year <- days_in_year * 24
 }
