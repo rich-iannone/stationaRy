@@ -200,4 +200,17 @@ year_summary_O3 <- function(all_years = FALSE,
         # Calculate the number of valid measurements for a given 8-hour averaging period
         O3_8hr_rolling_averages[m, 7] <- O3_8hr_rolling_averages[m, 5] -
           O3_8hr_rolling_averages[m, 6]
+        
+        # Calculate the average ozone concentration for a given 8-hour averaging period
+        O3_8hr_rolling_averages[m, 8] <- 
+          ifelse(O3_8hr_rolling_averages[m, 7] >= 6,
+                 round(mean(subset(df.station,
+                                   time <= as.POSIXct(paste(year, "-01-01", sep = '')) +
+                                     ((m - 1) * 3600) &
+                                     time >= as.POSIXct(paste(year, "-01-01", sep = '')) +
+                                     ((m - 8) * 3600)
+                 )[,3],
+                            na.rm = TRUE), digits = 1), NA)
+      }
+      
 }
