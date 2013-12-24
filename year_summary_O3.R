@@ -5,10 +5,10 @@
 
 
 year_summary_O3 <- function(all_years = FALSE,
-                             single_year = NULL,
-                             year_range = NULL,
-                             file_path = NULL,
-                             quarter_bounds = c("04-01", "09-30")) {
+                            single_year = NULL,
+                            year_range = NULL,
+                            file_path = NULL,
+                            quarter_bounds = c("04-01", "09-30")) {
   
   
   all_years <- FALSE
