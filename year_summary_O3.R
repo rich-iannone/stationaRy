@@ -179,4 +179,12 @@ year_summary_O3 <- function(all_years = FALSE,
         O3_8hr_rolling_averages[m, 4] <- as.POSIXct(paste(year, "-01-01", sep = '')) +
           ((m - 1) * 3600)
         
+        # Count the number of rows in dataset for a given 8-hour averaging period
+        O3_8hr_rolling_averages[m, 5] <-
+          nrow(subset(df.station,
+                      time <= as.POSIXct(paste(year, "-01-01", sep = '')) +
+                        ((m - 1) * 3600) &
+                        time >= as.POSIXct(paste(year, "-01-01", sep = '')) +
+                        ((m - 8) * 3600)))
+        
 }
