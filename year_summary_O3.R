@@ -197,4 +197,7 @@ year_summary_O3 <- function(all_years = FALSE,
                              ((m - 8) * 3600)  
           )[,3]))
         
+        # Calculate the number of valid measurements for a given 8-hour averaging period
+        O3_8hr_rolling_averages[m, 7] <- O3_8hr_rolling_averages[m, 5] -
+          O3_8hr_rolling_averages[m, 6]
 }
