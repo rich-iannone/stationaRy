@@ -232,4 +232,9 @@ year_summary_O3 <- function(all_years = FALSE,
         
         # Insert the day of year in the 'day_of_year' column
         O3_8hr_rolling_averages[k,2] <- k
+        
+        # Insert the date in the 'date' column
+        O3_8hr_rolling_averages[k,3] <- class(as.Date(subset(O3_8hr_rolling_averages, 
+                                                             day_of_year == k)[,4][1]))
+        
 }
