@@ -246,4 +246,8 @@ year_summary_O3 <- function(all_years = FALSE,
         O3_8hr_rolling_averages[k,5] <-
           sum(is.na(subset(O3_8hr_rolling_averages, 
                            day_of_year == k)[,8]))
+        
+        # Calculate the number of valid measurements for a given day
+        O3_8hr_rolling_averages[k,6] <-
+          O3_8hr_rolling_averages[k,4] - O3_8hr_rolling_averages[k,5]
 }
