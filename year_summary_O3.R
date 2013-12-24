@@ -166,4 +166,9 @@ year_summary_O3 <- function(all_years = FALSE,
         # Get year of 8-hour averaging period
         O3_8hr_rolling_averages[m, 1] <- year(as.POSIXct(paste(year, "-01-01", sep = '')) +
                                                 ((m - 1) * 3600))
+        
+        # Get day of year for 8-hour averaging period
+        O3_8hr_rolling_averages[m, 2] <- yday(as.POSIXct(paste(year, "-01-01", sep = '')) +
+                                                ((m - 1) * 3600))
+        
 }
