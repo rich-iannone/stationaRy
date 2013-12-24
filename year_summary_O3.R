@@ -115,4 +115,14 @@ year_summary_O3 <- function(all_years = FALSE,
                                                      "date", "rows_in_day", "NA_in_day",
                                                      "valid_obs_in_day",
                                                      "O3_max_daily_8hr_rolling_average")
+    
+    # Loop through all stations in each file
+    for (j in 1:length(station_list)){
+      df.station <- subset(df, df$STATION == station_list[j])
+      completeness_year <- 
+        round(((nrow(df.station) - sum(is.na(df.station[,3])))/
+                 ifelse(leap_year(year), 8784, 8760))
+              *100,
+              digits = 2)
+      
 }
