@@ -125,4 +125,12 @@ year_summary_O3 <- function(all_years = FALSE,
               *100,
               digits = 2)
       
+      # Initialize data frame for ozone daily 8-hr rolling averages
+      O3_8hr_rolling_averages <- as.data.frame(mat.or.vec(nr = hours_in_year, nc = 8))
+      colnames(O3_8hr_rolling_averages) <- c("year", "day_of_year", "hour_of_day",
+                                             "date", "rows_in_8hr_period",
+                                             "NA_in_8hr_period",
+                                             "valid_obs_in_8hr_period",
+                                             "O3_8hr_rolling_average")
+      class(O3_8hr_rolling_averages$date) = c('POSIXt','POSIXct')
 }
