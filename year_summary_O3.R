@@ -133,4 +133,31 @@ year_summary_O3 <- function(all_years = FALSE,
                                              "valid_obs_in_8hr_period",
                                              "O3_8hr_rolling_average")
       class(O3_8hr_rolling_averages$date) = c('POSIXt','POSIXct')
+      
+      for (m in 1:7) {
+        
+        # Get year of 8-hour averaging period
+        O3_8hr_rolling_averages[m, 1] <- year
+        
+        # Get day of year for 8-hour averaging period
+        O3_8hr_rolling_averages[m, 2] <- yday(as.POSIXct(paste(year, "-01-01", sep = '')) +
+                                                ((m - 1) * 3600))
+        
+        # Get hour of day for 8-hour averaging period
+        O3_8hr_rolling_averages[m, 3] <- hour(as.POSIXct(paste(year, "-01-01", sep = '')) +
+                                                ((m - 1) * 3600))
+        
+        # Get date for 8-hour averaging period
+        O3_8hr_rolling_averages[m, 4] <- as.POSIXct(paste(year, "-01-01", sep = '')) +
+          ((m - 1) * 3600)
+        
+        # Set to NA: (1) count of rows in dataset for a given 8-hour averaging period,
+        #            (2) count of NA values in dataset for a given 8-hour averaging period
+        #            (3) count of valid measurements for a given 8-hour averaging period
+        #            (4) average ozone concentration for a given 8-hour averaging period
+        O3_8hr_rolling_averages[m, 5] <- NA
+        O3_8hr_rolling_averages[m, 6] <- NA
+        O3_8hr_rolling_averages[m, 7] <- NA
+        O3_8hr_rolling_averages[m, 8] <- NA
+      }
 }
