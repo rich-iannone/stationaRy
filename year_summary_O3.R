@@ -79,4 +79,6 @@ year_summary_O3 <- function(all_years = FALSE,
                    header = TRUE, stringsAsFactors = FALSE)
     df$time <- as.POSIXct(df$time)
     
+    # get number of stations
+    no_stations <- length(unique(df$STATION))
 }
