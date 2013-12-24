@@ -237,4 +237,8 @@ year_summary_O3 <- function(all_years = FALSE,
         O3_8hr_rolling_averages[k,3] <- class(as.Date(subset(O3_8hr_rolling_averages, 
                                                              day_of_year == k)[,4][1]))
         
+        # Count the number of rows in dataset for a day      
+        O3_8hr_rolling_averages[k,4] <- nrow(subset(O3_8hr_rolling_averages, 
+                                                    day_of_year == k))
+        
 }
