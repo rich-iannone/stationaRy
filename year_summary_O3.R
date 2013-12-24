@@ -65,13 +65,6 @@ year_summary_O3 <- function(all_years = FALSE,
                                    pattern = paste("^",single_year,"[0-9A-Z]*O3\\.csv",
                                                    sep = '')))
   }
- 
-  
-  
-  
-  
-  
-  
   
   # Loop through reading in CSV files; convert time column back to POSIXct time objects
   for (i in 1:length(file_list)){
