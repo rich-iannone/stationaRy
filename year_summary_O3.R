@@ -223,4 +223,7 @@ year_summary_O3 <- function(all_years = FALSE,
                                                        "valid_obs_in_day",
                                                        "O3_max_daily_8hr_rolling_average")
       class(O3_max_daily_8hr_rolling_averages$date) = c('Date')
+      
+      # Loop through all days in year and put calculated values in initialized data frame
+      for (k in 1:days_in_year) {
 }
