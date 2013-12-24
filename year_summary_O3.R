@@ -286,4 +286,12 @@ year_summary_O3 <- function(all_years = FALSE,
         O3_8hr_rolling_averages,
         date >= as.POSIXct(paste(year, "-04-01", sep = '')) &
           date < as.POSIXct(paste(year, "-10-01", sep = '')))[,8]))
+      
+      # Determine the percentage of days with valid daily 8hr-O3-max values in the
+      # April 1 to September 30 period
+      percent_valid_O3_daily_averages <- (number_of_valid_O3_daily_averages /
+                                            (as.numeric(as.Date(paste(year, "-10-01", sep = '')) -
+                                                          as.Date(paste(year, "-04-01", sep = ''))))) * 100
+      
+      
 }
