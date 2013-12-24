@@ -300,4 +300,8 @@ year_summary_O3 <- function(all_years = FALSE,
       
       does_annual_4th_highest_daily_8hr_O3_max_exceed <- 
         ifelse(annual_4th_highest_daily_8hr_O3_max > 30, TRUE, FALSE)
+      
+      annual_4th_highest_daily_8hr_O3_max_flag <- 
+        ifelse(does_annual_4th_highest_daily_8hr_O3_max_exceed == TRUE &
+                 data_complete_year == FALSE, "based on incomplete data", "")
 }
