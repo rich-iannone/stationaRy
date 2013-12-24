@@ -331,4 +331,11 @@ year_summary_O3 <- function(all_years = FALSE,
           sep = "\n", append = TRUE)
       
       
+      # Close inner for loop, looping through stations in a CSV file
+    }
+    
+    # Close outer for loop, looping through reads of CSV files
+  } 
+  
+  # Close function 
 }
