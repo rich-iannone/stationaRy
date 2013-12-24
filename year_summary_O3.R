@@ -257,4 +257,7 @@ year_summary_O3 <- function(all_years = FALSE,
           ifelse(O3_8hr_rolling_averages[k,6] >= 18,
                  round(mean(subset(O3_8hr_rolling_averages, day_of_year == k)[,8],
                             na.rm = TRUE), digits = 1), NA)
+        
+        # Close inner loop for station days
+      }
 }
