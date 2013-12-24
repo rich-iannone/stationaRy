@@ -241,4 +241,9 @@ year_summary_O3 <- function(all_years = FALSE,
         O3_8hr_rolling_averages[k,4] <- nrow(subset(O3_8hr_rolling_averages, 
                                                     day_of_year == k))
         
+        # Count the number of NA values for the O3 8hr rolling average in the dataset
+        # for a given day
+        O3_8hr_rolling_averages[k,5] <-
+          sum(is.na(subset(O3_8hr_rolling_averages, 
+                           day_of_year == k)[,8]))
 }
