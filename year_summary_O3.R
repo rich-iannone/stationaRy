@@ -266,4 +266,7 @@ year_summary_O3 <- function(all_years = FALSE,
                                                       f = function(x) ifelse(is.nan(x), NA, x),
                                                       how = "replace"))
       
+      # Calculate the annual average of the highest daily 8hr-O3-max for the year
+      average_annual_of_daily_8hr_O3_max <- mean(O3_8hr_rolling_averages$O3_8hr_rolling_average,
+                                                 na.rm = TRUE)
 }
