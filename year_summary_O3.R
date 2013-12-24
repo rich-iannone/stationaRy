@@ -91,4 +91,9 @@ year_summary_O3 <- function(all_years = FALSE,
     
     # Determine number of hours in year
     hours_in_year <- days_in_year * 24
+    
+    # get vector list of stations for analysis
+    station_list <- mat.or.vec(nr = no_stations, nc = 1)
+    station_list <- unique(df$STATION)    
+    
 }
