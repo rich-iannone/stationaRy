@@ -160,4 +160,6 @@ year_summary_O3 <- function(all_years = FALSE,
         O3_8hr_rolling_averages[m, 7] <- NA
         O3_8hr_rolling_averages[m, 8] <- NA
       }
+      
+      for (m in 8:hours_in_year) {
 }
