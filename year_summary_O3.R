@@ -283,11 +283,12 @@ year_summary_O3 <- function(all_years = FALSE,
       
       
       # Determine number of valid daily 8hr-O3-max in the combined 2nd and 3rd quarters
-      # (April 1 to September 30)
-      number_of_valid_O3_daily_averages <- sum(!is.na(subset(
-        O3_8hr_rolling_averages,
-        date >= as.POSIXct(paste(year, "-04-01", sep = '')) &
-          date < as.POSIXct(paste(year, "-10-01", sep = '')))[,8]))
+      # (April 1 to September 30) - Fix this day 91-274
+      number_of_valid_O3_daily_averages <- 
+        sum(!is.na(subset(
+          O3_max_daily_8hr_rolling_averages,
+          O3_max_daily_8hr_rolling_averages$day_of_year >= 91 & 
+            O3_max_daily_8hr_rolling_averages$day_of_year <= 274)[,7]))
       
       # Determine the percentage of days with valid daily 8hr-O3-max values in the
       # April 1 to September 30 period
