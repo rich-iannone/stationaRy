@@ -297,7 +297,8 @@ year_summary_O3 <- function(all_years = FALSE,
 
       # Set the data completeness boolean to TRUE if the percentage of valid days in the
       # specified period is greater than or equal to 75%
-      data_complete_year <- ifelse(percent_valid_O3_daily_averages >= 75, TRUE, FALSE)
+      data_complete_year <- 
+        ifelse(percent_valid_O3_daily_averages >= 75, TRUE, FALSE)
       
       does_annual_4th_highest_daily_8hr_O3_max_exceed <- 
         ifelse(annual_4th_highest_daily_8hr_O3_max > 30, TRUE, FALSE)
