@@ -228,33 +228,33 @@ year_summary_O3 <- function(all_years = FALSE,
       for (k in 1:days_in_year) {
         
         # Insert the year in the 'year' column
-        O3_8hr_rolling_averages[k,1] <- year
+        O3_max_daily_8hr_rolling_averages[k,1] <- year
         
         # Insert the day of year in the 'day_of_year' column
-        O3_8hr_rolling_averages[k,2] <- k
+        O3_max_daily_8hr_rolling_averages[k,2] <- k
         
         # Insert the date in the 'date' column
-        O3_8hr_rolling_averages[k,3] <- class(as.Date(subset(O3_8hr_rolling_averages, 
-                                                             day_of_year == k)[,4][1]))
+        O3_max_daily_8hr_rolling_averages[k,3] <- as.Date(subset(O3_8hr_rolling_averages, 
+                                                             day_of_year == k)[,4][1])
         
         # Count the number of rows in dataset for a day      
-        O3_8hr_rolling_averages[k,4] <- nrow(subset(O3_8hr_rolling_averages, 
+        O3_max_daily_8hr_rolling_averages[k,4] <- nrow(subset(O3_8hr_rolling_averages, 
                                                     day_of_year == k))
         
         # Count the number of NA values for the O3 8hr rolling average in the dataset
         # for a given day
-        O3_8hr_rolling_averages[k,5] <-
+        O3_max_daily_8hr_rolling_averages[k,5] <-
           sum(is.na(subset(O3_8hr_rolling_averages, 
                            day_of_year == k)[,8]))
         
         # Calculate the number of valid measurements for a given day
-        O3_8hr_rolling_averages[k,6] <-
-          O3_8hr_rolling_averages[k,4] - O3_8hr_rolling_averages[k,5]
+        O3_max_daily_8hr_rolling_averages[k,6] <-
+          O3_max_daily_8hr_rolling_averages[k,4] - O3_max_daily_8hr_rolling_averages[k,5]
         
         # Calculate the maximum of 8-hour daily average, put into column 7
         # ('O3_max_daily_8hr_rolling_average')
-        O3_8hr_rolling_averages[k,7] <- 
-          ifelse(O3_8hr_rolling_averages[k,6] >= 18,
+        O3_max_daily_8hr_rolling_averages[k,7] <- 
+          ifelse(O3_max_daily_8hr_rolling_averages[k,6] >= 18,
                  round(mean(subset(O3_8hr_rolling_averages, day_of_year == k)[,8],
                             na.rm = TRUE), digits = 1), NA)
         
@@ -262,13 +262,15 @@ year_summary_O3 <- function(all_years = FALSE,
       }
       
       # Convert any NaN values in the data frame to NA for consistency
-      O3_8hr_rolling_averages <- as.data.frame(rapply(O3_8hr_rolling_averages,
-                                                      f = function(x) ifelse(is.nan(x), NA, x),
-                                                      how = "replace"))
+      O3_max_daily_8hr_rolling_averages <- 
+        as.data.frame(rapply(O3_max_daily_8hr_rolling_averages,
+                             f = function(x) ifelse(is.nan(x), NA, x),
+                             how = "replace"))
       
       # Calculate the annual average of the highest daily 8hr-O3-max for the year
-      average_annual_of_daily_8hr_O3_max <- mean(O3_8hr_rolling_averages$O3_8hr_rolling_average,
-                                                 na.rm = TRUE)
+      average_annual_of_daily_8hr_O3_max <- 
+        round(mean(O3_8hr_rolling_averages$O3_8hr_rolling_average,
+                   na.rm = TRUE), digits = 1)
       
       # Calculate the 4th highest daily 8hr-O3-max for the year by conducting a decreasing
       # sort of the maximum of daily rolling 8-hr averages and then accessing the 4th item in
