@@ -307,15 +307,6 @@ year_summary_O3 <- function(all_years = FALSE,
         ifelse(does_annual_4th_highest_daily_8hr_O3_max_exceed == TRUE &
                  data_complete_year == FALSE, "based on incomplete data", "")
       
-      # Write data to output CSV file
-      cat("Year,Pollutant,NapsID,",
-          "Annual_O3_Average_Daily_8_hr_Max,",
-          "Annual_O3_4th_Highest,",
-          "Q2_Q3.Complete_%,",
-          "Is_Annual_O3_4th_Highest_Valid,Annual_O3_4th_Highest_Exceed,",
-          "Annual_O3_4th_Highest_Flag",
-          file = paste(measure,"_data_summary.csv", sep = ''), sep = '')
-      
       # Place values in row of output CSV file
       #cat(year,",",measure,",",station_list[j],",",
       cat(year,",",measure,",",station_list[j],",",
