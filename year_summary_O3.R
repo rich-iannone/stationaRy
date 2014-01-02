@@ -292,11 +292,9 @@ year_summary_O3 <- function(all_years = FALSE,
       
       # Determine the percentage of days with valid daily 8hr-O3-max values in the
       # April 1 to September 30 period
-      percent_valid_O3_daily_averages <- (number_of_valid_O3_daily_averages /
-                                            (as.numeric(as.Date(paste(year, "-10-01", sep = '')) -
-                                                          as.Date(paste(year, "-04-01", sep = ''))))) * 100
-      
-      
+      percent_valid_O3_daily_averages <- 
+        (number_of_valid_O3_daily_averages / 184) * 100
+
       # Set the data completeness boolean to TRUE if the percentage of valid days in the
       # specified period is greater than or equal to 75%
       data_complete_year <- ifelse(percent_valid_O3_daily_averages >= 75, TRUE, FALSE)
