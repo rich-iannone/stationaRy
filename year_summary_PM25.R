@@ -1,4 +1,3 @@
-
 year_summary_PM25 <- function(all_years = FALSE,
                               single_year = NULL,
                               year_range = NULL,
@@ -7,7 +6,7 @@ year_summary_PM25 <- function(all_years = FALSE,
                                                  "04-01", "06-30",
                                                  "07-01", "09-30",
                                                  "10-01", "12-31")) {
-    
+  
   all_years <- FALSE
   single_year <- NULL
   year_range <- "1998-2012"
@@ -88,7 +87,7 @@ year_summary_PM25 <- function(all_years = FALSE,
     # get vector list of stations for analysis
     station_list <- mat.or.vec(nr = no_stations, nc = 1)
     station_list <- unique(df$STATION)    
-       
+    
     # Initialize the output file for writing
     if (i == 1) {
       cat("Year,Pollutant,Method,NapsID,Valid_Daily_Averages,Annual_pm25_98P,",
@@ -228,7 +227,7 @@ year_summary_PM25 <- function(all_years = FALSE,
       # whether 75% completeness is achieved
       
       data_complete_year <- ifelse(((number_of_valid_pm25_daily_averages/days_in_year) *
-                                        100) >= 75, TRUE, FALSE)
+                                      100) >= 75, TRUE, FALSE)
       
       # Calculate the percentage completeness in each calendar quarter
       
@@ -273,8 +272,8 @@ year_summary_PM25 <- function(all_years = FALSE,
       does_annual_pm25_98P_exceed <- ifelse(annual_pm25_98P > 30, TRUE, FALSE)
       
       pm25_98P_flag <- ifelse(does_annual_pm25_98P_exceed == TRUE &
-            data_complete_year == TRUE &
-            data_complete_quarter == FALSE, "based on incomplete data", "")
+                                data_complete_year == TRUE &
+                                data_complete_quarter == FALSE, "based on incomplete data", "")
       
       # Place values in row of output CSV file
       cat(year,",",measure,",",method,",",station_list[j],",",
