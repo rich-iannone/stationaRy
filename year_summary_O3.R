@@ -1,9 +1,3 @@
-# Function to obtain the:
-# 1)  the 1-year average of the daily maximum 8-hour average ozone concentrations
-# 2)	the annual 4th highest of daily maximum 8-hour average ozone concentrations
-
-
-
 year_summary_O3 <- function(all_years = FALSE,
                             single_year = NULL,
                             year_range = NULL,
