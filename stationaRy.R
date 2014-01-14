@@ -264,6 +264,8 @@ column.widths <- c(3, 6, 4, 2, 2,
     
     # Close the loop
   }
+  
+  # Close the function
 }
 
 #-----------------------#
