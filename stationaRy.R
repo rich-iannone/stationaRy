@@ -166,6 +166,13 @@ generate_NAPS_CSV <- function(subdir = NULL,
                               type = NULL,
                               NapsID = NULL,
                               all_data = FALSE) {
+  
+  subdir = "/Documents/R (Working)/NAPS"
+  year = 2011
+  pollutant = "O3"
+  type = NULL
+  NapsID = NULL
+  all_data = FALSE
 
 # Get vector with list of all hourly files
 files <- ifelse(all_data == "TRUE" & is.null(pollutant),
