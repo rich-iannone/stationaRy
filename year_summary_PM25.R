@@ -201,11 +201,14 @@ year_summary_PM25 <- function(all_years = FALSE,
         # Close inner loop for station days
       }
       
+      # Calculate the yearly average of daily 24hr averages
+      annual_pm25_average_daily_24h_average <- mean(pm25_daily_averages[,7],
+                                                 na.rm = TRUE)
+      
       # Calculate the 98th percentile value of PM2.5 for the year
       #
       # Order all the daily 24hr-PM2.5 for a given year into an array from highest to lowest
       # concentrations, with equal values repeated as often as they occur.
-      
       number_of_valid_pm25_daily_averages <- sum(!is.na(pm25_daily_averages$daily_average))
       
       pm25_daily_averages_sort_descending <-
