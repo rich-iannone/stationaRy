@@ -192,8 +192,9 @@ files <- ifelse(!is.null(year) & all_data == FALSE,
 # Get vector with list of hourly files selected by year and pollutant
 files <- ifelse(!is.null(year) & !is.null(pollutant) & all_data == FALSE,
                 list.files(path = paste("~", subdir, sep = ''), 
-                           pattern = paste("^", year, pollutant, ".hly", sep = '')), NULL)
-
+                           pattern = paste("^", year, "[a-zA-Z0-9]*",
+                                           pollutant, ".hly", sep = '')), NULL)
+  
 # Specify column widths for text fields in each hourly file
 column.widths <- c(3, 6, 4, 2, 2,
                    4, 4, 4, 4, 4,
