@@ -92,7 +92,8 @@ year_summary_PM25 <- function(all_years = FALSE,
     
     # Initialize the output file for writing
     if (i == 1) {
-      cat("Year,Pollutant,Method,NapsID,Valid_Daily_Averages,Annual_pm25_98P,",
+      cat("Year,Pollutant,Method,NapsID,",
+          "Valid_Daily_Averages,Annual_pm25_Average_Daily_24h_Average,Annual_pm25_98P,",
           "Q1.Complete_%,Q2.Complete_%,",
           "Q3.Complete_%,Q4.Complete_%,",
           "Is_98P_Valid,Annual_pm25_98P_Exceed,",
