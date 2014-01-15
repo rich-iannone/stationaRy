@@ -231,12 +231,10 @@ year_summary_PM25 <- function(all_years = FALSE,
       #
       # Calculate the percentage of valid daily-24hr-PM2.5 averages in the year, determine
       # whether 75% completeness is achieved
-      
       data_complete_year <- ifelse(((number_of_valid_pm25_daily_averages/days_in_year) *
                                       100) >= 75, TRUE, FALSE)
       
       # Calculate the percentage completeness in each calendar quarter
-      
       Q1 <- subset(pm25_daily_averages,
                    date >= as.POSIXct(paste(year, "-01-01", sep = ''),
                                       origin = "1970-01-01", tz = "GMT") &
