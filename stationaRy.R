@@ -168,8 +168,8 @@ generate_NAPS_CSV <- function(subdir = NULL,
                               all_data = FALSE) {
   
   subdir = "/Documents/R (Working)/NAPS"
-  year = 2011
-  pollutant = "O3"
+  year = 2012
+  pollutant = "PM25"
   type = NULL
   NapsID = NULL
   all_data = FALSE
