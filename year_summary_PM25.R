@@ -282,6 +282,7 @@ year_summary_PM25 <- function(all_years = FALSE,
       # Place values in row of output CSV file
       cat(year,",",measure,",",method,",",station_list[j],",",
           number_of_valid_pm25_daily_averages,",",
+          annual_pm25_average_daily_24h_average,",",
           annual_pm25_98P,",",
           Q1.complete,",",
           Q2.complete,",",
@@ -289,14 +290,13 @@ year_summary_PM25 <- function(all_years = FALSE,
           Q4.complete,",",
           is_98P_valid,",",
           does_annual_pm25_98P_exceed,",",
-          pm25_98P_flag,      
+          pm25_98P_flag,
           file = paste(measure,"_data_summary.csv", sep = ''),
           sep = "", append = TRUE)
       
       # Add linebreak to CSV file after writing line
       cat("", file = paste(measure,"_data_summary.csv", sep = ''),
           sep = "\n", append = TRUE)
-      
       
       # Close inner for loop, looping through stations in a CSV file
     }
