@@ -9,7 +9,6 @@ year_summary_PM25 <- function(all_years = FALSE,
 
 #  Example:
 #  year_summary_PM25(single_year = 2001, file_path = "~/Documents/R (Working)")
-#
   
   measure <- "PM25"
   
@@ -54,7 +53,6 @@ year_summary_PM25 <- function(all_years = FALSE,
                                    pattern = paste("^",single_year,"[0-9A-Z]*PM25\\.csv",
                                                    sep = '')))
   }
-  
   
   # Loop through reading in CSV files; convert time column back to POSIXct time objects
   for (i in 1:length(file_list)){
