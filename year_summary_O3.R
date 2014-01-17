@@ -4,17 +4,9 @@ year_summary_O3 <- function(all_years = FALSE,
                             file_path = NULL,
                             quarter_bounds = c("04-01", "09-30")) {
   
-#   
-#   all_years <- FALSE
-#   single_year <- 2010
-#   year_range <- NULL
-#   file_path <- "~/Documents/R (Working)"
-#   quarter_bounds = c("04-01", "09-30")
-#   
-# 
-#  test:
+
+#  Example:
 #  year_summary_O3(single_year = 2001, file_path = "~/Documents/R (Working)")
-#
   
   measure <- "O3"
   
