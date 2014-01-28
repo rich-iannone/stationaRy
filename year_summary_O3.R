@@ -4,7 +4,6 @@ year_summary_O3 <- function(all_years = FALSE,
                             file_path = NULL,
                             quarter_bounds = c("04-01", "09-30")) {
   
-
 #  Example:
 #  year_summary_O3(single_year = 2001, file_path = "~/Documents/R (Working)")
   
