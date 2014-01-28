@@ -1,4 +1,4 @@
-year_summary_PM25 <- function(all_years = FALSE,
+generate.year_summary.PM25 <- function(all_years = FALSE,
                               single_year = NULL,
                               year_range = NULL,
                               file_path = NULL,
