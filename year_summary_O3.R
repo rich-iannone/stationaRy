@@ -1,4 +1,4 @@
-year_summary_O3 <- function(all_years = FALSE,
+generate.year_summary.O3 <- function(all_years = FALSE,
                             single_year = NULL,
                             year_range = NULL,
                             file_path = NULL,
