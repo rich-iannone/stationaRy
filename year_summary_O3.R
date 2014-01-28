@@ -1,8 +1,8 @@
 generate.year_summary.O3 <- function(all_years = FALSE,
-                            single_year = NULL,
-                            year_range = NULL,
-                            file_path = NULL,
-                            quarter_bounds = c("04-01", "09-30")) {
+                                     single_year = NULL,
+                                     year_range = NULL,
+                                     file_path = NULL,
+                                     quarter_bounds = c("04-01", "09-30")) {
   
 #  Example:
 #  year_summary_O3(single_year = 2001, file_path = "~/Documents/R (Working)")
