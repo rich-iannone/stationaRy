@@ -17,3 +17,10 @@ URI_stub_AQSDM_query <- "https://ofmext.epa.gov/AQDMRS/ws/"
 
 # Create vector list of available AQ parameters
 AQ_parameters <- c("CO", "NO2", "Ozone", "PM10", "PM25")
+
+# Get updated station data for each of the monitoring networks
+for (i in 1:length(AQ_parameters)) {
+  download.file(paste(URI_stub_station_metadata_CSV, AQ_parameters[i], sep = ''),
+                paste("./data/", AQ_parameters[i], ".csv", sep = ''))
+}                          
+
