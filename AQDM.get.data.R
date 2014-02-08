@@ -40,3 +40,36 @@ box_2 <- c(49.0, 43.5, -95.1, -89.0)
 box_3 <- c(48.0, 37.5, -89.0, -78.8)
 box_4 <- c(48.0, 39.5, -78.8, -66.6)
 
+#----------------
+# NO2 stations
+#----------------
+
+# Create subsets of the 'NO2_station_metadata' data frame by each bounding box
+NO2_station_metadata.subset.1 <-
+  subset(NO2_station_metadata,
+         NO2_station_metadata$Latitude <= box_1[1] &
+           NO2_station_metadata$Latitude >= box_1[2] &
+           NO2_station_metadata$Longitude >= box_1[3] &
+           NO2_station_metadata$Longitude <= box_1[4])
+
+NO2_station_metadata.subset.2 <-
+  subset(NO2_station_metadata,
+         NO2_station_metadata$Latitude <= box_2[1] &
+           NO2_station_metadata$Latitude >= box_2[2] &
+           NO2_station_metadata$Longitude >= box_2[3] &
+           NO2_station_metadata$Longitude <= box_2[4])
+
+NO2_station_metadata.subset.3 <-
+  subset(NO2_station_metadata,
+         NO2_station_metadata$Latitude <= box_3[1] &
+           NO2_station_metadata$Latitude >= box_3[2] &
+           NO2_station_metadata$Longitude >= box_3[3] &
+           NO2_station_metadata$Longitude <= box_3[4])
+
+NO2_station_metadata.subset.4 <-
+  subset(NO2_station_metadata,
+         NO2_station_metadata$Latitude <= box_4[1] &
+           NO2_station_metadata$Latitude >= box_4[2] &
+           NO2_station_metadata$Longitude >= box_4[3] &
+           NO2_station_metadata$Longitude <= box_4[4])
+
