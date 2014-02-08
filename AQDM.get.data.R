@@ -161,3 +161,6 @@ ozone_station_metadata.subset.b <-
 # Select only stations using FEM or FRM methodology
 ozone_station_metadata.subset.c <-
   subset(ozone_station_metadata.subset.b, ozone_station_metadata.subset.b$FRM.FEM. == "Yes")
+
+# Get unique set of 'AQS.Site.ID' values for ozone monitoring stations
+AQS_Site_ID_ozone <- unique(ozone_station_metadata.subset.c$AQS.Site.ID)
