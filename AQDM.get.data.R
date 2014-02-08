@@ -242,3 +242,9 @@ for (i in 1:length(AQS_Site_ID_NO2)){
       "dur=1",
       sep = ''))
     
+    # Get the data as a blob of text
+    return_data <- getURL(paste(
+      URI_stub_AQSDM_query,
+      "retrieve?",
+      "id=", AQSDM_return_message,
+      sep = ''))
