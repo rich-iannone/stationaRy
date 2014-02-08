@@ -167,3 +167,10 @@ AQS_Site_ID_ozone <- unique(ozone_station_metadata.subset.c$AQS.Site.ID)
 
 # Get count of unique stations for ozone
 AQS_Site_ID_ozone.count <- length(AQS_Site_ID_ozone) # 232 stations
+
+#------------------------------------------------
+# Query the AQS Data Mart for hourly station data
+#------------------------------------------------
+
+# The AQS Site ID is a combination of the (1) state code, (2) county code, and (3) site ID
+# Here is a function to extract each element
