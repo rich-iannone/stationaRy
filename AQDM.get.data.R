@@ -100,3 +100,6 @@ NO2_station_metadata.subset.c <-
 
 # Get unique set of 'AQS.Site.ID' values for NO2 monitoring stations
 AQS_Site_ID_NO2 <- unique(NO2_station_metadata.subset.c$AQS.Site.ID)
+
+# Get count of unique stations for NO2
+AQS_Site_ID_NO2.count <- length(AQS_Site_ID_NO2) # 54 stations
