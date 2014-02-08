@@ -203,3 +203,8 @@ pw <- pw
 
 # Format of data requested is a Data Mart CSV file
 format <- "DMCSV"
+
+# The parameter codes for NO2 and ozone
+param_NO2 <- "42602"
+param_ozone <- "44201"
+
