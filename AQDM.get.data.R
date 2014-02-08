@@ -79,3 +79,10 @@ NO2_station_metadata.subset.a <- rbind(NO2_station_metadata.subset.1,
                                        NO2_station_metadata.subset.3,
                                        NO2_station_metadata.subset.4)
 
+# Filter those stations that have start dates before the requested start year
+NO2_station_metadata.subset.b <-
+  subset(NO2_station_metadata.subset.a,
+         as.numeric(gsub("[0-9][0-9][A-Z][A-Z][A-Z]([0-9][0-9][0-9][0-9]).*",
+                         "\\1", NO2_station_metadata.subset.a$Monitor.Start.Date,
+                         perl = TRUE)) < start_year)
+
