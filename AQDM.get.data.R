@@ -158,3 +158,6 @@ ozone_station_metadata.subset.b <-
                          "\\1", ozone_station_metadata.subset.b$Last.Sample.Date,
                          perl = TRUE)) > end_year)
 
+# Select only stations using FEM or FRM methodology
+ozone_station_metadata.subset.c <-
+  subset(ozone_station_metadata.subset.b, ozone_station_metadata.subset.b$FRM.FEM. == "Yes")
