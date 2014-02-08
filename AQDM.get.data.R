@@ -196,3 +196,7 @@ AQS.Site.ID.element <- function(AQS_Site_ID,
 
 URI_collection_NO2 <- mat.or.vec(nr = AQS_Site_ID_NO2.count * (end_year - start_year + 1),
                                  nc = 1) # 810 URIs
+
+# Username and password for API access
+user <- user
+pw <- pw
