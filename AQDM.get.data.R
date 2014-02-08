@@ -11,3 +11,6 @@ end_year <- 2012
 
 # Access URI stub for obtaining monitoring station metadata in CSV form
 URI_stub_station_metadata_CSV <- "http://www.epa.gov/airexplorer/"
+
+# Access URI stub for EPA air quality data
+URI_stub_AQSDM_query <- "https://ofmext.epa.gov/AQDMRS/ws/"
