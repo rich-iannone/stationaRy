@@ -31,3 +31,12 @@ NO2_station_metadata <- read.csv(paste("./data/", AQ_parameters[2], ".csv", sep 
 # Create data frame for the ozone parameter
 ozone_station_metadata <- read.csv(paste("./data/", AQ_parameters[3], ".csv", sep = ''),
                                    header = TRUE, stringsAsFactors = FALSE)
+
+# Filter list of stations by latitude and longitude bounding boxes
+# (decimal degrees: lat_N, lat_S, long_W, long_E)
+number_of_bounding_boxes <- 4
+box_1 <- c(49.0, 44.5, -125.0, -95.1)
+box_2 <- c(49.0, 43.5, -95.1, -89.0)
+box_3 <- c(48.0, 37.5, -89.0, -78.8)
+box_4 <- c(48.0, 39.5, -78.8, -66.6)
+
