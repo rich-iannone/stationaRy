@@ -143,3 +143,18 @@ ozone_station_metadata.subset.a <- rbind(ozone_station_metadata.subset.1,
                                          ozone_station_metadata.subset.3,
                                          ozone_station_metadata.subset.4)
 
+# Filter those stations that have start dates before the requested start year
+ozone_station_metadata.subset.b <-
+  subset(ozone_station_metadata.subset.a,
+         as.numeric(gsub("[0-9][0-9][A-Z][A-Z][A-Z]([0-9][0-9][0-9][0-9]).*",
+                         "\\1", ozone_station_metadata.subset.a$Monitor.Start.Date,
+                         perl = TRUE)) < start_year)
+
+# Continue to filter those stations, this time with last sample dates occuring after the
+# requested start date
+ozone_station_metadata.subset.b <-
+  subset(ozone_station_metadata.subset.b,
+         as.numeric(gsub("[0-9][0-9][A-Z][A-Z][A-Z]([0-9][0-9][0-9][0-9]).*",
+                         "\\1", ozone_station_metadata.subset.b$Last.Sample.Date,
+                         perl = TRUE)) > end_year)
+
