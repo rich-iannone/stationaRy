@@ -137,3 +137,9 @@ ozone_station_metadata.subset.4 <-
            ozone_station_metadata$Longitude >= box_4[3] &
            ozone_station_metadata$Longitude <= box_4[4])
 
+# Combine the 4 subsets by bounding box into one subset
+ozone_station_metadata.subset.a <- rbind(ozone_station_metadata.subset.1,
+                                         ozone_station_metadata.subset.2,
+                                         ozone_station_metadata.subset.3,
+                                         ozone_station_metadata.subset.4)
+
