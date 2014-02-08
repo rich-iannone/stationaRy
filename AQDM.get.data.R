@@ -164,3 +164,6 @@ ozone_station_metadata.subset.c <-
 
 # Get unique set of 'AQS.Site.ID' values for ozone monitoring stations
 AQS_Site_ID_ozone <- unique(ozone_station_metadata.subset.c$AQS.Site.ID)
+
+# Get count of unique stations for ozone
+AQS_Site_ID_ozone.count <- length(AQS_Site_ID_ozone) # 232 stations
