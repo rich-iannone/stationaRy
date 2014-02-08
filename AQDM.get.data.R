@@ -103,3 +103,37 @@ AQS_Site_ID_NO2 <- unique(NO2_station_metadata.subset.c$AQS.Site.ID)
 
 # Get count of unique stations for NO2
 AQS_Site_ID_NO2.count <- length(AQS_Site_ID_NO2) # 54 stations
+
+#----------------
+# Ozone stations
+#----------------
+
+# Create subsets of the 'ozone_station_metadata' data frame by each bounding box
+ozone_station_metadata.subset.1 <-
+  subset(ozone_station_metadata,
+         ozone_station_metadata$Latitude <= box_1[1] &
+           ozone_station_metadata$Latitude >= box_1[2] &
+           ozone_station_metadata$Longitude >= box_1[3] &
+           ozone_station_metadata$Longitude <= box_1[4])
+
+ozone_station_metadata.subset.2 <-
+  subset(ozone_station_metadata,
+         ozone_station_metadata$Latitude <= box_2[1] &
+           ozone_station_metadata$Latitude >= box_2[2] &
+           ozone_station_metadata$Longitude >= box_2[3] &
+           ozone_station_metadata$Longitude <= box_2[4])
+
+ozone_station_metadata.subset.3 <-
+  subset(ozone_station_metadata,
+         ozone_station_metadata$Latitude <= box_3[1] &
+           ozone_station_metadata$Latitude >= box_3[2] &
+           ozone_station_metadata$Longitude >= box_3[3] &
+           ozone_station_metadata$Longitude <= box_3[4])
+
+ozone_station_metadata.subset.4 <-
+  subset(ozone_station_metadata,
+         ozone_station_metadata$Latitude <= box_4[1] &
+           ozone_station_metadata$Latitude >= box_4[2] &
+           ozone_station_metadata$Longitude >= box_4[3] &
+           ozone_station_metadata$Longitude <= box_4[4])
+
