@@ -248,3 +248,10 @@ for (i in 1:length(AQS_Site_ID_NO2)){
       "retrieve?",
       "id=", AQSDM_return_message,
       sep = ''))
+    
+    writeLines(return_data,
+               con = paste("./data/",
+                           AQS_Site_ID_NO2[i],
+                           "--", j, ".csv",
+                           sep = ''),
+               sep = "\n")
