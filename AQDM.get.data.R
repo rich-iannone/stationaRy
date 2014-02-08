@@ -174,3 +174,20 @@ AQS_Site_ID_ozone.count <- length(AQS_Site_ID_ozone) # 232 stations
 
 # The AQS Site ID is a combination of the (1) state code, (2) county code, and (3) site ID
 # Here is a function to extract each element
+
+AQS.Site.ID.element <- function(AQS_Site_ID,
+                                element){
+  
+  if (element == "state_code"){
+    return(unlist(strsplit(AQS_Site_ID, split = "-"))[1])
+  }
+  
+  if (element == "county_code"){
+    return(unlist(strsplit(AQS_Site_ID, split = "-"))[2])
+  }
+  
+  if (element == "site_ID"){
+    return(unlist(strsplit(AQS_Site_ID, split = "-"))[3])
+  }  
+}
+
