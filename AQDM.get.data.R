@@ -216,3 +216,29 @@ for (i in 1:length(AQS_Site_ID_NO2)){
     # testing
     i <- 1
     j <- start_year
+    
+    # Construct request for data from AWSDM
+    AQSDM_return_message <- getURL(paste(
+      URI_stub_AQSDM_query,
+      "rawData?Notify",
+      "user=", user,
+      "&",
+      "pw=", pw,
+      "&",
+      "format=", format,
+      "&",
+      "param=", param_NO2,
+      "&",
+      "bdate=", paste(j, "0101", sep = ''),
+      "&",
+      "edate=", paste(j, "1231", sep = ''),
+      "&",
+      "state=", AQS.Site.ID.element(AQS_Site_ID_NO2[i], "state_code"),
+      "&",
+      "county=", AQS.Site.ID.element(AQS_Site_ID_NO2[i], "county_code"),
+      "&",
+      "site=", AQS.Site.ID.element(AQS_Site_ID_NO2[i], "site_ID"),
+      "&",
+      "dur=1",
+      sep = ''))
+    
