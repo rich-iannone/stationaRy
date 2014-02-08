@@ -213,3 +213,6 @@ for (i in 1:length(AQS_Site_ID_NO2)){
   
   for (j in start_year:end_year) {
     
+    # testing
+    i <- 1
+    j <- start_year
