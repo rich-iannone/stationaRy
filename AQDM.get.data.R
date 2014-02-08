@@ -208,3 +208,8 @@ format <- "DMCSV"
 param_NO2 <- "42602"
 param_ozone <- "44201"
 
+
+for (i in 1:length(AQS_Site_ID_NO2)){
+  
+  for (j in start_year:end_year) {
+    
