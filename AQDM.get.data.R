@@ -255,3 +255,6 @@ for (i in 1:length(AQS_Site_ID_NO2)){
                            "--", j, ".csv",
                            sep = ''),
                sep = "\n")
+    
+    # Close loop of years
+  }
