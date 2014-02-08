@@ -191,3 +191,8 @@ AQS.Site.ID.element <- function(AQS_Site_ID,
   }  
 }
 
+
+# Generate a collection of URLs to query NO2 data
+
+URI_collection_NO2 <- mat.or.vec(nr = AQS_Site_ID_NO2.count * (end_year - start_year + 1),
+                                 nc = 1) # 810 URIs
