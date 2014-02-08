@@ -94,3 +94,6 @@ NO2_station_metadata.subset.b <-
                          "\\1", NO2_station_metadata.subset.b$Last.Sample.Date,
                          perl = TRUE)) > end_year)
 
+# Select only stations using FEM or FRM methodology
+NO2_station_metadata.subset.c <-
+  subset(NO2_station_metadata.subset.b, NO2_station_metadata.subset.b$FRM.FEM. == "Yes")
