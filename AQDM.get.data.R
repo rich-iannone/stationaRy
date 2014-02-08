@@ -2,3 +2,5 @@
 #
 #
 
+# Add require statement
+require(RCurl)
