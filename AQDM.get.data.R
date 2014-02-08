@@ -97,3 +97,6 @@ NO2_station_metadata.subset.b <-
 # Select only stations using FEM or FRM methodology
 NO2_station_metadata.subset.c <-
   subset(NO2_station_metadata.subset.b, NO2_station_metadata.subset.b$FRM.FEM. == "Yes")
+
+# Get unique set of 'AQS.Site.ID' values for NO2 monitoring stations
+AQS_Site_ID_NO2 <- unique(NO2_station_metadata.subset.c$AQS.Site.ID)
