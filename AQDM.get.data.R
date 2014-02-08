@@ -200,3 +200,6 @@ URI_collection_NO2 <- mat.or.vec(nr = AQS_Site_ID_NO2.count * (end_year - start_
 # Username and password for API access
 user <- user
 pw <- pw
+
+# Format of data requested is a Data Mart CSV file
+format <- "DMCSV"
