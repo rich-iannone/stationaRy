@@ -24,3 +24,7 @@ for (i in 1:length(AQ_parameters)) {
                 paste("./data/", AQ_parameters[i], ".csv", sep = ''))
 }                          
 
+# Create data frame for the NO2 parameter
+NO2_station_metadata <- read.csv(paste("./data/", AQ_parameters[2], ".csv", sep = ''),
+                                 header = TRUE, stringsAsFactors = FALSE)
+
