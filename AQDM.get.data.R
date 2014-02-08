@@ -14,3 +14,6 @@ URI_stub_station_metadata_CSV <- "http://www.epa.gov/airexplorer/"
 
 # Access URI stub for EPA air quality data
 URI_stub_AQSDM_query <- "https://ofmext.epa.gov/AQDMRS/ws/"
+
+# Create vector list of available AQ parameters
+AQ_parameters <- c("CO", "NO2", "Ozone", "PM10", "PM25")
