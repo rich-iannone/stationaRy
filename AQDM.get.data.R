@@ -73,3 +73,9 @@ NO2_station_metadata.subset.4 <-
            NO2_station_metadata$Longitude >= box_4[3] &
            NO2_station_metadata$Longitude <= box_4[4])
 
+# Combine the 4 subsets by bounding box into one subset
+NO2_station_metadata.subset.a <- rbind(NO2_station_metadata.subset.1,
+                                       NO2_station_metadata.subset.2,
+                                       NO2_station_metadata.subset.3,
+                                       NO2_station_metadata.subset.4)
+
