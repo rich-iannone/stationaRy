@@ -86,3 +86,11 @@ NO2_station_metadata.subset.b <-
                          "\\1", NO2_station_metadata.subset.a$Monitor.Start.Date,
                          perl = TRUE)) < start_year)
 
+# Continue to filter those stations, this time with last sample dates occuring after the
+# requested start date
+NO2_station_metadata.subset.b <-
+  subset(NO2_station_metadata.subset.b,
+         as.numeric(gsub("[0-9][0-9][A-Z][A-Z][A-Z]([0-9][0-9][0-9][0-9]).*",
+                         "\\1", NO2_station_metadata.subset.b$Last.Sample.Date,
+                         perl = TRUE)) > end_year)
+
