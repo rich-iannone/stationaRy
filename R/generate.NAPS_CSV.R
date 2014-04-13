@@ -1,9 +1,13 @@
-generate.NAPS_CSV <- function(subdir = NULL,
+generate.NAPS.df <- function(subdir = NULL,
                               year = NULL,
                               pollutant = NULL,
                               type = NULL,
                               NapsID = NULL,
-                              all_data = FALSE) {
+                              all_data = FALSE,
+                              write_to_CSV = TRUE) {
+  
+  # Add require statements
+  require(gdata)
   
   # Function for generating CSV files from NAPS hourly (.hly) data files
   # Assumes that the files reside somewhere under ~ (the user's Home folder)
