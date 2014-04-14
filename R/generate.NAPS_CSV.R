@@ -106,16 +106,20 @@ generate.NAPS.df <- function(subdir = NULL,
     data$H <- NULL
     
     # Write data to a CSV
-    write.csv(data, file = paste(gsub("hly", "csv", files[i])), row.names = FALSE)
+    if (write_to_CSV == TRUE){
+      write.csv(data, file = paste(gsub("hly", "csv", files[i])), row.names = FALSE)
     
     # Clean up
     rm(data)
     rm(conc)
     rm(hours)
     rm(time)
+    }
     
     # Close the loop
   }
+  
+  return(data)
   
   # Close the function
 }
