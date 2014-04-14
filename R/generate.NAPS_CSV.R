@@ -35,7 +35,7 @@ generate.NAPS.df <- function(subdir = NULL,
                   list.files(path = paste("~", subdir, sep = ''), 
                              pattern = paste("^", year, "[a-zA-Z0-9]*",
                                              pollutant, ".hly", sep = '')), NULL)
-  
+
   # Specify column widths for text fields in each hourly file
   column.widths <- c(3, 6, 4, 2, 2,
                      4, 4, 4, 4, 4,
@@ -46,7 +46,18 @@ generate.NAPS.df <- function(subdir = NULL,
                      4, 4)
   
   # Generate yearly data frames from each hourly data file
-  for (i in 1:length(files)) {
+  for (i in 1:length(files)){
+    
+    # If the option to write yearly data to CSV is not chosen, need to collect yearly data
+    # in a large data frame that spans the range of years selected; initialize an empty
+    # data frame and sucessively use the rbind function to append df data
+    
+    if (write_to_CSV == FALSE){
+      if (i == 1){
+        large_df <- data.frame()
+      }
+    }
+    
     data <- read.fwf(paste("~", subdir, "/", files[i], sep = ""), column.widths)
     data <- data[, c(1:32)]
     names(data) <- c("POLLUT.CODE", "STATION", "YR", "M", "D", "D.AVG", "D.MIN", "D.MAX", 
