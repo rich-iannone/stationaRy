@@ -93,7 +93,6 @@ generate.NAPS.df <- function(subdir = NULL,
     data <- data[ , -grep("^D\\.[A-Z]*", names(data))]
     
     # Replace missing (-999) values with NA
-    require(gdata)
     data[,6] <- unknownToNA(data[,6], -999.0)
     
     # Generate time object of class "POSIXct" and place in data frame
