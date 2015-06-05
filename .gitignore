@@ -4,7 +4,6 @@
 *-Ex.R
 *.Rproj
 .Rproj.user
-*.png
 *.csv
 *.CSV
 .RData
