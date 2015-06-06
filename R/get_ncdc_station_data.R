@@ -167,10 +167,6 @@ get_ncdc_station_data <- function(station_id,
     
     data$rh <- rh
     
-    # Write CSV file for each station
-    write.csv(data,
-              file = paste0(gsub(".gz", "", data_files_downloaded[i]),
-                            ".csv"), row.names = FALSE)
   }
   
 }
