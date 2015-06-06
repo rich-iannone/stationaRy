@@ -176,6 +176,9 @@ get_ncdc_station_data <- function(station_id,
     }
   }
   
+  large_data_frame <- subset(large_data_frame, year >= startyear &
+                               year <= endyear)
+  
 }
 
 
