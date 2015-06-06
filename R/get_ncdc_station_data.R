@@ -167,6 +167,13 @@ get_ncdc_station_data <- function(station_id,
     
     data$rh <- rh
     
+    if (i == 1){
+      large_data_frame <- data
+    }
+    
+    if (i > 1){
+      large_data_frame <- rbind(large_data_frame, data)
+    }
   }
   
 }
