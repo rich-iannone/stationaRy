@@ -28,7 +28,7 @@ get_tz_offset <- function(x, y, proj4str = ""){
   
   zone_ids <- as.character(world_tz_shapes@data[,1])
   
-  coords <- SpatialPoints(coords, proj4string = CRS(p4s))
+  coords <- SpatialPoints(coords, proj4string = CRS(proj4str))
   
   tz_olson_name <- coords %over% world_tz_shapes
   
