@@ -11,11 +11,7 @@
 get_ncdc_station_data <- function(station_id,
                                   startyear,
                                   endyear){
-  # Add require statements
-  library(lubridate)
-  library(plyr)
-  library(downloader)
-  
+
   if (is.null(startyear) | is.null(endyear)) {
     stop("Please enter starting and ending years for surface station data")
   }
