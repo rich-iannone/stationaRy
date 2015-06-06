@@ -11,4 +11,4 @@ Wanna install? Make sure you have **R**, then, use this:
 devtools::install_github('rich-iannone/stationaRy')
 ```
 
-Thanks for installing.
+Thanks for installing. `:)`
