@@ -205,6 +205,9 @@ get_ncdc_station_data <- function(station_id,
   large_data_frame$atmos_pres <- as.numeric(large_data_frame$atmos_pres)
   large_data_frame$rh <- as.numeric(large_data_frame$rh)
   
+  # if 'tz_offset' is positive, add back a year to 'startyear'
+  if (tz_offset > 0) startyear <- startyear + 1
+  
   large_data_frame <- subset(large_data_frame, year >= startyear &
                                year <= endyear)
   
