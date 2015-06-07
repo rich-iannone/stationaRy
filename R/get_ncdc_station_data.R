@@ -176,6 +176,16 @@ get_ncdc_station_data <- function(station_id,
     }
   }
   
+  # Create POSIXct times
+  large_data_frame$time <- 
+    ISOdatetime(year = large_data_frame$year,
+                month = large_data_frame$month,
+                day = large_data_frame$day,
+                hour = large_data_frame$hour,
+                min = large_data_frame$minute,
+                sec = 0,
+                tz = "GMT") + (tz_offset * 3600)
+  
   large_data_frame <- subset(large_data_frame, year >= startyear &
                                year <= endyear)
   
