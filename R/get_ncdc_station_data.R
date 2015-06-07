@@ -208,6 +208,9 @@ get_ncdc_station_data <- function(station_id,
   # if 'tz_offset' is positive, add back a year to 'startyear'
   if (tz_offset > 0) startyear <- startyear + 1
   
+  # if 'tz_offset' is negative, subtract the added year from 'endyear'
+  if (tz_offset < 0) endyear <- endyear - 1
+  
   large_data_frame <- subset(large_data_frame, year >= startyear &
                                year <= endyear)
   
