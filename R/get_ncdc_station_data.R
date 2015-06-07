@@ -186,6 +186,25 @@ get_ncdc_station_data <- function(station_id,
                 sec = 0,
                 tz = "GMT") + (tz_offset * 3600)
   
+  # Ensure that data frame columns are correctly classed
+  large_data_frame$usaf_id <- as.character(large_data_frame$usaf_id)
+  large_data_frame$wban <- as.character(large_data_frame$wban) 
+  large_data_frame$year <- as.numeric(large_data_frame$year)
+  large_data_frame$month <- as.numeric(large_data_frame$month)
+  large_data_frame$day <- as.numeric(large_data_frame$day)
+  large_data_frame$hour <- as.numeric(large_data_frame$hour)
+  large_data_frame$minute <- as.numeric(large_data_frame$minute)
+  large_data_frame$lat <- as.numeric(large_data_frame$lat)
+  large_data_frame$lon <- as.numeric(large_data_frame$lon)
+  large_data_frame$elev <- as.numeric(large_data_frame$elev)
+  large_data_frame$wd <- as.numeric(large_data_frame$wd)
+  large_data_frame$ws <- as.numeric(large_data_frame$ws)
+  large_data_frame$ceiling_height <- as.numeric(large_data_frame$ceiling_height)
+  large_data_frame$temp <- as.numeric(large_data_frame$temp)
+  large_data_frame$dew_point <- as.numeric(large_data_frame$dew_point)
+  large_data_frame$atmos_pres <- as.numeric(large_data_frame$atmos_pres)
+  large_data_frame$rh <- as.numeric(large_data_frame$rh)
+  
   large_data_frame <- subset(large_data_frame, year >= startyear &
                                year <= endyear)
   
