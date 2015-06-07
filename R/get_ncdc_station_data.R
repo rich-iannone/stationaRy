@@ -105,7 +105,7 @@ get_ncdc_station_data <- function(station_id,
   for (i in 1:length(data_files_downloaded)){
     
     # Read data from mandatory data section of each file, which is a fixed-width string
-    data <- read.fwf(data_files_downloaded[i], column_widths)
+    data <- read.fwf(file.path(temp_folder,data_files_downloaded[i]), column_widths)
     
     # Remove select columns from data frame
     data <- data[, c(2:8, 10:11, 13, 16, 19, 21, 29, 31, 33)]
