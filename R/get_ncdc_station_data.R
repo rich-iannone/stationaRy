@@ -69,6 +69,8 @@ get_ncdc_station_data <- function(station_id,
   # end of series
   if (tz_offset < 0) endyear <- endyear + 1
   
+  # Create a temporary folder to deposit downloaded files
+  temp_folder <- tempdir()
   
   # Download the gzip-compressed data files for the years specified
   data_files_downloaded <- vector(mode = "character")
