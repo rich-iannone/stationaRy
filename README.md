@@ -12,3 +12,13 @@ devtools::install_github('rich-iannone/stationaRy')
 ```
 
 Thanks for installing. `:)`
+
+## Example
+
+Get data from a station in Norway:
+
+```
+met_data <- get_ncdc_station_data(station_id = "13860-99999",
+                                  startyear = 2009,
+                                  endyear = 2010)
+```
