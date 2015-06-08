@@ -105,77 +105,80 @@ get_ncdc_station_data <- function(station_id,
   
   for (i in 1:length(data_files_downloaded)){
     
-    # Read data from mandatory data section of each file, which is a fixed-width string
-    data <- read.fwf(file.path(temp_folder,data_files_downloaded[i]), column_widths)
-    
-    # Remove select columns from data frame
-    data <- data[, c(2:8, 10:11, 13, 16, 19, 21, 29, 31, 33)]
-    
-    # Apply new names to the data frame columns
-    names(data) <-
-      c("usaf_id", "wban", "year", "month", "day", "hour", "minute",
-        "lat", "lon", "elev", "wd", "ws", "ceiling_height",
-        "temp", "dew_point", "atmos_pres")
-    
-    #
-    # Recompose data and use consistent missing indicators of NA for missing data
-    #
-    
-    # Correct the latitude values
-    data$lat <- data$lat/1000
-    
-    # Correct the longitude values
-    data$lon <- data$lon/1000
-    
-    # Correct the wind direction values
-    data$wd <- 
-      ifelse(data$wd == 999, NA, data$wd)
-    
-    # Correct the wind speed values
-    data$ws <- 
-      ifelse(data$ws == 9999, NA, data$ws/10)
-    
-    # Correct the wind temperature values
-    data$temp <- 
-      ifelse(data$temp == 9999, NA, data$temp/10)
-    
-    # Correct the dew point values
-    data$dew_point <- 
-      ifelse(data$dew_point == 9999, NA, data$dew_point/10)
-    
-    # Correct the atmospheric pressure values
-    data$atmos_pres <- 
-      ifelse(data$atmos_pres == 99999, NA, data$atmos_pres/10)
-    
-    # Correct the ceiling height values
-    data$ceiling_height <- 
-      ifelse(data$ceiling_height == 99999, NA, data$ceiling_height)
-    
-    # Calculate RH values using the August-Roche-Magnus approximation
-    for (j in 1:nrow(data)){
+    if (file.exists(file.path(temp_folder, data_files_downloaded[i]))){
       
-      if (j == 1) rh <- vector("numeric")
+      # Read data from mandatory data section of each file, which is a fixed-width string
+      data <- read.fwf(file.path(temp_folder, data_files_downloaded[i]), column_widths)
       
-      rh_j <- 
-        ifelse(is.na(data$temp[j]) | is.na(data$dew_point[j]), NA,
-               100 * (exp((17.625 * data$dew_point[j]) /
-                            (243.04 + data$dew_point[j]))/
-                        exp((17.625 * (data$temp[j])) /
-                              (243.04 + (data$temp[j])))))
+      # Remove select columns from data frame
+      data <- data[, c(2:8, 10:11, 13, 16, 19, 21, 29, 31, 33)]
       
-      rh_j <- round_any(as.numeric(rh_j), 0.1, f = round)
+      # Apply new names to the data frame columns
+      names(data) <-
+        c("usaf_id", "wban", "year", "month", "day", "hour", "minute",
+          "lat", "lon", "elev", "wd", "ws", "ceiling_height",
+          "temp", "dew_point", "atmos_pres")
       
-      rh <- c(rh, rh_j)
-    }
-    
-    data$rh <- rh
-    
-    if (i == 1){
-      large_data_frame <- data
-    }
-    
-    if (i > 1){
-      large_data_frame <- rbind(large_data_frame, data)
+      #
+      # Recompose data and use consistent missing indicators of NA for missing data
+      #
+      
+      # Correct the latitude values
+      data$lat <- data$lat/1000
+      
+      # Correct the longitude values
+      data$lon <- data$lon/1000
+      
+      # Correct the wind direction values
+      data$wd <- 
+        ifelse(data$wd == 999, NA, data$wd)
+      
+      # Correct the wind speed values
+      data$ws <- 
+        ifelse(data$ws == 9999, NA, data$ws/10)
+      
+      # Correct the wind temperature values
+      data$temp <- 
+        ifelse(data$temp == 9999, NA, data$temp/10)
+      
+      # Correct the dew point values
+      data$dew_point <- 
+        ifelse(data$dew_point == 9999, NA, data$dew_point/10)
+      
+      # Correct the atmospheric pressure values
+      data$atmos_pres <- 
+        ifelse(data$atmos_pres == 99999, NA, data$atmos_pres/10)
+      
+      # Correct the ceiling height values
+      data$ceiling_height <- 
+        ifelse(data$ceiling_height == 99999, NA, data$ceiling_height)
+      
+      # Calculate RH values using the August-Roche-Magnus approximation
+      for (j in 1:nrow(data)){
+        
+        if (j == 1) rh <- vector("numeric")
+        
+        rh_j <- 
+          ifelse(is.na(data$temp[j]) | is.na(data$dew_point[j]), NA,
+                 100 * (exp((17.625 * data$dew_point[j]) /
+                              (243.04 + data$dew_point[j]))/
+                          exp((17.625 * (data$temp[j])) /
+                                (243.04 + (data$temp[j])))))
+        
+        rh_j <- round_any(as.numeric(rh_j), 0.1, f = round)
+        
+        rh <- c(rh, rh_j)
+      }
+      
+      data$rh <- rh
+      
+      if (i == 1){
+        large_data_frame <- data
+      }
+      
+      if (i > 1){
+        large_data_frame <- rbind(large_data_frame, data)
+      }
     }
   }
   
