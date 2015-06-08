@@ -88,9 +88,10 @@ get_ncdc_station_data <- function(station_id,
                "-", sprintf("%05d", station_required_year[1,2]),
                "-", i, ".gz")
       
-      download(url = paste0("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/", i,
-                            "/", data_file_to_download),
-               destfile = file.path(temp_folder, data_file_to_download))
+      try(download(url = paste0("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/", i,
+                                "/", data_file_to_download),
+                   destfile = file.path(temp_folder, data_file_to_download)),
+          silent = TRUE)
       
       data_files_downloaded <- c(data_files_downloaded,
                                  data_file_to_download)
