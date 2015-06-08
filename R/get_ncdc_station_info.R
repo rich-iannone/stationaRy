@@ -36,8 +36,8 @@ get_ncdc_station_info <- function(startyear = NULL,
   st$END <- as.numeric(substr(st$END, 1, 4))
   
   
-  st <- subset(st, st$LON >= lower_long & 
-                 st$LON <= upper_long &
+  st <- subset(st, st$LON >= lower_lon & 
+                 st$LON <= upper_lon &
                  st$LAT >= lower_lat &
                  st$LAT <= upper_lat &
                  BEGIN <= startyear &
