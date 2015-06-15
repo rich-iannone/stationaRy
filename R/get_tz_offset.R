@@ -1,8 +1,10 @@
 #' Get time zone offset from GMT
-#' @description Obtain the time zone difference in hours between GMT and a provided location.
+#' @description Obtain the time zone difference in hours between GMT and a
+#' provided location.
 #' @param x coordinate in the x direction.
 #' @param y coordinate in the y direction.
-#' @param proj4str an optional PROJ.4 string for the provided coordinates; not providing a value assumes lat/lon coordinates.
+#' @param proj4str an optional PROJ.4 string for the provided coordinates;
+#' not providing a value assumes lat/lon coordinates.
 #' @import proj4
 #' @import sp
 #' @export get_tz_offset
