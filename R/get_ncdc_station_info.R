@@ -1,14 +1,3 @@
-#' Get listing of stations based on location or time bounds
-#' @description Obtain a data frame containing information on hourly meteorological station by searching via a geographical bounding box and/or via time bounds for data availability.
-#' @param startyear the starting year for the collected data.
-#' @param endyear the ending year for the collected data.
-#' @param lower_lat the lower bound of the latitude for a bounding box.
-#' @param upper_lat the upper bound of the latitude for a bounding box.
-#' @param lower_lon the lower bound of the longitude for a bounding box.
-#' @param upper_lon the upper bound of the longitude for a bounding box.
-#' @import downloader
-#' @export get_ncdc_station_info
-
 get_ncdc_station_info <- function(startyear = NULL,
                                   endyear = NULL,
                                   lower_lat = NULL,
@@ -45,3 +34,15 @@ get_ncdc_station_info <- function(startyear = NULL,
   
   return(st)
 }
+#' Get listing of stations based on location or time bounds
+#' @description Obtain a data frame containing information on hourly
+#' meteorological station by searching via a geographical bounding box and/or
+#' via time bounds for data availability.
+#' @param startyear the starting year for the collected data.
+#' @param endyear the ending year for the collected data.
+#' @param lower_lat the lower bound of the latitude for a bounding box.
+#' @param upper_lat the upper bound of the latitude for a bounding box.
+#' @param lower_lon the lower bound of the longitude for a bounding box.
+#' @param upper_lon the upper bound of the longitude for a bounding box.
+#' @import downloader
+#' @export get_ncdc_station_info
