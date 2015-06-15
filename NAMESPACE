@@ -3,6 +3,7 @@
 export(get_ncdc_station_data)
 export(get_ncdc_station_info)
 export(get_tz_offset)
+export(select_ncdc_station)
 import(downloader)
 import(lubridate)
 import(plyr)
