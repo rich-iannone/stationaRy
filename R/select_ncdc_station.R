@@ -1,0 +1,85 @@
+#' Select a single station for data retrieval
+#' @description After filtering the list of global meteorological stations
+#' using \code{get_ncdc_station_info} there may be several stations returned, 
+#' so this function provides a means for selecting a single station from what 
+#' may be a list of several stations. 
+#' @param number the row number of the station listing for which station data 
+#' should be returned.
+#' @param name the partial name of the station for which station data should 
+#' be returned.
+#' @export select_ncdc_station
+
+select_ncdc_station <- function(stn_df,
+                                number = NULL,
+                                name = NULL){
+  
+  # Ensure that the search words for the station name are lowercase
+  name <- tolower(name)
+  
+  # If neither any number nor name provided, return NA
+  if (is.null(number) & is.null(name)){
+    
+    message("No search terms provided.")
+    return(NA)
+  }
+  
+  # If number provided, create the 'station_id' string from
+  # the USAF and WBAN from the row corresponding the the number
+  if (!is.null(number) & is.null(name)){
+    
+    station_id <- paste0(stn_df[number,1], "-",
+                         stn_df[number,2])
+    
+    return(station_id)
+  }
+  
+  if (!is.null(name)){
+    station_name <- gsub("  ", " ",
+                         tolower(as.character(stn_df[,3])))
+    
+    any_matched_stations <- any(grepl(name, station_name))
+    
+    if (any_matched_stations == FALSE){
+      
+      message("No stations were matched with the supplied search term.")
+      return(NA)
+    }
+    
+    if (any_matched_stations){
+      
+      number_of_matched_stations <-
+        sum(grepl(name, station_name))
+      
+      if (number_of_matched_stations == 1){
+        
+        number <- which(grepl(name, station_name))
+        
+        station_id <- paste0(stn_df[number,1], "-",
+                             stn_df[number,2])
+        
+        return(station_id)
+      }
+      
+      if (number_of_matched_stations > 1){
+        
+        if (!is.null(number)){
+          
+          numbers <- which(grepl(name, station_name))
+          
+          stn_df <- stn_df[numbers, ]
+          
+          row.names(stn_df) <- NULL
+          
+          station_id <- paste0(stn_df[number,1], "-",
+                               stn_df[number,2])
+          
+          return(station_id)
+        }
+        
+        message("Several stations matched. Provide a more specific search term.")
+        print(stn_df[which(grepl(name, station_name)),])
+        return(NA)
+      }
+    }
+  }
+}
