@@ -21,6 +21,8 @@ get_ncdc_station_info(startyear = NULL, endyear = NULL, lower_lat = NULL,
 \item{upper_lon}{the upper bound of the longitude for a bounding box.}
 }
 \description{
-Obtain a data frame containing information on hourly meteorological station by searching via a geographical bounding box and/or via time bounds for data availability.
+Obtain a data frame containing information on hourly
+meteorological station by searching via a geographical bounding box and/or
+via time bounds for data availability.
 }
 

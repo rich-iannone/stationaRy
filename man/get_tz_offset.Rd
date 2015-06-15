@@ -11,9 +11,11 @@ get_tz_offset(x, y, proj4str = "")
 
 \item{y}{coordinate in the y direction.}
 
-\item{proj4str}{an optional PROJ.4 string for the provided coordinates; not providing a value assumes lat/lon coordinates.}
+\item{proj4str}{an optional PROJ.4 string for the provided coordinates;
+not providing a value assumes lat/lon coordinates.}
 }
 \description{
-Obtain the time zone difference in hours between GMT and a provided location.
+Obtain the time zone difference in hours between GMT and a
+provided location.
 }
 
