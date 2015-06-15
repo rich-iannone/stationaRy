@@ -1,10 +1,12 @@
 Package: stationaRy
-Title: Get and Process Met and AQ Data from Global Stations.
-Version: 0.1
+Type: Package
+Title: Get Hourly Meteorological Data from Global Stations
+Version: 0.2
+Date: 2015-06-15
 Authors@R: 'Richard Iannone <riannone@me.com> [aut,cre]'
 Maintainer: Richard Iannone <riannone@me.com>
-Description: Tools to acquire and process meteorological and air quality monitoring station data.
-License: MIT
+Description: Selectively acquire hourly meteorological data from stations located all over the world.
+License: MIT + file LICENSE
 Imports:
     lubridate (>= 1.3.3), plyr (>= 1.8.2), downloader (>= 0.3), sp (>= 1.1-0), proj4 (>= 1.0-8)
 URL: https://github.com/rich-iannone/stationaRy
