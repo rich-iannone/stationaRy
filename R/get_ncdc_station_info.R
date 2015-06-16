@@ -55,8 +55,6 @@ get_ncdc_station_info <- function(startyear = NULL,
     
     row.names(st) <- NULL
     
-    print(st)
-    
     return(st)
   }
   
@@ -71,8 +69,6 @@ get_ncdc_station_info <- function(startyear = NULL,
                    st$LAT <= upper_lat)
     
     row.names(st) <- NULL
-    
-    print(st)
     
     return(st)
   }
@@ -90,8 +86,6 @@ get_ncdc_station_info <- function(startyear = NULL,
                    END >= endyear)
     
     row.names(st) <- NULL
-    
-    print(st)
     
     return(st)
   }
