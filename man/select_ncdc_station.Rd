@@ -7,6 +7,9 @@
 select_ncdc_station(stn_df, number = NULL, name = NULL)
 }
 \arguments{
+\item{stn_df}{a data frame of stations that is obtained with (and often filtered
+by) the \code{get_ncdc_station_info} function.}
+
 \item{number}{the row number of the station listing for which station data
 should be returned.}
 
