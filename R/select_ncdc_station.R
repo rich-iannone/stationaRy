@@ -19,9 +19,9 @@
 #'                         upper_lat = 49.500,
 #'                         lower_lon = -123.500,
 #'                         upper_lon = -123.000)
-#' cypress_bowl_stn <-
+#' cypress_bowl_snowboard_stn <-
 #'   select_ncdc_station(stn_df = stations_within_domain,
-#'                       name = "cypress bowl")
+#'                       name = "cypress bowl snowboard")
 #' }
 #' @export select_ncdc_station
 
