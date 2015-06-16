@@ -4,7 +4,7 @@
 #' @param startyear the starting year for the collected data.
 #' @param endyear the ending year for the collected data.
 #' @import lubridate
-#' @import plyr
+#' @importFrom plyr round_any
 #' @import downloader
 #' @export get_ncdc_station_data
 
