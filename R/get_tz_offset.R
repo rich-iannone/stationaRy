@@ -26,6 +26,8 @@ get_tz_offset <- function(x, y, proj4str = ""){
     coords <- project(coords, proj4str, inverse = TRUE)
   }
   
+  world_tz_shapes <- "world_tz_shapes"
+  
   load(system.file("time_zones.rda", package = "stationaRy"))
   
   zone_ids <- as.character(world_tz_shapes@data[,1])
