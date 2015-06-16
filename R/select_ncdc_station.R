@@ -9,6 +9,20 @@
 #' should be returned.
 #' @param name the partial name of the station for which station data should 
 #' be returned.
+#' @examples 
+#' \dontrun{
+#' # Obtain a listing of all stations within a bounding box and
+#' # then isolate a single station and obtain a string with the
+#' # \code{USAF} and \code{WBAN} identifiers
+#' stations_within_domain <-
+#'   get_ncdc_station_info(lower_lat = 49.000,
+#'                         upper_lat = 49.500,
+#'                         lower_lon = -123.500,
+#'                         upper_lon = -123.000)
+#' cypress_bowl_stn <-
+#'   select_ncdc_station(stn_df = stations_within_domain,
+#'                       name = "cypress bowl")
+#' }
 #' @export select_ncdc_station
 
 select_ncdc_station <- function(stn_df,
