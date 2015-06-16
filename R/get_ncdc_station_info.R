@@ -33,6 +33,8 @@ get_ncdc_station_info <- function(startyear = NULL,
   names(st)[c(3, 9)] <- c("NAME", "ELEV")
   st <- st[, -6]
   
+  BEGIN <- END <- "begin_end"
+  
   # Recompose the years from the data file
   st$BEGIN <- as.numeric(substr(st$BEGIN, 1, 4))
   st$END <- as.numeric(substr(st$END, 1, 4))
