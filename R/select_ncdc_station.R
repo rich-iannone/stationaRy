@@ -2,7 +2,9 @@
 #' @description After filtering the list of global meteorological stations
 #' using \code{get_ncdc_station_info} there may be several stations returned, 
 #' so this function provides a means for selecting a single station from what 
-#' may be a list of several stations. 
+#' may be a list of several stations.
+#' @param stn_df a data frame of stations that is obtained with (and often filtered
+#' by) the \code{get_ncdc_station_info} function.
 #' @param number the row number of the station listing for which station data 
 #' should be returned.
 #' @param name the partial name of the station for which station data should 
