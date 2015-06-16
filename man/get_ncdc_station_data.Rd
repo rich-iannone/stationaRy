@@ -16,4 +16,27 @@ get_ncdc_station_data(station_id, startyear, endyear)
 \description{
 Obtain one or more years of meteorological data for a station from the NCDC hourly global meteorology archive.
 }
+\examples{
+\dontrun{
+# Obtain a listing of all stations within a bounding box and
+# then isolate a single station and obtain a string with the
+# \\code{USAF} and \\code{WBAN} identifiers.
+# Pass that identifier string to the \\code{get_ncdc_station_data}
+# function to obtain a data frame of meteorological data for
+# the year 2010
+stations_within_domain <-
+  get_ncdc_station_info(lower_lat = 49.000,
+                        upper_lat = 49.500,
+                        lower_lon = -123.500,
+                        upper_lon = -123.000)
+cypress_bowl_snowboard_stn <-
+  select_ncdc_station(stn_df = stations_within_domain,
+                      name = "cypress bowl snowboard")
+
+cypress_bowl_snowboard_stn_met_data <-
+  get_ncdc_station_data(station_id = cypress_bowl_snowboard_stn,
+                        startyear = 2010,
+                        endyear = 2010)
+}
+}
 

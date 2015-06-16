@@ -22,4 +22,19 @@ using \code{get_ncdc_station_info} there may be several stations returned,
 so this function provides a means for selecting a single station from what
 may be a list of several stations.
 }
+\examples{
+\dontrun{
+# Obtain a listing of all stations within a bounding box and
+# then isolate a single station and obtain a string with the
+# \\code{USAF} and \\code{WBAN} identifiers
+stations_within_domain <-
+  get_ncdc_station_info(lower_lat = 49.000,
+                        upper_lat = 49.500,
+                        lower_lon = -123.500,
+                        upper_lon = -123.000)
+cypress_bowl_snowboard_stn <-
+  select_ncdc_station(stn_df = stations_within_domain,
+                      name = "cypress bowl snowboard")
+}
+}
 
