@@ -20,7 +20,7 @@ Obtain one or more years of meteorological data for a station from the NCDC hour
 \dontrun{
 # Obtain a listing of all stations within a bounding box and
 # then isolate a single station and obtain a string with the
-# \\code{USAF} and \\code{WBAN} identifiers.
+# \\code{usaf} and \\code{wban} identifiers.
 # Pass that identifier string to the \\code{get_ncdc_station_data}
 # function to obtain a data frame of meteorological data for
 # the year 2010
