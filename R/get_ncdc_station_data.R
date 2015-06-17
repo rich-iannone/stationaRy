@@ -159,7 +159,7 @@ get_ncdc_station_data <- function(station_id,
       data$ws <- 
         ifelse(data$ws == 9999, NA, data$ws/10)
       
-      # Correct the wind temperature values
+      # Correct the temperature values
       data$temp <- 
         ifelse(data$temp == 9999, NA, data$temp/10)
       
