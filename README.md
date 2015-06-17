@@ -13,6 +13,8 @@ They will help you get the hourly met data you need from a met station located s
 Get data from a station in Norway (**USAF**: 13860, **WBAN**: 99999):
 
 ```R
+library(stationaRy)
+
 met_data <- get_ncdc_station_data(station_id = "13860-99999",
                                   startyear = 2009,
                                   endyear = 2010)
@@ -21,6 +23,8 @@ met_data <- get_ncdc_station_data(station_id = "13860-99999",
 That's great if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't have this info. You can search for stations by using the `get_ncdc_station_info` function. By itself, it gives you a data frame with global station data. (As of June 15, 2015, there are 29,316 rows of station data.) Here are rows 250-255 of global met station list.
 
 ```R
+library(stationaRy)
+
 get_ncdc_station_info()[250:255,]
 ```
 
@@ -37,6 +41,8 @@ get_ncdc_station_info()[250:255,]
 You'll want to narrow this down. One way is to specify a geographic bounding box. Let's try the west coast of Canada. 
 
 ```R
+library(stationaRy)
+
 get_ncdc_station_info(lower_lat = 49.000,
                       upper_lat = 49.500,
                       lower_lon = -123.500,
@@ -70,6 +76,9 @@ get_ncdc_station_info(lower_lat = 49.000,
 That's a lot of stations. Alright, I'll get my data from the `CYPRESS BOWL SNOWBOARD`, so this can be done:
 
 ```R
+library(stationaRy)
+library(pipeR)
+
 get_ncdc_station_info(lower_lat = 49.000,
                       upper_lat = 49.500,
                       lower_lon = -123.500,
@@ -89,6 +98,7 @@ Several stations matched. Provide a more specific search term.
 Damn. Didn't notice those other `CYPRESS BOWL`s. That's okay, I'll try again and there's two ways to get a year of its data (`2010`):
 
 ```R
+library(stationaRy)
 library(pipeR)
 
 cypress_bowl_snowboard_1 <- 
@@ -135,6 +145,7 @@ head(cypress_bowl_snowboard_1)
 Moving west, I think Tofino is nice. I'd like to get it's weather data. Let's just make sure we can target that station.
 
 ```R
+library(stationaRy)
 library(pipeR)
 
 get_ncdc_station_info() %>>%
@@ -154,6 +165,7 @@ get_ncdc_station_info() %>>%
 Quite a few variants of the Tofino station. Let's choose the airport one. Seems to have a long record. It's the first one in that list. And I'd like the data from 2005 to 2010.
 
 ```R
+library(stationaRy)
 library(pipeR)
 
 tofino_airport_2005_2010 <- 
@@ -163,6 +175,35 @@ tofino_airport_2005_2010 <-
 ```
 
 That's gives you 34,877 rows of Tofino Airport meteorological data.
+
+Of course, **dplyr** works well with this sort of data:
+
+```R
+library(stationaRy)
+library(dplyr)
+
+bergen_point_met <- 
+  get_ncdc_station_info() %>%
+  select_ncdc_station(name = "bergen point") %>%
+  get_ncdc_station_data(startyear = 2006, endyear = 2015)
+
+high_temps <- 
+  as.tbl(bergen_point_met) %>% 
+  select(time, wd, ws, temp) %>% 
+  filter(temp > 37) %>%
+  mutate(temp_f = (temp * (9/5)) + 32)
+
+high_temps
+```
+
+```
+#> Source: local data frame [3 x 5]
+#> 
+#>                  time  wd  ws temp temp_f
+#> 1 2012-07-18 12:00:00 230 1.5 37.2  98.96
+#> 2 2012-07-18 13:00:00 220 2.6 37.8 100.04
+#> 3 2012-07-18 14:00:00 230 4.1 37.9 100.22
+```
 
 ## Installation
 
