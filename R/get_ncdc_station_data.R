@@ -138,7 +138,7 @@ get_ncdc_station_data <- function(station_id,
       # Apply new names to the data frame columns
       names(data) <-
         c("usaf", "wban", "year", "month", "day", "hour", "minute",
-          "lat", "lon", "elev", "wd", "ws", "ceiling_height",
+          "lat", "lon", "elev", "wd", "ws", "ceil_hgt",
           "temp", "dew_point", "atmos_pres")
       
       #
@@ -172,8 +172,8 @@ get_ncdc_station_data <- function(station_id,
         ifelse(data$atmos_pres == 99999, NA, data$atmos_pres/10)
       
       # Correct the ceiling height values
-      data$ceiling_height <- 
-        ifelse(data$ceiling_height == 99999, NA, data$ceiling_height)
+      data$ceil_hgt <- 
+        ifelse(data$ceil_hgt == 99999, NA, data$ceil_hgt)
       
       # Calculate RH values using the August-Roche-Magnus approximation
       for (j in 1:nrow(data)){
@@ -227,7 +227,7 @@ get_ncdc_station_data <- function(station_id,
   large_data_frame$elev <- as.numeric(large_data_frame$elev)
   large_data_frame$wd <- as.numeric(large_data_frame$wd)
   large_data_frame$ws <- as.numeric(large_data_frame$ws)
-  large_data_frame$ceiling_height <- as.numeric(large_data_frame$ceiling_height)
+  large_data_frame$ceil_hgt <- as.numeric(large_data_frame$ceil_hgt)
   large_data_frame$temp <- as.numeric(large_data_frame$temp)
   large_data_frame$dew_point <- as.numeric(large_data_frame$dew_point)
   large_data_frame$atmos_pres <- as.numeric(large_data_frame$atmos_pres)
