@@ -6,6 +6,7 @@
 #' @import lubridate
 #' @importFrom plyr round_any
 #' @import downloader
+#' @import readr
 #' @examples 
 #' \dontrun{
 #' # Obtain a listing of all stations within a bounding box and
