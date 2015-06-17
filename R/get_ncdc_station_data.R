@@ -137,7 +137,7 @@ get_ncdc_station_data <- function(station_id,
       
       # Apply new names to the data frame columns
       names(data) <-
-        c("usaf_id", "wban", "year", "month", "day", "hour", "minute",
+        c("usaf", "wban", "year", "month", "day", "hour", "minute",
           "lat", "lon", "elev", "wd", "ws", "ceiling_height",
           "temp", "dew_point", "atmos_pres")
       
@@ -215,7 +215,7 @@ get_ncdc_station_data <- function(station_id,
                 tz = "GMT") + (tz_offset * 3600)
   
   # Ensure that data frame columns are correctly classed
-  large_data_frame$usaf_id <- as.character(large_data_frame$usaf_id)
+  large_data_frame$usaf <- as.character(large_data_frame$usaf)
   large_data_frame$wban <- as.character(large_data_frame$wban) 
   large_data_frame$year <- as.numeric(large_data_frame$year)
   large_data_frame$month <- as.numeric(large_data_frame$month)
