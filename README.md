@@ -6,7 +6,7 @@ Want some tools to acquire and process meteorological and air quality monitoring
 - `select_ncdc_station`
 - `get_ncdc_station_data` 
 
-They will help you get the hourly met data you need from a met station located somewhere on earth.
+They will help you get the hourly met data you need from a met station located somewhere on Earth.
 
 ## Examples
 
