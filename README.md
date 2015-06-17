@@ -213,4 +213,10 @@ Want to try this? Make sure you have **R**, then, use this:
 devtools::install_github('rich-iannone/stationaRy')
 ```
 
+or this:
+
+```R
+install.packages("stationaRy")
+```
+
 Thanks for installing. `:)`
