@@ -7,6 +7,14 @@
 #' not providing a value assumes lat/lon coordinates.
 #' @import proj4
 #' @import sp
+#' @examples 
+#' \dontrun{
+#' # Get the time zone offset from UTC+00 at 125.50000
+#' # degrees W and 49.20000 degrees N
+#' get_tz_offset(x = -125.50000,
+#'               y = 49.20000)
+#' #> [1] -8
+#' }
 #' @export get_tz_offset
 
 get_tz_offset <- function(x, y, proj4str = ""){
