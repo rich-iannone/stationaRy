@@ -4,7 +4,7 @@
 \alias{get_ncdc_station_data}
 \title{Get met station data from NCDC}
 \usage{
-get_ncdc_station_data(station_id, startyear, endyear)
+get_ncdc_station_data(station_id, startyear, endyear, local_tz = TRUE)
 }
 \arguments{
 \item{station_id}{a station identifier composed of the station's USAF and WBAN numbers, separated by a hyphen.}
@@ -12,6 +12,8 @@ get_ncdc_station_data(station_id, startyear, endyear)
 \item{startyear}{the starting year for the collected data.}
 
 \item{endyear}{the ending year for the collected data.}
+
+\item{local_tz}{a boolean value stating whether a correction should be made to local time from UTC+00.}
 }
 \description{
 Obtain one or more years of meteorological data for a station from the NCDC hourly global meteorology archive.
