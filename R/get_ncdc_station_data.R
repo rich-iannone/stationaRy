@@ -3,6 +3,7 @@
 #' @param station_id a station identifier composed of the station's USAF and WBAN numbers, separated by a hyphen.
 #' @param startyear the starting year for the collected data.
 #' @param endyear the ending year for the collected data.
+#' @param local_tz a boolean value stating whether a correction should be made to local time from UTC+00.
 #' @import lubridate
 #' @importFrom plyr round_any
 #' @import downloader
@@ -33,7 +34,8 @@
 
 get_ncdc_station_data <- function(station_id,
                                   startyear,
-                                  endyear){
+                                  endyear,
+                                  local_tz = TRUE){
   
   if (is.null(startyear) | is.null(endyear)) {
     stop("Please enter starting and ending years for surface station data")
@@ -81,16 +83,20 @@ get_ncdc_station_data <- function(station_id,
            st$USAF == as.numeric(unlist(strsplit(station_id, "-"))[1]) &
              st$WBAN == as.numeric(unlist(strsplit(station_id, "-"))[2]))
   
-  tz_offset <-
-    get_tz_offset(target_station$LON[1], target_station$LAT[1])
   
-  # if tz_offset is positive, then also download year of data previous to
-  # beginning of series
-  if (tz_offset > 0) startyear <- startyear - 1
-  
-  # if tz_offset is negative, then also download year of data following the
-  # end of series
-  if (tz_offset < 0) endyear <- endyear + 1
+  if (local_tz == TRUE){
+    
+    tz_offset <-
+      get_tz_offset(target_station$LON[1], target_station$LAT[1])
+    
+    # if tz_offset is positive, then also download year of data previous to
+    # beginning of series
+    if (tz_offset > 0) startyear <- startyear - 1
+    
+    # if tz_offset is negative, then also download year of data following the
+    # end of series
+    if (tz_offset < 0) endyear <- endyear + 1
+  }
   
   # Create a temporary folder to deposit downloaded files
   temp_folder <- tempdir()
@@ -238,11 +244,14 @@ get_ncdc_station_data <- function(station_id,
   large_data_frame$atmos_pres <- as.numeric(large_data_frame$atmos_pres)
   large_data_frame$rh <- as.numeric(large_data_frame$rh)
   
-  # if 'tz_offset' is positive, add back a year to 'startyear'
-  if (tz_offset > 0) startyear <- startyear + 1
-  
-  # if 'tz_offset' is negative, subtract the added year from 'endyear'
-  if (tz_offset < 0) endyear <- endyear - 1
+  if (local_tz == TRUE){
+    
+    # if 'tz_offset' is positive, add back a year to 'startyear'
+    if (tz_offset > 0) startyear <- startyear + 1
+    
+    # if 'tz_offset' is negative, subtract the added year from 'endyear'
+    if (tz_offset < 0) endyear <- endyear - 1
+  }
   
   # Subset data frame to only include data for requested years
   large_data_frame <- subset(large_data_frame, year >= startyear &
