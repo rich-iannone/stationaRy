@@ -56,6 +56,9 @@ get_ncdc_station_info <- function(startyear = NULL,
   st$BEGIN <- as.numeric(substr(st$BEGIN, 1, 4))
   st$END <- as.numeric(substr(st$END, 1, 4))
   
+  # Exclude stations that do not have associated data files
+  st <- subset(st, USAF >= 10000)
+  
   # If no filtering is performed, return entire data frame
   if (is.null(c(startyear, endyear,
                 lower_lat, upper_lat,
