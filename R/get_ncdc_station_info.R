@@ -35,9 +35,9 @@ get_ncdc_station_info <- function(startyear = NULL,
                                   lower_lon = NULL,
                                   upper_lon = NULL){
   
-  # Get hourly surface data history CSV from NOAA/NCDC FTP
+  # Get hourly surface data history CSV from the FTP server
   file <- "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv"
-  
+
   repeat {
     suppressWarnings(download(file, "isd-history.csv"))
     if (file.info("isd-history.csv")$size > 0) { break }
