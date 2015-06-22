@@ -57,7 +57,7 @@ get_ncdc_station_data <- function(station_id,
     stop("Please enter the starting and ending years in the correct order")
   }
   
-  # Get hourly surface data history CSV from NOAA/NCDC FTP
+  # Get hourly surface data history CSV from the FTP server
   file <- "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv"
   
   repeat {
