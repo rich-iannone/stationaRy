@@ -7,7 +7,8 @@
 get_ncdc_station_data(station_id, startyear, endyear, local_tz = TRUE)
 }
 \arguments{
-\item{station_id}{a station identifier composed of the station's USAF and WBAN numbers, separated by a hyphen.}
+\item{station_id}{a station identifier composed of the station's USAF and WBAN numbers, separated
+by a hyphen.}
 
 \item{startyear}{the starting year for the collected data.}
 
@@ -16,7 +17,8 @@ get_ncdc_station_data(station_id, startyear, endyear, local_tz = TRUE)
 \item{local_tz}{a boolean value stating whether a correction should be made to local time from UTC+00.}
 }
 \description{
-Obtain one or more years of meteorological data for a station from the NCEI Integrated Surface Dataset (ISD).
+Obtain one or more years of meteorological data for a station from the NCEI Integrated
+Surface Dataset (ISD).
 }
 \examples{
 \dontrun{
