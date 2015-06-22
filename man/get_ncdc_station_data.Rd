@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_ncdc_station_data.R
 \name{get_ncdc_station_data}
 \alias{get_ncdc_station_data}
-\title{Get met station data from NCDC}
+\title{Get met station data from the ISD dataset}
 \usage{
 get_ncdc_station_data(station_id, startyear, endyear, local_tz = TRUE)
 }
@@ -16,7 +16,7 @@ get_ncdc_station_data(station_id, startyear, endyear, local_tz = TRUE)
 \item{local_tz}{a boolean value stating whether a correction should be made to local time from UTC+00.}
 }
 \description{
-Obtain one or more years of meteorological data for a station from the NCDC hourly global meteorology archive.
+Obtain one or more years of meteorological data for a station from the NCEI Integrated Surface Dataset (ISD).
 }
 \examples{
 \dontrun{
