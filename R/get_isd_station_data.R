@@ -41,6 +41,8 @@ get_isd_station_data <- function(station_id,
                                  endyear,
                                  local_tz = TRUE){
   
+  usaf <- wban <- tz_offset <- NA
+  
   if (is.null(startyear) | is.null(endyear)) {
     stop("Please enter starting and ending years for surface station data")
   }
