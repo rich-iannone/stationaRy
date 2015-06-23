@@ -1,10 +1,10 @@
-#' Select a single station for data retrieval
+#' Select a single ISD station for data retrieval
 #' @description After filtering the list of global meteorological stations
-#' using \code{get_ncdc_station_info} there may be several stations returned, 
+#' using \code{get_isd_stations} there may be several stations returned, 
 #' so this function provides a means for selecting a single station from what 
 #' may be a list of several stations.
 #' @param stn_df a data frame of stations that is obtained with (and often filtered
-#' by) the \code{get_ncdc_station_info} function.
+#' by) the \code{get_isd_stations} function.
 #' @param number the row number of the station listing for which station data 
 #' should be returned.
 #' @param name the partial name of the station for which station data should 
@@ -15,17 +15,18 @@
 #' # then isolate a single station and obtain a string with the
 #' # \code{USAF} and \code{WBAN} identifiers
 #' stations_within_domain <-
-#'   get_ncdc_station_info(lower_lat = 49.000,
-#'                         upper_lat = 49.500,
-#'                         lower_lon = -123.500,
-#'                         upper_lon = -123.000)
+#'   get_isd_stations(lower_lat = 49.000,
+#'                    upper_lat = 49.500,
+#'                    lower_lon = -123.500,
+#'                    upper_lon = -123.000)
+#'                    
 #' cypress_bowl_snowboard_stn <-
-#'   select_ncdc_station(stn_df = stations_within_domain,
-#'                       name = "cypress bowl snowboard")
+#'   select_isd_station(stn_df = stations_within_domain,
+#'                      name = "cypress bowl snowboard")
 #' }
-#' @export select_ncdc_station
+#' @export select_isd_station
 
-select_ncdc_station <- function(stn_df,
+select_isd_station <- function(stn_df,
                                 number = NULL,
                                 name = NULL){
   
