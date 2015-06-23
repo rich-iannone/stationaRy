@@ -2,12 +2,9 @@
 
 export(get_isd_station_data)
 export(get_isd_stations)
-export(get_tz_offset)
 export(select_isd_station)
 import(downloader)
 import(dplyr)
 import(lubridate)
-import(proj4)
 import(readr)
-import(sp)
 importFrom(plyr,round_any)
