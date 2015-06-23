@@ -124,7 +124,8 @@ get_isd_station_data <- function(station_id,
   
   for (i in 1:length(data_files_downloaded)){
     
-    if (file.exists(file.path(temp_folder, data_files_downloaded[i]))){
+    if (file.exists(file.path(temp_folder,
+                              data_files_downloaded[i]))){
       
       # Read data from mandatory data section of each file,
       # which is a fixed-width string
