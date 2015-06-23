@@ -260,8 +260,8 @@ get_isd_station_data <- function(station_id,
     if (tz_offset < 0) endyear <- endyear - 1
   }
   
-  # Subset data frame to only include data for requested years
-  large_data_frame <- subset(large_data_frame, year >= startyear &
+  # Filter data frame to only include data for requested years
+  large_data_frame <- filter(large_data_frame, year >= startyear &
                                year <= endyear)
   
   return(large_data_frame)
