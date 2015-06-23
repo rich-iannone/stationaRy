@@ -56,12 +56,6 @@ get_isd_station_data <- function(station_id,
     stop("Please enter the starting and ending years in the correct order")
   }
   
-  # Check whether 'staryear' and 'endyear' are within set bounds
-  if (startyear < 1892 | endyear < 1892 | 
-      startyear > year(Sys.Date()) | endyear > year(Sys.Date())) {
-    stop("Please enter the starting and ending years in the correct order")
-  }
-  
   gmt_offset <- 
     as.numeric(filter(get_isd_stations(),
                       usaf == as.numeric(unlist(strsplit(station_id,
