@@ -66,11 +66,11 @@ get_isd_station_data <- function(station_id,
   
   if (local_tz == TRUE){
     
-    # if tz_offset is positive, then also download year of data previous to
+    # if 'gmt_offset' is positive, then also download year of data previous to
     # beginning of series
     if (gmt_offset > 0) startyear <- startyear - 1
     
-    # if tz_offset is negative, then also download year of data following the
+    # if 'gmt_offset' is negative, then also download year of data following the
     # end of series
     if (gmt_offset < 0) endyear <- endyear + 1
   }
