@@ -56,6 +56,7 @@ get_isd_station_data <- function(station_id,
     stop("Please enter the starting and ending years in the correct order")
   }
   
+  # Obtain the GMT offset value for this ISD station
   gmt_offset <- 
     as.numeric(filter(get_isd_stations(),
                       usaf == as.numeric(unlist(strsplit(station_id,
