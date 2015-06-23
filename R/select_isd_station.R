@@ -51,8 +51,9 @@ select_isd_station <- function(stn_df,
   }
   
   if (!is.null(name)){
-    station_name <- gsub("  ", " ",
-                         tolower(as.character(stn_df[,3])))
+    station_name <- 
+      gsub("  ", " ",
+           tolower(as.character(as.data.frame(stn_df[,3])[[1]])))
     
     any_matched_stations <- any(grepl(name, station_name))
     
