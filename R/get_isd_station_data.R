@@ -61,32 +61,6 @@ get_isd_station_data <- function(station_id,
     stop("Please enter the starting and ending years in the correct order")
   }
   
-  # Get hourly surface data history CSV from the FTP server
-  file <- "ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv"
-  
-  repeat {
-    try(download(file, "isd-history.csv", quiet = TRUE))
-    if (file.info("isd-history.csv")$size > 0) { break }
-  }
-  
-  # Read in the "isd-history" CSV file
-  st <- read.csv("isd-history.csv")
-  
-  # Get formatted list of station names and elevations
-  names(st)[c(3, 9)] <- c("NAME", "ELEV")
-  st <- st[, -6]
-  
-  # Recompose the years from the data file
-  st$BEGIN <- as.numeric(substr(st$BEGIN, 1, 4))
-  st$END <- as.numeric(substr(st$END, 1, 4))
-  
-  # Generate a list based on the domain location, also ignoring stations without
-  # beginning years reported
-  target_station <- 
-    subset(st, 
-           st$USAF == as.numeric(unlist(strsplit(station_id, "-"))[1]) &
-             st$WBAN == as.numeric(unlist(strsplit(station_id, "-"))[2]))
-  
   
   if (local_tz == TRUE){
     
