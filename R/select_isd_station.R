@@ -27,8 +27,8 @@
 #' @export select_isd_station
 
 select_isd_station <- function(stn_df,
-                                number = NULL,
-                                name = NULL){
+                               number = NULL,
+                               name = NULL){
   
   # Ensure that the search words for the station name are lowercase
   name <- tolower(name)
