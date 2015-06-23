@@ -225,7 +225,7 @@ get_isd_station_data <- function(station_id,
                   hour = large_data_frame$hour,
                   min = large_data_frame$minute,
                   sec = 0,
-                  tz = "GMT") + (tz_offset * 3600)
+                  tz = "GMT") + (gmt_offset * 3600)
   }
   
   # Ensure that data frame columns are correctly classed
