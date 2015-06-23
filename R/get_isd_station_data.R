@@ -6,7 +6,6 @@
 #' @param startyear the starting year for the collected data.
 #' @param endyear the ending year for the collected data.
 #' @param local_tz a boolean value stating whether a correction should be made to local time from UTC+00.
-#' @import lubridate
 #' @importFrom plyr round_any
 #' @import dplyr
 #' @import downloader
