@@ -206,15 +206,31 @@ get_isd_station_data <- function(station_id,
     }
   }
   
-  # Create POSIXct times
-  large_data_frame$time <- 
-    ISOdatetime(year = large_data_frame$year,
-                month = large_data_frame$month,
-                day = large_data_frame$day,
-                hour = large_data_frame$hour,
-                min = large_data_frame$minute,
-                sec = 0,
-                tz = "GMT") + (tz_offset * 3600)
+  if (local_tz == FALSE){
+    
+    # Create POSIXct times
+    large_data_frame$time <- 
+      ISOdatetime(year = large_data_frame$year,
+                  month = large_data_frame$month,
+                  day = large_data_frame$day,
+                  hour = large_data_frame$hour,
+                  min = large_data_frame$minute,
+                  sec = 0,
+                  tz = "GMT")
+  }
+  
+  if (local_tz == TRUE){
+    
+    # Create POSIXct times
+    large_data_frame$time <- 
+      ISOdatetime(year = large_data_frame$year,
+                  month = large_data_frame$month,
+                  day = large_data_frame$day,
+                  hour = large_data_frame$hour,
+                  min = large_data_frame$minute,
+                  sec = 0,
+                  tz = "GMT") + (tz_offset * 3600)
+  }
   
   # Ensure that data frame columns are correctly classed
   large_data_frame$usaf <- as.character(large_data_frame$usaf)
