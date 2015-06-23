@@ -249,11 +249,11 @@ get_isd_station_data <- function(station_id,
   
   if (local_tz == TRUE){
     
-    # if 'tz_offset' is positive, add back a year to 'startyear'
-    if (tz_offset > 0) startyear <- startyear + 1
+    # if 'gmt_offset' is positive, add back a year to 'startyear'
+    if (gmt_offset > 0) startyear <- startyear + 1
     
-    # if 'tz_offset' is negative, subtract the added year from 'endyear'
-    if (tz_offset < 0) endyear <- endyear - 1
+    # if 'gmt_offset' is negative, subtract the added year from 'endyear'
+    if (gmt_offset < 0) endyear <- endyear - 1
   }
   
   # Filter data frame to only include data for requested years
