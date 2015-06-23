@@ -36,6 +36,8 @@ get_isd_stations <- function(startyear = NULL,
                              lower_lon = NULL,
                              upper_lon = NULL){
   
+  gn_gmtoffset <- begin <- lon <- lat <- NA
+  
   # Load the 'combined' data frame
   load(system.file("stations.rda", package = "stationaRy"))
   
