@@ -70,16 +70,13 @@ get_isd_station_data <- function(station_id,
   
   if (local_tz == TRUE){
     
-    tz_offset <-
-      get_tz_offset(target_station$LON[1], target_station$LAT[1])
-    
     # if tz_offset is positive, then also download year of data previous to
     # beginning of series
-    if (tz_offset > 0) startyear <- startyear - 1
+    if (gmt_offset > 0) startyear <- startyear - 1
     
     # if tz_offset is negative, then also download year of data following the
     # end of series
-    if (tz_offset < 0) endyear <- endyear + 1
+    if (gmt_offset < 0) endyear <- endyear + 1
   }
   
   # Create a temporary folder to deposit downloaded files
