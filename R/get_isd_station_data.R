@@ -87,21 +87,28 @@ get_isd_station_data <- function(station_id,
   
   for (i in startyear:endyear){
     
-    station_required_year <- 
-      target_station[target_station$BEGIN <= i &
-                       target_station$END >= i, ]
+    if (i == startyear){
+      
+      data_files_downloaded <- vector(mode = "character")
+    }
     
-    if (nrow(station_required_year) > 0){
-      
-      data_file_to_download <- 
-        paste0(sprintf("%06d", station_required_year[1,1]),
-               "-", sprintf("%05d", station_required_year[1,2]),
-               "-", i, ".gz")
-      
-      try(download(url = paste0("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/", i,
-                                "/", data_file_to_download),
-                   destfile = file.path(temp_folder, data_file_to_download)),
-          silent = TRUE)
+    data_file_to_download <- 
+      paste0(sprintf("%06d",
+                     as.numeric(unlist(strsplit(station_id,
+                                                "-"))[1])),
+             "-",
+             sprintf("%05d",
+                     as.numeric(unlist(strsplit(station_id,
+                                                "-"))[2])),
+             "-", i, ".gz")
+    
+    try(download(url = paste0("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/", i,
+                              "/", data_file_to_download),
+                 destfile = file.path(temp_folder, data_file_to_download)),
+        silent = TRUE)
+    
+    if (file.size(file.path(temp_folder,
+                            data_file_to_download)) > 1){
       
       data_files_downloaded <- c(data_files_downloaded,
                                  data_file_to_download)
