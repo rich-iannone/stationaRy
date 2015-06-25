@@ -7,16 +7,16 @@
 get_isd_station_data(station_id, startyear, endyear)
 }
 \arguments{
-\item{station_id}{a station identifier composed of the station's USAF and WBAN numbers, separated
-by a hyphen.}
+\item{station_id}{a station identifier composed of the station's USAF and
+WBAN numbers, separated by a hyphen.}
 
 \item{startyear}{the starting year for the collected data.}
 
 \item{endyear}{the ending year for the collected data.}
 }
 \description{
-Obtain one or more years of meteorological data for a station from the NCEI Integrated
-Surface Dataset (ISD).
+Obtain one or more years of meteorological data for a station
+from the NCEI Integrated Surface Dataset (ISD).
 }
 \examples{
 \dontrun{

@@ -7,8 +7,8 @@
 select_isd_station(stn_df, number = NULL, name = NULL)
 }
 \arguments{
-\item{stn_df}{a data frame of stations that is obtained with (and often filtered
-by) the \code{get_isd_stations} function.}
+\item{stn_df}{a data frame of stations that is obtained with (and often
+filtered by) the \code{get_isd_stations} function.}
 
 \item{number}{the row number of the station listing for which station data
 should be returned.}
