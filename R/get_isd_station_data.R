@@ -62,16 +62,13 @@ get_isd_station_data <- function(station_id,
                       wban == as.numeric(unlist(strsplit(station_id,
                                                          "-"))[2]))[,11])
   
-  if (local_tz == TRUE){
-    
-    # if 'gmt_offset' is positive, then also download year of data previous to
-    # beginning of series
-    if (gmt_offset > 0) startyear <- startyear - 1
-    
-    # if 'gmt_offset' is negative, then also download year of data following the
-    # end of series
-    if (gmt_offset < 0) endyear <- endyear + 1
-  }
+  # if 'gmt_offset' is positive, then also download year of data previous to
+  # beginning of series
+  if (gmt_offset > 0) startyear <- startyear - 1
+  
+  # if 'gmt_offset' is negative, then also download year of data following the
+  # end of series
+  if (gmt_offset < 0) endyear <- endyear + 1
   
   # Create a temporary folder to deposit downloaded files
   temp_folder <- tempdir()
@@ -200,31 +197,15 @@ get_isd_station_data <- function(station_id,
     }
   }
   
-  if (local_tz == FALSE){
-    
-    # Create POSIXct times
-    large_data_frame$time <- 
-      ISOdatetime(year = large_data_frame$year,
-                  month = large_data_frame$month,
-                  day = large_data_frame$day,
-                  hour = large_data_frame$hour,
-                  min = large_data_frame$minute,
-                  sec = 0,
-                  tz = "GMT")
-  }
-  
-  if (local_tz == TRUE){
-    
-    # Create POSIXct times
-    large_data_frame$time <- 
-      ISOdatetime(year = large_data_frame$year,
-                  month = large_data_frame$month,
-                  day = large_data_frame$day,
-                  hour = large_data_frame$hour,
-                  min = large_data_frame$minute,
-                  sec = 0,
-                  tz = "GMT") + (gmt_offset * 3600)
-  }
+  # Create POSIXct times
+  large_data_frame$time <- 
+    ISOdatetime(year = large_data_frame$year,
+                month = large_data_frame$month,
+                day = large_data_frame$day,
+                hour = large_data_frame$hour,
+                min = large_data_frame$minute,
+                sec = 0,
+                tz = "GMT") + (gmt_offset * 3600)
   
   # Ensure that data frame columns are correctly classed
   large_data_frame$usaf <- as.character(large_data_frame$usaf)
@@ -245,14 +226,11 @@ get_isd_station_data <- function(station_id,
   large_data_frame$atmos_pres <- as.numeric(large_data_frame$atmos_pres)
   large_data_frame$rh <- as.numeric(large_data_frame$rh)
   
-  if (local_tz == TRUE){
-    
-    # if 'gmt_offset' is positive, add back a year to 'startyear'
-    if (gmt_offset > 0) startyear <- startyear + 1
-    
-    # if 'gmt_offset' is negative, subtract the added year from 'endyear'
-    if (gmt_offset < 0) endyear <- endyear - 1
-  }
+  # if 'gmt_offset' is positive, add back a year to 'startyear'
+  if (gmt_offset > 0) startyear <- startyear + 1
+  
+  # if 'gmt_offset' is negative, subtract the added year from 'endyear'
+  if (gmt_offset < 0) endyear <- endyear - 1
   
   # Filter data frame to only include data for requested years
   large_data_frame <- filter(large_data_frame, year >= startyear &
