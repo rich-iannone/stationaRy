@@ -135,7 +135,7 @@ get_isd_station_data <- function(station_id,
           "temp", "dew_point", "atmos_pres")
       
       #
-      # Recompose data and use consistent missing indicators of NA for missing data
+      # Recompose data and use NAs for missing data
       #
       
       # Correct the latitude values
