@@ -3,8 +3,8 @@
 #' using \code{get_isd_stations} there may be several stations returned, 
 #' so this function provides a means for selecting a single station from what 
 #' may be a list of several stations.
-#' @param stn_df a data frame of stations that is obtained with (and often filtered
-#' by) the \code{get_isd_stations} function.
+#' @param stn_df a data frame of stations that is obtained with (and often
+#' filtered by) the \code{get_isd_stations} function.
 #' @param number the row number of the station listing for which station data 
 #' should be returned.
 #' @param name the partial name of the station for which station data should 
