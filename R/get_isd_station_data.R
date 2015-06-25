@@ -207,6 +207,13 @@ get_isd_station_data <- function(station_id,
                 sec = 0,
                 tz = "GMT") + (gmt_offset * 3600)
   
+  # Update time component columns to reflect corrected dates/times
+  large_data_frame$year <- year(large_data_frame$time)
+  large_data_frame$month <- month(large_data_frame$time) 
+  large_data_frame$day <- mday(large_data_frame$day)
+  large_data_frame$hour <- hour(large_data_frame$hour)
+  large_data_frame$min <- minute(large_data_frame$min)
+  
   # Ensure that data frame columns are correctly classed
   large_data_frame$usaf <- as.character(large_data_frame$usaf)
   large_data_frame$wban <- as.character(large_data_frame$wban) 
