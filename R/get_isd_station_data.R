@@ -7,8 +7,9 @@
 #' @param endyear the ending year for the collected data.
 #' @importFrom plyr round_any
 #' @import dplyr
-#' @import downloader
 #' @import readr
+#' @import lubridate
+#' @import downloader
 #' @examples 
 #' \dontrun{
 #' # Obtain a listing of all stations within a bounding box and
