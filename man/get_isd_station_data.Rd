@@ -4,7 +4,7 @@
 \alias{get_isd_station_data}
 \title{Get met station data from the ISD dataset}
 \usage{
-get_isd_station_data(station_id, startyear, endyear, local_tz = TRUE)
+get_isd_station_data(station_id, startyear, endyear)
 }
 \arguments{
 \item{station_id}{a station identifier composed of the station's USAF and WBAN numbers, separated
@@ -13,8 +13,6 @@ by a hyphen.}
 \item{startyear}{the starting year for the collected data.}
 
 \item{endyear}{the ending year for the collected data.}
-
-\item{local_tz}{a boolean value stating whether a correction should be made to local time from UTC+00.}
 }
 \description{
 Obtain one or more years of meteorological data for a station from the NCEI Integrated
