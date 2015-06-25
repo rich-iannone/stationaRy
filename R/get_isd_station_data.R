@@ -98,8 +98,8 @@ get_isd_station_data <- function(station_id,
                  destfile = file.path(temp_folder, data_file_to_download)),
         silent = TRUE)
     
-    if (file.size(file.path(temp_folder,
-                            data_file_to_download)) > 1){
+    if (file.info(file.path(temp_folder,
+                            data_file_to_download))$size > 1){
       
       data_files_downloaded <- c(data_files_downloaded,
                                  data_file_to_download)
