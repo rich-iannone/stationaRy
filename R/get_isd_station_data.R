@@ -68,7 +68,7 @@ get_isd_station_data <- function(station_id,
   
   # if 'gmt_offset' is negative, then also download year of data following the
   # end of series
-  if (gmt_offset < 0) endyear <- endyear + 1
+  if (gmt_offset < 0 & year(Sys.time()) != endyear) endyear <- endyear + 1
   
   # Create a temporary folder to deposit downloaded files
   temp_folder <- tempdir()
@@ -237,7 +237,7 @@ get_isd_station_data <- function(station_id,
   if (gmt_offset > 0) startyear <- startyear + 1
   
   # if 'gmt_offset' is negative, subtract the added year from 'endyear'
-  if (gmt_offset < 0) endyear <- endyear - 1
+  if (gmt_offset < 0 & year(Sys.time()) != endyear) endyear <- endyear - 1
   
   # Filter data frame to only include data for requested years
   large_data_frame <- filter(large_data_frame, year >= startyear &
