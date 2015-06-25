@@ -1,8 +1,8 @@
 #' Get met station data from the ISD dataset
-#' @description Obtain one or more years of meteorological data for a station from the NCEI Integrated
-#' Surface Dataset (ISD).
-#' @param station_id a station identifier composed of the station's USAF and WBAN numbers, separated
-#' by a hyphen.
+#' @description Obtain one or more years of meteorological data for a station
+#' from the NCEI Integrated Surface Dataset (ISD).
+#' @param station_id a station identifier composed of the station's USAF and
+#' WBAN numbers, separated by a hyphen.
 #' @param startyear the starting year for the collected data.
 #' @param endyear the ending year for the collected data.
 #' @importFrom plyr round_any
