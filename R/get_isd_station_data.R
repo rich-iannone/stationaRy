@@ -61,8 +61,6 @@
 #'   \item{rh}{Relative humidity, measured as a percentage, 
 #'     as calculated using the August-Roche-Magnus approximation}
 #'   \item{time}{A POSIXct object with the date-time of the observation.}
-#'   \item{min}{The minute value of the observation.  This is a duplicate
-#'     of minute.}
 #' }
 #' 
 #' @source 
