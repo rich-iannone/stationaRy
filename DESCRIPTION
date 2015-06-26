@@ -12,5 +12,6 @@ Description: Selectively acquire hourly meteorological data from stations locate
 License: MIT + file LICENSE
 Imports:
     plyr (>= 1.8.2), dplyr (>= 0.4.2),
-    readr (>= 0.1.1), downloader (>= 0.3)
+    readr (>= 0.1.1), downloader (>= 0.3),
+    lubridate
 URL: https://github.com/rich-iannone/stationaRy

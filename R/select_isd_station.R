@@ -9,6 +9,13 @@
 #' should be returned.
 #' @param name the partial name of the station for which station data should 
 #' be returned.
+#' 
+#' @return Returns a data frame of ISD stations as documented in 
+#'   \code{\link{get_isd_stations}}.
+#'   
+#' @seealso
+#'   \code{\link{get_isd_stations}}
+#'   
 #' @examples 
 #' \dontrun{
 #' # Obtain a listing of all stations within a bounding box and
