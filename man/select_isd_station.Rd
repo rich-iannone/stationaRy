@@ -16,6 +16,10 @@ should be returned.}
 \item{name}{the partial name of the station for which station data should
 be returned.}
 }
+\value{
+Returns a data frame of ISD stations as documented in
+  \code{\link{get_isd_stations}}.
+}
 \description{
 After filtering the list of global meteorological stations
 using \code{get_isd_stations} there may be several stations returned,
@@ -37,5 +41,8 @@ cypress_bowl_snowboard_stn <-
   select_isd_station(stn_df = stations_within_domain,
                      name = "cypress bowl snowboard")
 }
+}
+\seealso{
+\code{\link{get_isd_stations}}
 }
 
