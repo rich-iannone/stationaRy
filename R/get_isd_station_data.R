@@ -11,10 +11,9 @@
 #' @import stringr
 #' @import lubridate
 #' @import downloader
-#' 
-#' @return Returns a data frame with 19 variables.  Times are recorded 
-#' using the Universal Time Code (UTC) in the source data.  Using 
-#' \code{local_tz} adjusts the time zone to the current locale.
+#' @return Returns a data frame with 18 variables. Times are recorded 
+#' using the Universal Time Code (UTC) in the source data. Times are adjusted
+#' to local standard time for the station's locale.
 #' \describe{
 #'   \item{usaf}{A character string identifying the fixed weather 
 #'     station from the USAF Master Station Catalog.
