@@ -22,9 +22,9 @@ WBAN numbers, separated by a hyphen.}
 \item{endyear}{the ending year for the collected data.}
 }
 \value{
-Returns a data frame with 19 variables.  Times are recorded
-using the Universal Time Code (UTC) in the source data.  Using
-\code{local_tz} adjusts the time zone to the current locale.
+Returns a data frame with 18 variables. Times are recorded
+using the Universal Time Code (UTC) in the source data. Times are adjusted
+to local standard time for the station's locale.
 \describe{
   \item{usaf}{A character string identifying the fixed weather
     station from the USAF Master Station Catalog.
@@ -71,8 +71,6 @@ using the Universal Time Code (UTC) in the source data.  Using
   \item{rh}{Relative humidity, measured as a percentage,
     as calculated using the August-Roche-Magnus approximation}
   \item{time}{A POSIXct object with the date-time of the observation.}
-  \item{min}{The minute value of the observation.  This is a duplicate
-    of minute.}
 }
 }
 \description{
