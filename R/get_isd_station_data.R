@@ -322,4 +322,15 @@ get_isd_station_data <- function(station_id,
     }
   }
   
+  data_attributes <-
+    c("AA1", "AB1", "AC1", "AD1", "AE1", "AG1", "AH1", "AI1", "AJ1",
+      "AK1", "AL1", "AM1", "AN1", "AO1", "AP1", "AU1", "AW1", "AX1",
+      "AY1", "AZ1", "CB1", "CF1", "CH1", "CI1", "CN1", "CN2", "CN3",
+      "CN4", "CR1", "CT1", "CU1", "CV1", "CW1", "CX1", "CO1", "CO2",
+      "ED1", "GA1", "GD1", "GF1", "GG1", "GH1", "GJ1", "GK1", "GL1",
+      "GM1", "GN1", "GO1", "GP1", "GQ1", "GR1", "HL1", "IA1", "IA2",
+      "IB1", "IB2", "IC1", "KA1", "KB1", "KC1", "KD1", "KE1", "KF1",
+      "KG1", "MA1", "MD1", "ME1", "MF1", "MG1", "MH1", "MK1", "MV1",
+      "MW1", "OA1", "OB1", "OC1", "OE1", "RH1", "SA1", "ST1", "UA1",
+      "UG1", "UG2", "WA1", "WD1", "WG1")
 }
