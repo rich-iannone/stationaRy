@@ -8,6 +8,7 @@
 #' @importFrom plyr round_any
 #' @import dplyr
 #' @import readr
+#' @import stringr
 #' @import lubridate
 #' @import downloader
 #' 
