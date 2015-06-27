@@ -333,4 +333,18 @@ get_isd_station_data <- function(station_id,
       "KG1", "MA1", "MD1", "ME1", "MF1", "MG1", "MH1", "MK1", "MV1",
       "MW1", "OA1", "OB1", "OC1", "OE1", "RH1", "SA1", "ST1", "UA1",
       "UG1", "UG2", "WA1", "WD1", "WG1")
+  
+  # Determine which additional parameters have been measured
+  for (i in 1:length(data_attributes)){
+    
+    if (i == 1){
+      data_attributes_counts <-
+        vector(mode = "numeric",
+               length = length(data_attributes))
+    }
+    
+    data_attributes_counts[i] <-
+      sum(str_detect(all_add_data, data_attributes[i]))
+  }
+  
 }
