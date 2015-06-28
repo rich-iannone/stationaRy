@@ -351,6 +351,22 @@ get_isd_station_data <- function(station_id,
   significant_params <- data_attributes[which(data_attributes_counts > 20)]
   
   # AA1 - liquid precipitation: period quantity, depth dimension
+  if (data_attributes[1] %in% significant_params){
+    
+    data_strings <- str_extract(add_data, paste0(data_attributes[1], ".*"))
+    
+    aa1_liq_precip_period_quantity_h <-
+      ifelse(!is.na(data_strings),
+             as.numeric(substr(data_strings, 4, 5)), NA)
+    
+    aa1_liq_precip_depth_dimension <-
+      ifelse(!is.na(data_strings),
+             as.numeric(substr(data_strings, 6, 9))/10, NA)
+    
+    aa1_liq_precip_condition_code <-
+      ifelse(!is.na(data_strings),
+             substr(data_strings, 10, 10), NA)
+  }
   
   # AB1 - liquid precipitation: monthly total
   
@@ -487,7 +503,7 @@ get_isd_station_data <- function(station_id,
   # MF1 - atmospheric pressure observation (STP/SLP)
   
   # MG1 - atmospheric pressure observation
-
+  
   # MH1 - atmospheric pressure observation for the month (1)
   
   # MH2 - atmospheric pressure observation for the month (2)
@@ -522,4 +538,4 @@ get_isd_station_data <- function(station_id,
   
   
   
-  }
+}
