@@ -347,4 +347,5 @@ get_isd_station_data <- function(station_id,
       sum(str_detect(all_add_data, data_attributes[i]))
   }
   
-}
+  # Filter those measured parameters and obtain string of identifiers
+  significant_params <- data_attributes[which(data_attributes_counts > 20)]
