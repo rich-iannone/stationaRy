@@ -50,9 +50,9 @@ to local standard time for the station's locale.
     can be approximated by \code{elev * 3.28084}}
   \item{wd}{The angle of wind direction, measured in a clockwise
     direction, between true north and the direction from which
-    the wind is blowing.  For example, \code{wd = 90} indicates the
-    wind is blowing from due east.  \code{wd = 225} indicates the
-    wind is blowing from the south west.  The minimum value is 1, and the
+    the wind is blowing. For example, \code{wd = 90} indicates the
+    wind is blowing from due east. \code{wd = 225} indicates the
+    wind is blowing from the south west. The minimum value is 1, and the
     maximum value is 360.}
   \item{ws}{Wind speed in meters per second.  Wind speed in feet per
     second can be estimated by \code{ws * 3.28084}}
@@ -60,7 +60,7 @@ to local standard time for the station's locale.
     or other obscuring phenomena amounting to at least 5/8 sky
     coverate.  Measured in meters.  Unlimited height (no obstruction)
     is denoted by the value 22000}
-  \item{temp}{Air temperature measured in degrees Celsius.  Conversions
+  \item{temp}{Air temperature measured in degrees Celsius. Conversions
     to degrees Farenheit may be calculated with
     \code{(temp * 9) / 5 + 32}}.
   \item{dew_point}{The temperature in degrees Celsius to which a
