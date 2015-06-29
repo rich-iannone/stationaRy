@@ -1,6 +1,6 @@
 <img src="inst/stationaRy_2x.png", width = 100%>
 
-Want some tools to acquire and process meteorological and air quality monitoring station data? Well, you've come to the right repo. So far, because this is merely the beginning, there's only a few functions that get you data. These are:
+Want some tools to acquire and process meteorological and air quality monitoring station data? Well, you've come to the right repo. So far there's only a few functions that get you data. These are:
 
 - `get_isd_stations`
 - `select_isd_station`
