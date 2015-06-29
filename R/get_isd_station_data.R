@@ -366,6 +366,12 @@ get_isd_station_data <- function(station_id,
     aa1_liq_precip_condition_code <-
       ifelse(!is.na(data_strings),
              substr(data_strings, 10, 10), NA)
+    
+    aa1 <-
+      data.frame(liq_precip_period_quantity = aa1_liq_precip_period_quantity_h,
+                 liq_precip_depth_dimension = aa1_liq_precip_depth_dimension,
+                 liq_precip_condition_code= aa1_liq_precip_condition_code,
+                 stringsAsFactors = FALSE)
   }
   
   # AB1 - liquid precipitation: monthly total
