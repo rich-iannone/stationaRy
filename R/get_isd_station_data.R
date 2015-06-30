@@ -733,6 +733,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # CN2 - hourly diagnostics
+    if (data_attributes[27] %in% significant_params){
+      
+      cn2 <-
+        get_df_from_category(category_key = "CN2",
+                             field_lengths = c(5, 1, 1, 5, 1, 1,
+                                               2, 1, 1),
+                             scale_factor = c(10, NA, NA, 10, NA, NA,
+                                              1, NA, NA),
+                             data_types = "nccnccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
