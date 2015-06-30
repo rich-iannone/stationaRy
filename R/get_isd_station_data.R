@@ -1081,6 +1081,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # IB2 - hourly surface temperature sensor
+    if (data_attributes[57] %in% significant_params){
+      
+      ib2 <-
+        get_df_from_category(category_key = "IB2",
+                             field_lengths = c(5, 1, 1, 4, 1, 1),
+                             scale_factor = c(10, NA, NA, 10, NA, NA),
+                             data_types = "nccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
