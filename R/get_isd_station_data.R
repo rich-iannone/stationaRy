@@ -530,6 +530,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AJ1 - snow depth
+    if (data_attributes[9] %in% significant_params){
+      
+      aj1 <-
+        get_df_from_category(category_key = "AK1",
+                             field_lengths = c(4, 1, 1, 6, 1, 1),
+                             scale_factor = c(1, NA, NA, 10, NA, NA),
+                             data_types = "nccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
