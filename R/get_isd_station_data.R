@@ -1173,6 +1173,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # KG1 - average dew point and wet bulb temperature
+    if (data_attributes[65] %in% significant_params){
+      
+      kg1 <-
+        get_df_from_category(category_key = "KG1",
+                             field_lengths = c(3, 1, 5, 1, 1),
+                             scale_factor = c(1, NA, 100, NA, NA),
+                             data_types = "ncncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
