@@ -1127,6 +1127,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # KC1 - extreme air temperature for the month
+    if (data_attributes[61] %in% significant_params){
+      
+      kc1 <-
+        get_df_from_category(category_key = "KC1",
+                             field_lengths = c(1, 1, 5, 6, 1),
+                             scale_factor = c(NA, NA, 10, NA, NA),
+                             data_types = "ccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
