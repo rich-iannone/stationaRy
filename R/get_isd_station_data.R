@@ -1000,6 +1000,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GP1 - modeled solar irradiance
+    if (data_attributes[50] %in% significant_params){
+      
+      gp1 <-
+        get_df_from_category(category_key = "GP1",
+                             field_lengths = c(4, 4, 2, 3, 4, 2,
+                                               3, 4, 2, 3),
+                             scale_factor = c(1, 1, NA, 1, 1, NA,
+                                              1, 1, NA, 1),
+                             data_types = "nncnncnncn",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
