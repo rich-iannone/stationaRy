@@ -1206,6 +1206,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # ME1 - geopotential height isobaric level
+    if (data_attributes[68] %in% significant_params){
+      
+      me1 <-
+        get_df_from_category(category_key = "ME1",
+                             field_lengths = c(1, 4, 1),
+                             scale_factor = c(NA, 1, NA),
+                             data_types = "cnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
