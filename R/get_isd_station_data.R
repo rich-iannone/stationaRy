@@ -1239,6 +1239,18 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # MH1 - atmospheric pressure observation - average station pressure
+    # for the month
+    if (data_attributes[71] %in% significant_params){
+      
+      mh1 <-
+        get_df_from_category(category_key = "MH1",
+                             field_lengths = c(5, 1, 5, 1),
+                             scale_factor = c(10, NA, 10, NA),
+                             data_types = "ncnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
