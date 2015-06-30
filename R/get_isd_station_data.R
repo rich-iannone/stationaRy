@@ -1342,6 +1342,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # SA1 - sea surface temperature observation
+    if (data_attributes[80] %in% significant_params){
+      
+      sa1 <-
+        get_df_from_category(category_key = "SA1",
+                             field_lengths = c(4, 1),
+                             scale_factor = c(10, NA),
+                             data_types = "nc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
