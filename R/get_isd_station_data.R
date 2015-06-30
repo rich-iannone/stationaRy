@@ -464,6 +464,17 @@ get_isd_station_data <- function(station_id,
       
     }
     
+    # AC1 - precipitation observation history
+    if (data_attributes[3] %in% significant_params){
+      
+      ac1 <-
+        get_df_from_category(category_key = "AC1",
+                             field_lengths = c(1, 1, 1),
+                             scale_factor = c(NA, NA, NA),
+                             data_types = "ccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
