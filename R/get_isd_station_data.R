@@ -652,6 +652,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AZ1 - past weather observation (3)
+    if (data_attributes[20] %in% significant_params){
+      
+      az1 <-
+        get_df_from_category(category_key = "AZ1",
+                             field_lengths = c(1, 1, 2, 1),
+                             scale_factor = c(NA, NA, 1, NA),
+                             data_types = "ccnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
