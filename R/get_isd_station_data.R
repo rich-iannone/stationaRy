@@ -1024,6 +1024,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GR1 - hourly extraterrestrial radiation
+    if (data_attributes[52] %in% significant_params){
+      
+      gr1 <-
+        get_df_from_category(category_key = "GR1",
+                             field_lengths = c(4, 4, 1, 4, 1),
+                             scale_factor = c(1, 10, NA, 10, NA),
+                             data_types = "nncnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
