@@ -989,6 +989,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GO1 - net solar radiation
+    if (data_attributes[49] %in% significant_params){
+      
+      go1 <-
+        get_df_from_category(category_key = "GO1",
+                             field_lengths = c(4, 4, 1, 4, 1, 4, 1),
+                             scale_factor = c(1, 1, NA, 1, NA, 1, NA),
+                             data_types = "nncncnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
