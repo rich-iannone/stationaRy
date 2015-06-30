@@ -919,6 +919,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GH1 - hourly solar radiation
+    if (data_attributes[43] %in% significant_params){
+      
+      gh1 <-
+        get_df_from_category(category_key = "GH1",
+                             field_lengths = c(5, 1, 1, 5, 1, 1,
+                                               5, 1, 1, 5, 1, 1),
+                             scale_factor = c(10, NA, NA, 10, NA, NA,
+                                              10, NA, NA, 10, NA, NA),
+                             data_types = "nccnccnccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
