@@ -908,6 +908,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GG1 - below station cloud layer
+    if (data_attributes[42] %in% significant_params){
+      
+      gg1 <-
+        get_df_from_category(category_key = "GG1",
+                             field_lengths = c(2, 1, 5, 1, 2, 1, 2, 1),
+                             scale_factor = c(NA, NA, 1, NA, NA, NA, NA, NA),
+                             data_types = "ccnccccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
