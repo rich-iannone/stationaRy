@@ -1116,6 +1116,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # KB1 - average air temperature
+    if (data_attributes[60] %in% significant_params){
+      
+      kb1 <-
+        get_df_from_category(category_key = "KB1",
+                             field_lengths = c(3, 1, 5, 1),
+                             scale_factor = c(10, NA, 10, NA),
+                             data_types = "ncnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
