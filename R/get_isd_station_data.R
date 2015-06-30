@@ -309,132 +309,149 @@ get_isd_station_data <- function(station_id,
     return(large_data_frame)
   }
   
-  data_attributes <-
-    c("AA1", "AB1", "AC1", "AD1", "AE1", "AG1", "AH1", "AI1", "AJ1",
-      "AK1", "AL1", "AM1", "AN1", "AO1", "AP1", "AU1", "AW1", "AX1",
-      "AY1", "AZ1", "CB1", "CF1", "CG1", "CH1", "CI1", "CN1", "CN2",
-      "CN3", "CN4", "CR1", "CT1", "CU1", "CV1", "CW1", "CX1", "CO1",
-      "CO2", "ED1", "GA1", "GD1", "GF1", "GG1", "GH1", "GJ1", "GK1",
-      "GL1", "GM1", "GN1", "GO1", "GP1", "GQ1", "GR1", "HL1", "IA1",
-      "IA2", "IB1", "IB2", "IC1", "KA1", "KB1", "KC1", "KD1", "KE1",
-      "KF1", "KG1", "MA1", "MD1", "ME1", "MF1", "MG1", "MH1", "MK1",
-      "MV1", "MW1", "OA1", "OB1", "OC1", "OE1", "RH1", "SA1", "ST1",
-      "UA1", "UG1", "UG2", "WA1", "WD1", "WG1")
-  
-  # Function for getting data from an additional data category
-  get_df_from_category <- function(category_key,
-                                   field_lengths,
-                                   scale_factor,
-                                   data_types,
-                                   add_data){
+  if (full_data == TRUE){
     
-    # Parse string of characters representing data types
-    if (class(data_types) == "character" &
-        length(data_types) == 1 &
-        all(unique(unlist(strsplit(data_types, ""))) %in% c("c", "n"))){
+    # Get additional data portions of records, exluding remarks
+    for (i in 1:length(data_files_downloaded)){
+      add_data <- 
+        readLines(file.path(temp_folder,
+                            data_files_downloaded[i]))
       
-      for (i in 1:nchar(data_types)){
-        
-        if (i == 1) subst_data_types <- vector(mode = "character")
-        
-        subst_data_types <- c(subst_data_types,
-                              ifelse(substr(data_types, i, i) == "n",
-                                     "numeric", "character"))
-        
-      }
-      
-      data_types <- subst_data_types
-    }
-    
-    data_strings <- str_extract(add_data, paste0(category_key, ".*"))
-    
-    for (i in 1:length(field_lengths)){
+      add_data <- unlist(str_extract_all(add_data, "ADD.*?REM"))
       
       if (i == 1){
-        df_from_category <-
-          as.data.frame(mat.or.vec(nr = length(data_strings),
-                                   nc = length(field_lengths)))
-        colnames(df_from_category) <- paste(tolower(category_key),
-                                            rep = 1:length(field_lengths),
-                                            sep = "_")
-        
-        substr_start <- 4
-        substr_end <- substr_start + (field_lengths[i] - 1)
+        all_add_data <- add_data
       }
       
       if (i > 1){
-        
-        substr_start <- substr_end + 1
-        substr_end <- substr_start + (field_lengths[i] - 1)
+        all_add_data <- c(all_add_data, add_data)
       }
-      
-      if (data_types[i] == "numeric"){
-        
-        for (j in 1:length(data_strings)){
-          
-          if (j == 1) data_column <- vector(mode = data_types[i])
-          
-          data_element <-
-            ifelse(!is.na(data_strings[j]),
-                   as.numeric(substr(data_strings[j],
-                                     substr_start,
-                                     substr_end))/scale_factor[i],
-                   NA)
-          data_column <- c(data_column, data_element)
-        }
-      }
-      
-      if (data_types[i] == "character"){
-        
-        for (j in 1:length(data_strings)){
-          
-          if (j == 1) data_column <- vector(mode = data_types[i])
-          
-          data_element <-
-            ifelse(!is.na(data_strings[j]),
-                   substr(data_strings[j],
-                          substr_start,
-                          substr_end),
-                   NA)
-          data_column <- c(data_column, data_element)
-        }
-      }
-      
-      df_from_category[,i] <- data_column
     }
     
-    return(df_from_category)
-  }
-  
-  # Determine which additional parameters have been measured
-  for (i in 1:length(data_attributes)){
+    data_attributes <-
+      c("AA1", "AB1", "AC1", "AD1", "AE1", "AG1", "AH1", "AI1", "AJ1",
+        "AK1", "AL1", "AM1", "AN1", "AO1", "AP1", "AU1", "AW1", "AX1",
+        "AY1", "AZ1", "CB1", "CF1", "CG1", "CH1", "CI1", "CN1", "CN2",
+        "CN3", "CN4", "CR1", "CT1", "CU1", "CV1", "CW1", "CX1", "CO1",
+        "CO2", "ED1", "GA1", "GD1", "GF1", "GG1", "GH1", "GJ1", "GK1",
+        "GL1", "GM1", "GN1", "GO1", "GP1", "GQ1", "GR1", "HL1", "IA1",
+        "IA2", "IB1", "IB2", "IC1", "KA1", "KB1", "KC1", "KD1", "KE1",
+        "KF1", "KG1", "MA1", "MD1", "ME1", "MF1", "MG1", "MH1", "MK1",
+        "MV1", "MW1", "OA1", "OB1", "OC1", "OE1", "RH1", "SA1", "ST1",
+        "UA1", "UG1", "UG2", "WA1", "WD1", "WG1")
     
-    if (i == 1){
-      data_attributes_counts <-
-        vector(mode = "numeric",
-               length = length(data_attributes))
+    # Function for getting data from an additional data category
+    get_df_from_category <- function(category_key,
+                                     field_lengths,
+                                     scale_factor,
+                                     data_types,
+                                     add_data){
+      
+      # Parse string of characters representing data types
+      if (class(data_types) == "character" &
+          length(data_types) == 1 &
+          all(unique(unlist(strsplit(data_types, ""))) %in% c("c", "n"))){
+        
+        for (i in 1:nchar(data_types)){
+          
+          if (i == 1) subst_data_types <- vector(mode = "character")
+          
+          subst_data_types <- c(subst_data_types,
+                                ifelse(substr(data_types, i, i) == "n",
+                                       "numeric", "character"))
+          
+        }
+        
+        data_types <- subst_data_types
+      }
+      
+      data_strings <- str_extract(add_data, paste0(category_key, ".*"))
+      
+      for (i in 1:length(field_lengths)){
+        
+        if (i == 1){
+          df_from_category <-
+            as.data.frame(mat.or.vec(nr = length(data_strings),
+                                     nc = length(field_lengths)))
+          colnames(df_from_category) <- paste(tolower(category_key),
+                                              rep = 1:length(field_lengths),
+                                              sep = "_")
+          
+          substr_start <- 4
+          substr_end <- substr_start + (field_lengths[i] - 1)
+        }
+        
+        if (i > 1){
+          
+          substr_start <- substr_end + 1
+          substr_end <- substr_start + (field_lengths[i] - 1)
+        }
+        
+        if (data_types[i] == "numeric"){
+          
+          for (j in 1:length(data_strings)){
+            
+            if (j == 1) data_column <- vector(mode = data_types[i])
+            
+            data_element <-
+              ifelse(!is.na(data_strings[j]),
+                     as.numeric(substr(data_strings[j],
+                                       substr_start,
+                                       substr_end))/scale_factor[i],
+                     NA)
+            data_column <- c(data_column, data_element)
+          }
+        }
+        
+        if (data_types[i] == "character"){
+          
+          for (j in 1:length(data_strings)){
+            
+            if (j == 1) data_column <- vector(mode = data_types[i])
+            
+            data_element <-
+              ifelse(!is.na(data_strings[j]),
+                     substr(data_strings[j],
+                            substr_start,
+                            substr_end),
+                     NA)
+            data_column <- c(data_column, data_element)
+          }
+        }
+        
+        df_from_category[,i] <- data_column
+      }
+      
+      return(df_from_category)
     }
     
-    data_attributes_counts[i] <-
-      sum(str_detect(all_add_data, data_attributes[i]))
-  }
-  
-  # Filter those measured parameters and obtain string of identifiers
-  significant_params <- data_attributes[which(data_attributes_counts > 20)]
-  
-  # AA1 - liquid precipitation: period quantity, depth dimension
-  if (data_attributes[1] %in% significant_params){
+    # Determine which additional parameters have been measured
+    for (i in 1:length(data_attributes)){
+      
+      if (i == 1){
+        data_attributes_counts <-
+          vector(mode = "numeric",
+                 length = length(data_attributes))
+      }
+      
+      data_attributes_counts[i] <-
+        sum(str_detect(all_add_data, data_attributes[i]))
+    }
     
-    aa1 <-
-      get_df_from_category(category_key = "AA1",
-                           field_lengths = c(2, 4, 1, 1),
-                           scale_factor = c(1, 10, NA, NA),
-                           data_types = "nncc",
-                           add_data = all_add_data)
-  }
-  
-  # AB1 - liquid precipitation: monthly total
-  if (data_attributes[2] %in% significant_params){
+    # Filter those measured parameters and obtain string of identifiers
+    significant_params <- data_attributes[which(data_attributes_counts > 20)]
+    
+    # AA1 - liquid precipitation: period quantity, depth dimension
+    if (data_attributes[1] %in% significant_params){
+      
+      aa1 <-
+        get_df_from_category(category_key = "AA1",
+                             field_lengths = c(2, 4, 1, 1),
+                             scale_factor = c(1, 10, NA, NA),
+                             data_types = "nncc",
+                             add_data = all_add_data)
+    }
+    
     
     ab1 <-
       get_df_from_category(category_key = "AB1",
