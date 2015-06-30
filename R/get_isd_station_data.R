@@ -1296,6 +1296,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # OB1 - hourly/sub-hourly wind section
+    if (data_attributes[76] %in% significant_params){
+      
+      ob1 <-
+        get_df_from_category(category_key = "OB1",
+                             field_lengths = c(3, 4, 1, 1, 3, 1, 1,
+                                               5, 1, 1, 5, 1, 1),
+                             scale_factor = c(1, 10, NA, NA, 1, NA, NA,
+                                              100, NA, NA, 100, NA, NA),
+                             data_types = "nnccnccnccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
