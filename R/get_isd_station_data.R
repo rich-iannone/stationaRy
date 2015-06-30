@@ -1366,6 +1366,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # UA1 - wave measurement
+    if (data_attributes[82] %in% significant_params){
+      
+      ua1 <-
+        get_df_from_category(category_key = "UA1",
+                             field_lengths = c(1, 2, 3, 1, 2, 1),
+                             scale_factor = c(NA, 1, 10, NA, NA, NA),
+                             data_types = "cnnccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
