@@ -720,6 +720,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # CN1 - hourly battery voltage
+    if (data_attributes[26] %in% significant_params){
+      
+      cn1 <-
+        get_df_from_category(category_key = "CN1",
+                             field_lengths = c(4, 1, 1, 4, 1, 1,
+                                               4, 1, 1),
+                             scale_factor = c(10, NA, NA, 10, NA, NA,
+                                              10, NA, NA),
+                             data_types = "nccnccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
