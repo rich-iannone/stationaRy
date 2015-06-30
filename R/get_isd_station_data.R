@@ -1399,6 +1399,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # WA1 - platform ice accretion
+    if (data_attributes[85] %in% significant_params){
+      
+      wa1 <-
+        get_df_from_category(category_key = "WA1",
+                             field_lengths = c(1, 3, 1, 1),
+                             scale_factor = c(NA, 10, NA, NA),
+                             data_types = "cncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
