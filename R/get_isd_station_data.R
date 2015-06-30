@@ -1068,6 +1068,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # IB1 - hourly surface temperature
+    if (data_attributes[56] %in% significant_params){
+      
+      ib1 <-
+        get_df_from_category(category_key = "IB1",
+                             field_lengths = c(5, 1, 1, 5, 1, 1,
+                                               5, 1, 1, 4, 1, 1),
+                             scale_factor = c(10, NA, NA, 10, NA, NA,
+                                              10, NA, NA, 10, NA, NA),
+                             data_types = "nccnccnccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
