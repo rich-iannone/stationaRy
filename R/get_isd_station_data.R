@@ -976,6 +976,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GN1 - solar radiation
+    if (data_attributes[48] %in% significant_params){
+      
+      gn1 <-
+        get_df_from_category(category_key = "GN1",
+                             field_lengths = c(4, 4, 2, 1, 4, 2, 1,
+                                               4, 2, 1, 4, 1),
+                             scale_factor = c(1, 1, NA, NA, 1, NA, NA,
+                                              1, NA, NA, 1, NA),
+                             data_types = "nnccnccnccnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
