@@ -1285,6 +1285,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # OA1 - supplementary wine observation 
+    if (data_attributes[75] %in% significant_params){
+      
+      oa1 <-
+        get_df_from_category(category_key = "OA1",
+                             field_lengths = c(1, 2, 4, 1),
+                             scale_factor = c(NA, 1, 10, NA),
+                             data_types = "cnnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
