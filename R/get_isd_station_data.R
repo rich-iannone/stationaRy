@@ -563,6 +563,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AM1 - snow accumulation greatest amount in 24 hours, for the month
+    if (data_attributes[12] %in% significant_params){
+      
+      am1 <-
+        get_df_from_category(category_key = "AM1",
+                             field_lengths = c(4, 1, 4, 4, 4, 1),
+                             scale_factor = c(10, NA, NA, NA, NA, NA),
+                             data_types = "nccccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
