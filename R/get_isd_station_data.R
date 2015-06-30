@@ -1195,6 +1195,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # MD1 - atmospheric pressure change
+    if (data_attributes[67] %in% significant_params){
+      
+      md1 <-
+        get_df_from_category(category_key = "MD1",
+                             field_lengths = c(1, 1, 3, 1, 4, 1),
+                             scale_factor = c(NA, NA, 10, NA, 10, NA),
+                             data_types = "ccncnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
