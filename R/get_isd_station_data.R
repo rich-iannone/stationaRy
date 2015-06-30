@@ -1251,6 +1251,18 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # MK1 - atmospheric pressure observation - maximum sea level pressure
+    # for the month
+    if (data_attributes[72] %in% significant_params){
+      
+      mk1 <-
+        get_df_from_category(category_key = "MK1",
+                             field_lengths = c(5, 6, 1, 5, 6, 1),
+                             scale_factor = c(10, NA, NA, 10, NA, NA),
+                             data_types = "nccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
