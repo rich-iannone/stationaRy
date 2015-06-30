@@ -497,6 +497,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AG1 - precipitation estimated observation
+    if (data_attributes[6] %in% significant_params){
+      
+      ag1 <-
+        get_df_from_category(category_key = "AG1",
+                             field_lengths = c(1, 3),
+                             scale_factor = c(NA, 1),
+                             data_types = "cn",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
