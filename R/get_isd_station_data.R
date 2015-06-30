@@ -1320,6 +1320,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # OE1 - summary of day wind observation
+    if (data_attributes[78] %in% significant_params){
+      
+      oe1 <-
+        get_df_from_category(category_key = "OE1",
+                             field_lengths = c(1, 2, 5, 3, 4, 1),
+                             scale_factor = c(NA, 1, 100, 1, 10, NA),
+                             data_types = "cnnnnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
