@@ -1184,6 +1184,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # MA1 - atmospheric pressure observation
+    if (data_attributes[66] %in% significant_params){
+      
+      ma1 <-
+        get_df_from_category(category_key = "MA1",
+                             field_lengths = c(5, 1, 5, 1),
+                             scale_factor = c(10, NA, 10, NA),
+                             data_types = "ncnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
