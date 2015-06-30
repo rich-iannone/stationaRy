@@ -840,6 +840,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # CO1 - network metadata
+    if (data_attributes[36] %in% significant_params){
+      
+      co1 <-
+        get_df_from_category(category_key = "CO1",
+                             field_lengths = c(2, 3),
+                             scale_factor = c(1, 1),
+                             data_types = "nn",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
