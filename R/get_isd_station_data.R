@@ -884,6 +884,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GD1 - sky cover summation state
+    if (data_attributes[40] %in% significant_params){
+      
+      gd1 <-
+        get_df_from_category(category_key = "GD1",
+                             field_lengths = c(1, 2, 1, 6, 1, 1),
+                             scale_factor = c(NA, NA, NA, 1, NA, NA),
+                             data_types = "cccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
