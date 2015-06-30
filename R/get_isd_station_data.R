@@ -344,7 +344,6 @@ get_isd_station_data <- function(station_id,
     # Parse string of characters representing data types
     if (class(data_types) == "character" &
         length(data_types) == 1 &
-        nchar(data_types) == length(field_lengths) &
         all(unique(unlist(strsplit(data_types, ""))) %in% c("c", "n"))){
       
       for (i in 1:nchar(data_types)){
