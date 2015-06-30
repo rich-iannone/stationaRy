@@ -641,6 +641,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AY1 - past weather observation (2)
+    if (data_attributes[19] %in% significant_params){
+      
+      ay1 <-
+        get_df_from_category(category_key = "AY1",
+                             field_lengths = c(1, 1, 2, 1),
+                             scale_factor = c(NA, NA, 1, NA),
+                             data_types = "ccnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
