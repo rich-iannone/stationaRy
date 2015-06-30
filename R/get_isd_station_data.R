@@ -486,6 +486,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AE1 - liquid precipitation, number of days with specific amounts, for the month
+    if (data_attributes[5] %in% significant_params){
+      
+      ae1 <-
+        get_df_from_category(category_key = "AE1",
+                             field_lengths = c(2, 1, 2, 1, 2, 1, 2, 1),
+                             scale_factor = rep(NA, 8),
+                             data_types = "cccccccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
