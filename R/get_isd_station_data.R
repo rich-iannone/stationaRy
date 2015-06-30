@@ -873,6 +873,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GA1 - sky cover layer
+    if (data_attributes[39] %in% significant_params){
+      
+      ga1 <-
+        get_df_from_category(category_key = "GA1",
+                             field_lengths = c(2, 1, 6, 1, 2, 1),
+                             scale_factor = c(NA, NA, 1, NA, NA, NA),
+                             data_types = "ccnccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
