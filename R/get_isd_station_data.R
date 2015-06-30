@@ -965,6 +965,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GM1 - solar irradiance
+    if (data_attributes[47] %in% significant_params){
+      
+      gm1 <-
+        get_df_from_category(category_key = "GM1",
+                             field_lengths = c(),
+                             scale_factor = c(),
+                             data_types = "",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
