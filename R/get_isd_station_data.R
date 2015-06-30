@@ -1331,6 +1331,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # RH1 - relative humidity
+    if (data_attributes[79] %in% significant_params){
+      
+      rh1 <-
+        get_df_from_category(category_key = "RH1",
+                             field_lengths = c(3, 1, 3, 1, 1),
+                             scale_factor = c(1, NA, 1, NA, NA),
+                             data_types = "ncncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
