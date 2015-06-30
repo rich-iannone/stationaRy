@@ -862,6 +862,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # ED1 - runway visual range
+    if (data_attributes[38] %in% significant_params){
+      
+      ed1 <-
+        get_df_from_category(category_key = "ED1",
+                             field_lengths = c(2, 1, 4, 1),
+                             scale_factor = c(0.1, NA, 1, NA),
+                             data_types = "ncnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
