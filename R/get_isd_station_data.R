@@ -1263,6 +1263,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # MV1 - present weather in vicinity observation
+    if (data_attributes[73] %in% significant_params){
+      
+      mv1 <-
+        get_df_from_category(category_key = "MV1",
+                             field_lengths = c(2, 1),
+                             scale_factor = c(NA, NA),
+                             data_types = "cc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
