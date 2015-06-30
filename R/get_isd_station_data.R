@@ -5,6 +5,8 @@
 #' WBAN numbers, separated by a hyphen.
 #' @param startyear the starting year for the collected data.
 #' @param endyear the ending year for the collected data.
+#' @param full_data include additional meteorological data found in the
+#' dataset's additional data section?
 #' @importFrom plyr round_any
 #' @import dplyr
 #' @import readr
