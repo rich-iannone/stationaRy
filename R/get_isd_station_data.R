@@ -585,6 +585,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AO1 - liquid precipitation
+    if (data_attributes[14] %in% significant_params){
+      
+      ao1 <-
+        get_df_from_category(category_key = "AO1",
+                             field_lengths = c(2, 4, 1, 1),
+                             scale_factor = c(1, 10, NA, NA),
+                             data_types = "nncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
