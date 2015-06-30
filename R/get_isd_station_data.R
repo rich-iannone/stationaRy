@@ -696,6 +696,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # CH1 - hourly/subhourly RH/temperatures
+    if (data_attributes[24] %in% significant_params){
+      
+      ch1 <-
+        get_df_from_category(category_key = "CH1",
+                             field_lengths = c(2, 5, 1, 1, 4, 1, 1),
+                             scale_factor = c(1, 10, NA, NA, 10, NA, NA),
+                             data_types = "nnccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
