@@ -1149,6 +1149,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # KE1 - extreme temperatures, number of days exceeding criteria, for the month
+    if (data_attributes[63] %in% significant_params){
+      
+      ke1 <-
+        get_df_from_category(category_key = "KE1",
+                             field_lengths = c(2, 1, 2, 1,
+                                               2, 1, 2, 1),
+                             scale_factor = c(1, NA, 1, NA,
+                                              1, NA, 1, NA),
+                             data_types = "ncncncnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
