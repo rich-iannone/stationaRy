@@ -541,6 +541,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AK1 - snow depth greatest depth on the ground, for the month
+    if (data_attributes[10] %in% significant_params){
+      
+      ak1 <-
+        get_df_from_category(category_key = "AK1",
+                             field_lengths = c(4, 1, 6, 1),
+                             scale_factor = c(1, NA, NA, NA),
+                             data_types = "nccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
