@@ -1423,6 +1423,18 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # WG1 - water surface ice historical observation
+    if (data_attributes[87] %in% significant_params){
+      
+      wg1 <-
+        get_df_from_category(category_key = "WG1",
+                             field_lengths = c(2, 2, 2, 2, 2, 1),
+                             scale_factor = c(NA, 1, NA, NA, NA, NA),
+                             data_types = "cncccc",
+                             add_data = all_add_data)
+    }
+    
+    
     
     
   }
