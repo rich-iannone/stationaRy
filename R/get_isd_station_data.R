@@ -685,6 +685,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # CG1 - subhourly observed liquid precipitation: primary sensor
+    if (data_attributes[23] %in% significant_params){
+      
+      cg1 <-
+        get_df_from_category(category_key = "CG1",
+                             field_lengths = c(6, 1, 1),
+                             scale_factor = c(10, NA, NA),
+                             data_types = "ncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
