@@ -1092,6 +1092,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # IC1 - ground surface observation - pan evaporation
+    if (data_attributes[58] %in% significant_params){
+      
+      ic1 <-
+        get_df_from_category(category_key = "IC1",
+                             field_lengths = c(2, 4, 1, 1, 3, 1, 1,
+                                               4, 1, 1, 4, 1, 1),
+                             scale_factor = c(1, 1, NA, NA, 100, NA, NA,
+                                              10, NA, NA, 10, NA, NA),
+                             data_types = "nnccnccnccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
