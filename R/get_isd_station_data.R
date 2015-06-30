@@ -1162,6 +1162,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # KF1 - hourly calculated temperature
+    if (data_attributes[64] %in% significant_params){
+      
+      kf1 <-
+        get_df_from_category(category_key = "KF1",
+                             field_lengths = c(5, 1),
+                             scale_factor = c(10, NA),
+                             data_types = "nc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
