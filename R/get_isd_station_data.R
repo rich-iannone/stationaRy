@@ -954,6 +954,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GL1 - sunshine observation for the month
+    if (data_attributes[46] %in% significant_params){
+      
+      gl1 <-
+        get_df_from_category(category_key = "GL1",
+                             field_lengths = c(5, 1),
+                             scale_factor = c(1, NA),
+                             data_types = "nc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
