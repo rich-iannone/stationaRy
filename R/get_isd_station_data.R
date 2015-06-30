@@ -1377,6 +1377,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # UG1 - wave measurement primary swell
+    if (data_attributes[83] %in% significant_params){
+      
+      ug1 <-
+        get_df_from_category(category_key = "UG1",
+                             field_lengths = c(2, 3, 3, 1),
+                             scale_factor = c(1, 10, 1, NA),
+                             data_types = "nnnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
