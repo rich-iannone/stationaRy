@@ -1035,6 +1035,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # HL1 - hail data
+    if (data_attributes[53] %in% significant_params){
+      
+      hl1 <-
+        get_df_from_category(category_key = "HL1",
+                             field_lengths = c(3, 1),
+                             scale_factor = c(10, NA),
+                             data_types = "nc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
