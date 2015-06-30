@@ -1057,6 +1057,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # IA2 - ground surface observation
+    if (data_attributes[55] %in% significant_params){
+      
+      ia2 <-
+        get_df_from_category(category_key = "IA2",
+                             field_lengths = c(3, 5, 1),
+                             scale_factor = c(10, 10, NA),
+                             data_types = "nnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
