@@ -943,6 +943,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GK1 - sunshine observation (2)
+    if (data_attributes[45] %in% significant_params){
+      
+      gk1 <-
+        get_df_from_category(category_key = "GK1",
+                             field_lengths = c(3, 1),
+                             scale_factor = c(1, NA),
+                             data_types = "nc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
