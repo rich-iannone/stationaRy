@@ -1309,6 +1309,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # OC1 - wind gust observation
+    if (data_attributes[77] %in% significant_params){
+      
+      oc1 <-
+        get_df_from_category(category_key = "OC1",
+                             field_lengths = c(4, 1),
+                             scale_factor = c(10, NA),
+                             data_types = "nc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
