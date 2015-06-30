@@ -1013,6 +1013,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GQ1 - hourly solar angle
+    if (data_attributes[51] %in% significant_params){
+      
+      gq1 <-
+        get_df_from_category(category_key = "GQ1",
+                             field_lengths = c(),
+                             scale_factor = c(),
+                             data_types = "",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
