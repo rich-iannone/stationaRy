@@ -552,6 +552,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AL1 - snow accumulation
+    if (data_attributes[11] %in% significant_params){
+      
+      al1 <-
+        get_df_from_category(category_key = "AL1",
+                             field_lengths = c(2, 3, 1, 1),
+                             scale_factor = c(1, 1, NA, NA),
+                             data_types = "nncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
