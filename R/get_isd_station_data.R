@@ -607,6 +607,18 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AU1 - present weather observation
+    if (data_attributes[16] %in% significant_params){
+      
+      au1 <-
+        get_df_from_category(category_key = "AU1",
+                             field_lengths = c(1, 1, 2, 1, 1, 1, 1),
+                             scale_factor = c(NA, NA, NA, NA,
+                                              NA, NA, NA),
+                             data_types = "ccccccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
