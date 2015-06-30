@@ -674,6 +674,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # CF1 - hourly fan speed
+    if (data_attributes[22] %in% significant_params){
+      
+      cf1 <-
+        get_df_from_category(category_key = "CF1",
+                             field_lengths = c(4, 1, 1),
+                             scale_factor = c(10, NA, NA),
+                             data_types = "ncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
