@@ -475,6 +475,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AD1 - liquid precipitation, greatest amount in 24 hours, for the month
+    if (data_attributes[4] %in% significant_params){
+      
+      ad1 <-
+        get_df_from_category(category_key = "AD1",
+                             field_lengths = c(5, 1, 4, 4, 4, 1),
+                             scale_factor = c(10, NA, NA, NA, NA, NA),
+                             data_types = "nccccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
