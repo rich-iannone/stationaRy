@@ -452,6 +452,18 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AB1 - liquid precipitation: monthly total
+    if (data_attributes[2] %in% significant_params){
+      
+      ab1 <-
+        get_df_from_category(category_key = "AB1",
+                             field_lengths = c(5, 1, 1),
+                             scale_factor = c(10, NA, NA),
+                             data_types = "ncc",
+                             add_data = all_add_data)
+      
+    }
+    
     
     
   }
