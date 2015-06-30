@@ -334,6 +334,73 @@ get_isd_station_data <- function(station_id,
       "MV1", "MW1", "OA1", "OB1", "OC1", "OE1", "RH1", "SA1", "ST1",
       "UA1", "UG1", "UG2", "WA1", "WD1", "WG1")
   
+  # Function for getting data from an additional data category
+  get_df_from_category <- function(category_key,
+                                   field_lengths,
+                                   scale_factor,
+                                   data_types,
+                                   add_data){
+    
+    data_strings <- str_extract(add_data, paste0(category_key, ".*"))
+    
+    for (i in 1:length(field_lengths)){
+      
+      if (i == 1){
+        df_from_category <-
+          as.data.frame(mat.or.vec(nr = length(data_strings),
+                                   nc = length(field_lengths)))
+        colnames(df_from_category) <- paste(tolower(category_key),
+                                            rep = 1:length(field_lengths),
+                                            sep = "_")
+        
+        substr_start <- 4
+        substr_end <- substr_start + (field_lengths[i] - 1)
+      }
+      
+      if (i > 1){
+        
+        substr_start <- substr_end + 1
+        substr_end <- substr_start + (field_lengths[i] - 1)
+      }
+      
+      if (data_types[i] == "numeric"){
+        
+        for (j in 1:length(data_strings)){
+          
+          if (j == 1) data_column <- vector(mode = data_types[i])
+          
+          data_element <-
+            ifelse(!is.na(data_strings[j]),
+                   as.numeric(substr(data_strings[j],
+                                     substr_start,
+                                     substr_end))/scale_factor[i],
+                   NA)
+          data_column <- c(data_column, data_element)
+        }
+      }
+      
+      if (data_types[i] == "character"){
+        
+        for (j in 1:length(data_strings)){
+          
+          if (j == 1) data_column <- vector(mode = data_types[i])
+          
+          data_element <-
+            ifelse(!is.na(data_strings[j]),
+                   substr(data_strings[j],
+                          substr_start,
+                          substr_end),
+                   NA)
+          data_column <- c(data_column, data_element)
+        }
+      }
+      
+      df_from_category[,i] <- data_column
+    }
+    
+    return(df_from_category)
+  }
+  
   # Determine which additional parameters have been measured
   for (i in 1:length(data_attributes)){
     
