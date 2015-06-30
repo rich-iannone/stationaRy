@@ -1138,6 +1138,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # KD1 - heating/cooling degree days
+    if (data_attributes[62] %in% significant_params){
+      
+      kd1 <-
+        get_df_from_category(category_key = "KD1",
+                             field_lengths = c(3, 1, 4, 1),
+                             scale_factor = c(1, NA, 1, NA),
+                             data_types = "ncnc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
