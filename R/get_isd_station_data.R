@@ -803,6 +803,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # CV1 - hourly temperature extremes
+    if (data_attributes[33] %in% significant_params){
+      
+      cv1 <-
+        get_df_from_category(category_key = "CV1",
+                             field_lengths = c(5, 1, 1, 4, 1, 1,
+                                               5, 1, 1, 4, 1, 1),
+                             scale_factor = c(10, NA, NA, NA, NA, NA,
+                                              10, NA, NA, NA, NA, NA),
+                             data_types = "ncccccnccccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
