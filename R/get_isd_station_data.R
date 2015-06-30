@@ -574,6 +574,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AN1 - snow accumulation for the month
+    if (data_attributes[13] %in% significant_params){
+      
+      an1 <-
+        get_df_from_category(category_key = "AN1",
+                             field_lengths = c(3, 4, 1, 1),
+                             scale_factor = c(1, 10, NA, NA),
+                             data_types = "nncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
