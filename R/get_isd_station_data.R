@@ -341,6 +341,25 @@ get_isd_station_data <- function(station_id,
                                    data_types,
                                    add_data){
     
+    # Parse string of characters representing data types
+    if (class(data_types) == "character" &
+        length(data_types) == 1 &
+        nchar(data_types) == length(field_lengths) &
+        all(unique(unlist(strsplit(data_types, ""))) %in% c("c", "n"))){
+      
+      for (i in 1:nchar(data_types)){
+        
+        if (i == 1) subst_data_types <- vector(mode = "character")
+        
+        subst_data_types <- c(subst_data_types,
+                              ifelse(substr(data_types, i, i) == "n",
+                                     "numeric", "character"))
+        
+      }
+      
+      data_types <- subst_data_types
+    }
+    
     data_strings <- str_extract(add_data, paste0(category_key, ".*"))
     
     for (i in 1:length(field_lengths)){
