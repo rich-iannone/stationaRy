@@ -304,23 +304,9 @@ get_isd_station_data <- function(station_id,
   large_data_frame <- filter(large_data_frame, year >= startyear &
                                year <= endyear)
   
-  return(large_data_frame)
-  
-  # Get additional data portions of records, exluding remarks
-  for (i in 1:length(data_files_downloaded)){
-    add_data <- 
-      readLines(file.path(temp_folder,
-                          data_files_downloaded[i]))
+  if (full_data == FALSE){
     
-    add_data <- unlist(str_extract_all(add_data, "ADD.*?REM"))
-    
-    if (i == 1){
-      all_add_data <- add_data
-    }
-    
-    if (i > 1){
-      all_add_data <- c(all_add_data, add_data)
-    }
+    return(large_data_frame)
   }
   
   data_attributes <-
