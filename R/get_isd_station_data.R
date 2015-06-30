@@ -508,6 +508,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # AH1 - liquid precipitation maximum short duration, for the month (1)
+    if (data_attributes[7] %in% significant_params){
+      
+      ah1 <-
+        get_df_from_category(category_key = "AH1",
+                             field_lengths = c(3, 4, 1, 6, 1),
+                             scale_factor = c(1, 10, NA, NA, NA),
+                             data_types = "nnccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
