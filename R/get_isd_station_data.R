@@ -1105,6 +1105,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # KA1 - temperature data
+    if (data_attributes[59] %in% significant_params){
+      
+      ka1 <-
+        get_df_from_category(category_key = "KA1",
+                             field_lengths = c(),
+                             scale_factor = c(),
+                             data_types = "",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
