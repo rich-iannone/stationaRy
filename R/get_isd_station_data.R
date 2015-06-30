@@ -851,6 +851,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # CO2 - US cooperative network element time offset
+    if (data_attributes[37] %in% significant_params){
+      
+      co2 <-
+        get_df_from_category(category_key = "CO2",
+                             field_lengths = c(3, 5),
+                             scale_factor = c(NA, 10),
+                             data_types = "cn",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
