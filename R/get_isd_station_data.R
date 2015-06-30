@@ -827,6 +827,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # CX1 - hourly geonor vibrating wire summary
+    if (data_attributes[35] %in% significant_params){
+      
+      cx1 <-
+        get_df_from_category(category_key = "CX1",
+                             field_lengths = c(6, 1, 1, 4, 1, 1,
+                                               4, 1, 1, 4, 1, 1),
+                             scale_factor = c(10, NA, NA, 1, NA, NA,
+                                              1, NA, NA, 1, NA, NA),
+                             data_types = "nccnccnccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
