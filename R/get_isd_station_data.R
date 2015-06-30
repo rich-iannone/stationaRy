@@ -757,6 +757,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # CN4 - secondary hourly diagnostics (2)
+    if (data_attributes[29] %in% significant_params){
+      
+      cn4 <-
+        get_df_from_category(category_key = "CN4",
+                             field_lengths = c(1, 1, 1, 1, 1, 1,
+                                               3, 1, 1, 3, 1, 1),
+                             scale_factor = c(NA, NA, NA, NA, NA, NA,
+                                              10, NA, NA, 10, NA, NA),
+                             data_types = "ccccccnccncc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
