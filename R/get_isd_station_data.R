@@ -895,6 +895,19 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # GF1 - sky condition observation
+    if (data_attributes[41] %in% significant_params){
+      
+      gf1 <-
+        get_df_from_category(category_key = "GF1",
+                             field_lengths = c(2, 2, 1, 2, 1, 2, 1,
+                                               5, 1, 2, 1, 2, 1),
+                             scale_factor = c(NA, NA, NA, NA, NA, NA, NA,
+                                              1, NA, NA, NA, NA, NA),
+                             data_types = "cccccccnccccc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
