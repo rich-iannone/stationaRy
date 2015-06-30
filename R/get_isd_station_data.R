@@ -1046,6 +1046,17 @@ get_isd_station_data <- function(station_id,
                              add_data = all_add_data)
     }
     
+    # IA1 - ground surface data
+    if (data_attributes[54] %in% significant_params){
+      
+      ia1 <-
+        get_df_from_category(category_key = "IA1",
+                             field_lengths = c(2, 1),
+                             scale_factor = c(NA, NA),
+                             data_types = "cc",
+                             add_data = all_add_data)
+    }
+    
     
     
   }
