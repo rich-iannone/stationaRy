@@ -302,11 +302,11 @@ get_isd_station_data <- function(station_id,
   # if 'gmt_offset' is negative, subtract the added year from 'endyear'
   if (gmt_offset < 0 & year(Sys.time()) != endyear) endyear <- endyear - 1
   
-  # Filter data frame to only include data for requested years
-  large_data_frame <- filter(large_data_frame, year >= startyear &
-                               year <= endyear)
-  
   if (full_data == FALSE){
+    
+    # Filter data frame to only include data for requested years
+    large_data_frame <- filter(large_data_frame, year >= startyear &
+                                 year <= endyear)
     
     return(large_data_frame)
   }
