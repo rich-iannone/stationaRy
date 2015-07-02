@@ -452,7 +452,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AB1 - liquid precipitation: monthly total
@@ -465,7 +465,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AC1 - precipitation observation history
@@ -478,7 +478,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AD1 - liquid precipitation, greatest amount in 24 hours, for the month
@@ -491,7 +491,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AE1 - liquid precipitation, number of days with specific amounts, for the month
@@ -504,7 +504,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cccccccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AG1 - precipitation estimated observation
@@ -517,7 +517,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cn",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AH1 - liquid precipitation maximum short duration, for the month (1)
@@ -530,7 +530,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nnccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AI1 - liquid precipitation maximum short duration, for the month (2)
@@ -543,7 +543,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AJ1 - snow depth
@@ -556,7 +556,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AK1 - snow depth greatest depth on the ground, for the month
@@ -569,7 +569,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AL1 - snow accumulation
@@ -582,7 +582,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AM1 - snow accumulation greatest amount in 24 hours, for the month
@@ -595,7 +595,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AN1 - snow accumulation for the month
@@ -608,7 +608,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AO1 - liquid precipitation
@@ -621,7 +621,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AP1 - 15-minute liquid precipitation
@@ -634,7 +634,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AU1 - present weather observation
@@ -648,7 +648,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ccccccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AW1 - present weather observation 
@@ -661,7 +661,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AX1 - past weather observation (1)
@@ -674,7 +674,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ccnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AY1 - past weather observation (2)
@@ -687,7 +687,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ccnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # AZ1 - past weather observation (3)
@@ -700,7 +700,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ccnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CB1 - subhourly observed liquid precipitation: secondary sensor
@@ -713,7 +713,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CF1 - hourly fan speed
@@ -726,7 +726,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CG1 - subhourly observed liquid precipitation: primary sensor
@@ -739,7 +739,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CH1 - hourly/subhourly RH/temperatures
@@ -752,7 +752,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nnccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CI1 - hourly RH/temperatures
@@ -767,7 +767,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccnccnccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CN1 - hourly battery voltage
@@ -782,7 +782,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccnccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CN2 - hourly diagnostics
@@ -797,7 +797,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccnccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CN3 - secondary hourly diagnostics (1)
@@ -810,7 +810,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CN4 - secondary hourly diagnostics (2)
@@ -825,7 +825,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ccccccnccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CR1 - CRN control
@@ -838,7 +838,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CT1 - subhourly temperatures
@@ -851,7 +851,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CU1 - hourly temperatures
@@ -864,7 +864,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CV1 - hourly temperature extremes
@@ -879,7 +879,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncccccnccccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CW1 - subhourly wetness
@@ -892,7 +892,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CX1 - hourly geonor vibrating wire summary
@@ -907,7 +907,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccnccnccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CO1 - network metadata
@@ -920,7 +920,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nn",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # CO2 - US cooperative network element time offset
@@ -933,7 +933,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cn",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # ED1 - runway visual range
@@ -946,7 +946,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GA1 - sky cover layer
@@ -959,7 +959,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ccnccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GD1 - sky cover summation state
@@ -972,7 +972,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GF1 - sky condition observation
@@ -987,7 +987,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cccccccnccccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GG1 - below station cloud layer
@@ -1000,7 +1000,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ccnccccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GH1 - hourly solar radiation
@@ -1015,7 +1015,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccnccnccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GJ1 - sunshine observation (1)
@@ -1028,7 +1028,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GK1 - sunshine observation (2)
@@ -1041,7 +1041,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GL1 - sunshine observation for the month
@@ -1054,7 +1054,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GM1 - solar irradiance
@@ -1067,7 +1067,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GN1 - solar radiation
@@ -1082,7 +1082,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nnccnccnccnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GO1 - net solar radiation
@@ -1095,7 +1095,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nncncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GP1 - modeled solar irradiance
@@ -1110,7 +1110,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nncnncnncn",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GQ1 - hourly solar angle
@@ -1123,7 +1123,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # GR1 - hourly extraterrestrial radiation
@@ -1136,7 +1136,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # HL1 - hail data
@@ -1149,7 +1149,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # IA1 - ground surface data
@@ -1162,7 +1162,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # IA2 - ground surface observation
@@ -1175,7 +1175,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # IB1 - hourly surface temperature
@@ -1190,7 +1190,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccnccnccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # IB2 - hourly surface temperature sensor
@@ -1203,7 +1203,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # IC1 - ground surface observation - pan evaporation
@@ -1218,7 +1218,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nnccnccnccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # KA1 - temperature data
@@ -1231,7 +1231,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # KB1 - average air temperature
@@ -1244,7 +1244,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # KC1 - extreme air temperature for the month
@@ -1257,7 +1257,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # KD1 - heating/cooling degree days
@@ -1270,7 +1270,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # KE1 - extreme temperatures, number of days exceeding criteria, for the month
@@ -1285,7 +1285,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncncncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # KF1 - hourly calculated temperature
@@ -1298,7 +1298,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # KG1 - average dew point and wet bulb temperature
@@ -1311,7 +1311,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # MA1 - atmospheric pressure observation
@@ -1324,7 +1324,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # MD1 - atmospheric pressure change
@@ -1337,7 +1337,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ccncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # ME1 - geopotential height isobaric level
@@ -1350,7 +1350,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # MF1 - atmospheric pressure observation (STP/SLP)
@@ -1363,7 +1363,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # MG1 - atmospheric pressure observation
@@ -1376,7 +1376,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # MH1 - atmospheric pressure observation - average station pressure
@@ -1390,7 +1390,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # MK1 - atmospheric pressure observation - maximum sea level pressure
@@ -1404,7 +1404,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # MV1 - present weather in vicinity observation
@@ -1417,7 +1417,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # MW1 - present weather observation 
@@ -1430,7 +1430,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # OA1 - supplementary wine observation 
@@ -1443,7 +1443,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cnnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # OB1 - hourly/sub-hourly wind section
@@ -1458,7 +1458,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nnccnccnccncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # OC1 - wind gust observation
@@ -1471,7 +1471,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # OE1 - summary of day wind observation
@@ -1484,7 +1484,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cnnnnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # RH1 - relative humidity
@@ -1497,7 +1497,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "ncncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # SA1 - sea surface temperature observation
@@ -1510,7 +1510,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # ST1 - soil temperature
@@ -1525,7 +1525,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cncnccccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # UA1 - wave measurement
@@ -1538,7 +1538,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cnnccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # UG1 - wave measurement primary swell
@@ -1551,7 +1551,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nnnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # UG2 - wave measurement secondary swell
@@ -1564,7 +1564,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "nnnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # WA1 - platform ice accretion
@@ -1577,7 +1577,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cncc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # WD1 - water surface ice observation
@@ -1592,7 +1592,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cnccccccnnc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # WG1 - water surface ice historical observation
@@ -1605,7 +1605,7 @@ get_isd_station_data <- function(station_id,
                              data_types = "cncccc",
                              add_data = all_add_data)
       
-      large_data_frame <- cbind(large_data_frame, additional_data)
+      large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # Filter data frame to only include data for requested years
