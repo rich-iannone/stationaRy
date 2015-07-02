@@ -1226,9 +1226,9 @@ get_isd_station_data <- function(station_id,
       
       additional_data <-
         get_df_from_category(category_key = "KA1",
-                             field_lengths = c(),
-                             scale_factor = c(),
-                             data_types = "",
+                             field_lengths = c(3, 1, 5, 1),
+                             scale_factor = c(10, NA, 10, NA),
+                             data_types = "ncnc",
                              add_data = all_add_data)
     }
     
