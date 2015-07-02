@@ -315,11 +315,12 @@ get_isd_station_data <- function(station_id,
     
     # Get additional data portions of records, exluding remarks
     for (i in 1:length(data_files_downloaded)){
+      
       add_data <- 
         readLines(file.path(temp_folder,
                             data_files_downloaded[i]))
       
-      add_data <- unlist(str_extract_all(add_data, "ADD.*?REM"))
+      add_data <- unlist(str_extract_all(add_data, "ADD.*$"))
       
       if (i == 1){
         all_add_data <- add_data
