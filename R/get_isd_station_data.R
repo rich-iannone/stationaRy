@@ -1608,8 +1608,10 @@ get_isd_station_data <- function(station_id,
       large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
+    # Filter data frame to only include data for requested years
+    large_data_frame <- filter(large_data_frame, year >= startyear &
+                                 year <= endyear)
     
-    
-    
+    return(large_data_frame)
   }
 }
