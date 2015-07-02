@@ -1230,6 +1230,8 @@ get_isd_station_data <- function(station_id,
                              scale_factor = c(10, NA, 10, NA),
                              data_types = "ncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # KB1 - average air temperature
