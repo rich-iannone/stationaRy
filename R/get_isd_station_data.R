@@ -255,7 +255,7 @@ get_isd_station_data <- function(station_id,
       }
       
       if (i > 1){
-        large_data_frame <- rbind(large_data_frame, data)
+        large_data_frame <- bind_rows(large_data_frame, data)
       }
     }
   }
