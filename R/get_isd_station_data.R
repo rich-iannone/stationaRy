@@ -447,273 +447,320 @@ get_isd_station_data <- function(station_id,
     # AA1 - liquid precipitation: period quantity, depth dimension
     if (data_attributes[1] %in% significant_params){
       
-      aa1 <-
+      additional_data <-
         get_df_from_category(category_key = "AA1",
                              field_lengths = c(2, 4, 1, 1),
                              scale_factor = c(1, 10, NA, NA),
                              data_types = "nncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AB1 - liquid precipitation: monthly total
     if (data_attributes[2] %in% significant_params){
       
-      ab1 <-
+      additional_data <-
         get_df_from_category(category_key = "AB1",
                              field_lengths = c(5, 1, 1),
                              scale_factor = c(10, NA, NA),
                              data_types = "ncc",
                              add_data = all_add_data)
       
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AC1 - precipitation observation history
     if (data_attributes[3] %in% significant_params){
       
-      ac1 <-
+      additional_data <-
         get_df_from_category(category_key = "AC1",
                              field_lengths = c(1, 1, 1),
                              scale_factor = c(NA, NA, NA),
                              data_types = "ccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AD1 - liquid precipitation, greatest amount in 24 hours, for the month
     if (data_attributes[4] %in% significant_params){
       
-      ad1 <-
+      additional_data <-
         get_df_from_category(category_key = "AD1",
                              field_lengths = c(5, 1, 4, 4, 4, 1),
                              scale_factor = c(10, NA, NA, NA, NA, NA),
                              data_types = "nccccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AE1 - liquid precipitation, number of days with specific amounts, for the month
     if (data_attributes[5] %in% significant_params){
       
-      ae1 <-
+      additional_data <-
         get_df_from_category(category_key = "AE1",
                              field_lengths = c(2, 1, 2, 1, 2, 1, 2, 1),
                              scale_factor = rep(NA, 8),
                              data_types = "cccccccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AG1 - precipitation estimated observation
     if (data_attributes[6] %in% significant_params){
       
-      ag1 <-
+      additional_data <-
         get_df_from_category(category_key = "AG1",
                              field_lengths = c(1, 3),
                              scale_factor = c(NA, 1),
                              data_types = "cn",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AH1 - liquid precipitation maximum short duration, for the month (1)
     if (data_attributes[7] %in% significant_params){
       
-      ah1 <-
+      additional_data <-
         get_df_from_category(category_key = "AH1",
                              field_lengths = c(3, 4, 1, 6, 1),
                              scale_factor = c(1, 10, NA, NA, NA),
                              data_types = "nnccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AI1 - liquid precipitation maximum short duration, for the month (2)
     if (data_attributes[8] %in% significant_params){
       
-      ai1 <-
+      additional_data <-
         get_df_from_category(category_key = "AI1",
                              field_lengths = c(4, 1, 6, 1),
                              scale_factor = c(10, NA, NA, NA),
                              data_types = "nccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AJ1 - snow depth
     if (data_attributes[9] %in% significant_params){
       
-      aj1 <-
+      additional_data <-
         get_df_from_category(category_key = "AK1",
                              field_lengths = c(4, 1, 1, 6, 1, 1),
                              scale_factor = c(1, NA, NA, 10, NA, NA),
                              data_types = "nccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AK1 - snow depth greatest depth on the ground, for the month
     if (data_attributes[10] %in% significant_params){
       
-      ak1 <-
+      additional_data <-
         get_df_from_category(category_key = "AK1",
                              field_lengths = c(4, 1, 6, 1),
                              scale_factor = c(1, NA, NA, NA),
                              data_types = "nccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AL1 - snow accumulation
     if (data_attributes[11] %in% significant_params){
       
-      al1 <-
+      additional_data <-
         get_df_from_category(category_key = "AL1",
                              field_lengths = c(2, 3, 1, 1),
                              scale_factor = c(1, 1, NA, NA),
                              data_types = "nncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AM1 - snow accumulation greatest amount in 24 hours, for the month
     if (data_attributes[12] %in% significant_params){
       
-      am1 <-
+      additional_data <-
         get_df_from_category(category_key = "AM1",
                              field_lengths = c(4, 1, 4, 4, 4, 1),
                              scale_factor = c(10, NA, NA, NA, NA, NA),
                              data_types = "nccccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AN1 - snow accumulation for the month
     if (data_attributes[13] %in% significant_params){
       
-      an1 <-
+      additional_data <-
         get_df_from_category(category_key = "AN1",
                              field_lengths = c(3, 4, 1, 1),
                              scale_factor = c(1, 10, NA, NA),
                              data_types = "nncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AO1 - liquid precipitation
     if (data_attributes[14] %in% significant_params){
       
-      ao1 <-
+      additional_data <-
         get_df_from_category(category_key = "AO1",
                              field_lengths = c(2, 4, 1, 1),
                              scale_factor = c(1, 10, NA, NA),
                              data_types = "nncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AP1 - 15-minute liquid precipitation
     if (data_attributes[15] %in% significant_params){
       
-      ap1 <-
+      additional_data <-
         get_df_from_category(category_key = "AP1",
                              field_lengths = c(4, 1, 1),
                              scale_factor = c(10, NA, NA),
                              data_types = "ncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AU1 - present weather observation
     if (data_attributes[16] %in% significant_params){
       
-      au1 <-
+      additional_data <-
         get_df_from_category(category_key = "AU1",
                              field_lengths = c(1, 1, 2, 1, 1, 1, 1),
                              scale_factor = c(NA, NA, NA, NA,
                                               NA, NA, NA),
                              data_types = "ccccccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AW1 - present weather observation 
     if (data_attributes[17] %in% significant_params){
       
-      aw1 <-
+      additional_data <-
         get_df_from_category(category_key = "AW1",
                              field_lengths = c(2, 1),
                              scale_factor = c(NA, NA),
                              data_types = "cc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AX1 - past weather observation (1)
     if (data_attributes[18] %in% significant_params){
       
-      ax1 <-
+      additional_data <-
         get_df_from_category(category_key = "AX1",
                              field_lengths = c(2, 1, 2, 1),
                              scale_factor = c(NA, NA, 1, NA),
                              data_types = "ccnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AY1 - past weather observation (2)
     if (data_attributes[19] %in% significant_params){
       
-      ay1 <-
+      additional_data <-
         get_df_from_category(category_key = "AY1",
                              field_lengths = c(1, 1, 2, 1),
                              scale_factor = c(NA, NA, 1, NA),
                              data_types = "ccnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # AZ1 - past weather observation (3)
     if (data_attributes[20] %in% significant_params){
       
-      az1 <-
+      additional_data <-
         get_df_from_category(category_key = "AZ1",
                              field_lengths = c(1, 1, 2, 1),
                              scale_factor = c(NA, NA, 1, NA),
                              data_types = "ccnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CB1 - subhourly observed liquid precipitation: secondary sensor
     if (data_attributes[21] %in% significant_params){
       
-      cb1 <-
+      additional_data <-
         get_df_from_category(category_key = "CB1",
                              field_lengths = c(2, 6, 1, 1),
                              scale_factor = c(1, 10, NA, NA),
                              data_types = "nncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CF1 - hourly fan speed
     if (data_attributes[22] %in% significant_params){
       
-      cf1 <-
+      additional_data <-
         get_df_from_category(category_key = "CF1",
                              field_lengths = c(4, 1, 1),
                              scale_factor = c(10, NA, NA),
                              data_types = "ncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CG1 - subhourly observed liquid precipitation: primary sensor
     if (data_attributes[23] %in% significant_params){
       
-      cg1 <-
+      additional_data <-
         get_df_from_category(category_key = "CG1",
                              field_lengths = c(6, 1, 1),
                              scale_factor = c(10, NA, NA),
                              data_types = "ncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CH1 - hourly/subhourly RH/temperatures
     if (data_attributes[24] %in% significant_params){
       
-      ch1 <-
+      additional_data <-
         get_df_from_category(category_key = "CH1",
                              field_lengths = c(2, 5, 1, 1, 4, 1, 1),
                              scale_factor = c(1, 10, NA, NA, 10, NA, NA),
                              data_types = "nnccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CI1 - hourly RH/temperatures
     if (data_attributes[25] %in% significant_params){
       
-      ci1 <-
+      additional_data <-
         get_df_from_category(category_key = "CI1",
                              field_lengths = c(5, 1, 1, 5, 1, 1,
                                                5, 1, 1, 5, 1, 1),
@@ -721,12 +768,14 @@ get_isd_station_data <- function(station_id,
                                               10, NA, NA, 10, NA, NA),
                              data_types = "nccnccnccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CN1 - hourly battery voltage
     if (data_attributes[26] %in% significant_params){
       
-      cn1 <-
+      additional_data <-
         get_df_from_category(category_key = "CN1",
                              field_lengths = c(4, 1, 1, 4, 1, 1,
                                                4, 1, 1),
@@ -734,12 +783,14 @@ get_isd_station_data <- function(station_id,
                                               10, NA, NA),
                              data_types = "nccnccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CN2 - hourly diagnostics
     if (data_attributes[27] %in% significant_params){
       
-      cn2 <-
+      additional_data <-
         get_df_from_category(category_key = "CN2",
                              field_lengths = c(5, 1, 1, 5, 1, 1,
                                                2, 1, 1),
@@ -747,23 +798,27 @@ get_isd_station_data <- function(station_id,
                                               1, NA, NA),
                              data_types = "nccnccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CN3 - secondary hourly diagnostics (1)
     if (data_attributes[28] %in% significant_params){
       
-      cn3 <-
+      additional_data <-
         get_df_from_category(category_key = "CN3",
                              field_lengths = c(6, 1, 1, 6, 1, 1),
                              scale_factor = c(10, NA, NA, 10, NA, NA),
                              data_types = "nccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CN4 - secondary hourly diagnostics (2)
     if (data_attributes[29] %in% significant_params){
       
-      cn4 <-
+      additional_data <-
         get_df_from_category(category_key = "CN4",
                              field_lengths = c(1, 1, 1, 1, 1, 1,
                                                3, 1, 1, 3, 1, 1),
@@ -771,45 +826,53 @@ get_isd_station_data <- function(station_id,
                                               10, NA, NA, 10, NA, NA),
                              data_types = "ccccccnccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CR1 - CRN control
     if (data_attributes[30] %in% significant_params){
       
-      cr1 <-
+      additional_data <-
         get_df_from_category(category_key = "CR1",
                              field_lengths = c(5, 1, 1),
                              scale_factor = c(1000, NA, NA),
                              data_types = "ncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CT1 - subhourly temperatures
     if (data_attributes[31] %in% significant_params){
       
-      ct1 <-
+      additional_data <-
         get_df_from_category(category_key = "CT1",
                              field_lengths = c(5, 1, 1),
                              scale_factor = c(10, NA, NA),
                              data_types = "ncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CU1 - hourly temperatures
     if (data_attributes[32] %in% significant_params){
       
-      cu1 <-
+      additional_data <-
         get_df_from_category(category_key = "CU1",
                              field_lengths = c(5, 1, 1, 4, 1, 1),
                              scale_factor = c(10, NA, NA, 10, NA, NA),
                              data_types = "nccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CV1 - hourly temperature extremes
     if (data_attributes[33] %in% significant_params){
       
-      cv1 <-
+      additional_data <-
         get_df_from_category(category_key = "CV1",
                              field_lengths = c(5, 1, 1, 4, 1, 1,
                                                5, 1, 1, 4, 1, 1),
@@ -817,23 +880,27 @@ get_isd_station_data <- function(station_id,
                                               10, NA, NA, NA, NA, NA),
                              data_types = "ncccccnccccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CW1 - subhourly wetness
     if (data_attributes[34] %in% significant_params){
       
-      cw1 <-
+      additional_data <-
         get_df_from_category(category_key = "CW1",
                              field_lengths = c(5, 1, 1, 5, 1, 1),
                              scale_factor = c(10, NA, NA, 10, NA, NA),
                              data_types = "nccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CX1 - hourly geonor vibrating wire summary
     if (data_attributes[35] %in% significant_params){
       
-      cx1 <-
+      additional_data <-
         get_df_from_category(category_key = "CX1",
                              field_lengths = c(6, 1, 1, 4, 1, 1,
                                                4, 1, 1, 4, 1, 1),
@@ -841,67 +908,79 @@ get_isd_station_data <- function(station_id,
                                               1, NA, NA, 1, NA, NA),
                              data_types = "nccnccnccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CO1 - network metadata
     if (data_attributes[36] %in% significant_params){
       
-      co1 <-
+      additional_data <-
         get_df_from_category(category_key = "CO1",
                              field_lengths = c(2, 3),
                              scale_factor = c(1, 1),
                              data_types = "nn",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # CO2 - US cooperative network element time offset
     if (data_attributes[37] %in% significant_params){
       
-      co2 <-
+      additional_data <-
         get_df_from_category(category_key = "CO2",
                              field_lengths = c(3, 5),
                              scale_factor = c(NA, 10),
                              data_types = "cn",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # ED1 - runway visual range
     if (data_attributes[38] %in% significant_params){
       
-      ed1 <-
+      additional_data <-
         get_df_from_category(category_key = "ED1",
                              field_lengths = c(2, 1, 4, 1),
                              scale_factor = c(0.1, NA, 1, NA),
                              data_types = "ncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GA1 - sky cover layer
     if (data_attributes[39] %in% significant_params){
       
-      ga1 <-
+      additional_data <-
         get_df_from_category(category_key = "GA1",
                              field_lengths = c(2, 1, 6, 1, 2, 1),
                              scale_factor = c(NA, NA, 1, NA, NA, NA),
                              data_types = "ccnccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GD1 - sky cover summation state
     if (data_attributes[40] %in% significant_params){
       
-      gd1 <-
+      additional_data <-
         get_df_from_category(category_key = "GD1",
                              field_lengths = c(1, 2, 1, 6, 1, 1),
                              scale_factor = c(NA, NA, NA, 1, NA, NA),
                              data_types = "cccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GF1 - sky condition observation
     if (data_attributes[41] %in% significant_params){
       
-      gf1 <-
+      additional_data <-
         get_df_from_category(category_key = "GF1",
                              field_lengths = c(2, 2, 1, 2, 1, 2, 1,
                                                5, 1, 2, 1, 2, 1),
@@ -909,23 +988,27 @@ get_isd_station_data <- function(station_id,
                                               1, NA, NA, NA, NA, NA),
                              data_types = "cccccccnccccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GG1 - below station cloud layer
     if (data_attributes[42] %in% significant_params){
       
-      gg1 <-
+      additional_data <-
         get_df_from_category(category_key = "GG1",
                              field_lengths = c(2, 1, 5, 1, 2, 1, 2, 1),
                              scale_factor = c(NA, NA, 1, NA, NA, NA, NA, NA),
                              data_types = "ccnccccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GH1 - hourly solar radiation
     if (data_attributes[43] %in% significant_params){
       
-      gh1 <-
+      additional_data <-
         get_df_from_category(category_key = "GH1",
                              field_lengths = c(5, 1, 1, 5, 1, 1,
                                                5, 1, 1, 5, 1, 1),
@@ -933,56 +1016,66 @@ get_isd_station_data <- function(station_id,
                                               10, NA, NA, 10, NA, NA),
                              data_types = "nccnccnccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GJ1 - sunshine observation (1)
     if (data_attributes[44] %in% significant_params){
       
-      gj1 <-
+      additional_data <-
         get_df_from_category(category_key = "GJ1",
                              field_lengths = c(4, 1),
                              scale_factor = c(1, NA),
                              data_types = "nc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GK1 - sunshine observation (2)
     if (data_attributes[45] %in% significant_params){
       
-      gk1 <-
+      additional_data <-
         get_df_from_category(category_key = "GK1",
                              field_lengths = c(3, 1),
                              scale_factor = c(1, NA),
                              data_types = "nc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GL1 - sunshine observation for the month
     if (data_attributes[46] %in% significant_params){
       
-      gl1 <-
+      additional_data <-
         get_df_from_category(category_key = "GL1",
                              field_lengths = c(5, 1),
                              scale_factor = c(1, NA),
                              data_types = "nc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GM1 - solar irradiance
     if (data_attributes[47] %in% significant_params){
       
-      gm1 <-
+      additional_data <-
         get_df_from_category(category_key = "GM1",
                              field_lengths = c(),
                              scale_factor = c(),
                              data_types = "",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GN1 - solar radiation
     if (data_attributes[48] %in% significant_params){
       
-      gn1 <-
+      additional_data <-
         get_df_from_category(category_key = "GN1",
                              field_lengths = c(4, 4, 2, 1, 4, 2, 1,
                                                4, 2, 1, 4, 1),
@@ -990,23 +1083,27 @@ get_isd_station_data <- function(station_id,
                                               1, NA, NA, 1, NA),
                              data_types = "nnccnccnccnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GO1 - net solar radiation
     if (data_attributes[49] %in% significant_params){
       
-      go1 <-
+      additional_data <-
         get_df_from_category(category_key = "GO1",
                              field_lengths = c(4, 4, 1, 4, 1, 4, 1),
                              scale_factor = c(1, 1, NA, 1, NA, 1, NA),
                              data_types = "nncncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GP1 - modeled solar irradiance
     if (data_attributes[50] %in% significant_params){
       
-      gp1 <-
+      additional_data <-
         get_df_from_category(category_key = "GP1",
                              field_lengths = c(4, 4, 2, 3, 4, 2,
                                                3, 4, 2, 3),
@@ -1014,67 +1111,79 @@ get_isd_station_data <- function(station_id,
                                               1, 1, NA, 1),
                              data_types = "nncnncnncn",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GQ1 - hourly solar angle
     if (data_attributes[51] %in% significant_params){
       
-      gq1 <-
+      additional_data <-
         get_df_from_category(category_key = "GQ1",
                              field_lengths = c(4, 4, 1, 4, 1),
                              scale_factor = c(1, 10, NA, 10, NA),
                              data_types = "nncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # GR1 - hourly extraterrestrial radiation
     if (data_attributes[52] %in% significant_params){
       
-      gr1 <-
+      additional_data <-
         get_df_from_category(category_key = "GR1",
                              field_lengths = c(4, 4, 1, 4, 1),
-                             scale_factor = c(1, 10, NA, 10, NA),
+                             scale_factor = c(1, 1, NA, 1, NA),
                              data_types = "nncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # HL1 - hail data
     if (data_attributes[53] %in% significant_params){
       
-      hl1 <-
+      additional_data <-
         get_df_from_category(category_key = "HL1",
                              field_lengths = c(3, 1),
                              scale_factor = c(10, NA),
                              data_types = "nc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # IA1 - ground surface data
     if (data_attributes[54] %in% significant_params){
       
-      ia1 <-
+      additional_data <-
         get_df_from_category(category_key = "IA1",
                              field_lengths = c(2, 1),
                              scale_factor = c(NA, NA),
                              data_types = "cc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # IA2 - ground surface observation
     if (data_attributes[55] %in% significant_params){
       
-      ia2 <-
+      additional_data <-
         get_df_from_category(category_key = "IA2",
                              field_lengths = c(3, 5, 1),
                              scale_factor = c(10, 10, NA),
                              data_types = "nnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # IB1 - hourly surface temperature
     if (data_attributes[56] %in% significant_params){
       
-      ib1 <-
+      additional_data <-
         get_df_from_category(category_key = "IB1",
                              field_lengths = c(5, 1, 1, 5, 1, 1,
                                                5, 1, 1, 4, 1, 1),
@@ -1082,23 +1191,27 @@ get_isd_station_data <- function(station_id,
                                               10, NA, NA, 10, NA, NA),
                              data_types = "nccnccnccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # IB2 - hourly surface temperature sensor
     if (data_attributes[57] %in% significant_params){
       
-      ib2 <-
+      additional_data <-
         get_df_from_category(category_key = "IB2",
                              field_lengths = c(5, 1, 1, 4, 1, 1),
                              scale_factor = c(10, NA, NA, 10, NA, NA),
                              data_types = "nccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # IC1 - ground surface observation - pan evaporation
     if (data_attributes[58] %in% significant_params){
       
-      ic1 <-
+      additional_data <-
         get_df_from_category(category_key = "IC1",
                              field_lengths = c(2, 4, 1, 1, 3, 1, 1,
                                                4, 1, 1, 4, 1, 1),
@@ -1106,12 +1219,14 @@ get_isd_station_data <- function(station_id,
                                               10, NA, NA, 10, NA, NA),
                              data_types = "nnccnccnccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # KA1 - temperature data
     if (data_attributes[59] %in% significant_params){
       
-      ka1 <-
+      additional_data <-
         get_df_from_category(category_key = "KA1",
                              field_lengths = c(),
                              scale_factor = c(),
@@ -1122,40 +1237,46 @@ get_isd_station_data <- function(station_id,
     # KB1 - average air temperature
     if (data_attributes[60] %in% significant_params){
       
-      kb1 <-
+      additional_data <-
         get_df_from_category(category_key = "KB1",
                              field_lengths = c(3, 1, 5, 1),
                              scale_factor = c(10, NA, 10, NA),
                              data_types = "ncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # KC1 - extreme air temperature for the month
     if (data_attributes[61] %in% significant_params){
       
-      kc1 <-
+      additional_data <-
         get_df_from_category(category_key = "KC1",
                              field_lengths = c(1, 1, 5, 6, 1),
                              scale_factor = c(NA, NA, 10, NA, NA),
                              data_types = "ccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # KD1 - heating/cooling degree days
     if (data_attributes[62] %in% significant_params){
       
-      kd1 <-
+      additional_data <-
         get_df_from_category(category_key = "KD1",
                              field_lengths = c(3, 1, 4, 1),
                              scale_factor = c(1, NA, 1, NA),
                              data_types = "ncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # KE1 - extreme temperatures, number of days exceeding criteria, for the month
     if (data_attributes[63] %in% significant_params){
       
-      ke1 <-
+      additional_data <-
         get_df_from_category(category_key = "KE1",
                              field_lengths = c(2, 1, 2, 1,
                                                2, 1, 2, 1),
@@ -1163,146 +1284,172 @@ get_isd_station_data <- function(station_id,
                                               1, NA, 1, NA),
                              data_types = "ncncncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # KF1 - hourly calculated temperature
     if (data_attributes[64] %in% significant_params){
       
-      kf1 <-
+      additional_data <-
         get_df_from_category(category_key = "KF1",
                              field_lengths = c(5, 1),
                              scale_factor = c(10, NA),
                              data_types = "nc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # KG1 - average dew point and wet bulb temperature
     if (data_attributes[65] %in% significant_params){
       
-      kg1 <-
+      additional_data <-
         get_df_from_category(category_key = "KG1",
                              field_lengths = c(3, 1, 5, 1, 1),
                              scale_factor = c(1, NA, 100, NA, NA),
                              data_types = "ncncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # MA1 - atmospheric pressure observation
     if (data_attributes[66] %in% significant_params){
       
-      ma1 <-
+      additional_data <-
         get_df_from_category(category_key = "MA1",
                              field_lengths = c(5, 1, 5, 1),
                              scale_factor = c(10, NA, 10, NA),
                              data_types = "ncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # MD1 - atmospheric pressure change
     if (data_attributes[67] %in% significant_params){
       
-      md1 <-
+      additional_data <-
         get_df_from_category(category_key = "MD1",
                              field_lengths = c(1, 1, 3, 1, 4, 1),
                              scale_factor = c(NA, NA, 10, NA, 10, NA),
                              data_types = "ccncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # ME1 - geopotential height isobaric level
     if (data_attributes[68] %in% significant_params){
       
-      me1 <-
+      additional_data <-
         get_df_from_category(category_key = "ME1",
                              field_lengths = c(1, 4, 1),
                              scale_factor = c(NA, 1, NA),
                              data_types = "cnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # MF1 - atmospheric pressure observation (STP/SLP)
     if (data_attributes[69] %in% significant_params){
       
-      mf1 <-
+      additional_data <-
         get_df_from_category(category_key = "MF1",
                              field_lengths = c(5, 1, 5, 1),
                              scale_factor = c(10, NA, 10, NA),
                              data_types = "ncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # MG1 - atmospheric pressure observation
     if (data_attributes[70] %in% significant_params){
       
-      mg1 <-
+      additional_data <-
         get_df_from_category(category_key = "MG1",
                              field_lengths = c(5, 1, 5, 1),
                              scale_factor = c(10, NA, 10, NA),
                              data_types = "ncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # MH1 - atmospheric pressure observation - average station pressure
     # for the month
     if (data_attributes[71] %in% significant_params){
       
-      mh1 <-
+      additional_data <-
         get_df_from_category(category_key = "MH1",
                              field_lengths = c(5, 1, 5, 1),
                              scale_factor = c(10, NA, 10, NA),
                              data_types = "ncnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # MK1 - atmospheric pressure observation - maximum sea level pressure
     # for the month
     if (data_attributes[72] %in% significant_params){
       
-      mk1 <-
+      additional_data <-
         get_df_from_category(category_key = "MK1",
                              field_lengths = c(5, 6, 1, 5, 6, 1),
                              scale_factor = c(10, NA, NA, 10, NA, NA),
                              data_types = "nccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # MV1 - present weather in vicinity observation
     if (data_attributes[73] %in% significant_params){
       
-      mv1 <-
+      additional_data <-
         get_df_from_category(category_key = "MV1",
                              field_lengths = c(2, 1),
                              scale_factor = c(NA, NA),
                              data_types = "cc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # MW1 - present weather observation 
     if (data_attributes[74] %in% significant_params){
       
-      mw1 <-
+      additional_data <-
         get_df_from_category(category_key = "MW1",
                              field_lengths = c(2, 1),
                              scale_factor = c(NA, NA),
                              data_types = "cc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # OA1 - supplementary wine observation 
     if (data_attributes[75] %in% significant_params){
       
-      oa1 <-
+      additional_data <-
         get_df_from_category(category_key = "OA1",
                              field_lengths = c(1, 2, 4, 1),
                              scale_factor = c(NA, 1, 10, NA),
                              data_types = "cnnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # OB1 - hourly/sub-hourly wind section
     if (data_attributes[76] %in% significant_params){
       
-      ob1 <-
+      additional_data <-
         get_df_from_category(category_key = "OB1",
                              field_lengths = c(3, 4, 1, 1, 3, 1, 1,
                                                5, 1, 1, 5, 1, 1),
@@ -1310,56 +1457,66 @@ get_isd_station_data <- function(station_id,
                                               100, NA, NA, 100, NA, NA),
                              data_types = "nnccnccnccncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # OC1 - wind gust observation
     if (data_attributes[77] %in% significant_params){
       
-      oc1 <-
+      additional_data <-
         get_df_from_category(category_key = "OC1",
                              field_lengths = c(4, 1),
                              scale_factor = c(10, NA),
                              data_types = "nc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # OE1 - summary of day wind observation
     if (data_attributes[78] %in% significant_params){
       
-      oe1 <-
+      additional_data <-
         get_df_from_category(category_key = "OE1",
                              field_lengths = c(1, 2, 5, 3, 4, 1),
                              scale_factor = c(NA, 1, 100, 1, 10, NA),
                              data_types = "cnnnnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # RH1 - relative humidity
     if (data_attributes[79] %in% significant_params){
       
-      rh1 <-
+      additional_data <-
         get_df_from_category(category_key = "RH1",
                              field_lengths = c(3, 1, 3, 1, 1),
                              scale_factor = c(1, NA, 1, NA, NA),
                              data_types = "ncncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # SA1 - sea surface temperature observation
     if (data_attributes[80] %in% significant_params){
       
-      sa1 <-
+      additional_data <-
         get_df_from_category(category_key = "SA1",
                              field_lengths = c(4, 1),
                              scale_factor = c(10, NA),
                              data_types = "nc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # ST1 - soil temperature
     if (data_attributes[81] %in% significant_params){
       
-      st1 <-
+      additional_data <-
         get_df_from_category(category_key = "ST1",
                              field_lengths = c(1, 5, 1, 4, 1,
                                                2, 1, 1, 1),
@@ -1367,56 +1524,66 @@ get_isd_station_data <- function(station_id,
                                               NA, NA, NA, NA),
                              data_types = "cncnccccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # UA1 - wave measurement
     if (data_attributes[82] %in% significant_params){
       
-      ua1 <-
+      additional_data <-
         get_df_from_category(category_key = "UA1",
                              field_lengths = c(1, 2, 3, 1, 2, 1),
                              scale_factor = c(NA, 1, 10, NA, NA, NA),
                              data_types = "cnnccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # UG1 - wave measurement primary swell
     if (data_attributes[83] %in% significant_params){
       
-      ug1 <-
+      additional_data <-
         get_df_from_category(category_key = "UG1",
                              field_lengths = c(2, 3, 3, 1),
                              scale_factor = c(1, 10, 1, NA),
                              data_types = "nnnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # UG2 - wave measurement secondary swell
     if (data_attributes[84] %in% significant_params){
       
-      ug2 <-
+      additional_data <-
         get_df_from_category(category_key = "UG2",
                              field_lengths = c(2, 3, 3, 1),
                              scale_factor = c(1, 10, 1, NA),
                              data_types = "nnnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # WA1 - platform ice accretion
     if (data_attributes[85] %in% significant_params){
       
-      wa1 <-
+      additional_data <-
         get_df_from_category(category_key = "WA1",
                              field_lengths = c(1, 3, 1, 1),
                              scale_factor = c(NA, 10, NA, NA),
                              data_types = "cncc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # WD1 - water surface ice observation
     if (data_attributes[86] %in% significant_params){
       
-      wd1 <-
+      additional_data <-
         get_df_from_category(category_key = "WD1",
                              field_lengths = c(2, 3, 2, 1, 1, 1,
                                                2, 1, 3, 3, 1),
@@ -1424,17 +1591,21 @@ get_isd_station_data <- function(station_id,
                                               NA, NA, 1, 1, NA),
                              data_types = "cnccccccnnc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     # WG1 - water surface ice historical observation
     if (data_attributes[87] %in% significant_params){
       
-      wg1 <-
+      additional_data <-
         get_df_from_category(category_key = "WG1",
                              field_lengths = c(2, 2, 2, 2, 2, 1),
                              scale_factor = c(NA, 1, NA, NA, NA, NA),
                              data_types = "cncccc",
                              add_data = all_add_data)
+      
+      large_data_frame <- cbind(large_data_frame, additional_data)
     }
     
     
