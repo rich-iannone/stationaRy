@@ -444,11 +444,6 @@ get_isd_station_data <- function(station_id,
     # Filter those measured parameters and obtain string of identifiers
     significant_params <- data_attributes[which(data_attributes_counts > 20)]
     
-    # Create data frame to which additional data will bind
-    add_data_cols <- 
-      as.data.frame(mat.or.vec(nr = nrow(all_add_data),
-                               nc = 0))
-    
     # AA1 - liquid precipitation: period quantity, depth dimension
     if (data_attributes[1] %in% significant_params){
       
