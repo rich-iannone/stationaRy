@@ -275,7 +275,7 @@ get_isd_station_data <- function(station_id,
   large_data_frame$month <- month(large_data_frame$time) 
   large_data_frame$day <- mday(large_data_frame$time)
   large_data_frame$hour <- hour(large_data_frame$time)
-  large_data_frame$min <- minute(large_data_frame$time)
+  large_data_frame$minute <- minute(large_data_frame$time)
   
   # Ensure that data frame columns are correctly classed
   large_data_frame$usaf <- as.character(large_data_frame$usaf)
