@@ -1021,9 +1021,9 @@ get_isd_station_data <- function(station_id,
       
       gq1 <-
         get_df_from_category(category_key = "GQ1",
-                             field_lengths = c(),
-                             scale_factor = c(),
-                             data_types = "",
+                             field_lengths = c(4, 4, 1, 4, 1),
+                             scale_factor = c(1, 10, NA, 10, NA),
+                             data_types = "nncnc",
                              add_data = all_add_data)
     }
     
