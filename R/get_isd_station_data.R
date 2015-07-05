@@ -460,6 +460,14 @@ get_isd_station_data <- function(station_id,
     # Filter those measured parameters and obtain string of identifiers
     significant_params <- data_attributes[which(data_attributes_counts > 20)]
     
+    # Filter the significantly available extra parameters by those specified
+    if (!is.null(select_additional_data)){
+      
+      significant_params <-
+        significant_params[which(significant_params %in%
+                                   select_additional_data)]
+    }
+    
     # AA1 - liquid precipitation: period quantity, depth dimension
     if (data_attributes[1] %in% significant_params){
       
