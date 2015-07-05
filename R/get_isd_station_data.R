@@ -355,8 +355,15 @@ get_isd_station_data <- function(station_id,
         
         for (i in 1:nchar(data_types)){
           
-          if (i == 1) subst_data_types <- vector(mode = "character")
-          
+          if (i == 1){
+            subst_data_types <- vector(mode = "character")
+            
+            # Create a progress bar object
+            pb <- progress_bar$new(
+              format = "  processing :what [:bar] :percent",
+              total = nchar(data_types))
+            
+          }
           subst_data_types <- c(subst_data_types,
                                 ifelse(substr(data_types, i, i) == "n",
                                        "numeric", "character"))
@@ -400,6 +407,7 @@ get_isd_station_data <- function(station_id,
                                        substr_start,
                                        substr_end))/scale_factor[i],
                      NA)
+            
             data_column <- c(data_column, data_element)
           }
         }
@@ -416,11 +424,15 @@ get_isd_station_data <- function(station_id,
                             substr_start,
                             substr_end),
                      NA)
+            
             data_column <- c(data_column, data_element)
           }
         }
         
         df_from_category[,i] <- data_column
+        
+        # Add tick to progress bar
+        pb$tick(tokens = list(what = category_key))
       }
       
       return(df_from_category)
