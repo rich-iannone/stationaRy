@@ -17,6 +17,14 @@ test_that("get_isd_station_data returns correct number of columns", {
                          endyear = 2015,
                          full_data = TRUE)
   
+  # Get data frame of met data with both the mandatory fields and
+  # additional fields for two categories: AA1 and AB1
+  df_aa1_ab1 <- 
+    get_isd_station_data(station_id = "722315-53917",
+                         startyear = 2014,
+                         endyear = 2015,
+                         select_additional_data = c("AA1", "AB1"))
+  
   # Expect that, for the mandatory met data df, the number of columns
   # will be exactly 18
   expect_equal(ncol(df_mandatory_data), 18L)
