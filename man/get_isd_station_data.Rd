@@ -11,7 +11,8 @@ Calculating Humidity: \cr
 \url{https://en.wikipedia.org/wiki/Clausius\%E2\%80\%93Clapeyron_relation#Meteorology_and_climatology}
 }
 \usage{
-get_isd_station_data(station_id, startyear, endyear, full_data = FALSE)
+get_isd_station_data(station_id, startyear, endyear, full_data = FALSE,
+  select_additional_data = NULL)
 }
 \arguments{
 \item{station_id}{a station identifier composed of the station's USAF and
@@ -23,6 +24,9 @@ WBAN numbers, separated by a hyphen.}
 
 \item{full_data}{include additional meteorological data found in the
 dataset's additional data section?}
+
+\item{select_additional_data}{a vector of categories for additional
+meteorological data to include (instead of all available categories).}
 }
 \value{
 Returns a data frame with 18 variables. Times are recorded
