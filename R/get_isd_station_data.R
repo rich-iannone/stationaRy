@@ -13,6 +13,7 @@
 #' @import stringr
 #' @import lubridate
 #' @import downloader
+#' @import progress
 #' @return Returns a data frame with 18 variables. Times are recorded 
 #' using the Universal Time Code (UTC) in the source data. Times are adjusted
 #' to local standard time for the station's locale.
