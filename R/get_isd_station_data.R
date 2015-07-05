@@ -7,6 +7,8 @@
 #' @param endyear the ending year for the collected data.
 #' @param full_data include additional meteorological data found in the
 #' dataset's additional data section?
+#' @param select_additional_data a vector of categories for additional
+#' meteorological data to include (instead of all available categories). 
 #' @importFrom plyr round_any
 #' @import dplyr
 #' @import readr
