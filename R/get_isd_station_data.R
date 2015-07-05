@@ -304,6 +304,10 @@ get_isd_station_data <- function(station_id,
   # if 'gmt_offset' is negative, subtract the added year from 'endyear'
   if (gmt_offset < 0 & year(Sys.time()) != endyear) endyear <- endyear - 1
   
+  # If additional data categories specified, then set 'full_data' to TRUE
+  # to enter that conditional block
+  if (!is.null(select_additional_data)) full_data <- TRUE
+  
   if (full_data == FALSE){
     
     # Filter data frame to only include data for requested years
