@@ -44,6 +44,7 @@ select_isd_station <- function(stn_df,
   if (is.null(number) & is.null(name)){
     
     message("No search terms provided.")
+    
     return(NA)
   }
   
@@ -53,11 +54,10 @@ select_isd_station <- function(stn_df,
     
     station_id <- paste0(stn_df[number,1], "-",
                          stn_df[number,2])
-    
-    return(station_id)
   }
   
   if (!is.null(name) & is.null(number)){
+    
     station_name <- 
       gsub("  ", " ",
            tolower(as.character(as.data.frame(stn_df[,3])[[1]])))
@@ -67,6 +67,7 @@ select_isd_station <- function(stn_df,
     if (any_matched_stations == FALSE){
       
       message("No stations were matched with the supplied search term.")
+      
       return(NA)
     }
     
@@ -82,7 +83,6 @@ select_isd_station <- function(stn_df,
         station_id <- paste0(stn_df[number,1], "-",
                              stn_df[number,2])
         
-        return(station_id)
       }
       
       if (number_of_matched_stations > 1){
@@ -98,13 +98,16 @@ select_isd_station <- function(stn_df,
           station_id <- paste0(stn_df[number,1], "-",
                                stn_df[number,2])
           
-          return(station_id)
         }
         
         message("Several stations matched. Provide a more specific search term.")
+        
         print(stn_df[which(grepl(name, station_name)),])
+        
         return(NA)
       }
     }
   }
+  
+  return(station_id)
 }
