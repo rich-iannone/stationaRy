@@ -57,7 +57,7 @@ select_isd_station <- function(stn_df,
     return(station_id)
   }
   
-  if (!is.null(name)){
+  if (!is.null(name) & is.null(number)){
     station_name <- 
       gsub("  ", " ",
            tolower(as.character(as.data.frame(stn_df[,3])[[1]])))
