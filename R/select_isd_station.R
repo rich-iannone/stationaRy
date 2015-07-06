@@ -38,7 +38,9 @@ select_isd_station <- function(stn_df,
                                name = NULL){
   
   # Ensure that the search words for the station name are lowercase
-  name <- tolower(name)
+  if (!is.null(name)){
+    name <- tolower(name)
+  }
   
   # If neither any number nor name provided, return NA
   if (is.null(number) & is.null(name)){
