@@ -228,8 +228,8 @@ get_isd_station_data <- function(station_id,
       data_attributes_counts[which(data_attributes_counts > 0)]
     
     data_categories_df <- 
-      data.frame(categories = data_categories_available,
-                 counts = data_categories_counts)
+      data.frame(category = data_categories_available,
+                 total_count = data_categories_counts)
     
     return(data_categories_df)
   }
