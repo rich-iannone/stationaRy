@@ -103,6 +103,7 @@ get_isd_station_data <- function(station_id,
                                  startyear,
                                  endyear,
                                  full_data = FALSE,
+                                 add_data_report = FALSE,
                                  select_additional_data = NULL){
   
   usaf <- wban <- year <- NA
