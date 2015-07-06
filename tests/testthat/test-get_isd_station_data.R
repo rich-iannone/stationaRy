@@ -50,3 +50,18 @@ test_that("get_isd_station_data returns correct number of columns", {
                "^[a-z][a-z][1-9]_([0-9]|[0-9][0-9])$")
   
 })
+
+test_that("get_isd_station_data can provide an additional data report", {
+  
+  # Get vector of available additional data categories for the station
+  # during the specied years
+  additional_data_categories <- 
+    get_isd_station_data(station_id = "722315-53917",
+                         startyear = 2014,
+                         endyear = 2015,
+                         add_data_report = TRUE)
+
+  # Expect that a data frame is returned
+  expect_true(class(additional_data_categories) == "data.frame")
+  
+  })
