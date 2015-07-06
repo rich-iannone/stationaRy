@@ -222,10 +222,10 @@ get_isd_station_data <- function(station_id,
     }
     
     data_categories_available <-
-      data_categories[which(data_attributes_counts > 0)]
+      data_categories[which(data_categories_counts > 0)]
     
     data_categories_counts <-
-      data_attributes_counts[which(data_attributes_counts > 0)]
+      data_categories_counts[which(data_categories_counts > 0)]
     
     data_categories_df <- 
       data.frame(category = data_categories_available,
@@ -522,7 +522,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # Filter those measured parameters and obtain string of identifiers
-    significant_params <- data_categories[which(data_categories_counts > 20)]
+    significant_params <- data_categories[which(data_categories_counts > 5)]
     
     # Filter the significantly available extra parameters by those specified
     if (!is.null(select_additional_data)){
