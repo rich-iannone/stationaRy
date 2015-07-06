@@ -395,7 +395,8 @@ get_isd_station_data <- function(station_id,
       }
     }
     
-    data_attributes <-
+    # Create vector of additional data categories
+    data_categories <-
       c("AA1", "AB1", "AC1", "AD1", "AE1", "AG1", "AH1", "AI1", "AJ1",
         "AK1", "AL1", "AM1", "AN1", "AO1", "AP1", "AU1", "AW1", "AX1",
         "AY1", "AZ1", "CB1", "CF1", "CG1", "CH1", "CI1", "CN1", "CN2",
@@ -505,20 +506,20 @@ get_isd_station_data <- function(station_id,
     }
     
     # Determine which additional parameters have been measured
-    for (i in 1:length(data_attributes)){
+    for (i in 1:length(data_categories)){
       
       if (i == 1){
-        data_attributes_counts <-
+        data_categories_counts <-
           vector(mode = "numeric",
-                 length = length(data_attributes))
+                 length = length(data_categories))
       }
       
-      data_attributes_counts[i] <-
-        sum(str_detect(all_add_data, data_attributes[i]))
+      data_categories_counts[i] <-
+        sum(str_detect(all_add_data, data_categories[i]))
     }
     
     # Filter those measured parameters and obtain string of identifiers
-    significant_params <- data_attributes[which(data_attributes_counts > 20)]
+    significant_params <- data_categories[which(data_categories_counts > 20)]
     
     # Filter the significantly available extra parameters by those specified
     if (!is.null(select_additional_data)){
@@ -529,7 +530,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AA1 - liquid precipitation: period quantity, depth dimension
-    if (data_attributes[1] %in% significant_params){
+    if (data_categories[1] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AA1",
@@ -542,7 +543,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AB1 - liquid precipitation: monthly total
-    if (data_attributes[2] %in% significant_params){
+    if (data_categories[2] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AB1",
@@ -555,7 +556,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AC1 - precipitation observation history
-    if (data_attributes[3] %in% significant_params){
+    if (data_categories[3] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AC1",
@@ -568,7 +569,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AD1 - liquid precipitation, greatest amount in 24 hours, for the month
-    if (data_attributes[4] %in% significant_params){
+    if (data_categories[4] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AD1",
@@ -581,7 +582,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AE1 - liquid precipitation, number of days with specific amounts, for the month
-    if (data_attributes[5] %in% significant_params){
+    if (data_categories[5] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AE1",
@@ -594,7 +595,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AG1 - precipitation estimated observation
-    if (data_attributes[6] %in% significant_params){
+    if (data_categories[6] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AG1",
@@ -607,7 +608,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AH1 - liquid precipitation maximum short duration, for the month (1)
-    if (data_attributes[7] %in% significant_params){
+    if (data_categories[7] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AH1",
@@ -620,7 +621,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AI1 - liquid precipitation maximum short duration, for the month (2)
-    if (data_attributes[8] %in% significant_params){
+    if (data_categories[8] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AI1",
@@ -633,7 +634,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AJ1 - snow depth
-    if (data_attributes[9] %in% significant_params){
+    if (data_categories[9] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AK1",
@@ -646,7 +647,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AK1 - snow depth greatest depth on the ground, for the month
-    if (data_attributes[10] %in% significant_params){
+    if (data_categories[10] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AK1",
@@ -659,7 +660,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AL1 - snow accumulation
-    if (data_attributes[11] %in% significant_params){
+    if (data_categories[11] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AL1",
@@ -672,7 +673,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AM1 - snow accumulation greatest amount in 24 hours, for the month
-    if (data_attributes[12] %in% significant_params){
+    if (data_categories[12] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AM1",
@@ -685,7 +686,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AN1 - snow accumulation for the month
-    if (data_attributes[13] %in% significant_params){
+    if (data_categories[13] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AN1",
@@ -698,7 +699,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AO1 - liquid precipitation
-    if (data_attributes[14] %in% significant_params){
+    if (data_categories[14] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AO1",
@@ -711,7 +712,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AP1 - 15-minute liquid precipitation
-    if (data_attributes[15] %in% significant_params){
+    if (data_categories[15] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AP1",
@@ -724,7 +725,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AU1 - present weather observation
-    if (data_attributes[16] %in% significant_params){
+    if (data_categories[16] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AU1",
@@ -738,7 +739,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AW1 - present weather observation 
-    if (data_attributes[17] %in% significant_params){
+    if (data_categories[17] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AW1",
@@ -751,7 +752,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AX1 - past weather observation (1)
-    if (data_attributes[18] %in% significant_params){
+    if (data_categories[18] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AX1",
@@ -764,7 +765,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AY1 - past weather observation (2)
-    if (data_attributes[19] %in% significant_params){
+    if (data_categories[19] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AY1",
@@ -777,7 +778,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # AZ1 - past weather observation (3)
-    if (data_attributes[20] %in% significant_params){
+    if (data_categories[20] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "AZ1",
@@ -790,7 +791,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CB1 - subhourly observed liquid precipitation: secondary sensor
-    if (data_attributes[21] %in% significant_params){
+    if (data_categories[21] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CB1",
@@ -803,7 +804,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CF1 - hourly fan speed
-    if (data_attributes[22] %in% significant_params){
+    if (data_categories[22] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CF1",
@@ -816,7 +817,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CG1 - subhourly observed liquid precipitation: primary sensor
-    if (data_attributes[23] %in% significant_params){
+    if (data_categories[23] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CG1",
@@ -829,7 +830,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CH1 - hourly/subhourly RH/temperatures
-    if (data_attributes[24] %in% significant_params){
+    if (data_categories[24] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CH1",
@@ -842,7 +843,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CI1 - hourly RH/temperatures
-    if (data_attributes[25] %in% significant_params){
+    if (data_categories[25] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CI1",
@@ -857,7 +858,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CN1 - hourly battery voltage
-    if (data_attributes[26] %in% significant_params){
+    if (data_categories[26] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CN1",
@@ -872,7 +873,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CN2 - hourly diagnostics
-    if (data_attributes[27] %in% significant_params){
+    if (data_categories[27] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CN2",
@@ -887,7 +888,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CN3 - secondary hourly diagnostics (1)
-    if (data_attributes[28] %in% significant_params){
+    if (data_categories[28] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CN3",
@@ -900,7 +901,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CN4 - secondary hourly diagnostics (2)
-    if (data_attributes[29] %in% significant_params){
+    if (data_categories[29] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CN4",
@@ -915,7 +916,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CR1 - CRN control
-    if (data_attributes[30] %in% significant_params){
+    if (data_categories[30] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CR1",
@@ -928,7 +929,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CT1 - subhourly temperatures
-    if (data_attributes[31] %in% significant_params){
+    if (data_categories[31] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CT1",
@@ -941,7 +942,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CU1 - hourly temperatures
-    if (data_attributes[32] %in% significant_params){
+    if (data_categories[32] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CU1",
@@ -954,7 +955,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CV1 - hourly temperature extremes
-    if (data_attributes[33] %in% significant_params){
+    if (data_categories[33] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CV1",
@@ -969,7 +970,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CW1 - subhourly wetness
-    if (data_attributes[34] %in% significant_params){
+    if (data_categories[34] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CW1",
@@ -982,7 +983,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CX1 - hourly geonor vibrating wire summary
-    if (data_attributes[35] %in% significant_params){
+    if (data_categories[35] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CX1",
@@ -997,7 +998,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CO1 - network metadata
-    if (data_attributes[36] %in% significant_params){
+    if (data_categories[36] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CO1",
@@ -1010,7 +1011,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # CO2 - US cooperative network element time offset
-    if (data_attributes[37] %in% significant_params){
+    if (data_categories[37] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "CO2",
@@ -1023,7 +1024,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # ED1 - runway visual range
-    if (data_attributes[38] %in% significant_params){
+    if (data_categories[38] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "ED1",
@@ -1036,7 +1037,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GA1 - sky cover layer
-    if (data_attributes[39] %in% significant_params){
+    if (data_categories[39] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GA1",
@@ -1049,7 +1050,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GD1 - sky cover summation state
-    if (data_attributes[40] %in% significant_params){
+    if (data_categories[40] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GD1",
@@ -1062,7 +1063,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GF1 - sky condition observation
-    if (data_attributes[41] %in% significant_params){
+    if (data_categories[41] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GF1",
@@ -1077,7 +1078,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GG1 - below station cloud layer
-    if (data_attributes[42] %in% significant_params){
+    if (data_categories[42] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GG1",
@@ -1090,7 +1091,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GH1 - hourly solar radiation
-    if (data_attributes[43] %in% significant_params){
+    if (data_categories[43] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GH1",
@@ -1105,7 +1106,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GJ1 - sunshine observation (1)
-    if (data_attributes[44] %in% significant_params){
+    if (data_categories[44] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GJ1",
@@ -1118,7 +1119,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GK1 - sunshine observation (2)
-    if (data_attributes[45] %in% significant_params){
+    if (data_categories[45] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GK1",
@@ -1131,7 +1132,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GL1 - sunshine observation for the month
-    if (data_attributes[46] %in% significant_params){
+    if (data_categories[46] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GL1",
@@ -1144,7 +1145,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GM1 - solar irradiance
-    if (data_attributes[47] %in% significant_params){
+    if (data_categories[47] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GM1",
@@ -1157,7 +1158,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GN1 - solar radiation
-    if (data_attributes[48] %in% significant_params){
+    if (data_categories[48] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GN1",
@@ -1172,7 +1173,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GO1 - net solar radiation
-    if (data_attributes[49] %in% significant_params){
+    if (data_categories[49] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GO1",
@@ -1185,7 +1186,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GP1 - modeled solar irradiance
-    if (data_attributes[50] %in% significant_params){
+    if (data_categories[50] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GP1",
@@ -1200,7 +1201,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GQ1 - hourly solar angle
-    if (data_attributes[51] %in% significant_params){
+    if (data_categories[51] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GQ1",
@@ -1213,7 +1214,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # GR1 - hourly extraterrestrial radiation
-    if (data_attributes[52] %in% significant_params){
+    if (data_categories[52] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "GR1",
@@ -1226,7 +1227,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # HL1 - hail data
-    if (data_attributes[53] %in% significant_params){
+    if (data_categories[53] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "HL1",
@@ -1239,7 +1240,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # IA1 - ground surface data
-    if (data_attributes[54] %in% significant_params){
+    if (data_categories[54] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "IA1",
@@ -1252,7 +1253,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # IA2 - ground surface observation
-    if (data_attributes[55] %in% significant_params){
+    if (data_categories[55] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "IA2",
@@ -1265,7 +1266,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # IB1 - hourly surface temperature
-    if (data_attributes[56] %in% significant_params){
+    if (data_categories[56] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "IB1",
@@ -1280,7 +1281,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # IB2 - hourly surface temperature sensor
-    if (data_attributes[57] %in% significant_params){
+    if (data_categories[57] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "IB2",
@@ -1293,7 +1294,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # IC1 - ground surface observation - pan evaporation
-    if (data_attributes[58] %in% significant_params){
+    if (data_categories[58] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "IC1",
@@ -1308,7 +1309,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # KA1 - temperature data
-    if (data_attributes[59] %in% significant_params){
+    if (data_categories[59] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "KA1",
@@ -1321,7 +1322,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # KB1 - average air temperature
-    if (data_attributes[60] %in% significant_params){
+    if (data_categories[60] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "KB1",
@@ -1334,7 +1335,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # KC1 - extreme air temperature for the month
-    if (data_attributes[61] %in% significant_params){
+    if (data_categories[61] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "KC1",
@@ -1347,7 +1348,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # KD1 - heating/cooling degree days
-    if (data_attributes[62] %in% significant_params){
+    if (data_categories[62] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "KD1",
@@ -1360,7 +1361,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # KE1 - extreme temperatures, number of days exceeding criteria, for the month
-    if (data_attributes[63] %in% significant_params){
+    if (data_categories[63] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "KE1",
@@ -1375,7 +1376,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # KF1 - hourly calculated temperature
-    if (data_attributes[64] %in% significant_params){
+    if (data_categories[64] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "KF1",
@@ -1388,7 +1389,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # KG1 - average dew point and wet bulb temperature
-    if (data_attributes[65] %in% significant_params){
+    if (data_categories[65] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "KG1",
@@ -1401,7 +1402,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # MA1 - atmospheric pressure observation
-    if (data_attributes[66] %in% significant_params){
+    if (data_categories[66] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "MA1",
@@ -1414,7 +1415,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # MD1 - atmospheric pressure change
-    if (data_attributes[67] %in% significant_params){
+    if (data_categories[67] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "MD1",
@@ -1427,7 +1428,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # ME1 - geopotential height isobaric level
-    if (data_attributes[68] %in% significant_params){
+    if (data_categories[68] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "ME1",
@@ -1440,7 +1441,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # MF1 - atmospheric pressure observation (STP/SLP)
-    if (data_attributes[69] %in% significant_params){
+    if (data_categories[69] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "MF1",
@@ -1453,7 +1454,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # MG1 - atmospheric pressure observation
-    if (data_attributes[70] %in% significant_params){
+    if (data_categories[70] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "MG1",
@@ -1467,7 +1468,7 @@ get_isd_station_data <- function(station_id,
     
     # MH1 - atmospheric pressure observation - average station pressure
     # for the month
-    if (data_attributes[71] %in% significant_params){
+    if (data_categories[71] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "MH1",
@@ -1481,7 +1482,7 @@ get_isd_station_data <- function(station_id,
     
     # MK1 - atmospheric pressure observation - maximum sea level pressure
     # for the month
-    if (data_attributes[72] %in% significant_params){
+    if (data_categories[72] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "MK1",
@@ -1494,7 +1495,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # MV1 - present weather in vicinity observation
-    if (data_attributes[73] %in% significant_params){
+    if (data_categories[73] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "MV1",
@@ -1507,7 +1508,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # MW1 - present weather observation 
-    if (data_attributes[74] %in% significant_params){
+    if (data_categories[74] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "MW1",
@@ -1520,7 +1521,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # OA1 - supplementary wine observation 
-    if (data_attributes[75] %in% significant_params){
+    if (data_categories[75] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "OA1",
@@ -1533,7 +1534,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # OB1 - hourly/sub-hourly wind section
-    if (data_attributes[76] %in% significant_params){
+    if (data_categories[76] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "OB1",
@@ -1548,7 +1549,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # OC1 - wind gust observation
-    if (data_attributes[77] %in% significant_params){
+    if (data_categories[77] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "OC1",
@@ -1561,7 +1562,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # OE1 - summary of day wind observation
-    if (data_attributes[78] %in% significant_params){
+    if (data_categories[78] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "OE1",
@@ -1574,7 +1575,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # RH1 - relative humidity
-    if (data_attributes[79] %in% significant_params){
+    if (data_categories[79] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "RH1",
@@ -1587,7 +1588,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # SA1 - sea surface temperature observation
-    if (data_attributes[80] %in% significant_params){
+    if (data_categories[80] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "SA1",
@@ -1600,7 +1601,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # ST1 - soil temperature
-    if (data_attributes[81] %in% significant_params){
+    if (data_categories[81] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "ST1",
@@ -1615,7 +1616,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # UA1 - wave measurement
-    if (data_attributes[82] %in% significant_params){
+    if (data_categories[82] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "UA1",
@@ -1628,7 +1629,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # UG1 - wave measurement primary swell
-    if (data_attributes[83] %in% significant_params){
+    if (data_categories[83] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "UG1",
@@ -1641,7 +1642,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # UG2 - wave measurement secondary swell
-    if (data_attributes[84] %in% significant_params){
+    if (data_categories[84] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "UG2",
@@ -1654,7 +1655,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # WA1 - platform ice accretion
-    if (data_attributes[85] %in% significant_params){
+    if (data_categories[85] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "WA1",
@@ -1667,7 +1668,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # WD1 - water surface ice observation
-    if (data_attributes[86] %in% significant_params){
+    if (data_categories[86] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "WD1",
@@ -1682,7 +1683,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # WG1 - water surface ice historical observation
-    if (data_attributes[87] %in% significant_params){
+    if (data_categories[87] %in% significant_params){
       
       additional_data <-
         get_df_from_category(category_key = "WG1",
