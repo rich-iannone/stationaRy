@@ -174,6 +174,63 @@ get_isd_station_data <- function(station_id,
     }
   }
   
+  if (add_data_report == TRUE){
+    
+    # Create vector of additional data categories
+    data_categories <-
+      c("AA1", "AB1", "AC1", "AD1", "AE1", "AG1", "AH1", "AI1", "AJ1",
+        "AK1", "AL1", "AM1", "AN1", "AO1", "AP1", "AU1", "AW1", "AX1",
+        "AY1", "AZ1", "CB1", "CF1", "CG1", "CH1", "CI1", "CN1", "CN2",
+        "CN3", "CN4", "CR1", "CT1", "CU1", "CV1", "CW1", "CX1", "CO1",
+        "CO2", "ED1", "GA1", "GD1", "GF1", "GG1", "GH1", "GJ1", "GK1",
+        "GL1", "GM1", "GN1", "GO1", "GP1", "GQ1", "GR1", "HL1", "IA1",
+        "IA2", "IB1", "IB2", "IC1", "KA1", "KB1", "KC1", "KD1", "KE1",
+        "KF1", "KG1", "MA1", "MD1", "ME1", "MF1", "MG1", "MH1", "MK1",
+        "MV1", "MW1", "OA1", "OB1", "OC1", "OE1", "RH1", "SA1", "ST1",
+        "UA1", "UG1", "UG2", "WA1", "WD1", "WG1")
+    
+    # Get additional data portions of records, exluding remarks
+    for (i in 1:length(data_files_downloaded)){
+      
+      add_data <- 
+        readLines(file.path(temp_folder,
+                            data_files_downloaded[i]))
+      
+      if (i == 1){
+        all_add_data <- add_data
+      }
+      
+      if (i > 1){
+        all_add_data <- c(all_add_data, add_data)
+      }
+    }
+    
+    # Determine which additional parameters have been measured
+    for (i in 1:length(data_categories)){
+      
+      if (i == 1){
+        data_categories_counts <-
+          vector(mode = "numeric",
+                 length = length(data_categories))
+      }
+      
+      data_categories_counts[i] <-
+        sum(str_detect(all_add_data, data_categories[i]))
+    }
+    
+    data_categories_available <-
+      data_categories[which(data_attributes_counts > 0)]
+    
+    data_categories_counts <-
+      data_attributes_counts[which(data_attributes_counts > 0)]
+    
+    data_categories_df <- 
+      data.frame(categories = data_categories_available,
+                 counts = data_categories_counts)
+    
+    return(data_categories_df)
+  }
+  
   # Define column widths for fixed-width data in mandatory section of
   # ISD data file
   column_widths <- c(4, 6, 5, 4, 2, 2, 2, 2, 1, 6,
