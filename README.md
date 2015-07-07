@@ -248,7 +248,12 @@ There's actually a lot of extra met data, and it varies from station to station.
 #> 21      ST1          38
 ```
 
+Want the rainfall in `mm` units for a particular month? Here's an example where rainfall amounts over 6 hour periods are summed for the month of June in 2015 for Abbotsford, BC, Canada.
 ```
+library(stationaRy)
+library(dplyr)
+library(magrittr)
+
   rainfall_6h_june2015 <- 
     get_isd_stations(startyear = 1970, endyear = 2015,
                        lower_lat = 49, upper_lat = 58,
@@ -259,6 +264,10 @@ There's actually a lot of extra met data, and it varies from station to station.
                              select_additional_data = "AA1") %>%
         filter(month == 6, aa1_1 == 6) %>% 
         select(aa1_2) %>% sum()
+```
+
+```
+[1] 12.5  
 ```
 
 ## Installation
