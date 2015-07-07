@@ -253,21 +253,21 @@ get_isd_stations(startyear = 1970, endyear = 2015,
 #> 21      ST1          38
 ```
 
-Want the rainfall in mm units for a particular month? Here's an example where rainfall amounts over 6 hour periods are summed for the month of June in 2015 for Abbotsford, BC, Canada. The `AA1` data category has to do with rainfall, where `AA1_1` is the duration in hours when the liquid precipitation was observed, and, the `AA1_2` column is quantity of rain in mm.
+Want the rainfall in mm units for a particular month? Here's an example where rainfall amounts over 6 hour periods are summed for the month of June in 2015 for Abbotsford, BC, Canada. The `AA1` data category has to do with rainfall, so that can be included in the output data frame using the `select_additional_data` argument. The `AA1_1` column is the duration in hours when the liquid precipitation was observed, and, the `AA1_2` column is quantity of rain in mm. The deft use of functions the `dplyr` makes this whole process less painful.
 
 ```
 library(stationaRy)
 library(dplyr)
 
-  rainfall_6h_june2015 <- 
-    get_isd_stations(startyear = 1970, endyear = 2015,
-                       lower_lat = 49, upper_lat = 58,
-                       lower_lon = -125, upper_lon = -120) %>%
-        select_isd_station(name = "abbotsford") %>%
-        get_isd_station_data(startyear = 2015,
-                             endyear = 2015,
-                             select_additional_data = "AA1") %>%
-        filter(month == 6, aa1_1 == 6) %>% 
+rainfall_6h_june2015 <- 
+  get_isd_stations(startyear = 1970, endyear = 2015,
+                   lower_lat = 49, upper_lat = 58,
+                   lower_lon = -125, upper_lon = -120) %>%
+    select_isd_station(name = "abbotsford") %>%
+    get_isd_station_data(startyear = 2015,
+                         endyear = 2015,
+                         select_additional_data = "AA1") %>%
+    filter(month == 6, aa1_1 == 6) %>% 
         select(aa1_2) %>% sum()
 ```
 
