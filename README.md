@@ -211,16 +211,21 @@ high_temps
 #> 3 2012-07-18 14:00:00 230 4.1 37.9 100.22
 ```
 
-There's actually a lot of extra met data, and it varies from station to station. These additional categories are denoted 'two-letter + digit' identifiers (e.g., `AA1`, `GA1`, etc.). To find out which categories are available for a station, set the `add_data_report` argument of the `get_isd_station_data` function to `TRUE`. This will provide a data frame with the available additional categories with their counts in the dataset.
+There's actually a lot of extra met data, and it varies from station to station. These additional categories are denoted 'two-letter + digit' identifiers (e.g., `AA1`, `GA1`, etc.). More information about these observations can be found in [this PDF document](http://www1.ncdc.noaa.gov/pub/data/ish/ish-format-document.pdf).
+
+To find out which categories are available for a station, set the `add_data_report` argument of the `get_isd_station_data` function to `TRUE`. This will provide a data frame with the available additional categories with their counts in the dataset.
 
 ```
-  get_isd_stations(startyear = 1970, endyear = 2015,
-                   lower_lat = 49, upper_lat = 58,
-                   lower_lon = -125, upper_lon = -120) %>%
-    select_isd_station(name = "abbotsford") %>%
-    get_isd_station_data(startyear = 2015,
-                         endyear = 2015,
-                         add_data_report = TRUE)
+library(stationaRy)
+library(dplyr)
+
+get_isd_stations(startyear = 1970, endyear = 2015,
+                 lower_lat = 49, upper_lat = 58,
+                 lower_lon = -125, upper_lon = -120) %>%
+  select_isd_station(name = "abbotsford") %>%
+  get_isd_station_data(startyear = 2015,
+                       endyear = 2015,
+                       add_data_report = TRUE)
 ```
 
 ```
@@ -248,11 +253,11 @@ There's actually a lot of extra met data, and it varies from station to station.
 #> 21      ST1          38
 ```
 
-Want the rainfall in `mm` units for a particular month? Here's an example where rainfall amounts over 6 hour periods are summed for the month of June in 2015 for Abbotsford, BC, Canada.
+Want the rainfall in mm units for a particular month? Here's an example where rainfall amounts over 6 hour periods are summed for the month of June in 2015 for Abbotsford, BC, Canada. The `AA1` data category has to do with rainfall, where `AA1_1` is the duration in hours when the liquid precipitation was observed, and, the `AA1_2` column is quantity of rain in mm.
+
 ```
 library(stationaRy)
 library(dplyr)
-library(magrittr)
 
   rainfall_6h_june2015 <- 
     get_isd_stations(startyear = 1970, endyear = 2015,
