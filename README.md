@@ -253,7 +253,7 @@ get_isd_stations(startyear = 1970, endyear = 2015,
 #> 21      ST1          38
 ```
 
-Want the rainfall in mm units for a particular month? Here's an example where rainfall amounts over 6 hour periods are summed for the month of June in 2015 for Abbotsford, BC, Canada. The `AA1` data category has to do with rainfall, so that can be included in the output data frame using the `select_additional_data` argument. The `AA1_1` column is the duration in hours when the liquid precipitation was observed, and, the `AA1_2` column is quantity of rain in mm. The deft use of functions the `dplyr` makes this whole process less painful.
+Want the rainfall in mm units for a particular month? Here's an example where rainfall amounts over 6 hour periods are summed for the month of June in 2015 for Abbotsford, BC, Canada. The `AA1` data category has to do with rainfall, so that can be included in the output data frame using the `select_additional_data` argument. The `AA1_1` column is the duration in hours when the liquid precipitation was observed, and, the `AA1_2` column is quantity of rain in mm. The deft use of functions the **dplyr** makes this whole process less painful.
 
 ```
 library(stationaRy)
