@@ -211,6 +211,56 @@ high_temps
 #> 3 2012-07-18 14:00:00 230 4.1 37.9 100.22
 ```
 
+There's actually a lot of extra met data, and it varies from station to station. These additional categories are denoted 'two-letter + digit' identifiers (e.g., `AA1`, `GA1`, etc.). To find out which categories are available for a station, set the `add_data_report` argument of the `get_isd_station_data` function to `TRUE`. This will provide a data frame with the available additional categories with their counts in the dataset.
+
+```
+  get_isd_stations(startyear = 1970, endyear = 2015,
+                   lower_lat = 49, upper_lat = 58,
+                   lower_lon = -125, upper_lon = -120) %>%
+    select_isd_station(name = "abbotsford") %>%
+    get_isd_station_data(startyear = 2015,
+                         endyear = 2015,
+                         add_data_report = TRUE)
+```
+
+```
+#>    category total_count
+#> 1       AA1         744
+#> 2       AC1         817
+#> 3       AJ1           5
+#> 4       AL1           4
+#> 5       AY1         248
+#> 6       CB1          27
+#> 7       CF1         125
+#> 8       CI1         560
+#> 9       CT1         406
+#> 10      CU1         478
+#> 11      ED1          27
+#> 12      GA1         778
+#> 13      GD1        4514
+#> 14      GF1        5664
+#> 15      IA1           5
+#> 16      KA1         744
+#> 17      MA1        5748
+#> 18      MD1         736
+#> 19      MW1        1609
+#> 20      OC1         324
+#> 21      ST1          38
+```
+
+```
+  rainfall_6h_june2015 <- 
+    get_isd_stations(startyear = 1970, endyear = 2015,
+                       lower_lat = 49, upper_lat = 58,
+                       lower_lon = -125, upper_lon = -120) %>%
+        select_isd_station(name = "abbotsford") %>%
+        get_isd_station_data(startyear = 2015,
+                             endyear = 2015,
+                             select_additional_data = "AA1") %>%
+        filter(month == 6, aa1_1 == 6) %>% 
+        select(aa1_2) %>% sum()
+```
+
 ## Installation
 
 Want to try this? Make sure you have **R**, then, use this:
