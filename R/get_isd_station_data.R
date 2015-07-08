@@ -7,9 +7,9 @@
 #' @param endyear the ending year for the collected data.
 #' @param full_data include additional meteorological data found in the
 #' dataset's additional data section?
-#' @param add_data_report provides a data frame that provides information on
-#' which additional data categories are available for the selected station
-#' during the specified years.
+#' @param add_data_report selecting TRUE will provide a data frame with
+#' information on which additional data categories are available for the
+#' selected station during the specified years.
 #' @param select_additional_data a vector of categories for additional
 #' meteorological data to include (instead of all available categories). 
 #' @importFrom plyr round_any
