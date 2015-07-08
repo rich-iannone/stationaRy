@@ -1,5 +1,7 @@
 <img src="inst/stationaRy_2x.png", width = 100%>
 
+![](http://cranlogs.r-pkg.org/badges/grand-total/stationaRy?color=brightgreen) [![Issue Stats](http://issuestats.com/github/rich-iannone/stationaRy/badge/pr?style=flat)](http://issuestats.com/github/rich-iannone/stationaRy) [![Issue Stats](http://issuestats.com/github/rich-iannone/stationaRy/badge/issue?style=flat)](http://issuestats.com/github/rich-iannone/stationaRy)
+
 Want some tools to acquire and process meteorological data? Well, you've come to the right repo. So far there's only a few functions that get you data. These are:
 
 - `get_isd_stations`
