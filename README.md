@@ -215,7 +215,7 @@ There's actually a lot of extra met data, and it varies from station to station.
 
 To find out which categories are available for a station, set the `add_data_report` argument of the `get_isd_station_data` function to `TRUE`. This will provide a data frame with the available additional categories with their counts in the dataset.
 
-```
+```R
 library(stationaRy)
 library(dplyr)
 
@@ -255,7 +255,7 @@ get_isd_stations(startyear = 1970, endyear = 2015,
 
 Want the rainfall in mm units for a particular month? Here's an example where rainfall amounts (over 6 hour periods) are summed for the month of June in 2015 for Abbotsford, BC, Canada. The `AA1` data category has to do with rainfall, and you can be include that data (where available) in the output data frame by using the `select_additional_data` argument and specifying which data categories you'd like. The `AA1_1` column is the duration in hours when the liquid precipitation was observed, and, the `AA1_2` column is quantity of rain in mm. The deft use of functions from the **dplyr** package makes this whole process less painful.
 
-```
+```R
 library(stationaRy)
 library(dplyr)
 
