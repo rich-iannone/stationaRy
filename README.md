@@ -1,5 +1,7 @@
 <img src="inst/stationaRy_2x.png", width = 100%>
 
+![](http://cranlogs.r-pkg.org/badges/grand-total/stationaRy?color=brightgreen) [![Issue Stats](http://issuestats.com/github/rich-iannone/stationaRy/badge/pr?style=flat)](http://issuestats.com/github/rich-iannone/stationaRy) [![Issue Stats](http://issuestats.com/github/rich-iannone/stationaRy/badge/issue?style=flat)](http://issuestats.com/github/rich-iannone/stationaRy)
+
 Want some tools to acquire and process meteorological data? Well, you've come to the right repo. So far there's only a few functions that get you data. These are:
 
 - `get_isd_stations`
@@ -209,6 +211,70 @@ high_temps
 #> 1 2012-07-18 12:00:00 230 1.5 37.2  98.96
 #> 2 2012-07-18 13:00:00 220 2.6 37.8 100.04
 #> 3 2012-07-18 14:00:00 230 4.1 37.9 100.22
+```
+
+There's actually a lot of extra met data, and it varies from station to station. These additional categories are denoted 'two-letter + digit' identifiers (e.g., `AA1`, `GA1`, etc.). More information about these observations can be found in [this PDF document](http://www1.ncdc.noaa.gov/pub/data/ish/ish-format-document.pdf).
+
+To find out which categories are available for a station, set the `add_data_report` argument of the `get_isd_station_data` function to `TRUE`. This will provide a data frame with the available additional categories with their counts in the dataset.
+
+```R
+library(stationaRy)
+library(dplyr)
+
+get_isd_stations(startyear = 1970, endyear = 2015,
+                 lower_lat = 49, upper_lat = 58,
+                 lower_lon = -125, upper_lon = -120) %>%
+  select_isd_station(name = "abbotsford") %>%
+  get_isd_station_data(startyear = 2015,
+                       endyear = 2015,
+                       add_data_report = TRUE)
+```
+
+```
+#>    category total_count
+#> 1       AA1         744
+#> 2       AC1         817
+#> 3       AJ1           5
+#> 4       AL1           4
+#> 5       AY1         248
+#> 6       CB1          27
+#> 7       CF1         125
+#> 8       CI1         560
+#> 9       CT1         406
+#> 10      CU1         478
+#> 11      ED1          27
+#> 12      GA1         778
+#> 13      GD1        4514
+#> 14      GF1        5664
+#> 15      IA1           5
+#> 16      KA1         744
+#> 17      MA1        5748
+#> 18      MD1         736
+#> 19      MW1        1609
+#> 20      OC1         324
+#> 21      ST1          38
+```
+
+Want the rainfall in mm units for a particular month? Here's an example where rainfall amounts (over 6 hour periods) are summed for the month of June in 2015 for Abbotsford, BC, Canada. The `AA1` data category has to do with rainfall, and you can be include that data (where available) in the output data frame by using the `select_additional_data` argument and specifying which data categories you'd like. The `AA1_1` column is the duration in hours when the liquid precipitation was observed, and, the `AA1_2` column is quantity of rain in mm. The deft use of functions from the **dplyr** package makes this whole process less painful.
+
+```R
+library(stationaRy)
+library(dplyr)
+
+rainfall_6h_june2015 <- 
+  get_isd_stations(startyear = 1970, endyear = 2015,
+                   lower_lat = 49, upper_lat = 58,
+                   lower_lon = -125, upper_lon = -120) %>%
+    select_isd_station(name = "abbotsford") %>%
+    get_isd_station_data(startyear = 2015,
+                         endyear = 2015,
+                         select_additional_data = "AA1") %>%
+    filter(month == 6, aa1_1 == 6) %>% 
+        select(aa1_2) %>% sum()
+```
+
+```
+[1] 12.5  
 ```
 
 ## Installation
