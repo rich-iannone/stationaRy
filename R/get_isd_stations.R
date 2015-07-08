@@ -74,24 +74,24 @@ get_isd_stations <- function(startyear = NULL,
   
   gmt_offset <- begin <- lon <- lat <- NA
   
-  # Load the 'combined' data frame
+  # Load the 'stn_df' data frame
   load(system.file("stations.rda", package = "stationaRy"))
   
   # Subset by those stations that have GMT offset values
-  combined <- filter(combined, !is.na(gmt_offset))
+  stn_df <- filter(stn_df, !is.na(gmt_offset))
   
   # Set '-999.9' values for elevation to NA
-  combined[which(combined$elev == -999.9), 8] <- NA
-  
+  stn_df[which(stn_df$elev == -999.9), 8] <- NA
+
   # Transform data frame to a dplyr tbl
-  combined <- as.tbl(combined)
+  stn_df <- as.tbl(stn_df)
   
   # If no filtering is performed, return entire data frame
   if (is.null(c(startyear, endyear,
                 lower_lat, upper_lat,
                 lower_lon, upper_lon))){
     
-    return(combined)
+    return(stn_df)
   }
   
   # If filtering by year only
@@ -99,14 +99,14 @@ get_isd_stations <- function(startyear = NULL,
       is.null(c(lower_lat, upper_lat,
                 lower_lon, upper_lon))){
     
-    combined <- 
-      filter(combined, 
+    stn_df <- 
+      filter(stn_df, 
              begin <= startyear &
                end >= endyear)
     
-    row.names(combined) <- NULL
+    row.names(stn_df) <- NULL
     
-    return(combined)
+    return(stn_df)
   }
   
   # If filtering by bounding box only
@@ -114,16 +114,16 @@ get_isd_stations <- function(startyear = NULL,
       !is.null(c(lower_lat, upper_lat,
                  lower_lon, upper_lon))){
     
-    combined <- 
-      filter(combined,
+    stn_df <- 
+      filter(stn_df,
              lon >= lower_lon & 
                lon <= upper_lon &
                lat >= lower_lat &
                lat <= upper_lat)
     
-    row.names(combined) <- NULL
+    row.names(stn_df) <- NULL
     
-    return(combined)
+    return(stn_df)
   }
   
   # If filtering by date and bounding box
@@ -131,8 +131,8 @@ get_isd_stations <- function(startyear = NULL,
                  lower_lat, upper_lat,
                  lower_lon, upper_lon))){
     
-    combined <- 
-      filter(combined,
+    stn_df <- 
+      filter(stn_df,
              lon >= lower_lon & 
                lon <= upper_lon &
                lat >= lower_lat &
@@ -140,8 +140,8 @@ get_isd_stations <- function(startyear = NULL,
                begin <= startyear &
                end >= endyear)
     
-    row.names(combined) <- NULL
+    row.names(stn_df) <- NULL
     
-    return(combined)
+    return(stn_df)
   }
 }
