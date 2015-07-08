@@ -13,10 +13,10 @@
 #' @param select_additional_data a vector of categories for additional
 #' meteorological data to include (instead of all available categories). 
 #' @importFrom plyr round_any
+#' @importFrom lubridate year month mday hour minute
 #' @import dplyr
 #' @import readr
 #' @import stringr
-#' @import lubridate
 #' @import downloader
 #' @import progress
 #' @return Returns a data frame with 18 variables. Times are recorded 
