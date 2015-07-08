@@ -10,7 +10,7 @@
 #' @param upper_lon the upper bound of the longitude for a bounding box.
 #' @import dplyr
 #' 
-#' @return Returns a data frame with 15 columns.
+#' @return Returns a data frame with 16 columns.
 #' \describe{
 #'   \item{usaf}{A character string identifying the fixed weather 
 #'     station from the USAF Master Station Catalog.
