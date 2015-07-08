@@ -3,10 +3,6 @@
 \name{get_isd_stations}
 \alias{get_isd_stations}
 \title{Get listing of ISD stations based on location or time bounds}
-\source{
-\url{http://www.ncdc.noaa.gov/isd}\cr
-Source needed for column descriptions.
-}
 \usage{
 get_isd_stations(startyear = NULL, endyear = NULL, lower_lat = NULL,
   upper_lat = NULL, lower_lon = NULL, upper_lon = NULL)
@@ -25,7 +21,7 @@ get_isd_stations(startyear = NULL, endyear = NULL, lower_lat = NULL,
 \item{upper_lon}{the upper bound of the longitude for a bounding box.}
 }
 \value{
-Returns a data frame with 15 columns.
+Returns a data frame with 16 columns.
 \describe{
   \item{usaf}{A character string identifying the fixed weather
     station from the USAF Master Station Catalog.
@@ -46,16 +42,19 @@ Returns a data frame with 15 columns.
     can be approximated by \code{elev * 3.28084}}
   \item{begin}{The earliest year for which data are available.}
   \item{end}{The latest year for which data are available.}
-  \item{gn_gmtoffset}{A time zone offset.}
-  \item{rawoffset}{A time zone offset.  I'm not entirely sure how this
-    differs from \code{gn_gmtoffset}.}
+  \item{gmt_offset}{A time zone offset.}
   \item{time_zone_id}{Time zone identifier}
   \item{country_name}{Character string giving the name of the country
     where the station is located.}
   \item{country_code}{A character string with the two character country
-    code where the station is located.  This is not identical to the
-    \code{country} column.  At first glance, this column appears to resemble
-    the country more accurately than \code{country}.}
+    code where the station is located. This is not identical to the
+    \code{country} column.}
+  \item{iso3166_2_subd}{The ISO 3166-2 representation of the country's
+  subdivision (e.g., state, province, etc.) for where the station is
+  located.}
+  \item{fips10_4_subd}{The FIPS 10-4 representation of the country's
+  subdivision (e.g., state, province, etc.) for where the station is
+  located.}
 }
 }
 \description{
