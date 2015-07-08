@@ -72,13 +72,13 @@ get_isd_stations <- function(startyear = NULL,
                              lower_lon = NULL,
                              upper_lon = NULL){
   
-  gn_gmtoffset <- begin <- lon <- lat <- NA
+  gmt_offset <- begin <- lon <- lat <- NA
   
   # Load the 'combined' data frame
   load(system.file("stations.rda", package = "stationaRy"))
   
   # Subset by those stations that have GMT offset values
-  combined <- filter(combined, !is.na(gn_gmtoffset))
+  combined <- filter(combined, !is.na(gmt_offset))
   
   # Set '-999.9' values for elevation to NA
   combined[which(combined$elev == -999.9), 8] <- NA
