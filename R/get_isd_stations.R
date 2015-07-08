@@ -8,7 +8,6 @@
 #' @param upper_lat the upper bound of the latitude for a bounding box.
 #' @param lower_lon the lower bound of the longitude for a bounding box.
 #' @param upper_lon the upper bound of the longitude for a bounding box.
-#' @import downloader
 #' @import dplyr
 #' 
 #' @return Returns a data frame with 15 columns.
