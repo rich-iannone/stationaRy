@@ -25,9 +25,9 @@ WBAN numbers, separated by a hyphen.}
 \item{full_data}{include additional meteorological data found in the
 dataset's additional data section?}
 
-\item{add_data_report}{provides a data frame that provides information on
-which additional data categories are available for the selected station
-during the specified years.}
+\item{add_data_report}{selecting TRUE will provide a data frame with
+information on which additional data categories are available for the
+selected station during the specified years.}
 
 \item{select_additional_data}{a vector of categories for additional
 meteorological data to include (instead of all available categories).}
