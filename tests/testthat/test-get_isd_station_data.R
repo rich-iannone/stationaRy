@@ -30,8 +30,8 @@ test_that("get_isd_station_data returns correct number of columns", {
   expect_equal(ncol(df_mandatory_data), 18L)
   
   # Expect that, for the df with both mandatory and additional data,
-  # the number of columns will be exactly 114
-  expect_equal(ncol(df_full_data), 114L)
+  # the number of columns will be greater than 100
+  expect_greater_than(ncol(df_full_data), 100L)
   
   # Expect that, for the df with both mandatory and two additional data
   # categories, the number of columns will be exactly 25
