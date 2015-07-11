@@ -3,7 +3,8 @@
 [![Travis-CI Build Status](https://travis-ci.org/rich-iannone/stationaRy.svg?branch=master)](https://travis-ci.org/rich-iannone/stationaRy) 
 [![Issue Stats](http://issuestats.com/github/rich-iannone/stationaRy/badge/pr?style=flat)](http://issuestats.com/github/rich-iannone/stationaRy) 
 [![Issue Stats](http://issuestats.com/github/rich-iannone/stationaRy/badge/issue?style=flat)](http://issuestats.com/github/rich-iannone/stationaRy) 
-[![codecov.io](https://codecov.io/github/rich-iannone/stationaRy/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/stationaRy?branch=master)![](http://cranlogs.r-pkg.org/badges/grand-total/stationaRy?color=brightgreen) 
+![](http://cranlogs.r-pkg.org/badges/grand-total/stationaRy?color=brightgreen) 
+[![codecov.io](https://codecov.io/github/rich-iannone/stationaRy/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/stationaRy?branch=master) 
 
 Want some tools to acquire and process meteorological data? Well, you've come to the right repo. So far there's only a few functions that get you data. These are:
 
