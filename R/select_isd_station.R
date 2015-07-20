@@ -62,7 +62,7 @@ select_isd_station <- function(stn_df,
     
     station_name <- 
       gsub("  ", " ",
-           tolower(as.character(as.data.frame(stn_df[,3])[[1]])))
+           tolower(as.character(as.data.frame(stn_df$name)[[1]])))
     
     re.escape <- function(strings){
       
