@@ -76,16 +76,7 @@ get_isd_stations <- function(startyear = NULL,
   
   # Load the 'stn_df' data frame
   load(system.file("stations.rda", package = "stationaRy"))
-  
-  # Subset by those stations that have GMT offset values
-  stn_df <- filter(stn_df, !is.na(gmt_offset))
-  
-  # Set '-999.9' values for elevation to NA
-  stn_df[which(stn_df$elev == -999.9), 8] <- NA
 
-  # Transform data frame to a dplyr tbl
-  stn_df <- as.tbl(stn_df)
-  
   # If no filtering is performed, return entire data frame
   if (is.null(c(startyear, endyear,
                 lower_lat, upper_lat,
