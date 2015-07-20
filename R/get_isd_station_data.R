@@ -16,7 +16,7 @@
 #' @importFrom lubridate year month mday hour minute
 #' @import dplyr
 #' @import readr
-#' @import stringr
+#' @importFrom stringr str_detect str_extract
 #' @import downloader
 #' @import progress
 #' @return Returns a data frame with 18 variables. Times are recorded 
