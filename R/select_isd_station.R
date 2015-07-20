@@ -64,6 +64,24 @@ select_isd_station <- function(stn_df,
       gsub("  ", " ",
            tolower(as.character(as.data.frame(stn_df[,3])[[1]])))
     
+    re.escape <- function(strings){
+      
+      vals <- c("\\\\", "\\[", "\\]", "\\(", "\\)", 
+                "\\{", "\\}", "\\^", "\\$", "\\*", 
+                "\\+", "\\?", "\\.", "\\|")
+      
+      replace.vals <- paste0("\\\\", vals)
+      
+      for (i in seq_along(vals)){
+        
+        strings <- gsub(vals[i], replace.vals[i], strings)
+      }
+      
+      strings
+    }
+    
+    station_name <- re.escape(strings = station_name)
+    
     any_matched_stations <- any(grepl(name, station_name))
     
     if (any_matched_stations == FALSE){
