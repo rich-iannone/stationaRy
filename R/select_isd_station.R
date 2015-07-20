@@ -80,7 +80,7 @@ select_isd_station <- function(stn_df,
       strings
     }
     
-    station_name <- re.escape(strings = station_name)
+    name <- re.escape(strings = name)
     
     any_matched_stations <- any(grepl(name, station_name))
     
