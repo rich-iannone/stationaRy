@@ -50,15 +50,18 @@ select_isd_station <- function(stn_df,
     return(NA)
   }
   
-  # If number provided, create the 'station_id' string from
+  # If just the number provided, create the 'station_id' string from
   # the USAF and WBAN from the row corresponding the the number
   if (!is.null(number) & is.null(name)){
     
     station_id <- paste0(stn_df[number,1], "-",
                          stn_df[number,2])
+    
+    return(station_id)
   }
   
-  if (!is.null(name) & is.null(number)){
+  # If the name is provided, filter the data frame by that name
+  if (!is.null(name)){
     
     station_name <- 
       gsub("  ", " ",
@@ -91,7 +94,7 @@ select_isd_station <- function(stn_df,
       return(NA)
     }
     
-    if (any_matched_stations){
+    if (any_matched_stations == TRUE){
       
       number_of_matched_stations <-
         sum(grepl(name, station_name))
@@ -103,6 +106,7 @@ select_isd_station <- function(stn_df,
         station_id <- paste0(stn_df[number,1], "-",
                              stn_df[number,2])
         
+        return(station_id)
       }
       
       if (number_of_matched_stations > 1){
@@ -118,6 +122,7 @@ select_isd_station <- function(stn_df,
           station_id <- paste0(stn_df[number,1], "-",
                                stn_df[number,2])
           
+          return(station_id)
         }
         
         message("Several stations matched. Provide a more specific search term.")
@@ -128,6 +133,4 @@ select_isd_station <- function(stn_df,
       }
     }
   }
-  
-  return(station_id)
 }
