@@ -9,13 +9,13 @@ test_that("get_isd_station_data returns correct number of columns", {
                          endyear = 2015,
                          full_data = FALSE)
   
-#   # Get data frame of met data with both the mandatory fields and
-#   # additional fields as well
-#   df_full_data <- 
-#     get_isd_station_data(station_id = "722315-53917",
-#                          startyear = 2014,
-#                          endyear = 2015,
-#                          full_data = TRUE)
+  #   # Get data frame of met data with both the mandatory fields and
+  #   # additional fields as well
+  #   df_full_data <- 
+  #     get_isd_station_data(station_id = "722315-53917",
+  #                          startyear = 2014,
+  #                          endyear = 2015,
+  #                          full_data = TRUE)
   
   # Get data frame of met data with both the mandatory fields and
   # additional fields for two categories: AA1 and AB1
@@ -46,8 +46,8 @@ test_that("get_isd_station_data returns correct number of columns", {
   
   # Expect that, for the df with both mandatory and additional data,
   # the column names for the additional data will match a specified format
-#   expect_match(colnames(df_full_data)[19:length(colnames(df_full_data))],
-#                "^[a-z][a-z][1-9]_([0-9]|[0-9][0-9])$")
+  #   expect_match(colnames(df_full_data)[19:length(colnames(df_full_data))],
+  #                "^[a-z][a-z][1-9]_([0-9]|[0-9][0-9])$")
   
 })
 
@@ -60,8 +60,34 @@ test_that("get_isd_station_data can provide an additional data report", {
                          startyear = 2014,
                          endyear = 2015,
                          add_data_report = TRUE)
-
+  
   # Expect that a data frame is returned
   expect_true(class(additional_data_categories) == "data.frame")
   
-  })
+})
+
+test_that("error messages are provided in certain situations", {
+  
+  # Expect an error if numeric values aren't provided for both
+  # "startyear" and "endyear"
+  expect_error(
+    get_isd_station_data(station_id = "722315-53917",
+                         startyear = "2010",
+                         endyear = "2014")
+  )
+  
+  # Expect an error if numeric values aren't provided for both
+  # "startyear" and "endyear"
+  expect_error(
+    get_isd_station_data(station_id = "722315-53917",
+                         startyear = 2014,
+                         endyear = 2010)
+  )
+  
+  # Expect an error if values aren't provided at all for both
+  # "startyear" and "endyear"
+  expect_error(
+    get_isd_station_data(station_id = "722315-53917")
+  )
+  
+})
