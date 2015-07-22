@@ -107,7 +107,9 @@ get_isd_station_data <- function(station_id,
                                  endyear,
                                  full_data = FALSE,
                                  add_data_report = FALSE,
-                                 select_additional_data = NULL){
+                                 select_additional_data = NULL,
+                                 use_local_files = TRUE,
+                                 local_file_dir = NULL){
   
   usaf <- wban <- year <- NA
   
