@@ -144,7 +144,8 @@ get_isd_station_data <- function(station_id,
   # Create a temporary folder to deposit downloaded files
   temp_folder <- tempdir()
   
-  # Download the gzip-compressed data files for the years specified
+  # If a station ID string provided,
+  # download the gzip-compressed data files for the years specified
   for (i in startyear:endyear){
     
     if (i == startyear){
