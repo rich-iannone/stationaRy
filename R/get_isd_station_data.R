@@ -328,8 +328,7 @@ get_isd_station_data <- function(station_id,
       # Read data from mandatory data section of each file,
       # which is a fixed-width string
       data <- 
-        read_fwf(file.path(temp_folder,
-                           data_files[i]),
+        read_fwf(data_files[i],
                  fwf_widths(column_widths))
       
       # Remove select columns from data frame
