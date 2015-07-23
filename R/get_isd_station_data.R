@@ -11,7 +11,9 @@
 #' information on which additional data categories are available for the
 #' selected station during the specified years.
 #' @param select_additional_data a vector of categories for additional
-#' meteorological data to include (instead of all available categories). 
+#' meteorological data to include (instead of all available categories).
+#' @param use_local_files option to use data files already available locally.
+#' @param local_file_dir path to local meteorological data files.
 #' @importFrom plyr round_any
 #' @importFrom lubridate year month mday hour minute
 #' @import dplyr
