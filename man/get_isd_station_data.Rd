@@ -13,7 +13,7 @@ Calculating Humidity: \cr
 \usage{
 get_isd_station_data(station_id, startyear, endyear, full_data = FALSE,
   add_data_report = FALSE, select_additional_data = NULL,
-  use_local_files = TRUE, local_file_dir = NULL)
+  use_local_files = FALSE, local_file_dir = NULL)
 }
 \arguments{
 \item{station_id}{a station identifier composed of the station's USAF and
