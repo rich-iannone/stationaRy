@@ -47,7 +47,7 @@ test_that("get_isd_stations returns a correct data frame", {
   expect_more_than(nrow(all_isd_stations), 10L)
   expect_more_than(nrow(isd_stations_bbox), 10L)
   expect_more_than(nrow(isd_stations_year_range), 10L)
-  expect_more_than(nrow(isd_stations_bbox_year_range), 10L)
+  expect_more_than(nrow(isd_stations_bbox_year_range), 5L)
   
   # Expect that more filtering leads to less stations
   expect_less_than(nrow(isd_stations_bbox),
