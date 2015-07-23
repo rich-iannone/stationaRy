@@ -209,7 +209,7 @@ get_isd_station_data <- function(station_id,
       }
     }
     
-    # Determine which additional parameters have been measured
+    # Obtain data counts for all additional parameters
     for (i in 1:length(data_categories)){
       
       if (i == 1){
