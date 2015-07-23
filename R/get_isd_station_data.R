@@ -143,38 +143,67 @@ get_isd_station_data <- function(station_id,
   # end of series
   if (gmt_offset < 0 & year(Sys.time()) != endyear) endyear <- endyear + 1
   
-  # Create a temporary folder to deposit downloaded files
-  temp_folder <- tempdir()
-  
-  # If a station ID string provided,
-  # download the gzip-compressed data files for the years specified
-  for (i in startyear:endyear){
+  if (use_local_files == TRUE){
     
-    if (i == startyear){
+    for (i in startyear:endyear){
       
-      data_files_downloaded <- vector(mode = "character")
+      if (i == startyear){
+        
+        data_files_required <- vector(mode = "character")
+      }
+      
+      data_files_required <- 
+        c(data_files_required,
+          paste0(sprintf("%06d",
+                         as.numeric(unlist(strsplit(station_id,
+                                                    "-"))[1])),
+                 "-",
+                 sprintf("%05d",
+                         as.numeric(unlist(strsplit(station_id,
+                                                    "-"))[2])),
+                 "-", i, ".gz"))
     }
     
-    data_file_to_download <- 
-      paste0(sprintf("%06d",
-                     as.numeric(unlist(strsplit(station_id,
-                                                "-"))[1])),
-             "-",
-             sprintf("%05d",
-                     as.numeric(unlist(strsplit(station_id,
-                                                "-"))[2])),
-             "-", i, ".gz")
+    # Verify that local files are available
+    all_local_files_available <-
+      all(file.exists(paste0(local_file_dir, "/", data_files_required)))
+  }
+  
+  if (use_local_files == FALSE){
     
-    try(download(url = paste0("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/", i,
-                              "/", data_file_to_download),
-                 destfile = file.path(temp_folder, data_file_to_download)),
-        silent = TRUE)
+    # Create a temporary folder to deposit downloaded files
+    temp_folder <- tempdir()
     
-    if (file.info(file.path(temp_folder,
-                            data_file_to_download))$size > 1){
+    # If a station ID string provided,
+    # download the gzip-compressed data files for the years specified
+    for (i in startyear:endyear){
       
-      data_files_downloaded <- c(data_files_downloaded,
-                                 data_file_to_download)
+      if (i == startyear){
+        
+        data_files_downloaded <- vector(mode = "character")
+      }
+      
+      data_file_to_download <- 
+        paste0(sprintf("%06d",
+                       as.numeric(unlist(strsplit(station_id,
+                                                  "-"))[1])),
+               "-",
+               sprintf("%05d",
+                       as.numeric(unlist(strsplit(station_id,
+                                                  "-"))[2])),
+               "-", i, ".gz")
+      
+      try(download(url = paste0("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/", i,
+                                "/", data_file_to_download),
+                   destfile = file.path(temp_folder, data_file_to_download)),
+          silent = TRUE)
+      
+      if (file.info(file.path(temp_folder,
+                              data_file_to_download))$size > 1){
+        
+        data_files_downloaded <- c(data_files_downloaded,
+                                   data_file_to_download)
+      }
     }
   }
   
@@ -194,18 +223,49 @@ get_isd_station_data <- function(station_id,
         "UA1", "UG1", "UG2", "WA1", "WD1", "WG1")
     
     # Get additional data portions of records, exluding remarks
-    for (i in 1:length(data_files_downloaded)){
+    if (use_local_files == FALSE){
       
-      add_data <- 
-        readLines(file.path(temp_folder,
-                            data_files_downloaded[i]))
-      
-      if (i == 1){
-        all_add_data <- add_data
+      for (i in 1:length(data_files_downloaded)){
+        
+        if (use_local_files == FALSE){
+          
+          add_data <- 
+            readLines(file.path(temp_folder,
+                                data_files_downloaded[i]))
+        }
+        
+        if (i == 1){
+          all_add_data <- add_data
+        }
+        
+        if (i > 1){
+          all_add_data <- c(all_add_data, add_data)
+        }
       }
+    }
+    
+    if (use_local_files == TRUE){
       
-      if (i > 1){
-        all_add_data <- c(all_add_data, add_data)
+      for (i in 1:length(data_files_required)){
+        
+        if (use_local_files == FALSE){
+          
+          add_data <- 
+            readLines(file.path(temp_folder,
+                                data_files_required[i]))
+        }
+        
+        add_data <- 
+          readLines(file.path(local_file_dir,
+                              data_files_required[i]))
+        
+        if (i == 1){
+          all_add_data <- add_data
+        }
+        
+        if (i > 1){
+          all_add_data <- c(all_add_data, add_data)
+        }
       }
     }
     
