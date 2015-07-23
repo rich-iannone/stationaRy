@@ -246,6 +246,17 @@ get_isd_station_data <- function(station_id,
       5, 1, 1, 1, 6, 1, 1, 1, 5, 1,
       5, 1, 5, 1)
   
+  if (use_local_files == TRUE){
+    
+    data_files <- file.path(local_file_dir,
+                            data_files_required)
+  }
+  
+  if (use_local_files == FALSE){
+    
+    data_files <- file.path(temp_folder,
+                            data_files_downloaded)
+  }
   
   for (i in 1:length(data_files_downloaded)){
     
