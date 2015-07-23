@@ -238,12 +238,14 @@ get_isd_station_data <- function(station_id,
     return(data_categories_df)
   }
   
-  # Define column widths for fixed-width data in mandatory section of
-  # ISD data file
-  column_widths <- c(4, 6, 5, 4, 2, 2, 2, 2, 1, 6,
-                     7, 5, 5, 5, 4, 3, 1, 1, 4, 1,
-                     5, 1, 1, 1, 6, 1, 1, 1, 5, 1,
-                     5, 1, 5, 1)
+  # Define column widths for fixed-width data in the mandatory section of
+  # the ISD data files
+  column_widths <- 
+    c(4, 6, 5, 4, 2, 2, 2, 2, 1, 6,
+      7, 5, 5, 5, 4, 3, 1, 1, 4, 1,
+      5, 1, 1, 1, 6, 1, 1, 1, 5, 1,
+      5, 1, 5, 1)
+  
   
   for (i in 1:length(data_files_downloaded)){
     
