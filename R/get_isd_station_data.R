@@ -258,16 +258,18 @@ get_isd_station_data <- function(station_id,
                             data_files_downloaded)
   }
   
-  for (i in 1:length(data_files_downloaded)){
+  for (i in 1:length(data_files)){
     
-    if (file.exists(file.path(temp_folder,
-                              data_files_downloaded[i]))){
+#     if (file.exists(file.path(temp_folder,
+#                               data_files[i]))){
       
+    if (file.exists(data_files[i])){
+    
       # Read data from mandatory data section of each file,
       # which is a fixed-width string
       data <- 
         read_fwf(file.path(temp_folder,
-                           data_files_downloaded[i]),
+                           data_files[i]),
                  fwf_widths(column_widths))
       
       # Remove select columns from data frame
@@ -919,7 +921,7 @@ get_isd_station_data <- function(station_id,
                   "wg1_water_surf_ice_hist_obs_form_type_code",
                   "wg1_water_surf_ice_hist_obs_nav_effect_code",
                   "wg1_water_surf_ice_hist_obs_quality_code")
-        )
+      )
     
     # Function for getting data from an additional data category
     get_df_from_category <- function(category_key,
