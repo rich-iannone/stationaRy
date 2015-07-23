@@ -12,7 +12,8 @@ Calculating Humidity: \cr
 }
 \usage{
 get_isd_station_data(station_id, startyear, endyear, full_data = FALSE,
-  add_data_report = FALSE, select_additional_data = NULL)
+  add_data_report = FALSE, select_additional_data = NULL,
+  use_local_files = TRUE, local_file_dir = NULL)
 }
 \arguments{
 \item{station_id}{a station identifier composed of the station's USAF and
@@ -31,6 +32,10 @@ selected station during the specified years.}
 
 \item{select_additional_data}{a vector of categories for additional
 meteorological data to include (instead of all available categories).}
+
+\item{use_local_files}{option to use data files already available locally.}
+
+\item{local_file_dir}{path to local meteorological data files.}
 }
 \value{
 Returns a data frame with 18 variables. Times are recorded
