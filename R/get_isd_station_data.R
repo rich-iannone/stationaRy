@@ -222,12 +222,15 @@ get_isd_station_data <- function(station_id,
         sum(str_detect(all_add_data, data_categories[i]))
     }
     
+    # Determine which data categories have data
     data_categories_available <-
       data_categories[which(data_categories_counts > 0)]
     
+    # Get those data counts that are greater than 0
     data_categories_counts <-
       data_categories_counts[which(data_categories_counts > 0)]
     
+    # Create a data frame composed of categories and their counts
     data_categories_df <- 
       data.frame(category = data_categories_available,
                  total_count = data_categories_counts)
