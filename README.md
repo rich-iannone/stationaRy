@@ -6,13 +6,11 @@
 ![](http://cranlogs.r-pkg.org/badges/grand-total/stationaRy?color=brightgreen) 
 [![codecov.io](https://codecov.io/github/rich-iannone/stationaRy/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/stationaRy?branch=master) 
 
-Want some tools to acquire and process meteorological data? Well, you've come to the right repo. So far there's only a few functions that get you data. These are:
+Get the hourly met data you need from a met station located somewhere on Earth. Three functions allow you to filter stations and acquire met data from a selected station:
 
 - `get_isd_stations`
 - `select_isd_station`
 - `get_isd_station_data` 
-
-They will help you get the hourly met data you need from a met station located somewhere on Earth.
 
 ## Examples
 
