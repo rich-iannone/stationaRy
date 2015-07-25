@@ -4,7 +4,7 @@
 #' @param stations a data frame with station data, typically subset from the
 #' data frame provided by the \code{get_isd_stations} function.
 #' @import dplyr
-#' @import leaflet
+#' @importFrom leaflet leaflet addTiles addCircles clearBounds
 #' @return a Leaflet map in the RStudio Viewer
 
 map_isd_stations <- function(stations){
