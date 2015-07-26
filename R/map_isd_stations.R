@@ -6,6 +6,7 @@
 #' @import dplyr
 #' @importFrom leaflet leaflet addTiles addCircles clearBounds
 #' @return a Leaflet map in the RStudio Viewer
+#' @export map_isd_stations
 
 map_isd_stations <- function(stations){
   
