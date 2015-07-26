@@ -2,6 +2,7 @@
 
 export(get_isd_station_data)
 export(get_isd_stations)
+export(map_isd_stations)
 export(select_isd_station)
 import(downloader)
 import(dplyr)
