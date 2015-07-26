@@ -85,7 +85,22 @@ Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
   country_code (chr), iso3166_2_subd (chr), fips10_4_subd (chr)
 ```
 
-That's a lot of stations. Alright, I'll get my data from the `CYPRESS BOWL SNOWBOARD`, so this can be done:
+To put these stations on a viewable map, extend the statement with the `map_isd_stations` function:
+
+```R
+library(stationaRy)
+library(magrittr)
+
+get_isd_stations(lower_lat = 49.000,
+                 upper_lat = 49.500,
+                 lower_lon = -123.500,
+                 upper_lon = -123.000) %>%
+  map_isd_stations()
+```
+
+<img src="inst/stations_map.png", width = 100%>
+
+Alright, I'll get my data from the `CYPRESS BOWL SNOWBOARD`, so this can be done by extending with `select_isd_station` and using the `name` argument to supply part of the station name.
 
 ```R
 library(stationaRy)
@@ -111,7 +126,7 @@ Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
 [1] NA
 ```
 
-Damn. Didn't notice those other `CYPRESS BOWL`s. That's okay, I'll try again and there's two ways to get a year of its data (`2010`):
+There are other `CYPRESS BOWL`s in the bounding box so we'll have to try again to isolate a single station. There are two ways to get a year of `CYPRESS BOWL SNOWBOARD` data (`2010`):
 
 ```R
 library(stationaRy)
