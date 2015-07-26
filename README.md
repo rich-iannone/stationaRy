@@ -46,7 +46,7 @@ Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
   country_code (chr), iso3166_2_subd (chr), fips10_4_subd (chr)
 ```
 
-You'll want to narrow this down. One way is to specify a geographic bounding box. Let's try the west coast of Canada. 
+This list can be narrowed down. One way to do this is to specify a geographic bounding box. Let's try a bounding box located in the west coast of Canada. 
 
 ```R
 library(stationaRy)
@@ -100,7 +100,7 @@ get_isd_stations(lower_lat = 49.000,
 
 <img src="inst/stations_map.png", width = 100%>
 
-Alright, I'll get my data from the `CYPRESS BOWL SNOWBOARD`, so this can be done by extending with `select_isd_station` and using the `name` argument to supply part of the station name.
+We'll get our data from the `CYPRESS BOWL SNOWBOARD` station. This can be done by extending with `select_isd_station` and using the `name` argument to supply part of the station name.
 
 ```R
 library(stationaRy)
