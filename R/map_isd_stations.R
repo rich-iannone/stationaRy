@@ -20,7 +20,13 @@ map_isd_stations <- function(stations){
                     "", stations$country_code),
              " ",
              ifelse(is.na(stations$iso3166_2_subd),
-                    "", stations$iso3166_2_subd))
+                    "", stations$iso3166_2_subd),
+             "<br>",
+             ifelse(is.na(stations$begin),
+                    "", stations$begin),
+             " - ",
+             ifelse(is.na(stations$end),
+                    "", stations$end))
     
     leaflet() %>% addTiles() %>%
       addCircles(lng = stations$lon,
