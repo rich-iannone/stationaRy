@@ -322,9 +322,6 @@ get_isd_station_data <- function(station_id,
   
   for (i in 1:length(data_files)){
     
-#     if (file.exists(file.path(temp_folder,
-#                               data_files[i]))){
-      
     if (file.exists(data_files[i])){
     
       # Read data from mandatory data section of each file,
@@ -341,10 +338,6 @@ get_isd_station_data <- function(station_id,
         c("usaf", "wban", "year", "month", "day", "hour", "minute",
           "lat", "lon", "elev", "wd", "ws", "ceil_hgt",
           "temp", "dew_point", "atmos_pres")
-      
-      #
-      # Recompose data and use NAs for missing data
-      #
       
       # Correct the latitude values
       data$lat <- data$lat/1000
@@ -388,11 +381,13 @@ get_isd_station_data <- function(station_id,
                           exp((17.625 * (data$temp[j])) /
                                 (243.04 + (data$temp[j])))))
         
+        # Round data to the nearest 0.1
         rh_j <- round_any(as.numeric(rh_j), 0.1, f = round)
         
         rh <- c(rh, rh_j)
       }
       
+      # Add RH values to the data frame
       data$rh <- rh
       
       if (i == 1){
@@ -405,7 +400,7 @@ get_isd_station_data <- function(station_id,
     }
   }
   
-  # Create POSIXct times
+  # Create POSIXct time values from the time elements
   large_data_frame$time <- 
     ISOdatetime(year = large_data_frame$year,
                 month = large_data_frame$month,
