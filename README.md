@@ -6,11 +6,7 @@
 ![](http://cranlogs.r-pkg.org/badges/grand-total/stationaRy?color=brightgreen) 
 [![codecov.io](https://codecov.io/github/rich-iannone/stationaRy/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/stationaRy?branch=master) 
 
-Get the hourly met data you need from a met station located somewhere on Earth. Three functions allow you to filter stations and acquire met data from a selected station:
-
-- `get_isd_stations`
-- `select_isd_station`
-- `get_isd_station_data` 
+Get the hourly met data you need from a met station located somewhere on Earth. Filter stations and acquire met data from a selected station.
 
 ## Examples
 
