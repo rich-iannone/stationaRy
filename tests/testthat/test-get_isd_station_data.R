@@ -65,4 +65,13 @@ test_that("error messages are provided in certain situations", {
   # Expect an error if values aren't provided at all for both
   # "startyear" and "endyear"
   expect_error(get_isd_station_data(station_id = "722315-53917"))
+  
+  # Expect an error if the "startyear" is later than the "endyear"
+  expect_error(
+    get_isd_station_data(station_id = "722315-53917",
+                         startyear = "2014",
+                         endyear = "2010")
+    )
+  
+  
 })
