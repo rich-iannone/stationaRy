@@ -115,10 +115,6 @@ get_isd_station_data <- function(station_id,
   
   usaf <- wban <- year <- NA
   
-  if (is.null(startyear) | is.null(endyear)) {
-    stop("Please enter starting and ending years for surface station data")
-  }
-  
   # Check whether 'startyear' and 'endyear' are both numeric
   if (!is.numeric(startyear) | !is.numeric(endyear)) {
     stop("Please enter numeric values for the starting and ending years")
