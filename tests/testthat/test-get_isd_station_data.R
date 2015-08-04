@@ -45,7 +45,39 @@ test_that("get_isd_station_data can provide an additional data report", {
   
   # Expect that a data frame is returned
   expect_true(class(additional_data_categories) == "data.frame")
+})
+
+test_that("data can be obtained from locally stored files", {
   
+  # Obtain two years of data from data files stored on disk (inside
+  # the package itself)
+  df_mandatory_data_local <- 
+    get_isd_station_data(
+      station_id = "999999-63897",
+      startyear = 2013,
+      endyear = 2014,
+      use_local_files = TRUE,
+      local_file_dir = system.file(package = "stationaRy")
+    )
+  
+  # Expect that, for the mandatory met data df that is obtain from local
+  # files, the number of columns will be exactly 18
+  expect_equal(ncol(df_mandatory_data_local), 18L)
+  
+  # Using locally stored data files, get vector of available additional
+  # data categories for the station during the specied years
+  additional_data_categories_local <- 
+    get_isd_station_data(
+      station_id = "999999-63897",
+      startyear = 2013,
+      endyear = 2014,
+      add_data_report = TRUE,
+      use_local_files = TRUE,
+      local_file_dir = system.file(package = "stationaRy")
+    )
+  
+  # Expect that a data frame is returned
+  expect_true(class(additional_data_categories) == "data.frame")
 })
 
 test_that("error messages are provided in certain situations", {
@@ -67,5 +99,5 @@ test_that("error messages are provided in certain situations", {
     get_isd_station_data(station_id = "722315-53917",
                          startyear = "2014",
                          endyear = "2010")
-    )
+  )
 })
