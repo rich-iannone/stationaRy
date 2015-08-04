@@ -147,11 +147,11 @@ get_isd_station_data <- function(station_id,
       
       if (i == startyear){
         
-        data_files_required <- vector(mode = "character")
+        data_files <- vector(mode = "character")
       }
       
-      data_files_required <- 
-        c(data_files_required,
+      data_files <- 
+        c(data_files,
           paste0(sprintf("%06d",
                          as.numeric(unlist(strsplit(station_id,
                                                     "-"))[1])),
@@ -164,7 +164,7 @@ get_isd_station_data <- function(station_id,
     
     # Verify that local files are available
     all_local_files_available <-
-      all(file.exists(paste0(local_file_dir, "/", data_files_required)))
+      all(file.exists(paste0(local_file_dir, "/", data_files)))
   }
   
   if (use_local_files == FALSE){
@@ -178,7 +178,7 @@ get_isd_station_data <- function(station_id,
       
       if (i == startyear){
         
-        data_files_downloaded <- vector(mode = "character")
+        data_files <- vector(mode = "character")
       }
       
       data_file_to_download <- 
@@ -199,8 +199,8 @@ get_isd_station_data <- function(station_id,
       if (file.info(file.path(temp_folder,
                               data_file_to_download))$size > 1){
         
-        data_files_downloaded <- c(data_files_downloaded,
-                                   data_file_to_download)
+        data_files <- c(data_files,
+                        data_file_to_download)
       }
     }
   }
@@ -221,49 +221,28 @@ get_isd_station_data <- function(station_id,
         "UA1", "UG1", "UG2", "WA1", "WD1", "WG1")
     
     # Get additional data portions of records, exluding remarks
-    if (use_local_files == FALSE){
+    for (i in 1:length(data_files)){
       
-      for (i in 1:length(data_files_downloaded)){
+      if (use_local_files == FALSE){
         
-        if (use_local_files == FALSE){
-          
-          add_data <- 
-            readLines(file.path(temp_folder,
-                                data_files_downloaded[i]))
-        }
-        
-        if (i == 1){
-          all_add_data <- add_data
-        }
-        
-        if (i > 1){
-          all_add_data <- c(all_add_data, add_data)
-        }
+        add_data <- 
+          readLines(file.path(temp_folder,
+                              data_files[i]))
       }
-    }
-    
-    if (use_local_files == TRUE){
       
-      for (i in 1:length(data_files_required)){
-        
-        if (use_local_files == FALSE){
-          
-          add_data <- 
-            readLines(file.path(temp_folder,
-                                data_files_required[i]))
-        }
+      if (use_local_files == TRUE){
         
         add_data <- 
           readLines(file.path(local_file_dir,
-                              data_files_required[i]))
-        
-        if (i == 1){
-          all_add_data <- add_data
-        }
-        
-        if (i > 1){
-          all_add_data <- c(all_add_data, add_data)
-        }
+                              data_files[i]))
+      }
+      
+      if (i == 1){
+        all_add_data <- add_data
+      }
+      
+      if (i > 1){
+        all_add_data <- c(all_add_data, add_data)
       }
     }
     
@@ -307,19 +286,19 @@ get_isd_station_data <- function(station_id,
   if (use_local_files == TRUE){
     
     data_files <- file.path(local_file_dir,
-                            data_files_required)
+                            data_files)
   }
   
   if (use_local_files == FALSE){
     
     data_files <- file.path(temp_folder,
-                            data_files_downloaded)
+                            data_files)
   }
   
   for (i in 1:length(data_files)){
     
     if (file.exists(data_files[i])){
-    
+      
       # Read data from mandatory data section of each file,
       # which is a fixed-width string
       data <- 
@@ -454,11 +433,20 @@ get_isd_station_data <- function(station_id,
   if (full_data == TRUE){
     
     # Get additional data portions of records, exluding remarks
-    for (i in 1:length(data_files_downloaded)){
+    for (i in 1:length(data_files)){
       
-      add_data <- 
-        readLines(file.path(temp_folder,
-                            data_files_downloaded[i]))
+      if (use_local_files == FALSE){
+        
+        add_data <- 
+          readLines(file.path(temp_folder,
+                              data_files[i]))
+      }
+      
+      if (use_local_files == TRUE){
+        
+        add_data <- 
+          readLines(data_files[i])
+      }
       
       if (i == 1){
         all_add_data <- add_data
