@@ -21,10 +21,6 @@ test_that("get_isd_station_data returns correct number of columns", {
   # will be exactly 18
   expect_equal(ncol(df_mandatory_data), 18L)
   
-  # Expect that, for the df with both mandatory and additional data,
-  # the number of columns will be greater than 100
-  # expect_greater_than(ncol(df_full_data), 100L)
-  
   # Expect that, for the df with both mandatory and two additional data
   # categories, the number of columns will be exactly 25
   expect_equal(ncol(df_aa1_ab1), 25L)
@@ -72,6 +68,4 @@ test_that("error messages are provided in certain situations", {
                          startyear = "2014",
                          endyear = "2010")
     )
-  
-  
 })
