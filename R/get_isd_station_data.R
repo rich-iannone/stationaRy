@@ -101,6 +101,14 @@
 #'   get_isd_station_data(station_id = cypress_bowl_snowboard_stn,
 #'                        startyear = 2010,
 #'                        endyear = 2010)
+#'  
+#' # Get a vector of available additional data categories for a station
+#' # during the specied years
+#' additional_data_categories <- 
+#'   get_isd_station_data(station_id = "722315-53917",
+#'                        startyear = 2014,
+#'                        endyear = 2015,
+#'                        add_data_report = TRUE)
 #' }
 #' @export get_isd_station_data
 
