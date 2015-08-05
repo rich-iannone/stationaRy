@@ -109,6 +109,17 @@
 #'                        startyear = 2014,
 #'                        endyear = 2015,
 #'                        add_data_report = TRUE)
+#'  
+#' # Obtain two years of data from data files stored on disk (in this
+#' # case, inside the package itself)
+#' df_mandatory_data_local <- 
+#'   get_isd_station_data(
+#'     station_id = "999999-63897",
+#'     startyear = 2013,
+#'     endyear = 2014,
+#'     use_local_files = TRUE,
+#'     local_file_dir = system.file(package = "stationaRy")
+#' )
 #' }
 #' @export get_isd_station_data
 
