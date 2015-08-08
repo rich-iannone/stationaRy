@@ -6,6 +6,17 @@
 #' @import dplyr
 #' @importFrom leaflet leaflet addTiles addCircles clearBounds
 #' @return a Leaflet map in the RStudio Viewer
+#' @examples
+#' \dontrun{
+#' library(magrittr)
+#' 
+#' # Select stations using a bounding box and map the stations
+#' get_isd_stations(lower_lat = 49.000,
+#'                  upper_lat = 49.500,
+#'                  lower_lon = -123.500,
+#'                  upper_lon = -123.000) %>%
+#'   map_isd_stations()
+#' }
 #' @export map_isd_stations
 
 map_isd_stations <- function(stations){
