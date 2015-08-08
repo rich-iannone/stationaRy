@@ -22,8 +22,8 @@ test_that("get_isd_station_data returns correct number of columns", {
   expect_equal(ncol(df_mandatory_data), 18L)
   
   # Expect that, for the df with both mandatory and two additional data
-  # categories, the number of columns will be exactly 25
-  expect_equal(ncol(df_aa1_ab1), 25L)
+  # categories, the number of columns will be greater than 18
+  expect_greater_than(ncol(df_aa1_ab1), 18L)
   
   # Expect that, for the mandatory met data df, the column names will
   # be from a specified set
@@ -42,39 +42,6 @@ test_that("get_isd_station_data can provide an additional data report", {
                          startyear = 2014,
                          endyear = 2015,
                          add_data_report = TRUE)
-  
-  # Expect that a data frame is returned
-  expect_true(class(additional_data_categories) == "data.frame")
-})
-
-test_that("data can be obtained from locally stored files", {
-  
-  # Obtain two years of data from data files stored on disk (inside
-  # the package itself)
-  df_mandatory_data_local <- 
-    get_isd_station_data(
-      station_id = "999999-63897",
-      startyear = 2013,
-      endyear = 2014,
-      use_local_files = TRUE,
-      local_file_dir = system.file(package = "stationaRy")
-    )
-  
-  # Expect that, for the mandatory met data df that is obtain from local
-  # files, the number of columns will be exactly 18
-  expect_equal(ncol(df_mandatory_data_local), 18L)
-  
-  # Using locally stored data files, get vector of available additional
-  # data categories for the station during the specied years
-  additional_data_categories_local <- 
-    get_isd_station_data(
-      station_id = "999999-63897",
-      startyear = 2013,
-      endyear = 2014,
-      add_data_report = TRUE,
-      use_local_files = TRUE,
-      local_file_dir = system.file(package = "stationaRy")
-    )
   
   # Expect that a data frame is returned
   expect_true(class(additional_data_categories) == "data.frame")
