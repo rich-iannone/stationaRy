@@ -17,4 +17,16 @@ a Leaflet map in the RStudio Viewer
 Display a map of selected meteorological stations
 from the NCEI Integrated Surface Dataset (ISD).
 }
+\examples{
+\dontrun{
+library(magrittr)
+
+# Select stations using a bounding box and map the stations
+get_isd_stations(lower_lat = 49.000,
+                 upper_lat = 49.500,
+                 lower_lon = -123.500,
+                 upper_lon = -123.000) \%>\%
+  map_isd_stations()
+}
+}
 
