@@ -457,8 +457,7 @@ get_isd_station_data <- function(station_id,
       if (use_local_files == FALSE){
         
         add_data <- 
-          readLines(file.path(temp_folder,
-                              data_files[i]))
+          readLines(data_files[i])
       }
       
       if (use_local_files == TRUE){
