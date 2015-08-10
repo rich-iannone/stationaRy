@@ -10,7 +10,7 @@ Get the hourly met data you need from a met station located somewhere on Earth.
 
 ## Examples
 
-Get data from a station in Norway (**USAF**: 13860, **WBAN**: 99999):
+Get data from a station in Norway (with a **USAF** value of 13860, and a **WBAN** value of 99999). Specify the `station_id` as a string in the format `[USAF]-[WBAN]`, and, provide beginning and ending years for data collection to `startyear` and `endyear`, respectively.
 
 ```R
 library(stationaRy)
@@ -20,7 +20,7 @@ met_data <- get_isd_station_data(station_id = "13860-99999",
                                  endyear = 2010)
 ```
 
-That's great if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't have this info. You can search for stations by using the `get_isd_stations` function. By itself, it gives you a data frame with global station data. (As of June 15, 2015, there are 27,446 rows of station data.) Here are rows 250-255 of global met station list.
+That's great if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't have this info. You can search for station metadata using the `get_isd_stations` function. Without providing any arguments, it gives you a data frame containing the entire dataset of stations. Currently, there are 27,446 rows in the dataset. Here are rows 250-255 from the dataset:
 
 ```R
 library(stationaRy)
@@ -42,7 +42,7 @@ Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
   country_code (chr), iso3166_2_subd (chr), fips10_4_subd (chr)
 ```
 
-This list can be narrowed down. One way to do this is to specify a geographic bounding box. Let's try a bounding box located in the west coast of Canada. 
+This list can be greatly reduced to isolate the stations of interest. One way to do this is to specify a geographic bounding box using lat/lon values to specify the bounds. Let's try a bounding box located in the west coast of Canada. 
 
 ```R
 library(stationaRy)
@@ -81,7 +81,7 @@ Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
   country_code (chr), iso3166_2_subd (chr), fips10_4_subd (chr)
 ```
 
-To put these stations on a viewable map, extend the statement with the `map_isd_stations` function:
+To put these stations on a viewable map, use a `magrittr` or `pipeR` pipe, to send the output data frame as input to the `map_isd_stations` function:
 
 ```R
 library(stationaRy)
@@ -96,7 +96,7 @@ get_isd_stations(lower_lat = 49.000,
 
 <img src="inst/stations_map.png", width = 100%>
 
-We'll get our data from the `CYPRESS BOWL SNOWBOARD` station. This can be done by extending with `select_isd_station` and using the `name` argument to supply part of the station name.
+Upon inspecting the data frame, you can reduce it to a single station by specifying it's name (or part of its name). In this example, we wish to get data from the `CYPRESS BOWL SNOWBOARD` station. This can be done by extending with `select_isd_station` and using the `name` argument to supply part of the station name.
 
 ```R
 library(stationaRy)
@@ -122,7 +122,7 @@ Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
 [1] NA
 ```
 
-There are other `CYPRESS BOWL`s in the bounding box so we'll have to try again to isolate a single station. There are two ways to get a year of `CYPRESS BOWL SNOWBOARD` data (`2010`):
+As this function yielded a data frame with 3 stations (3 stations leading with `CYPRESS BOWL` in their station names), a set of strategies will be used to obtain single station. There are two ways to get a year of `CYPRESS BOWL SNOWBOARD` data for `2010`: (1) provide the full name of the station, or (2) use the data frame with multiple stations and specify the row of the target station.
 
 ```R
 library(stationaRy)
