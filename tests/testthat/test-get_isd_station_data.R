@@ -68,4 +68,23 @@ test_that("error messages are provided in certain situations", {
                          endyear = 2010)
   )
   
+  # Get an additional data report df from a local test file
+  df_data_report_data_local_test <- 
+    get_isd_station_data(
+      station_id = "000000-00000",
+      startyear = 2015,
+      endyear = 2015,
+      use_local_files = TRUE,
+      local_file_dir = system.file(package = "stationaRy"),
+      add_data_report = TRUE
+    )
+  
+  # Expect the report to be a data frame
+  expect_is(df_data_report_data_local_test, "data.frame")
+  
+  # Expect all possible additional data categories to be present
+  expect_equal(nrow(df_data_report_data_local_test), 85L)
+  
+  # Expect one record for each additional data category
+  expect_true(all(df_data_report_data_local_test$total_count == 1))
 })
