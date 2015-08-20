@@ -2270,6 +2270,12 @@ get_isd_station_data <- function(station_id,
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
+    # If the tz offset is 0, return the data frame without filtering it
+    if (gmt_offset == 0){
+      
+      return(large_data_frame) 
+    }
+    
     # Filter data frame to only include data for requested years
     large_data_frame <- filter(large_data_frame, year >= startyear &
                                  year <= endyear)
