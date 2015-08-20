@@ -88,6 +88,7 @@ test_that("error messages are provided in certain situations", {
   # Expect one record for each additional data category
   expect_true(all(df_data_report_data_local_test$total_count == 1))
   
+  # Get all possible data from the test station file
   df_data_additional_data_local_test <- 
     get_isd_station_data(
       station_id = "000000-00000",
@@ -98,5 +99,9 @@ test_that("error messages are provided in certain situations", {
       local_file_dir = system.file(package = "stationaRy")
     )
   
+  # Expect that the resulting data frame will be very wide
+  expect_more_than(ncol(df_data_additional_data_local_test), 400L)
   
+  # Expect a single row of data in the data frame
+  expect_equal(nrow(df_data_additional_data_local_test), 1L)
 })
