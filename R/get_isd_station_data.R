@@ -1092,7 +1092,7 @@ get_isd_station_data <- function(station_id,
     }
     
     # Filter those measured parameters and obtain string of identifiers
-    significant_params <- data_categories[which(data_categories_counts > 5)]
+    significant_params <- data_categories[which(data_categories_counts >= 1)]
     
     # Filter the significantly available extra parameters by those specified
     if (!is.null(select_additional_data)){
