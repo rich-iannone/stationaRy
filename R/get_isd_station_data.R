@@ -1722,9 +1722,11 @@ get_isd_station_data <- function(station_id,
       
       additional_data <-
         get_df_from_category(category_key = "GM1",
-                             field_lengths = c(),
-                             scale_factor = c(),
-                             data_types = "",
+                             field_lengths = c(4, 4, 2, 1, 4, 2, 1,
+                                               4, 2, 1, 4, 1),
+                             scale_factor = c(1, 1, NA, NA, 1, NA, NA,
+                                              1, NA, NA, 1, NA),
+                             data_types = "nnccnccnccnc",
                              add_data = all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
