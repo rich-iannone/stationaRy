@@ -103,5 +103,5 @@ test_that("error messages are provided in certain situations", {
   expect_more_than(ncol(df_data_additional_data_local_test), 400L)
   
   # Expect a single row of data in the data frame
-  expect_equal(nrow(df_data_additional_data_local_test), 1L)
+  expect_equal(nrow(df_data_additional_data_local_test), 2L)
 })
