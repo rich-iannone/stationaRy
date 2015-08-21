@@ -86,7 +86,7 @@ test_that("error messages are provided in certain situations", {
   expect_equal(nrow(df_data_report_data_local_test), 85L)
   
   # Expect one record for each additional data category
-  expect_true(all(df_data_report_data_local_test$total_count == 1))
+  expect_true(all(df_data_report_data_local_test$total_count == 2))
   
   # Get all possible data from the test station file
   df_data_additional_data_local_test <- 
