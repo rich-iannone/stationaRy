@@ -1210,7 +1210,7 @@ get_isd_station_data <- function(station_id,
     if (data_categories[9] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AK1",
+        get_df_from_category(category_key = "AJ1",
                              field_lengths = c(4, 1, 1, 6, 1, 1),
                              scale_factor = c(1, NA, NA, 10, NA, NA),
                              data_types = "nccncc",
