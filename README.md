@@ -165,7 +165,7 @@ Source: local data frame [711 x 18]
 Variables not shown: dew_point (dbl), atmos_pres (dbl), rh (dbl), time (time)
 ```
 
-Moving west, I think Tofino is nice. I'd like to get it's weather data. Let's just make sure we can target that station.
+If you'd like to get weather data from a weather station at Tofino, BC, CA, it's possible to search using `tofino` as the value for the `name` argument in the `select_isd_stations` function.
 
 ```R
 library(stationaRy)
@@ -189,7 +189,7 @@ Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
 [1] NA
 ```
 
-Quite a few variants of the Tofino station. Let's choose the airport one. Seems to have a long record. It's the first one in that list. And I'd like the data from 2005 to 2010.
+A number of stations with `tofino` in its name were returned. If the first station in the returned data frame is desired, it can be selected with a slight modification to the `select_isd_station` call (using the `number` argument). Then, pipe the output to the `get_isd_station_data` function and supply the desired period of retrieval.
 
 ```R
 library(stationaRy)
@@ -201,7 +201,7 @@ tofino_airport_2005_2010 <-
     get_isd_station_data(startyear = 2005, endyear = 2010)
 ```
 
-That's gives you 34,877 rows of Tofino Airport meteorological data:
+That's gives you 34,877 rows of meteorological data from the Tofino Airport station:
 
 ```
 Source: local data frame [34,877 x 18]
