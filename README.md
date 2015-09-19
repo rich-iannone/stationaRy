@@ -81,7 +81,7 @@ Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
   country_code (chr), iso3166_2_subd (chr), fips10_4_subd (chr)
 ```
 
-To put these stations on a viewable map, use a `magrittr` or `pipeR` pipe, to send the output data frame as input to the `map_isd_stations` function:
+To put these stations on a viewable map, use a `magrittr` or `pipeR` pipe, to send the output data frame as input to the `map_isd_stations` function. Pipes are great, amirite?
 
 ```R
 library(stationaRy)
