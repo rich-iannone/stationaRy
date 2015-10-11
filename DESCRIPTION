@@ -8,8 +8,7 @@ Authors@R: person(
              role = c("aut", "cre"),
              email = "riannone@me.com")
 Maintainer: Richard Iannone <riannone@me.com>
-Description: Selectively acquire hourly meteorological data from stations
-located all over the world.
+Description: Selectively acquire hourly meteorological data from stations located all over the world.
 License: MIT + file LICENSE
 Imports: 
     plyr (>= 1.8.2), dplyr (>= 0.4.3),
