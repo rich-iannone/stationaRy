@@ -322,7 +322,8 @@ get_isd_station_data <- function(station_id,
       # which is a fixed-width string
       data <- 
         read_fwf(data_files[i],
-                 fwf_widths(column_widths))
+                 fwf_widths(column_widths),
+                 col_types = "ccciiiiiciicicciccicicccccccicicic")
       
       # Remove select columns from data frame
       data <- data[, c(2:8, 10:11, 13, 16, 19, 21, 29, 31, 33)]
