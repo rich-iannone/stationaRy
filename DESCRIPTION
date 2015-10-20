@@ -1,7 +1,7 @@
 Package: stationaRy
 Type: Package
 Title: Get Hourly Meteorological Data from Global Stations
-Version: 0.4
+Version: 0.5
 Date: 2015-10-20
 Authors@R: person(
              "Richard", "Iannone",
