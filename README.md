@@ -4,7 +4,7 @@
 ![](http://cranlogs.r-pkg.org/badges/grand-total/stationaRy?color=brightgreen) 
 [![codecov.io](https://codecov.io/github/rich-iannone/stationaRy/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/stationaRy?branch=master) 
 
-Get hourly meteorological data from a station located somewhere on Earth.
+Get hourly meteorological data from global met stations.
 
 ## Examples
 
