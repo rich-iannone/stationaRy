@@ -13,9 +13,11 @@ Get data from a station in Norway (with a **USAF** value of 13860, and a **WBAN*
 ```R
 library(stationaRy)
 
-met_data <- get_isd_station_data(station_id = "13860-99999",
-                                 startyear = 2009,
-                                 endyear = 2010)
+met_data <- 
+  get_isd_station_data(
+    station_id = "13860-99999",
+    startyear = 2009,
+    endyear = 2010)
 ```
 
 That's great if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't have this info. You can search for station metadata using the `get_isd_stations` function. Without providing any arguments, it gives you a data frame containing the entire dataset of stations. Currently, there are 27,446 rows in the dataset. Here are rows 250-255 from the dataset:
@@ -45,10 +47,11 @@ This list can be greatly reduced to isolate the stations of interest. One way to
 ```R
 library(stationaRy)
 
-get_isd_stations(lower_lat = 49.000,
-                 upper_lat = 49.500,
-                 lower_lon = -123.500,
-                 upper_lon = -123.000)
+get_isd_stations(
+  lower_lat = 49.000,
+  upper_lat = 49.500,
+  lower_lon = -123.500,
+  upper_lon = -123.000)
 ```
 
 ```
