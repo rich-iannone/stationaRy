@@ -8,8 +8,6 @@
 #' @param upper_lat the upper bound of the latitude for a bounding box.
 #' @param lower_lon the lower bound of the longitude for a bounding box.
 #' @param upper_lon the upper bound of the longitude for a bounding box.
-#' @import dplyr
-#' 
 #' @return Returns a data frame with 16 columns.
 #' \describe{
 #'   \item{usaf}{A character string identifying the fixed weather 
@@ -45,7 +43,6 @@
 #'   subdivision (e.g., state, province, etc.) for where the station is 
 #'   located.}
 #' }
-#' 
 #' @examples
 #' \dontrun{
 #' # Obtain a data frame with all available met stations
@@ -53,16 +50,19 @@
 #' 
 #' # Get a listing of all ISD met stations within a geographical
 #' # bounding box
-#' get_isd_stations(lower_lat = 49.000,
-#'                  upper_lat = 49.500,
-#'                  lower_lon = -123.500,
-#'                  upper_lon = -123.000)
+#' get_isd_stations(
+#'   lower_lat = 49.000,
+#'   upper_lat = 49.500,
+#'   lower_lon = -123.500,
+#'   upper_lon = -123.000)
 #'  
 #' # List all ISD stations with data available for the 2005
 #' # and 2006 years
-#' get_isd_stations(startyear = 2005,
-#'                  endyear = 2006)
+#' get_isd_stations(
+#'   startyear = 2005,
+#'   endyear = 2006)
 #' }
+#' @import dplyr
 #' @export get_isd_stations
 
 get_isd_stations <- function(startyear = NULL,
