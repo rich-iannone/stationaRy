@@ -5,7 +5,7 @@
 #' with (and often filtered by) the \code{get_isd_stations}
 #' function.
 #' @return Returns a character vector of length 
-#' \code{nrow{stn_df}). 
+#' \code{nrow(stn_df)}. 
 #' @examples
 #' \dontrun{
 #' library(dplyr)
