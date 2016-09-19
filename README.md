@@ -82,17 +82,18 @@ Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
   country_code (chr), iso3166_2_subd (chr), fips10_4_subd (chr)
 ```
 
-To put these stations on a viewable map, use a `magrittr` or `pipeR` pipe, to send the output data frame as input to the `map_isd_stations` function. Pipes are great, amirite?
+To put these stations on a viewable map, use a `magrittr` pipe to send the output data frame as input to the `map_isd_stations()` function:
 
 ```R
 library(stationaRy)
 library(magrittr)
 
-get_isd_stations(lower_lat = 49.000,
-                 upper_lat = 49.500,
-                 lower_lon = -123.500,
-                 upper_lon = -123.000) %>%
-  map_isd_stations()
+get_isd_stations(
+  lower_lat = 49.000,
+  upper_lat = 49.500,
+  lower_lon = -123.500,
+  upper_lon = -123.000) %>%
+  map_isd_stations
 ```
 
 <img src="inst/stations_map.png", width = 100%>
@@ -103,10 +104,11 @@ Upon inspecting the data frame, you can reduce it to a single station by specify
 library(stationaRy)
 library(magrittr)
 
-get_isd_stations(lower_lat = 49.000,
-                 upper_lat = 49.500,
-                 lower_lon = -123.500,
-                 upper_lon = -123.000) %>%
+get_isd_stations(
+  lower_lat = 49.000,
+  upper_lat = 49.500,
+  lower_lon = -123.500,
+  upper_lon = -123.000) %>%
   select_isd_station(name = "cypress bowl")
 ```
 
@@ -130,18 +132,20 @@ library(stationaRy)
 library(magrittr)
 
 cypress_bowl_snowboard_1 <- 
-  get_isd_stations(lower_lat = 49.000,
-                   upper_lat = 49.500,
-                   lower_lon = -123.500,
-                   upper_lon = -123.000) %>%
+  get_isd_stations(
+    lower_lat = 49.000,
+    upper_lat = 49.500,
+    lower_lon = -123.500,
+    upper_lon = -123.000) %>%
     select_isd_station(name = "cypress bowl snowboard") %>%
     get_isd_station_data(startyear = 2010, endyear = 2010)
     
 cypress_bowl_snowboard_2 <- 
-  get_isd_stations(lower_lat = 49.000,
-                   upper_lat = 49.500,
-                   lower_lon = -123.500,
-                   upper_lon = -123.000) %>%
+  get_isd_stations(
+    lower_lat = 49.000,
+    upper_lat = 49.500,
+    lower_lon = -123.500,
+    upper_lon = -123.000) %>%
     select_isd_station(name = "cypress bowl", number = 2) %>%
     get_isd_station_data(startyear = 2010, endyear = 2010)
 ```
@@ -751,13 +755,18 @@ library(stationaRy)
 library(magrittr)
 library(dplyr)
 
-get_isd_stations(startyear = 1970, endyear = 2015,
-                 lower_lat = 49, upper_lat = 58,
-                 lower_lon = -125, upper_lon = -120) %>%
+get_isd_stations(
+  startyear = 1970,
+  endyear = 2015,
+  lower_lat = 49,
+  upper_lat = 58,
+  lower_lon = -125,
+  upper_lon = -120) %>%
   select_isd_station(name = "abbotsford") %>%
-  get_isd_station_data(startyear = 2015,
-                       endyear = 2015,
-                       add_data_report = TRUE)
+  get_isd_station_data(
+    startyear = 2015,
+    endyear = 2015,
+    add_data_report = TRUE)
 ```
 
 ```
