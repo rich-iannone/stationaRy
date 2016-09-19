@@ -11,6 +11,10 @@ get_station_ids(stn_df)
 with (and often filtered by) the \code{get_isd_stations}
 function.}
 }
+\value{
+Returns a character vector of length 
+\code{nrow(stn_df)}.
+}
 \description{
 Obtain the station IDs needed as input
 for the \code{get_isd_station_data} function.

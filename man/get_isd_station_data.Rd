@@ -102,27 +102,31 @@ from the NCEI Integrated Surface Dataset (ISD).
 # function to obtain a data frame of meteorological data for
 # the year 2010
 stations_within_domain <-
-  get_isd_stations(lower_lat = 49.000,
-                   upper_lat = 49.500,
-                   lower_lon = -123.500,
-                   upper_lon = -123.000)
+  get_isd_stations(
+    lower_lat = 49.000,
+    upper_lat = 49.500,
+    lower_lon = -123.500,
+    upper_lon = -123.000)
                         
 cypress_bowl_snowboard_stn <-
-  select_isd_station(stn_df = stations_within_domain,
-                     name = "cypress bowl snowboard")
+  select_isd_station(
+    stn_df = stations_within_domain,
+    name = "cypress bowl snowboard")
 
 cypress_bowl_snowboard_stn_met_data <-
-  get_isd_station_data(station_id = cypress_bowl_snowboard_stn,
-                       startyear = 2010,
-                       endyear = 2010)
+  get_isd_station_data(
+    station_id = cypress_bowl_snowboard_stn,
+    startyear = 2010,
+    endyear = 2010)
  
 # Get a vector of available additional data categories for a station
 # during the specied years
 additional_data_categories <- 
-  get_isd_station_data(station_id = "722315-53917",
-                       startyear = 2014,
-                       endyear = 2015,
-                       add_data_report = TRUE)
+  get_isd_station_data(
+    station_id = "722315-53917",
+    startyear = 2014,
+    endyear = 2015,
+    add_data_report = TRUE)
  
 # Obtain two years of data from data files stored on disk (in this
 # case, inside the package itself)
