@@ -14,13 +14,6 @@
 #' meteorological data to include (instead of all available categories).
 #' @param use_local_files option to use data files already available locally.
 #' @param local_file_dir path to local meteorological data files.
-#' @importFrom plyr round_any
-#' @importFrom lubridate year month mday hour minute
-#' @import dplyr
-#' @import readr
-#' @importFrom stringr str_detect str_extract
-#' @import downloader
-#' @import progress
 #' @return Returns a data frame with 18 variables. Times are recorded 
 #' using the Universal Time Code (UTC) in the source data. Times are adjusted
 #' to local standard time for the station's locale.
@@ -78,7 +71,6 @@
 #' 
 #' Calculating Humidity: \cr
 #' \url{https://en.wikipedia.org/wiki/Clausius\%E2\%80\%93Clapeyron_relation#Meteorology_and_climatology}
-#' 
 #' @examples 
 #' \dontrun{
 #' # Obtain a listing of all stations within a bounding box and
@@ -88,27 +80,31 @@
 #' # function to obtain a data frame of meteorological data for
 #' # the year 2010
 #' stations_within_domain <-
-#'   get_isd_stations(lower_lat = 49.000,
-#'                    upper_lat = 49.500,
-#'                    lower_lon = -123.500,
-#'                    upper_lon = -123.000)
+#'   get_isd_stations(
+#'     lower_lat = 49.000,
+#'     upper_lat = 49.500,
+#'     lower_lon = -123.500,
+#'     upper_lon = -123.000)
 #'                         
 #' cypress_bowl_snowboard_stn <-
-#'   select_isd_station(stn_df = stations_within_domain,
-#'                      name = "cypress bowl snowboard")
+#'   select_isd_station(
+#'     stn_df = stations_within_domain,
+#'     name = "cypress bowl snowboard")
 #' 
 #' cypress_bowl_snowboard_stn_met_data <-
-#'   get_isd_station_data(station_id = cypress_bowl_snowboard_stn,
-#'                        startyear = 2010,
-#'                        endyear = 2010)
+#'   get_isd_station_data(
+#'     station_id = cypress_bowl_snowboard_stn,
+#'     startyear = 2010,
+#'     endyear = 2010)
 #'  
 #' # Get a vector of available additional data categories for a station
 #' # during the specied years
 #' additional_data_categories <- 
-#'   get_isd_station_data(station_id = "722315-53917",
-#'                        startyear = 2014,
-#'                        endyear = 2015,
-#'                        add_data_report = TRUE)
+#'   get_isd_station_data(
+#'     station_id = "722315-53917",
+#'     startyear = 2014,
+#'     endyear = 2015,
+#'     add_data_report = TRUE)
 #'  
 #' # Obtain two years of data from data files stored on disk (in this
 #' # case, inside the package itself)
@@ -121,6 +117,10 @@
 #'     local_file_dir = system.file(package = "stationaRy")
 #' )
 #' }
+#' @import dplyr readr downloader progress
+#' @importFrom stringr str_detect str_extract
+#' @importFrom plyr round_any
+#' @importFrom lubridate year month mday hour minute
 #' @export get_isd_station_data
 
 get_isd_station_data <- function(station_id,
@@ -146,11 +146,13 @@ get_isd_station_data <- function(station_id,
   
   # Obtain the GMT offset value for this ISD station
   gmt_offset <- 
-    as.numeric(filter(get_isd_stations(),
-                      usaf == as.numeric(unlist(strsplit(station_id,
-                                                         "-"))[1]),
-                      wban == as.numeric(unlist(strsplit(station_id,
-                                                         "-"))[2]))[,11])
+    as.numeric(
+      filter(
+        get_isd_stations(),
+        usaf == as.numeric(unlist(strsplit(station_id,
+                                           "-"))[1]),
+        wban == as.numeric(unlist(strsplit(station_id,
+                                           "-"))[2]))[,11])
   
   # if 'gmt_offset' is positive, then also download year of data previous to
   # beginning of series
@@ -161,24 +163,22 @@ get_isd_station_data <- function(station_id,
   if (gmt_offset < 0 & year(Sys.time()) != endyear) endyear <- endyear + 1
   
   if (use_local_files == TRUE){
-    
     for (i in startyear:endyear){
-      
       if (i == startyear){
-        
         data_files <- vector(mode = "character")
       }
       
       data_files <- 
         c(data_files,
-          paste0(sprintf("%06d",
-                         as.numeric(unlist(strsplit(station_id,
-                                                    "-"))[1])),
-                 "-",
-                 sprintf("%05d",
-                         as.numeric(unlist(strsplit(station_id,
-                                                    "-"))[2])),
-                 "-", i, ".gz"))
+          paste0(
+            sprintf("%06d",
+                    as.numeric(unlist(strsplit(station_id,
+                                               "-"))[1])),
+            "-",
+            sprintf("%05d",
+                    as.numeric(unlist(strsplit(station_id,
+                                               "-"))[2])),
+            "-", i, ".gz"))
     }
     
     # Verify that local files are available
@@ -194,29 +194,30 @@ get_isd_station_data <- function(station_id,
     # If a station ID string provided,
     # download the gzip-compressed data files for the years specified
     for (i in startyear:endyear){
-      
       if (i == startyear){
-        
         data_files <- vector(mode = "character")
       }
       
       data_file_to_download <- 
-        paste0(sprintf("%06d",
-                       as.numeric(unlist(strsplit(station_id,
-                                                  "-"))[1])),
-               "-",
-               sprintf("%05d",
-                       as.numeric(unlist(strsplit(station_id,
-                                                  "-"))[2])),
-               "-", i, ".gz")
+        paste0(
+          sprintf("%06d",
+                  as.numeric(unlist(strsplit(station_id,
+                                             "-"))[1])),
+          "-",
+          sprintf("%05d",
+                  as.numeric(unlist(strsplit(station_id,
+                                             "-"))[2])),
+          "-", i, ".gz")
       
-      try(download(url = paste0("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/", i,
-                                "/", data_file_to_download),
-                   destfile = file.path(temp_folder, data_file_to_download)),
-          silent = TRUE)
+      try(download(
+        url = paste0("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/", i,
+                     "/", data_file_to_download),
+        destfile = file.path(temp_folder, data_file_to_download)),
+        silent = TRUE)
       
-      if (file.info(file.path(temp_folder,
-                              data_file_to_download))$size > 1){
+      if (file.info(
+        file.path(temp_folder,
+                  data_file_to_download))$size > 1){
         
         data_files <- c(data_files,
                         data_file_to_download)
@@ -228,29 +229,35 @@ get_isd_station_data <- function(station_id,
     
     # Create vector of additional data categories
     data_categories <-
-      c("AA1", "AB1", "AC1", "AD1", "AE1", "AG1", "AH1", "AI1", "AJ1",
-        "AK1", "AL1", "AM1", "AN1", "AO1", "AP1", "AU1", "AW1", "AX1",
-        "AY1", "AZ1", "CB1", "CF1", "CG1", "CH1", "CI1", "CN1", "CN2",
-        "CN3", "CN4", "CR1", "CT1", "CU1", "CV1", "CW1", "CX1", "CO1",
-        "CO2", "ED1", "GA1", "GD1", "GF1", "GG1", "GH1", "GJ1", "GK1",
-        "GL1", "GM1", "GN1", "GO1", "GP1", "GQ1", "GR1", "HL1", "IA1",
-        "IA2", "IB1", "IB2", "IC1", "KA1", "KB1", "KC1", "KD1", "KE1",
-        "KF1", "KG1", "MA1", "MD1", "ME1", "MF1", "MG1", "MH1", "MK1",
-        "MV1", "MW1", "OA1", "OB1", "OC1", "OE1", "RH1", "SA1", "ST1",
-        "UA1", "UG1", "UG2", "WA1", "WD1", "WG1")
+      c("AA1", "AB1", "AC1", "AD1", "AE1",
+        "AG1", "AH1", "AI1", "AJ1", "AK1",
+        "AL1", "AM1", "AN1", "AO1", "AP1",
+        "AU1", "AW1", "AX1", "AY1", "AZ1",
+        "CB1", "CF1", "CG1", "CH1", "CI1",
+        "CN1", "CN2", "CN3", "CN4", "CR1",
+        "CT1", "CU1", "CV1", "CW1", "CX1",
+        "CO1", "CO2", "ED1", "GA1", "GD1",
+        "GF1", "GG1", "GH1", "GJ1", "GK1",
+        "GL1", "GM1", "GN1", "GO1", "GP1",
+        "GQ1", "GR1", "HL1", "IA1", "IA2",
+        "IB1", "IB2", "IC1", "KA1", "KB1",
+        "KC1", "KD1", "KE1", "KF1", "KG1",
+        "MA1", "MD1", "ME1", "MF1", "MG1",
+        "MH1", "MK1", "MV1", "MW1", "OA1",
+        "OB1", "OC1", "OE1", "RH1", "SA1",
+        "ST1", "UA1", "UG1", "UG2", "WA1",
+        "WD1", "WG1")
     
     # Get additional data portions of records, exluding remarks
     for (i in 1:length(data_files)){
       
       if (use_local_files == FALSE){
-        
         add_data <- 
           readLines(file.path(temp_folder,
                               data_files[i]))
       }
       
       if (use_local_files == TRUE){
-        
         add_data <- 
           readLines(file.path(local_file_dir,
                               data_files[i]))
@@ -267,7 +274,6 @@ get_isd_station_data <- function(station_id,
     
     # Obtain data counts for all additional parameters
     for (i in 1:length(data_categories)){
-      
       if (i == 1){
         data_categories_counts <-
           vector(mode = "numeric",
@@ -321,17 +327,20 @@ get_isd_station_data <- function(station_id,
       # Read data from mandatory data section of each file,
       # which is a fixed-width string
       data <- 
-        read_fwf(data_files[i],
-                 fwf_widths(column_widths),
-                 col_types = "ccciiiiiciicicciccicicccccccicicic")
+        read_fwf(
+          data_files[i],
+          fwf_widths(column_widths),
+          col_types = "ccciiiiiciicicciccicicccccccicicic")
       
       # Remove select columns from data frame
-      data <- data[, c(2:8, 10:11, 13, 16, 19, 21, 29, 31, 33)]
+      data <- 
+        data[, c(2:8, 10:11, 13, 16, 19, 21, 29, 31, 33)]
       
       # Apply new names to the data frame columns
       names(data) <-
-        c("usaf", "wban", "year", "month", "day", "hour", "minute",
-          "lat", "lon", "elev", "wd", "ws", "ceil_hgt",
+        c("usaf", "wban", "year", "month",
+          "day", "hour", "minute", "lat", "lon",
+          "elev", "wd", "ws", "ceil_hgt",
           "temp", "dew_point", "atmos_pres")
       
       # Correct the latitude values
