@@ -996,12 +996,12 @@ get_isd_station_data <- function(station_id,
                                      field_lengths,
                                      scale_factor,
                                      data_types,
-                                     add_data){
+                                     add_data) {
       
       # Parse string of characters representing data types
       if (class(data_types) == "character" &
           length(data_types) == 1 &
-          all(unique(unlist(strsplit(data_types, ""))) %in% c("c", "n"))){
+          all(unique(unlist(strsplit(data_types, ""))) %in% c("c", "n"))) {
         
         for (i in 1:nchar(data_types)){
           
@@ -1014,16 +1014,18 @@ get_isd_station_data <- function(station_id,
               total = nchar(data_types))
             
           }
-          subst_data_types <- c(subst_data_types,
-                                ifelse(substr(data_types, i, i) == "n",
-                                       "numeric", "character"))
+          subst_data_types <- 
+            c(subst_data_types,
+              ifelse(substr(data_types, i, i) == "n",
+                     "numeric", "character"))
           
         }
         
         data_types <- subst_data_types
       }
       
-      data_strings <- str_extract(add_data, paste0(category_key, ".*"))
+      data_strings <- 
+        str_extract(add_data, paste0(category_key, ".*"))
       
       for (i in 1:length(field_lengths)){
         
@@ -1031,9 +1033,11 @@ get_isd_station_data <- function(station_id,
           df_from_category <-
             as.data.frame(mat.or.vec(nr = length(data_strings),
                                      nc = length(field_lengths)))
-          colnames(df_from_category) <- paste(tolower(category_key),
-                                              rep = 1:length(field_lengths),
-                                              sep = "_")
+          
+          colnames(df_from_category) <- 
+            paste(tolower(category_key),
+                  rep = 1:length(field_lengths),
+                  sep = "_")
           
           substr_start <- 4
           substr_end <- substr_start + (field_lengths[i] - 1)
@@ -1116,11 +1120,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[1] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AA1",
-                             field_lengths = c(2, 4, 1, 1),
-                             scale_factor = c(1, 10, NA, NA),
-                             data_types = "nncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AA1",
+          c(2, 4, 1, 1),
+          c(1, 10, NA, NA),
+          "nncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1129,11 +1134,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[2] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AB1",
-                             field_lengths = c(5, 1, 1),
-                             scale_factor = c(10, NA, NA),
-                             data_types = "ncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AB1",
+          c(5, 1, 1),
+          c(10, NA, NA),
+          "ncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1142,11 +1148,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[3] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AC1",
-                             field_lengths = c(1, 1, 1),
-                             scale_factor = c(NA, NA, NA),
-                             data_types = "ccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AC1",
+          c(1, 1, 1),
+          c(NA, NA, NA),
+          "ccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1155,24 +1162,27 @@ get_isd_station_data <- function(station_id,
     if (data_categories[4] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AD1",
-                             field_lengths = c(5, 1, 4, 4, 4, 1),
-                             scale_factor = c(10, NA, NA, NA, NA, NA),
-                             data_types = "nccccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AD1",
+          c(5, 1, 4, 4, 4, 1),
+          c(10, NA, NA, NA, NA, NA),
+          "nccccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
-    # AE1 - liquid precipitation, number of days with specific amounts, for the month
+    # AE1 - liquid precipitation, number of days with specific 
+    # amounts, for the month
     if (data_categories[5] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AE1",
-                             field_lengths = c(2, 1, 2, 1, 2, 1, 2, 1),
-                             scale_factor = rep(NA, 8),
-                             data_types = "cccccccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AE1",
+          c(2, 1, 2, 1, 2, 1, 2, 1),
+          rep(NA, 8),
+          "cccccccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1181,11 +1191,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[6] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AG1",
-                             field_lengths = c(1, 3),
-                             scale_factor = c(NA, 1),
-                             data_types = "cn",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AG1",
+          c(1, 3),
+          c(NA, 1),
+          "cn",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1194,11 +1205,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[7] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AH1",
-                             field_lengths = c(3, 4, 1, 6, 1),
-                             scale_factor = c(1, 10, NA, NA, NA),
-                             data_types = "nnccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AH1",
+          c(3, 4, 1, 6, 1),
+          c(1, 10, NA, NA, NA),
+          "nnccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1207,11 +1219,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[8] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AI1",
-                             field_lengths = c(4, 1, 6, 1),
-                             scale_factor = c(10, NA, NA, NA),
-                             data_types = "nccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AI1",
+          c(4, 1, 6, 1),
+          c(10, NA, NA, NA),
+          "nccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1220,11 +1233,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[9] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AJ1",
-                             field_lengths = c(4, 1, 1, 6, 1, 1),
-                             scale_factor = c(1, NA, NA, 10, NA, NA),
-                             data_types = "nccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AJ1",
+          c(4, 1, 1, 6, 1, 1),
+          c(1, NA, NA, 10, NA, NA),
+          "nccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1233,11 +1247,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[10] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AK1",
-                             field_lengths = c(4, 1, 6, 1),
-                             scale_factor = c(1, NA, NA, NA),
-                             data_types = "nccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AK1",
+          c(4, 1, 6, 1),
+          c(1, NA, NA, NA),
+          "nccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1246,11 +1261,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[11] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AL1",
-                             field_lengths = c(2, 3, 1, 1),
-                             scale_factor = c(1, 1, NA, NA),
-                             data_types = "nncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AL1",
+          c(2, 3, 1, 1),
+          c(1, 1, NA, NA),
+          "nncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1259,11 +1275,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[12] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AM1",
-                             field_lengths = c(4, 1, 4, 4, 4, 1),
-                             scale_factor = c(10, NA, NA, NA, NA, NA),
-                             data_types = "nccccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AM1",
+          c(4, 1, 4, 4, 4, 1),
+          c(10, NA, NA, NA, NA, NA),
+          "nccccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1272,11 +1289,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[13] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AN1",
-                             field_lengths = c(3, 4, 1, 1),
-                             scale_factor = c(1, 10, NA, NA),
-                             data_types = "nncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AN1",
+          c(3, 4, 1, 1),
+          c(1, 10, NA, NA),
+          "nncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1285,11 +1303,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[14] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AO1",
-                             field_lengths = c(2, 4, 1, 1),
-                             scale_factor = c(1, 10, NA, NA),
-                             data_types = "nncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AO1",
+          c(2, 4, 1, 1),
+          c(1, 10, NA, NA),
+          "nncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1298,11 +1317,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[15] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AP1",
-                             field_lengths = c(4, 1, 1),
-                             scale_factor = c(10, NA, NA),
-                             data_types = "ncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AP1",
+          c(4, 1, 1),
+          c(10, NA, NA),
+          "ncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1311,12 +1331,13 @@ get_isd_station_data <- function(station_id,
     if (data_categories[16] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AU1",
-                             field_lengths = c(1, 1, 2, 1, 1, 1, 1),
-                             scale_factor = c(NA, NA, NA, NA,
-                                              NA, NA, NA),
-                             data_types = "ccccccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AU1",
+          c(1, 1, 2, 1, 1, 1, 1),
+          c(NA, NA, NA, NA,
+            NA, NA, NA),
+          "ccccccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1325,11 +1346,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[17] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AW1",
-                             field_lengths = c(2, 1),
-                             scale_factor = c(NA, NA),
-                             data_types = "cc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AW1",
+          c(2, 1),
+          c(NA, NA),
+          "cc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1338,11 +1360,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[18] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AX1",
-                             field_lengths = c(2, 1, 2, 1),
-                             scale_factor = c(NA, NA, 1, NA),
-                             data_types = "ccnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AX1",
+          c(2, 1, 2, 1),
+          c(NA, NA, 1, NA),
+          "ccnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1351,11 +1374,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[19] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AY1",
-                             field_lengths = c(1, 1, 2, 1),
-                             scale_factor = c(NA, NA, 1, NA),
-                             data_types = "ccnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AY1",
+          c(1, 1, 2, 1),
+          c(NA, NA, 1, NA),
+          "ccnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1364,11 +1388,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[20] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "AZ1",
-                             field_lengths = c(1, 1, 2, 1),
-                             scale_factor = c(NA, NA, 1, NA),
-                             data_types = "ccnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "AZ1",
+          c(1, 1, 2, 1),
+          c(NA, NA, 1, NA),
+          "ccnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1377,11 +1402,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[21] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CB1",
-                             field_lengths = c(2, 6, 1, 1),
-                             scale_factor = c(1, 10, NA, NA),
-                             data_types = "nncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CB1",
+          c(2, 6, 1, 1),
+          c(1, 10, NA, NA),
+          "nncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1390,11 +1416,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[22] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CF1",
-                             field_lengths = c(4, 1, 1),
-                             scale_factor = c(10, NA, NA),
-                             data_types = "ncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CF1",
+          c(4, 1, 1),
+          c(10, NA, NA),
+          "ncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1403,11 +1430,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[23] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CG1",
-                             field_lengths = c(6, 1, 1),
-                             scale_factor = c(10, NA, NA),
-                             data_types = "ncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CG1",
+          c(6, 1, 1),
+          c(10, NA, NA),
+          "ncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1416,11 +1444,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[24] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CH1",
-                             field_lengths = c(2, 5, 1, 1, 4, 1, 1),
-                             scale_factor = c(1, 10, NA, NA, 10, NA, NA),
-                             data_types = "nnccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CH1",
+          c(2, 5, 1, 1, 4, 1, 1),
+          c(1, 10, NA, NA, 10, NA, NA),
+          "nnccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1429,13 +1458,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[25] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CI1",
-                             field_lengths = c(5, 1, 1, 5, 1, 1,
-                                               5, 1, 1, 5, 1, 1),
-                             scale_factor = c(10, NA, NA, 10, NA, NA,
-                                              10, NA, NA, 10, NA, NA),
-                             data_types = "nccnccnccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CI1",
+          c(5, 1, 1, 5, 1, 1,
+            5, 1, 1, 5, 1, 1),
+          c(10, NA, NA, 10, NA, NA,
+            10, NA, NA, 10, NA, NA),
+          "nccnccnccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1444,13 +1474,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[26] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CN1",
-                             field_lengths = c(4, 1, 1, 4, 1, 1,
-                                               4, 1, 1),
-                             scale_factor = c(10, NA, NA, 10, NA, NA,
-                                              10, NA, NA),
-                             data_types = "nccnccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CN1",
+          c(4, 1, 1, 4, 1, 1,
+            4, 1, 1),
+          c(10, NA, NA, 10, NA, NA,
+            10, NA, NA),
+          "nccnccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1459,13 +1490,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[27] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CN2",
-                             field_lengths = c(5, 1, 1, 5, 1, 1,
-                                               2, 1, 1),
-                             scale_factor = c(10, NA, NA, 10, NA, NA,
-                                              1, NA, NA),
-                             data_types = "nccnccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CN2",
+          c(5, 1, 1, 5, 1, 1,
+            2, 1, 1),
+          c(10, NA, NA, 10, NA, NA,
+            1, NA, NA),
+          "nccnccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1474,11 +1506,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[28] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CN3",
-                             field_lengths = c(6, 1, 1, 6, 1, 1),
-                             scale_factor = c(10, NA, NA, 10, NA, NA),
-                             data_types = "nccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CN3",
+          c(6, 1, 1, 6, 1, 1),
+          c(10, NA, NA, 10, NA, NA),
+          "nccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1487,13 +1520,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[29] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CN4",
-                             field_lengths = c(1, 1, 1, 1, 1, 1,
-                                               3, 1, 1, 3, 1, 1),
-                             scale_factor = c(NA, NA, NA, NA, NA, NA,
-                                              10, NA, NA, 10, NA, NA),
-                             data_types = "ccccccnccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CN4",
+          c(1, 1, 1, 1, 1, 1,
+            3, 1, 1, 3, 1, 1),
+          c(NA, NA, NA, NA, NA, NA,
+            10, NA, NA, 10, NA, NA),
+          "ccccccnccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1502,11 +1536,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[30] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CR1",
-                             field_lengths = c(5, 1, 1),
-                             scale_factor = c(1000, NA, NA),
-                             data_types = "ncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CR1",
+          c(5, 1, 1),
+          c(1000, NA, NA),
+          "ncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1515,11 +1550,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[31] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CT1",
-                             field_lengths = c(5, 1, 1),
-                             scale_factor = c(10, NA, NA),
-                             data_types = "ncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CT1",
+          c(5, 1, 1),
+          c(10, NA, NA),
+          "ncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1528,11 +1564,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[32] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CU1",
-                             field_lengths = c(5, 1, 1, 4, 1, 1),
-                             scale_factor = c(10, NA, NA, 10, NA, NA),
-                             data_types = "nccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CU1",
+          c(5, 1, 1, 4, 1, 1),
+          c(10, NA, NA, 10, NA, NA),
+          "nccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1541,13 +1578,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[33] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CV1",
-                             field_lengths = c(5, 1, 1, 4, 1, 1,
-                                               5, 1, 1, 4, 1, 1),
-                             scale_factor = c(10, NA, NA, NA, NA, NA,
-                                              10, NA, NA, NA, NA, NA),
-                             data_types = "ncccccnccccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CV1",
+          c(5, 1, 1, 4, 1, 1,
+            5, 1, 1, 4, 1, 1),
+          c(10, NA, NA, NA, NA, NA,
+            10, NA, NA, NA, NA, NA),
+          "ncccccnccccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1556,11 +1594,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[34] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CW1",
-                             field_lengths = c(5, 1, 1, 5, 1, 1),
-                             scale_factor = c(10, NA, NA, 10, NA, NA),
-                             data_types = "nccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CW1",
+          c(5, 1, 1, 5, 1, 1),
+          c(10, NA, NA, 10, NA, NA),
+          "nccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1569,13 +1608,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[35] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CX1",
-                             field_lengths = c(6, 1, 1, 4, 1, 1,
-                                               4, 1, 1, 4, 1, 1),
-                             scale_factor = c(10, NA, NA, 1, NA, NA,
-                                              1, NA, NA, 1, NA, NA),
-                             data_types = "nccnccnccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CX1",
+          c(6, 1, 1, 4, 1, 1,
+            4, 1, 1, 4, 1, 1),
+          c(10, NA, NA, 1, NA, NA,
+            1, NA, NA, 1, NA, NA),
+          "nccnccnccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1584,11 +1624,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[36] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CO1",
-                             field_lengths = c(2, 3),
-                             scale_factor = c(1, 1),
-                             data_types = "nn",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CO1",
+          c(2, 3),
+          c(1, 1),
+          "nn",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1597,11 +1638,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[37] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "CO2",
-                             field_lengths = c(3, 5),
-                             scale_factor = c(NA, 10),
-                             data_types = "cn",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "CO2",
+          c(3, 5),
+          c(NA, 10),
+          "cn",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1610,11 +1652,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[38] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "ED1",
-                             field_lengths = c(2, 1, 4, 1),
-                             scale_factor = c(0.1, NA, 1, NA),
-                             data_types = "ncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "ED1",
+          c(2, 1, 4, 1),
+          c(0.1, NA, 1, NA),
+          "ncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1623,11 +1666,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[39] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GA1",
-                             field_lengths = c(2, 1, 6, 1, 2, 1),
-                             scale_factor = c(NA, NA, 1, NA, NA, NA),
-                             data_types = "ccnccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GA1",
+          c(2, 1, 6, 1, 2, 1),
+          c(NA, NA, 1, NA, NA, NA),
+          "ccnccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1636,11 +1680,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[40] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GD1",
-                             field_lengths = c(1, 2, 1, 6, 1, 1),
-                             scale_factor = c(NA, NA, NA, 1, NA, NA),
-                             data_types = "cccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GD1",
+          c(1, 2, 1, 6, 1, 1),
+          c(NA, NA, NA, 1, NA, NA),
+          "cccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1649,13 +1694,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[41] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GF1",
-                             field_lengths = c(2, 2, 1, 2, 1, 2, 1,
-                                               5, 1, 2, 1, 2, 1),
-                             scale_factor = c(NA, NA, NA, NA, NA, NA, NA,
-                                              1, NA, NA, NA, NA, NA),
-                             data_types = "cccccccnccccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GF1",
+          c(2, 2, 1, 2, 1, 2, 1,
+            5, 1, 2, 1, 2, 1),
+          c(NA, NA, NA, NA, NA, NA, NA,
+            1, NA, NA, NA, NA, NA),
+          "cccccccnccccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1664,11 +1710,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[42] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GG1",
-                             field_lengths = c(2, 1, 5, 1, 2, 1, 2, 1),
-                             scale_factor = c(NA, NA, 1, NA, NA, NA, NA, NA),
-                             data_types = "ccnccccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GG1",
+          c(2, 1, 5, 1, 2, 1, 2, 1),
+          c(NA, NA, 1, NA, NA, NA, NA, NA),
+          "ccnccccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1677,13 +1724,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[43] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GH1",
-                             field_lengths = c(5, 1, 1, 5, 1, 1,
-                                               5, 1, 1, 5, 1, 1),
-                             scale_factor = c(10, NA, NA, 10, NA, NA,
-                                              10, NA, NA, 10, NA, NA),
-                             data_types = "nccnccnccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GH1",
+          c(5, 1, 1, 5, 1, 1,
+            5, 1, 1, 5, 1, 1),
+          c(10, NA, NA, 10, NA, NA,
+            10, NA, NA, 10, NA, NA),
+          "nccnccnccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1692,11 +1740,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[44] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GJ1",
-                             field_lengths = c(4, 1),
-                             scale_factor = c(1, NA),
-                             data_types = "nc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GJ1",
+          c(4, 1),
+          c(1, NA),
+          "nc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1705,11 +1754,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[45] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GK1",
-                             field_lengths = c(3, 1),
-                             scale_factor = c(1, NA),
-                             data_types = "nc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GK1",
+          c(3, 1),
+          c(1, NA),
+          "nc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1718,11 +1768,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[46] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GL1",
-                             field_lengths = c(5, 1),
-                             scale_factor = c(1, NA),
-                             data_types = "nc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GL1",
+          c(5, 1),
+          c(1, NA),
+          "nc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1731,13 +1782,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[47] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GM1",
-                             field_lengths = c(4, 4, 2, 1, 4, 2, 1,
-                                               4, 2, 1, 4, 1),
-                             scale_factor = c(1, 1, NA, NA, 1, NA, NA,
-                                              1, NA, NA, 1, NA),
-                             data_types = "nnccnccnccnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GM1",
+          c(4, 4, 2, 1, 4, 2, 1,
+            4, 2, 1, 4, 1),
+          c(1, 1, NA, NA, 1, NA, NA,
+            1, NA, NA, 1, NA),
+          "nnccnccnccnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1746,13 +1798,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[48] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GN1",
-                             field_lengths = c(4, 4, 2, 1, 4, 2, 1,
-                                               4, 2, 1, 4, 1),
-                             scale_factor = c(1, 1, NA, NA, 1, NA, NA,
-                                              1, NA, NA, 1, NA),
-                             data_types = "nnccnccnccnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GN1",
+          c(4, 4, 2, 1, 4, 2, 1,
+            4, 2, 1, 4, 1),
+          c(1, 1, NA, NA, 1, NA, NA,
+            1, NA, NA, 1, NA),
+          "nnccnccnccnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1761,11 +1814,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[49] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GO1",
-                             field_lengths = c(4, 4, 1, 4, 1, 4, 1),
-                             scale_factor = c(1, 1, NA, 1, NA, 1, NA),
-                             data_types = "nncncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GO1",
+          c(4, 4, 1, 4, 1, 4, 1),
+          c(1, 1, NA, 1, NA, 1, NA),
+          "nncncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1774,13 +1828,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[50] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GP1",
-                             field_lengths = c(4, 4, 2, 3, 4, 2,
-                                               3, 4, 2, 3),
-                             scale_factor = c(1, 1, NA, 1, 1, NA,
-                                              1, 1, NA, 1),
-                             data_types = "nncnncnncn",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GP1",
+          c(4, 4, 2, 3, 4, 2,
+            3, 4, 2, 3),
+          c(1, 1, NA, 1, 1, NA,
+            1, 1, NA, 1),
+          "nncnncnncn",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1789,11 +1844,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[51] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GQ1",
-                             field_lengths = c(4, 4, 1, 4, 1),
-                             scale_factor = c(1, 10, NA, 10, NA),
-                             data_types = "nncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GQ1",
+          c(4, 4, 1, 4, 1),
+          c(1, 10, NA, 10, NA),
+          "nncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1802,11 +1858,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[52] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "GR1",
-                             field_lengths = c(4, 4, 1, 4, 1),
-                             scale_factor = c(1, 1, NA, 1, NA),
-                             data_types = "nncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "GR1",
+          c(4, 4, 1, 4, 1),
+          c(1, 1, NA, 1, NA),
+          "nncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1815,11 +1872,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[53] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "HL1",
-                             field_lengths = c(3, 1),
-                             scale_factor = c(10, NA),
-                             data_types = "nc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "HL1",
+          c(3, 1),
+          c(10, NA),
+          "nc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1828,11 +1886,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[54] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "IA1",
-                             field_lengths = c(2, 1),
-                             scale_factor = c(NA, NA),
-                             data_types = "cc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "IA1",
+          c(2, 1),
+          c(NA, NA),
+          "cc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1841,11 +1900,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[55] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "IA2",
-                             field_lengths = c(3, 5, 1),
-                             scale_factor = c(10, 10, NA),
-                             data_types = "nnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "IA2",
+          c(3, 5, 1),
+          c(10, 10, NA),
+          "nnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1854,13 +1914,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[56] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "IB1",
-                             field_lengths = c(5, 1, 1, 5, 1, 1,
-                                               5, 1, 1, 4, 1, 1),
-                             scale_factor = c(10, NA, NA, 10, NA, NA,
-                                              10, NA, NA, 10, NA, NA),
-                             data_types = "nccnccnccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "IB1",
+          c(5, 1, 1, 5, 1, 1,
+            5, 1, 1, 4, 1, 1),
+          c(10, NA, NA, 10, NA, NA,
+            10, NA, NA, 10, NA, NA),
+          "nccnccnccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1869,11 +1930,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[57] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "IB2",
-                             field_lengths = c(5, 1, 1, 4, 1, 1),
-                             scale_factor = c(10, NA, NA, 10, NA, NA),
-                             data_types = "nccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "IB2",
+          c(5, 1, 1, 4, 1, 1),
+          c(10, NA, NA, 10, NA, NA),
+          "nccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1882,13 +1944,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[58] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "IC1",
-                             field_lengths = c(2, 4, 1, 1, 3, 1, 1,
-                                               4, 1, 1, 4, 1, 1),
-                             scale_factor = c(1, 1, NA, NA, 100, NA, NA,
-                                              10, NA, NA, 10, NA, NA),
-                             data_types = "nnccnccnccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "IC1",
+          c(2, 4, 1, 1, 3, 1, 1,
+            4, 1, 1, 4, 1, 1),
+          c(1, 1, NA, NA, 100, NA, NA,
+            10, NA, NA, 10, NA, NA),
+          "nnccnccnccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1897,11 +1960,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[59] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "KA1",
-                             field_lengths = c(3, 1, 5, 1),
-                             scale_factor = c(10, NA, 10, NA),
-                             data_types = "ncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "KA1",
+          c(3, 1, 5, 1),
+          c(10, NA, 10, NA),
+          "ncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1910,11 +1974,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[60] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "KB1",
-                             field_lengths = c(3, 1, 5, 1),
-                             scale_factor = c(10, NA, 10, NA),
-                             data_types = "ncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "KB1",
+          c(3, 1, 5, 1),
+          c(10, NA, 10, NA),
+          "ncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1923,11 +1988,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[61] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "KC1",
-                             field_lengths = c(1, 1, 5, 6, 1),
-                             scale_factor = c(NA, NA, 10, NA, NA),
-                             data_types = "ccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "KC1",
+          c(1, 1, 5, 6, 1),
+          c(NA, NA, 10, NA, NA),
+          "ccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1936,11 +2002,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[62] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "KD1",
-                             field_lengths = c(3, 1, 4, 1),
-                             scale_factor = c(1, NA, 1, NA),
-                             data_types = "ncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "KD1",
+          c(3, 1, 4, 1),
+          c(1, NA, 1, NA),
+          "ncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1949,13 +2016,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[63] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "KE1",
-                             field_lengths = c(2, 1, 2, 1,
-                                               2, 1, 2, 1),
-                             scale_factor = c(1, NA, 1, NA,
-                                              1, NA, 1, NA),
-                             data_types = "ncncncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "KE1",
+          c(2, 1, 2, 1,
+            2, 1, 2, 1),
+          c(1, NA, 1, NA,
+            1, NA, 1, NA),
+          "ncncncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1964,11 +2032,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[64] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "KF1",
-                             field_lengths = c(5, 1),
-                             scale_factor = c(10, NA),
-                             data_types = "nc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "KF1",
+          c(5, 1),
+          c(10, NA),
+          "nc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1977,11 +2046,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[65] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "KG1",
-                             field_lengths = c(3, 1, 5, 1, 1),
-                             scale_factor = c(1, NA, 100, NA, NA),
-                             data_types = "ncncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "KG1",
+          c(3, 1, 5, 1, 1),
+          c(1, NA, 100, NA, NA),
+          "ncncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -1990,11 +2060,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[66] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "MA1",
-                             field_lengths = c(5, 1, 5, 1),
-                             scale_factor = c(10, NA, 10, NA),
-                             data_types = "ncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "MA1",
+          c(5, 1, 5, 1),
+          c(10, NA, 10, NA),
+          "ncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2003,11 +2074,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[67] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "MD1",
-                             field_lengths = c(1, 1, 3, 1, 4, 1),
-                             scale_factor = c(NA, NA, 10, NA, 10, NA),
-                             data_types = "ccncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "MD1",
+          c(1, 1, 3, 1, 4, 1),
+          c(NA, NA, 10, NA, 10, NA),
+          "ccncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2016,11 +2088,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[68] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "ME1",
-                             field_lengths = c(1, 4, 1),
-                             scale_factor = c(NA, 1, NA),
-                             data_types = "cnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "ME1",
+          c(1, 4, 1),
+          c(NA, 1, NA),
+          "cnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2029,11 +2102,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[69] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "MF1",
-                             field_lengths = c(5, 1, 5, 1),
-                             scale_factor = c(10, NA, 10, NA),
-                             data_types = "ncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "MF1",
+          c(5, 1, 5, 1),
+          c(10, NA, 10, NA),
+          "ncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2042,11 +2116,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[70] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "MG1",
-                             field_lengths = c(5, 1, 5, 1),
-                             scale_factor = c(10, NA, 10, NA),
-                             data_types = "ncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "MG1",
+          c(5, 1, 5, 1),
+          c(10, NA, 10, NA),
+          "ncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2056,11 +2131,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[71] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "MH1",
-                             field_lengths = c(5, 1, 5, 1),
-                             scale_factor = c(10, NA, 10, NA),
-                             data_types = "ncnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "MH1",
+          c(5, 1, 5, 1),
+          c(10, NA, 10, NA),
+          "ncnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2070,11 +2146,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[72] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "MK1",
-                             field_lengths = c(5, 6, 1, 5, 6, 1),
-                             scale_factor = c(10, NA, NA, 10, NA, NA),
-                             data_types = "nccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "MK1",
+          c(5, 6, 1, 5, 6, 1),
+          c(10, NA, NA, 10, NA, NA),
+          "nccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2083,11 +2160,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[73] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "MV1",
-                             field_lengths = c(2, 1),
-                             scale_factor = c(NA, NA),
-                             data_types = "cc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "MV1",
+          c(2, 1),
+          c(NA, NA),
+          "cc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2096,11 +2174,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[74] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "MW1",
-                             field_lengths = c(2, 1),
-                             scale_factor = c(NA, NA),
-                             data_types = "cc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "MW1",
+          c(2, 1),
+          c(NA, NA),
+          "cc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2109,11 +2188,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[75] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "OA1",
-                             field_lengths = c(1, 2, 4, 1),
-                             scale_factor = c(NA, 1, 10, NA),
-                             data_types = "cnnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "OA1",
+          c(1, 2, 4, 1),
+          c(NA, 1, 10, NA),
+          "cnnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2122,13 +2202,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[76] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "OB1",
-                             field_lengths = c(3, 4, 1, 1, 3, 1, 1,
-                                               5, 1, 1, 5, 1, 1),
-                             scale_factor = c(1, 10, NA, NA, 1, NA, NA,
-                                              100, NA, NA, 100, NA, NA),
-                             data_types = "nnccnccnccncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "OB1",
+          c(3, 4, 1, 1, 3, 1, 1,
+            5, 1, 1, 5, 1, 1),
+          c(1, 10, NA, NA, 1, NA, NA,
+            100, NA, NA, 100, NA, NA),
+          "nnccnccnccncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2137,11 +2218,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[77] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "OC1",
-                             field_lengths = c(4, 1),
-                             scale_factor = c(10, NA),
-                             data_types = "nc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "OC1",
+          c(4, 1),
+          c(10, NA),
+          "nc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2150,11 +2232,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[78] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "OE1",
-                             field_lengths = c(1, 2, 5, 3, 4, 1),
-                             scale_factor = c(NA, 1, 100, 1, 10, NA),
-                             data_types = "cnnnnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "OE1",
+          c(1, 2, 5, 3, 4, 1),
+          c(NA, 1, 100, 1, 10, NA),
+          "cnnnnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2163,11 +2246,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[79] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "RH1",
-                             field_lengths = c(3, 1, 3, 1, 1),
-                             scale_factor = c(1, NA, 1, NA, NA),
-                             data_types = "ncncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "RH1",
+          c(3, 1, 3, 1, 1),
+          c(1, NA, 1, NA, NA),
+          "ncncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2176,11 +2260,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[80] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "SA1",
-                             field_lengths = c(4, 1),
-                             scale_factor = c(10, NA),
-                             data_types = "nc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "SA1",
+          c(4, 1),
+          c(10, NA),
+          "nc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2189,13 +2274,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[81] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "ST1",
-                             field_lengths = c(1, 5, 1, 4, 1,
-                                               2, 1, 1, 1),
-                             scale_factor = c(NA, 10, NA, 10, NA,
-                                              NA, NA, NA, NA),
-                             data_types = "cncnccccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "ST1",
+          c(1, 5, 1, 4, 1,
+            2, 1, 1, 1),
+          c(NA, 10, NA, 10, NA,
+            NA, NA, NA, NA),
+          "cncnccccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2204,11 +2290,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[82] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "UA1",
-                             field_lengths = c(1, 2, 3, 1, 2, 1),
-                             scale_factor = c(NA, 1, 10, NA, NA, NA),
-                             data_types = "cnnccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "UA1",
+          c(1, 2, 3, 1, 2, 1),
+          c(NA, 1, 10, NA, NA, NA),
+          "cnnccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2217,11 +2304,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[83] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "UG1",
-                             field_lengths = c(2, 3, 3, 1),
-                             scale_factor = c(1, 10, 1, NA),
-                             data_types = "nnnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "UG1",
+          c(2, 3, 3, 1),
+          c(1, 10, 1, NA),
+          "nnnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2230,11 +2318,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[84] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "UG2",
-                             field_lengths = c(2, 3, 3, 1),
-                             scale_factor = c(1, 10, 1, NA),
-                             data_types = "nnnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "UG2",
+          c(2, 3, 3, 1),
+          c(1, 10, 1, NA),
+          "nnnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2243,11 +2332,12 @@ get_isd_station_data <- function(station_id,
     if (data_categories[85] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "WA1",
-                             field_lengths = c(1, 3, 1, 1),
-                             scale_factor = c(NA, 10, NA, NA),
-                             data_types = "cncc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "WA1",
+          c(1, 3, 1, 1),
+          c(NA, 10, NA, NA),
+          "cncc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2256,13 +2346,14 @@ get_isd_station_data <- function(station_id,
     if (data_categories[86] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "WD1",
-                             field_lengths = c(2, 3, 2, 1, 1, 1,
-                                               2, 1, 3, 3, 1),
-                             scale_factor = c(NA, 1, NA, NA, NA, NA,
-                                              NA, NA, 1, 1, NA),
-                             data_types = "cnccccccnnc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "WD1",
+          c(2, 3, 2, 1, 1, 1,
+            2, 1, 3, 3, 1),
+          c(NA, 1, NA, NA, NA, NA,
+            NA, NA, 1, 1, NA),
+          "cnccccccnnc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
@@ -2271,24 +2362,26 @@ get_isd_station_data <- function(station_id,
     if (data_categories[87] %in% significant_params){
       
       additional_data <-
-        get_df_from_category(category_key = "WG1",
-                             field_lengths = c(2, 2, 2, 2, 2, 1),
-                             scale_factor = c(NA, 1, NA, NA, NA, NA),
-                             data_types = "cncccc",
-                             add_data = all_add_data)
+        get_df_from_category(
+          "WG1",
+          c(2, 2, 2, 2, 2, 1),
+          c(NA, 1, NA, NA, NA, NA),
+          "cncccc",
+          all_add_data)
       
       large_data_frame <- bind_cols(large_data_frame, additional_data)
     }
     
     # If the tz offset is 0, return the data frame without filtering it
     if (gmt_offset == 0){
-      
       return(large_data_frame) 
     }
     
     # Filter data frame to only include data for requested years
-    large_data_frame <- filter(large_data_frame, year >= startyear &
-                                 year <= endyear)
+    large_data_frame <- 
+      filter(large_data_frame, 
+             year >= startyear &
+               year <= endyear)
     
     return(large_data_frame)
   }
