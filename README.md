@@ -802,15 +802,21 @@ library(magrittr)
 library(dplyr)
 
 rainfall_6h_june2015 <- 
-  get_isd_stations(startyear = 1970, endyear = 2015,
-                   lower_lat = 49, upper_lat = 58,
-                   lower_lon = -125, upper_lon = -120) %>%
+  get_isd_stations(
+    startyear = 1970,
+    endyear = 2015,
+    lower_lat = 49,
+    upper_lat = 58,
+    lower_lon = -125,
+    upper_lon = -120) %>%
     select_isd_station(name = "abbotsford") %>%
-    get_isd_station_data(startyear = 2015,
-                         endyear = 2015,
-                         select_additional_data = "AA1") %>%
+    get_isd_station_data(
+      startyear = 2015,
+      endyear = 2015,
+      select_additional_data = "AA1") %>%
     filter(month == 6, aa1_1 == 6) %>% 
-        select(aa1_2) %>% sum()
+    select(aa1_2) %>%
+    sum()
 ```
 
 ```
@@ -819,16 +825,15 @@ rainfall_6h_june2015 <-
 
 ## Installation
 
-Want to try this? Make sure you have **R**, then, use this:
+To install the development **R** package, use the following:
 
 ```R
 devtools::install_github('rich-iannone/stationaRy')
 ```
 
-or this:
+The package is also available in CRAN:
 
 ```R
 install.packages("stationaRy")
 ```
 
-Thanks for installing. `:)`
