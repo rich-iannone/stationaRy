@@ -32,14 +32,16 @@ may be a list of several stations.
 # then isolate a single station and obtain a string with the
 # \\code{USAF} and \\code{WBAN} identifiers
 stations_within_domain <-
-  get_isd_stations(lower_lat = 49.000,
-                   upper_lat = 49.500,
-                   lower_lon = -123.500,
-                   upper_lon = -123.000)
+  get_isd_stations(
+    lower_lat = 49.000,
+    upper_lat = 49.500,
+    lower_lon = -123.500,
+    upper_lon = -123.000)
                    
 cypress_bowl_snowboard_stn <-
-  select_isd_station(stn_df = stations_within_domain,
-                     name = "cypress bowl snowboard")
+  select_isd_station(
+    stn_df = stations_within_domain,
+    name = "cypress bowl snowboard")
 }
 }
 \seealso{
