@@ -22,20 +22,22 @@
 #' # then isolate a single station and obtain a string with the
 #' # \code{USAF} and \code{WBAN} identifiers
 #' stations_within_domain <-
-#'   get_isd_stations(lower_lat = 49.000,
-#'                    upper_lat = 49.500,
-#'                    lower_lon = -123.500,
-#'                    upper_lon = -123.000)
+#'   get_isd_stations(
+#'     lower_lat = 49.000,
+#'     upper_lat = 49.500,
+#'     lower_lon = -123.500,
+#'     upper_lon = -123.000)
 #'                    
 #' cypress_bowl_snowboard_stn <-
-#'   select_isd_station(stn_df = stations_within_domain,
-#'                      name = "cypress bowl snowboard")
+#'   select_isd_station(
+#'     stn_df = stations_within_domain,
+#'     name = "cypress bowl snowboard")
 #' }
 #' @export select_isd_station
 
 select_isd_station <- function(stn_df,
                                number = NULL,
-                               name = NULL){
+                               name = NULL) {
   
   # Ensure that the search words for the station name are lowercase
   if (!is.null(name)){
@@ -44,9 +46,7 @@ select_isd_station <- function(stn_df,
   
   # If neither any number nor name provided, return NA
   if (is.null(number) & is.null(name)){
-    
     message("No search terms provided.")
-    
     return(NA)
   }
   
@@ -79,7 +79,6 @@ select_isd_station <- function(stn_df,
         
         strings <- gsub(vals[i], replace.vals[i], strings)
       }
-      
       strings
     }
     
@@ -88,9 +87,7 @@ select_isd_station <- function(stn_df,
     any_matched_stations <- any(grepl(name, station_name))
     
     if (any_matched_stations == FALSE){
-      
       message("No stations were matched with the supplied search term.")
-      
       return(NA)
     }
     
@@ -126,9 +123,7 @@ select_isd_station <- function(stn_df,
         }
         
         message("Several stations matched. Provide a more specific search term.")
-        
         print(stn_df[which(grepl(name, station_name)),])
-        
         return(NA)
       }
     }
