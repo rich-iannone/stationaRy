@@ -678,33 +678,38 @@ bergen_point_temps
 #> 12    12 10.03515850 10.445389
 ```
 
-Here's an example where rainfall amounts (over 6 hour periods) are summed for the month of June in 2015 for Abbotsford, BC, Canada. The `aa1_1` column is the duration in hours when the liquid precipitation was observed, and, the `aa1_2` column is quantity of rain in mm.
+Here's an example where rainfall amounts (over 6 hour periods) are summed by month for the year of 2015. The `aa1_1` column is the duration in hours when the liquid precipitation was observed, and, the `aa1_2` column is quantity of rain. With `group_by()` and `summarize()`, we can get the monthly total precipitation amounts in mm units.
 
 ```R
-library(stationaRy)
-library(magrittr)
-library(dplyr)
-
-rainfall_6h_june2015 <- 
-  get_isd_stations(
-    startyear = 1970,
+monthly_rainfall <- 
+  get_isd_stations() %>%
+  filter(name == "ABBOTSFORD") %>%
+  get_station_ids %>%
+  get_isd_station_data(
+    startyear = 2015,
     endyear = 2015,
-    lower_lat = 49,
-    upper_lat = 58,
-    lower_lon = -125,
-    upper_lon = -120) %>%
-    select_isd_station(name = "abbotsford") %>%
-    get_isd_station_data(
-      startyear = 2015,
-      endyear = 2015,
-      select_additional_data = "AA1") %>%
-    filter(month == 6, aa1_1 == 6) %>% 
-    select(aa1_2) %>%
-    sum()
-```
+    select_additional_data = "AA1") %>%
+  filter(aa1_1 == 6, aa1_2 < 800) %>% 
+  select(month, aa1_2) %>%
+  group_by(month) %>%
+  summarize(mm_per_month = sum(aa1_2))
 
-```
-[1] 12.5  
+monthly_rainfall
+#> # A tibble: 12 × 2
+#>    month mm_per_month
+#>    <dbl>        <dbl>
+#> 1      1        317.8
+#> 2      2        239.1
+#> 3      3        304.5
+#> 4      4         98.6
+#> 5      5         41.9
+#> 6      6         35.2
+#> 7      7         56.9
+#> 8      8         52.3
+#> 9      9        115.4
+#> 10    10         88.9
+#> 11    11        175.7
+#> 12    12        194.0
 ```
 
 ## Installation
