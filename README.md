@@ -8,7 +8,7 @@ Get hourly meteorological data from global met stations.
 
 ## Examples
 
-Get data from a station in Norway (with a **USAF** value of 13860, and a **WBAN** value of 99999). Specify the `station_id` as a string in the format `[USAF]-[WBAN]`, and, provide beginning and ending years for data collection to `startyear` and `endyear`, respectively.
+Get data from a station in Norway (with a **USAF** code of `13860`, and a **WBAN** code of `99999`). Specify the `station_id` as a string in the format `[USAF]-[WBAN]`, and, provide beginning and ending years for data collection to `startyear` and `endyear`, respectively.
 
 ```R
 library(stationaRy)
@@ -16,240 +16,117 @@ library(stationaRy)
 met_data <- 
   get_isd_station_data(
     station_id = "13860-99999",
-    startyear = 2009,
-    endyear = 2010)
-```
-
-That's great if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't have this info. You can search for station metadata using the `get_isd_stations` function. Without providing any arguments, it gives you a data frame containing the entire dataset of stations. Currently, there are 27,446 rows in the dataset. Here are rows 250-255 from the dataset:
-
-```R
-library(stationaRy)
-
-get_isd_stations()[250:255,]
-```
-
-```
-Source: local data frame [6 x 16]
-
-   usaf  wban                 name country state    lat   lon elev begin  end
-1 13220 99999          FORDE-TEFRE      NO       61.467 5.917   64  1973 2015
-2 13230 99999           BRINGELAND      NO       61.393 5.764  327  1984 2015
-3 13250 99999           MODALEN II      NO       60.833 5.950  114  1973 2008
-4 13260 99999          MODALEN III      NO       60.850 5.983  125  2008 2015
-5 13270 99999 KVAMSKOGEN-JONSHOGDI      NO       60.383 5.967  455  2006 2015
-6 13280 99999           KVAMSKOGEN      NO       60.400 5.917  408  1973 2006
-Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
-  country_code (chr), iso3166_2_subd (chr), fips10_4_subd (chr)
-```
-
-This list can be greatly reduced to isolate the stations of interest. One way to do this is to specify a geographic bounding box using lat/lon values to specify the bounds. Let's try a bounding box located in the west coast of Canada. 
-
-```R
-library(stationaRy)
-
-get_isd_stations(
-  lower_lat = 49.000,
-  upper_lat = 49.500,
-  lower_lon = -123.500,
-  upper_lon = -123.000)
-```
-
-```
-Source: local data frame [20 x 16]
-
-     usaf  wban                      name country state    lat      lon   elev begin  end
-1  710040 99999    CYPRESS BOWL FREESTYLE      CA       49.400 -123.200  969.0  2007 2010
-2  710370 99999            POINT ATKINSON      CA       49.330 -123.265   35.0  2003 2015
-3  710420 99999           DELTA BURNS BOG      CA       49.133 -123.000    3.0  2001 2015
-4  711120 99999 RICHMOND OPERATION CENTRE      CA       49.167 -123.067   16.0  1980 2015
-5  712010 99999  VANCOUVER HARBOUR CS  BC      CA       49.283 -123.117    3.0  1980 2015
-6  712013 99999            VANCOUVER INTL      CA       49.183 -123.167    3.0  1988 1988
-7  712025 99999          WEST VAN CYPRESS      CA       49.350 -123.183  161.0  1993 1995
-8  712045 99999           SAND HEADS (LS)      CA       49.100 -123.300    1.0  1992 1995
-9  712090 99999          SANDHEADS CS  BC      CA       49.100 -123.300     NA  2001 2015
-10 712110 99999      HOWE SOUND - PAM ROC      CA       49.483 -123.300    5.0  1996 2015
-11 715620 99999    CYPRESS BOWL SNOWBOARD      CA       49.383 -123.200 1180.0  2010 2010
-12 716080 99999  VANCOUVER SEA ISLAND CCG      CA       49.183 -123.183    2.1  1982 2015
-13 716930 99999        CYPRESS BOWL SOUTH      CA       49.383 -123.200  886.0  2007 2014
-14 717840 99999      WEST VANCOUVER (AUT)      CA       49.350 -123.200  168.0  1995 2015
-15 718903 99999                 PAM ROCKS      CA       49.483 -123.283    0.0  1987 1995
-16 718920 99999            VANCOUVER INTL      CA       49.194 -123.184    4.3  1955 2015
-17 718925 99999         VANCOUVER HARBOUR      CA       49.300 -123.117    5.0  1977 1980
-18 718926 99999       VANCOUVER HARBOUR &      CA       49.300 -123.117    5.0  1979 1979
-19 728920 99999            VANCOUVER INTL      CA       49.183 -123.167    3.0  1973 1977
-20 728925 99999       VANCOUVER HARBOUR &      CA       49.300 -123.117    5.0  1976 1977
-Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
-  country_code (chr), iso3166_2_subd (chr), fips10_4_subd (chr)
-```
-
-To put these stations on a viewable map, use a `magrittr` pipe to send the output data frame as input to the `map_isd_stations()` function:
-
-```R
-library(stationaRy)
-library(magrittr)
-
-get_isd_stations(
-  lower_lat = 49.000,
-  upper_lat = 49.500,
-  lower_lon = -123.500,
-  upper_lon = -123.000) %>%
-  map_isd_stations
-```
-
-<img src="inst/stations_map.png", width = 100%>
-
-Upon inspecting the data frame, you can reduce it to a single station by specifying it's name (or part of its name). In this example, we wish to get data from the `CYPRESS BOWL SNOWBOARD` station. This can be done by extending with `select_isd_station` and using the `name` argument to supply part of the station name.
-
-```R
-library(stationaRy)
-library(magrittr)
-
-get_isd_stations(
-  lower_lat = 49.000,
-  upper_lat = 49.500,
-  lower_lon = -123.500,
-  upper_lon = -123.000) %>%
-  select_isd_station(name = "cypress bowl")
-```
-
-```
-Several stations matched. Provide a more specific search term.
-Source: local data frame [3 x 16]
-
-    usaf  wban                   name country state    lat    lon elev begin  end
-1 710040 99999 CYPRESS BOWL FREESTYLE      CA       49.400 -123.2  969  2007 2010
-2 715620 99999 CYPRESS BOWL SNOWBOARD      CA       49.383 -123.2 1180  2010 2010
-3 716930 99999     CYPRESS BOWL SOUTH      CA       49.383 -123.2  886  2007 2014
-Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
-  country_code (chr), iso3166_2_subd (chr), fips10_4_subd (chr)
-[1] NA
-```
-
-As this function yielded a data frame with 3 stations (3 stations leading with `CYPRESS BOWL` in their station names), a set of strategies will be used to obtain single station. There are two ways to get a year of `CYPRESS BOWL SNOWBOARD` data for `2010`: (1) provide the full name of the station, or (2) use the data frame with multiple stations and specify the row of the target station.
-
-```R
-library(stationaRy)
-library(magrittr)
-
-cypress_bowl_snowboard_1 <- 
-  get_isd_stations(
-    lower_lat = 49.000,
-    upper_lat = 49.500,
-    lower_lon = -123.500,
-    upper_lon = -123.000) %>%
-    select_isd_station(name = "cypress bowl snowboard") %>%
-    get_isd_station_data(startyear = 2010, endyear = 2010)
+    startyear = 2010,
+    endyear = 2011)
     
-cypress_bowl_snowboard_2 <- 
-  get_isd_stations(
-    lower_lat = 49.000,
-    upper_lat = 49.500,
-    lower_lon = -123.500,
-    upper_lon = -123.000) %>%
-    select_isd_station(name = "cypress bowl", number = 2) %>%
-    get_isd_station_data(startyear = 2010, endyear = 2010)
+# Display part of the meteorological dataset
+met_data
+#> # A tibble: 16,474 × 18
+#>      usaf  wban  year month   day  hour minute   lat   lon  elev    wd    ws
+#>     <chr> <chr> <dbl> <dbl> <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1  013860 99999  2010     1     1     0      0  60.8  11.1   132    NA    NA
+#> 2  013860 99999  2010     1     1     1      0  60.8  11.1   132    NA    NA
+#> 3  013860 99999  2010     1    21    15      0  60.8  11.1   132    NA    NA
+#> 4  013860 99999  2010     1    21    16      0  60.8  11.1   132    NA    NA
+#> 5  013860 99999  2010     1    21    17      0  60.8  11.1   132    NA    NA
+#> 6  013860 99999  2010     1    21    18      0  60.8  11.1   132    NA    NA
+#> 7  013860 99999  2010     1    21    19      0  60.8  11.1   132    NA    NA
+#> 8  013860 99999  2010     1    21    20      0  60.8  11.1   132    NA    NA
+#> 9  013860 99999  2010     1    21    21      0  60.8  11.1   132    NA    NA
+#> 10 013860 99999  2010     1    21    22      0  60.8  11.1   132    NA    NA
+#> # ... with 16,464 more rows, and 6 more variables: ceil_hgt <dbl>, temp <dbl>,
+#> #   dew_point <dbl>, atmos_pres <dbl>, rh <dbl>, time <dttm>
 ```
 
-Both statements get the same met data (the `select_isd_station` function simply passes a `USAF`/`WBAN` string to `get_isd_station_data` via the `%>%` operator). Here's a bit of that met data:
-
-```
-Source: local data frame [711 x 18]
-
-     usaf  wban year month day hour minute    lat      lon elev wd ws ceil_hgt temp
-1  715620 99999 2010     1  28   16      0 50.633 -128.117  568 NA NA       NA  1.3
-2  715620 99999 2010     1  28   22      0 50.633 -128.117  568 NA NA       NA  2.5
-3  715620 99999 2010     1  29    4      0 50.633 -128.117  568 NA NA       NA  3.1
-4  715620 99999 2010     1  29   10      0 50.633 -128.117  568 NA NA       NA  5.5
-5  715620 99999 2010     1  29   16      0 50.633 -128.117  568 NA NA       NA  3.0
-6  715620 99999 2010     1  29   22      0 50.633 -128.117  568 NA NA       NA  1.5
-7  715620 99999 2010     1  30    4      0 50.633 -128.117  568 NA NA       NA  0.3
-8  715620 99999 2010     1  30   10      0 50.633 -128.117  568 NA NA       NA  0.9
-9  715620 99999 2010     1  30   16      0 50.633 -128.117  568 NA NA       NA  0.7
-10 715620 99999 2010     1  30   22      0 50.633 -128.117  568 NA NA       NA -0.1
-..    ...   ...  ...   ... ...  ...    ...    ...      ...  ... .. ..      ...  ...
-Variables not shown: dew_point (dbl), atmos_pres (dbl), rh (dbl), time (time)
-```
-
-If you'd like to get weather data from a weather station at Tofino, BC, CA, it's possible to search using `tofino` as the value for the `name` argument in the `select_isd_stations` function.
+This is useful if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't readily have this information. You can examine station metadata using the `get_isd_stations()` function. Without providing any arguments, it provides a tibble for all available stations (with many variables to filter on). Currently, there are 27,446 rows in the dataset. All stations in Norway, for example, can be isolated easily by using functions from the **dplyr** package.
 
 ```R
-library(stationaRy)
-library(magrittr)
-
-get_isd_stations() %>%
-  select_isd_station(name = "tofino")
-```
-
-```
-Several stations matched. Provide a more specific search term.
-Source: local data frame [4 x 16]
-
-    usaf  wban           name country state    lat      lon elev begin  end
-1 711060 94234 TOFINO AIRPORT      CA    BC 49.083 -125.767 24.0  1958 2015
-2 711060 99999         TOFINO      CA       49.082 -125.773 24.4  2000 2004
-3 741060 94234         TOFINO      CA       49.083 -125.767 20.0  1973 1977
-4 999999 94234         TOFINO      CA       49.083 -125.767 24.1  1964 1972
-Variables not shown: gmt_offset (dbl), time_zone_id (chr), country_name (chr),
-  country_code (chr), iso3166_2_subd (chr), fips10_4_subd (chr)
-[1] NA
-```
-
-A number of stations with `tofino` in its name were returned. If the first station in the returned data frame is desired, it can be selected with a slight modification to the `select_isd_station` call (using the `number` argument). Then, pipe the output to the `get_isd_station_data` function and supply the desired period of retrieval.
-
-```R
-library(stationaRy)
-library(magrittr)
-
-tofino_airport_2005_2010 <- 
-  get_isd_stations() %>%
-    select_isd_station(name = "tofino", number = 1) %>%
-    get_isd_station_data(startyear = 2005, endyear = 2010)
-```
-
-That's gives you 34,877 rows of meteorological data from the Tofino Airport station:
-
-```
-Source: local data frame [34,877 x 18]
-
-     usaf  wban year month day hour minute    lat      lon elev wd  ws ceil_hgt
-1  711060 94234 2005     1   1    7      0 49.083 -125.767   24 NA 0.0     1500
-2  711060 94234 2005     1   1    8      0 49.083 -125.767   24 NA 0.0     1500
-3  711060 94234 2005     1   1    9      0 49.083 -125.767   24 NA 0.0     1500
-4  711060 94234 2005     1   1   10      0 49.083 -125.767   24 NA 0.0     1200
-5  711060 94234 2005     1   1   11      0 49.083 -125.767   24 80 1.5     1200
-6  711060 94234 2005     1   1   12      0 49.083 -125.767   24 NA 0.0     1650
-7  711060 94234 2005     1   1   13      0 49.083 -125.767   24 40 2.6     1650
-8  711060 94234 2005     1   1   14      0 49.083 -125.767   24 50 3.6     1650
-9  711060 94234 2005     1   1   15      0 49.083 -125.767   24 70 1.0      900
-10 711060 94234 2005     1   1   16      0 49.083 -125.767   24 60 1.5     1650
-..    ...   ...  ...   ... ...  ...    ...    ...      ...  ... .. ...      ...
-Variables not shown: temp (dbl), dew_point (dbl), atmos_pres (dbl), rh (dbl), time
-  (time)
-```
-
-Of course, **dplyr** works really well to work toward the data you need. Suppose you'd like to collect several years of met data from a particular station and get only a listing of parameters that meet some criterion. Here's an example of obtaining temperatures above 37 degrees Celsius from a particular station:
-
-```R
-library(stationaRy)
-library(magrittr)
 library(dplyr)
 
+# Get a tibble with all stations in Norway
+stations_norway <- 
+  get_isd_stations() %>% 
+  filter(country == "NO")
+  
+# Preview the dataset
+stations_norway
+#> # A tibble: 398 × 16
+#>     usaf  wban                name country state    lat    lon  elev begin   end
+#>    <dbl> <dbl>               <chr>   <chr> <chr>  <dbl>  <dbl> <dbl> <dbl> <dbl>
+#> 1  10010 99999 JAN MAYEN(NOR-NAVY)      NO       70.933 -8.667   9.0  1931  2015
+#> 2  10014 99999          SORSTOKKEN      NO       59.792  5.341  48.8  1986  2015
+#> 3  10015 99999          BRINGELAND      NO       61.383  5.867 327.0  1987  2011
+#> 4  10016 99999         RORVIK/RYUM      NO       64.850 11.233  14.0  1987  1991
+#> 5  10017 99999               FRIGG      NO       59.980  2.250  48.0  1988  2005
+#> 6  10020 99999       VERLEGENHUKEN      NO       80.050 16.250   8.0  1986  2015
+#> 7  10030 99999            HORNSUND      NO       77.000 15.500  12.0  1985  2015
+#> 8  10040 99999       NY-ALESUND II      NO       78.917 11.933   8.0  1973  2014
+#> 9  10060 99999             EDGEOYA      NO       78.250 22.817  14.0  1973  2015
+#> 10 10100 99999              ANDOYA      NO       69.293 16.144  13.1  1931  2015
+#> # ... with 388 more rows, and 6 more variables: gmt_offset <dbl>, time_zone_id <chr>,
+#> #   country_name <chr>, country_code <chr>, iso3166_2_subd <chr>, fips10_4_subd <chr>
+```
+
+This table can be greatly reduced to isolate the stations of interest. For example, a filter could be applied to get only high-altitude stations (above 1000 meters). 
+
+```R
+norway_high_elev <-
+  stations_norway %>% 
+  filter(elev > 1000)
+
+norway_high_elev
+#> # A tibble: 13 × 16
+#>      usaf  wban               name country state     lat    lon   elev begin   end
+#>     <dbl> <dbl>              <chr>   <chr> <chr>   <dbl>  <dbl>  <dbl> <dbl> <dbl>
+#> 1   12200 99999             MANNEN      NO        62.450  7.767 1294.0  2010  2015
+#> 2   12390 99999        HJERKINN II      NO        62.217  9.550 1012.0  2010  2015
+#> 3   13460 99999          MIDTSTOVA      NO        60.650  7.267 1162.0  2011  2015
+#> 4   13500 99999          FINSEVATN      NO        60.600  7.533 1208.0  2003  2015
+#> 5   13510 99999          FINSE III      NO        60.600  7.500 1224.0  1973  2001
+#> 6   13520 99999           SANDHAUG      NO        60.183  7.483 1250.0  2004  2015
+#> 7   13620 99999         JUVVASSHOE      NO        61.667  8.367 1894.0  2009  2015
+#> 8   13660 99999         SOGNEFJELL      NO        61.567  8.000 1413.0  1979  2015
+#> 9   13750 99999          KVITFJELL      NO        61.467 10.133 1028.0  1973  2015
+#> 10  14330 99999         MIDTLAEGER      NO        59.833  6.983 1081.0  1973  2015
+#> 11  14400 99999             BLASJO      NO        59.333  6.867 1104.6  1973  2015
+#> 12  14611 99999       GAUSTATOPPEN      NO        59.850  8.650 1803.7  2014  2015
+#> 13 895040 99999 TROLL IN ANTARKTIS      NO       -72.017  2.383 1270.0  1994  2015
+#> # ... with 6 more variables: gmt_offset <dbl>, time_zone_id <chr>, country_name <chr>,
+#> #   country_code <chr>, iso3166_2_subd <chr>, fips10_4_subd <chr>
+```
+
+The station IDs from the tibble can be transformed into a vector with the `get_station_ids()` function.
+
+```R
+norway_high_elev_ids <-
+  norway_high_elev %>% 
+  get_station_ids
+  
+norway_high_elev_ids
+#>  [1] "12200-99999"  "12390-99999"  "13460-99999"  "13500-99999"  "13510-99999" 
+#>  [6] "13520-99999"  "13620-99999"  "13660-99999"  "13750-99999"  "14330-99999" 
+#> [11] "14400-99999"  "14611-99999"  "895040-99999"
+```
+
+Suppose you'd like to collect several years of met data from a particular station and get only a listing of parameters that meet some criterion. Here's an example of obtaining temperatures above 37 degrees Celsius from the Bergen Point station:
+
+```R
 high_temps_at_bergen_point_stn <- 
   get_isd_stations() %>%
-  select_isd_station(name = "bergen point") %>%
+  filter(name == "BERGEN POINT") %>%
+  get_station_ids %>%
   get_isd_station_data(startyear = 2006, endyear = 2015) %>%
   select(time, wd, ws, temp) %>% 
   filter(temp > 37) %>%
   mutate(temp_f = (temp * (9/5)) + 32)
-```
-
-```
-#> Source: local data frame [3 x 5]
-#> 
-#>                  time  wd  ws temp temp_f
-#> 1 2012-07-18 12:00:00 230 1.5 37.2  98.96
-#> 2 2012-07-18 13:00:00 220 2.6 37.8 100.04
-#> 3 2012-07-18 14:00:00 230 4.1 37.9 100.22
+  
+high_temps_at_bergen_point_stn
+#> # A tibble: 3 × 5
+#>                  time    wd    ws  temp temp_f
+#>                <dttm> <dbl> <dbl> <dbl>  <dbl>
+#> 1 2012-07-18 12:00:00   230   1.5  37.2  98.96
+#> 2 2012-07-18 13:00:00   220   2.6  37.8 100.04
+#> 3 2012-07-18 14:00:00   230   4.1  37.9 100.22
 ```
 
 There can actually be a lot of additional met data beyond wind speed, temperatures, etc. It can vary greatly depending on the selected station. These additional categories are denoted 'two-letter + digit' identifiers (e.g., `AA1`, `GA1`, etc.). Within each category are numerous variables (coded as `[identifer]_[index]`). Here is the complete list of the different parameters:
@@ -746,55 +623,62 @@ Category | Identifier | Column Name
 `WG1` | `wg1_4` | `wg1_water_surf_ice_hist_obs_nav_effect_code`
 `WG1` | `wg1_5` | `wg1_water_surf_ice_hist_obs_quality_code`
 
-More information about these observations can be found in [this PDF document](http://www1.ncdc.noaa.gov/pub/data/ish/ish-format-document.pdf).
+More information about these variables can be found in [this PDF document](http://www1.ncdc.noaa.gov/pub/data/ish/ish-format-document.pdf).
 
 To find out which categories are available for a station, set the `add_data_report` argument of the `get_isd_station_data` function to `TRUE`. This will provide a data frame with the available additional categories with their counts in the dataset.
 
 ```R
-library(stationaRy)
-library(magrittr)
-library(dplyr)
-
-get_isd_stations(
-  startyear = 1970,
-  endyear = 2015,
-  lower_lat = 49,
-  upper_lat = 58,
-  lower_lon = -125,
-  upper_lon = -120) %>%
-  select_isd_station(name = "abbotsford") %>%
+bergen_pt_add_data <-
+  get_isd_stations() %>%
+  filter(name == "BERGEN POINT") %>%
+  get_station_ids %>%
   get_isd_station_data(
     startyear = 2015,
     endyear = 2015,
     add_data_report = TRUE)
+
+bergen_pt_add_data
+#>   category total_count
+#> 1      MD1       13170
+#> 2      SA1       14479
 ```
 
-```
-#>    category total_count
-#> 1       AA1         744
-#> 2       AC1         817
-#> 3       AJ1           5
-#> 4       AL1           4
-#> 5       AY1         248
-#> 6       CB1          27
-#> 7       CF1         125
-#> 8       CI1         560
-#> 9       CT1         406
-#> 10      CU1         478
-#> 11      ED1          27
-#> 12      GA1         778
-#> 13      GD1        4514
-#> 14      GF1        5664
-#> 15      IA1           5
-#> 16      KA1         744
-#> 17      MA1        5748
-#> 18      MD1         736
-#> 19      MW1        1609
-#> 20      OC1         324
-#> 21      ST1          38
+The `SA1` category has to do with sea surface temperature, where the `sa1_1` and `sa1_2` variables are the sea surface temperature and it's quality code (`1` is the ideal quality code value). Using functions from **dplyr** one can extract mean ambient and sea-surface temperatures by month.The additional data is included by using the `select_additional_data` argument and specifying which categories to include. 
+
+```R
+bergen_point_temps <- 
+  get_isd_stations() %>%
+  filter(name == "BERGEN POINT") %>%
+  get_station_ids %>%
+  get_isd_station_data(
+    startyear = 2015,
+    endyear = 2015,
+    select_additional_data = "SA1") %>%
+  select(month, temp, sa1_1, sa1_2) %>%
+  filter(sa1_2 == 1) %>%
+  group_by(month) %>%
+  summarize(avg_temp = mean(temp, na.rm = TRUE),
+            avg_sst = mean(sa1_1, na.rm = TRUE))
+
+bergen_point_temps
+#> # A tibble: 12 × 3
+#>    month    avg_temp   avg_sst
+#>    <dbl>       <dbl>     <dbl>
+#> 1      1 -0.05040928  4.192490
+#> 2      2 -0.33406940  2.091724
+#> 3      3  5.64884726  4.855947
+#> 4      4 11.48056976  9.221271
+#> 5      5 17.74683453 14.573022
+#> 6      6 21.57782041 19.815111
+#> 7      7 25.48305209 23.666417
+#> 8      8 25.68534610 25.087288
+#> 9      9 22.35404858 23.689652
+#> 10    10 13.83142077 17.038115
+#> 11    11 10.65389507 13.158805
+#> 12    12 10.03515850 10.445389
 ```
 
-Want the rainfall in mm units for a particular month? Here's an example where rainfall amounts (over 6 hour periods) are summed for the month of June in 2015 for Abbotsford, BC, Canada. The `AA1` data category has to do with rainfall, and you can be include that data (where available) in the output data frame by using the `select_additional_data` argument and specifying which data categories you'd like. The `AA1_1` column is the duration in hours when the liquid precipitation was observed, and, the `AA1_2` column is quantity of rain in mm. The deft use of functions from the **dplyr** package makes this whole process less painful.
+Here's an example where rainfall amounts (over 6 hour periods) are summed for the month of June in 2015 for Abbotsford, BC, Canada. The `aa1_1` column is the duration in hours when the liquid precipitation was observed, and, the `aa1_2` column is quantity of rain in mm.
 
 ```R
 library(stationaRy)
@@ -836,4 +720,3 @@ The package is also available in CRAN:
 ```R
 install.packages("stationaRy")
 ```
-
