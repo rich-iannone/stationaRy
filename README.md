@@ -38,7 +38,7 @@ met_data
 #> #   dew_point <dbl>, atmos_pres <dbl>, rh <dbl>, time <dttm>
 ```
 
-This is useful if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't readily have this information. However, you can examine station metadata using the `get_isd_stations()` function (which has those ID values). Without providing any arguments, it provides a tibble for all available stations (with many variables to filter on). All stations in Norway, for example, can be isolated easily by using the `filter()` function from the **dplyr** package.
+This is useful if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't readily have this information. However, you can examine station metadata using the `get_isd_stations()` function (which has those ID values). Without providing any arguments, it provides a tibble for all available stations (with many variables to filter on). All stations in Norway, for example, can be isolated easily by using the `filter()` function from the **dplyr** package after the pipe (`%>%`).
 
 ```R
 library(stationaRy)
@@ -68,7 +68,7 @@ stations_norway
 #> #   country_name <chr>, country_code <chr>, iso3166_2_subd <chr>, fips10_4_subd <chr>
 ```
 
-This table can be greatly reduced to isolate the stations of interest. For example, a filter could be applied to get only high-altitude stations (above 1000 meters). 
+This table can be greatly reduced to isolate the stations of interest. For example, another use of `filter()` could be used to get only high-altitude stations (above 1000 meters). 
 
 ```R
 library(stationaRy)
@@ -759,7 +759,7 @@ monthly_rainfall
 To install the development **R** package, use the following:
 
 ```R
-devtools::install_github('rich-iannone/stationaRy')
+devtools::install_github("rich-iannone/stationaRy")
 ```
 
 The package is also available in CRAN:
