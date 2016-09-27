@@ -38,9 +38,10 @@ met_data
 #> #   dew_point <dbl>, atmos_pres <dbl>, rh <dbl>, time <dttm>
 ```
 
-This is useful if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't readily have this information. You can examine station metadata using the `get_isd_stations()` function. Without providing any arguments, it provides a tibble for all available stations (with many variables to filter on). Currently, there are 27,446 rows in the dataset. All stations in Norway, for example, can be isolated easily by using functions from the **dplyr** package.
+This is useful if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't readily have this information. However, you can examine station metadata using the `get_isd_stations()` function (which has those ID values). Without providing any arguments, it provides a tibble for all available stations (with many variables to filter on). All stations in Norway, for example, can be isolated easily by using the `filter()` function from the **dplyr** package.
 
 ```R
+library(stationaRy)
 library(dplyr)
 
 # Get a tibble with all stations in Norway
@@ -70,10 +71,17 @@ stations_norway
 This table can be greatly reduced to isolate the stations of interest. For example, a filter could be applied to get only high-altitude stations (above 1000 meters). 
 
 ```R
+library(stationaRy)
+library(dplyr)
+
+# Filter the table with met stations
+# in Norway to only those with elevation
+# greater than 1000 m
 norway_high_elev <-
   stations_norway %>% 
   filter(elev > 1000)
 
+# Preview the dataset
 norway_high_elev
 #> # A tibble: 13 × 16
 #>      usaf  wban               name country state     lat    lon   elev begin   end
@@ -98,10 +106,17 @@ norway_high_elev
 The station IDs from the tibble can be transformed into a vector with the `get_station_ids()` function.
 
 ```R
+library(stationaRy)
+library(dplyr)
+
+# With the filtered table of high-elevation
+# sites in Norway, create a vector of
+# station ID values
 norway_high_elev_ids <-
   norway_high_elev %>% 
   get_station_ids
-  
+
+# Display the vector of station ID values
 norway_high_elev_ids
 #>  [1] "12200-99999"  "12390-99999"  "13460-99999"  "13500-99999"  "13510-99999" 
 #>  [6] "13520-99999"  "13620-99999"  "13660-99999"  "13750-99999"  "14330-99999" 
@@ -111,6 +126,11 @@ norway_high_elev_ids
 Suppose you'd like to collect several years of met data from a particular station and get only a listing of parameters that meet some criterion. Here's an example of obtaining temperatures above 37 degrees Celsius from the Bergen Point station:
 
 ```R
+library(stationaRy)
+library(dplyr)
+
+# Get high temperatures from 2006 to the end of 2015
+# recorded at the Bergen Point met station
 high_temps_at_bergen_point_stn <- 
   get_isd_stations() %>%
   filter(name == "BERGEN POINT") %>%
@@ -119,7 +139,8 @@ high_temps_at_bergen_point_stn <-
   select(time, wd, ws, temp) %>% 
   filter(temp > 37) %>%
   mutate(temp_f = (temp * (9/5)) + 32)
-  
+
+# Preview the dataset
 high_temps_at_bergen_point_stn
 #> # A tibble: 3 × 5
 #>                  time    wd    ws  temp temp_f
@@ -625,9 +646,14 @@ Category | Identifier | Column Name
 
 More information about these variables can be found in [this PDF document](http://www1.ncdc.noaa.gov/pub/data/ish/ish-format-document.pdf).
 
-To find out which categories are available for a station, set the `add_data_report` argument of the `get_isd_station_data` function to `TRUE`. This will provide a data frame with the available additional categories with their counts in the dataset.
+To find out which categories are available for a station, set the `add_data_report` argument of the `get_isd_station_data()` function to `TRUE`. This will provide a tibble with the available additional categories with their counts in the dataset.
 
 ```R
+library(stationaRy)
+library(dplyr)
+
+# Get information on which additional met data
+# is available at the Bergen Point station
 bergen_pt_add_data <-
   get_isd_stations() %>%
   filter(name == "BERGEN POINT") %>%
@@ -637,15 +663,23 @@ bergen_pt_add_data <-
     endyear = 2015,
     add_data_report = TRUE)
 
+# Preview the dataset
 bergen_pt_add_data
 #>   category total_count
 #> 1      MD1       13170
 #> 2      SA1       14479
 ```
 
-The `SA1` category has to do with sea surface temperature, where the `sa1_1` and `sa1_2` variables are the sea surface temperature and it's quality code (`1` is the ideal quality code value). Using functions from **dplyr** one can extract mean ambient and sea-surface temperatures by month.The additional data is included by using the `select_additional_data` argument and specifying which categories to include. 
+The `MD1` category deals with atmospheric pressure change and the `SA1` category provides sea surface temperature. For `SA1`, the `sa1_1` and `sa1_2` variables represent the sea surface temperature and it's quality code (where `1` is the ideal quality code value). Using functions from **dplyr** (`select()`, `filter()`, `group_by()`, and `summarize()`) one can create a table of the mean ambient and sea-surface temperatures by month from the met data table. The additional data is included in the met data table by using the `select_additional_data` argument and specifying the `SA1` category (multiple categories can be included). 
 
 ```R
+library(stationaRy)
+library(dplyr)
+
+# Get the average ambient temperature and the
+# average sea-surface temperatures (sst) from
+# the Bergen Point station for every month
+# during 2015
 bergen_point_temps <- 
   get_isd_stations() %>%
   filter(name == "BERGEN POINT") %>%
@@ -660,6 +694,7 @@ bergen_point_temps <-
   summarize(avg_temp = mean(temp, na.rm = TRUE),
             avg_sst = mean(sa1_1, na.rm = TRUE))
 
+# Preview the dataset
 bergen_point_temps
 #> # A tibble: 12 × 3
 #>    month    avg_temp   avg_sst
@@ -681,6 +716,12 @@ bergen_point_temps
 Here's an example where rainfall amounts (over 6 hour periods) are summed by month for the year of 2015. The `aa1_1` column is the duration in hours when the liquid precipitation was observed, and, the `aa1_2` column is quantity of rain. With `group_by()` and `summarize()`, we can get the monthly total precipitation amounts in mm units.
 
 ```R
+library(stationaRy)
+library(dplyr)
+
+# Get the total monthly rainfall amounts
+# by month for the Abbotsford station
+# during 2015
 monthly_rainfall <- 
   get_isd_stations() %>%
   filter(name == "ABBOTSFORD") %>%
@@ -694,6 +735,7 @@ monthly_rainfall <-
   group_by(month) %>%
   summarize(mm_per_month = sum(aa1_2))
 
+# Preview the dataset
 monthly_rainfall
 #> # A tibble: 12 × 2
 #>    month mm_per_month
