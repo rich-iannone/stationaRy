@@ -1,4 +1,4 @@
-<img src="inst/stationaRy_2x.png", width = 100%>
+<img src="inst/stationaRy_2x.png" width = 100%>
 
 [![Travis-CI Build Status](https://travis-ci.org/rich-iannone/stationaRy.svg?branch=master)](https://travis-ci.org/rich-iannone/stationaRy) 
 ![](http://cranlogs.r-pkg.org/badges/grand-total/stationaRy?color=brightgreen) 
