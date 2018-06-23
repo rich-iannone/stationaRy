@@ -48,25 +48,25 @@ test_that("get_isd_stations returns a correct data frame", {
   expect_is(isd_stations_bbox_year_range, "tbl_df")
   
   # For all three function calls, expect that some rows are returned
-  expect_more_than(nrow(all_isd_stations), 10L)
-  expect_more_than(nrow(isd_stations_bbox), 10L)
-  expect_more_than(nrow(isd_stations_year_range), 10L)
-  expect_more_than(nrow(isd_stations_bbox_year_range), 5L)
+  expect_gt(nrow(all_isd_stations), 10L)
+  expect_gt(nrow(isd_stations_bbox), 10L)
+  expect_gt(nrow(isd_stations_year_range), 10L)
+  expect_gt(nrow(isd_stations_bbox_year_range), 5L)
   
   # Expect that more filtering leads to less stations
-  expect_less_than(
+  expect_lt(
     nrow(isd_stations_bbox),
     nrow(all_isd_stations))
   
-  expect_less_than(
+  expect_lt(
     nrow(isd_stations_bbox),
     nrow(isd_stations_year_range))
   
-  expect_less_than(
+  expect_lt(
     nrow(isd_stations_bbox_year_range),
     nrow(isd_stations_year_range))
   
-  expect_less_than(
+  expect_lt(
     nrow(isd_stations_bbox_year_range),
     nrow(isd_stations_bbox))
 })
