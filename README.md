@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="inst/stationaRy_2x.png" width = 100%>
+<img src="man/figures/stationaRy_2x.png" width = 100%>
 
 [![Travis-CI Build
 Status](https://travis-ci.org/rich-iannone/stationaRy.svg?branch=master)](https://travis-ci.org/rich-iannone/stationaRy)
