@@ -47,4 +47,3 @@ cypress_bowl_snowboard_stn <-
 \seealso{
 \code{\link{get_isd_stations}}
 }
-

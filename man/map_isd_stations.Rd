@@ -29,4 +29,3 @@ get_isd_stations(lower_lat = 49.000,
   map_isd_stations()
 }
 }
-

@@ -82,4 +82,3 @@ get_isd_stations(
   endyear = 2006)
 }
 }
-

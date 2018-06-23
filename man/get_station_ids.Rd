@@ -39,4 +39,3 @@ get_isd_station_data(
   endyear = 2014)
 }
 }
-
