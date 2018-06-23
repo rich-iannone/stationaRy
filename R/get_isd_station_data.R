@@ -121,8 +121,7 @@
 #' @importFrom stringr str_detect str_extract
 #' @importFrom plyr round_any
 #' @importFrom lubridate year month mday hour minute
-#' @export get_isd_station_data
-
+#' @export
 get_isd_station_data <- function(station_id,
                                  startyear,
                                  endyear,
