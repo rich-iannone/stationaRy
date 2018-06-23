@@ -21,11 +21,13 @@ test_that("get_isd_station_data returns correct number of columns", {
   
   # Expect that, for the mandatory met data df, the number of columns
   # will be exactly 18
-  expect_equal(ncol(df_mandatory_data), 18L)
+  expect_equal(
+    ncol(df_mandatory_data), 18L)
   
   # Expect that, for the df with both mandatory and two additional data
   # categories, the number of columns will be greater than 18
-  expect_more_than(ncol(df_aa1_ab1), 18L)
+  expect_gt(
+    ncol(df_aa1_ab1), 18L)
   
   # Expect that, for the mandatory met data df, the column names will
   # be from a specified set
@@ -48,7 +50,8 @@ test_that("get_isd_station_data can provide an additional data report", {
       add_data_report = TRUE)
   
   # Expect that a data frame is returned
-  expect_true(class(additional_data_categories) == "data.frame")
+  expect_is(
+    additional_data_categories, "data.frame")
 })
 
 test_that("error messages are provided in certain situations", {
@@ -59,8 +62,7 @@ test_that("error messages are provided in certain situations", {
     get_isd_station_data(
       station_id = "722315-53917",
       startyear = "2010",
-      endyear = "2014")
-  )
+      endyear = "2014"))
   
   # Expect an error if values aren't provided at all for both
   # "startyear" and "endyear"
@@ -73,8 +75,7 @@ test_that("error messages are provided in certain situations", {
     get_isd_station_data(
       station_id = "722315-53917",
       startyear = 2014,
-      endyear = 2010)
-  )
+      endyear = 2010))
   
   # Get an additional data report df from a local test file
   df_data_report_data_local_test <- 
@@ -84,8 +85,7 @@ test_that("error messages are provided in certain situations", {
       endyear = 2015,
       use_local_files = TRUE,
       local_file_dir = system.file(package = "stationaRy"),
-      add_data_report = TRUE
-    )
+      add_data_report = TRUE)
   
   # Expect the report to be a data frame
   expect_is(
@@ -107,11 +107,10 @@ test_that("error messages are provided in certain situations", {
       endyear = 2015,
       full_data = TRUE,
       use_local_files = TRUE,
-      local_file_dir = system.file(package = "stationaRy")
-    )
+      local_file_dir = system.file(package = "stationaRy"))
   
   # Expect that the resulting data frame will be very wide
-  expect_more_than(
+  expect_gt(
     ncol(df_data_additional_data_local_test), 400L)
   
   # Expect a single row of data in the data frame
