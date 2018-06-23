@@ -20,9 +20,10 @@ Imports:
     progress (>= 1.0.2),
     stringr (>= 1.0.0),
     tidyr (>= 0.6.0),
-    leaflet (>= 1.0.0)
+    leaflet (>= 1.0.0),
+    magrittr
 URL: https://github.com/rich-iannone/stationaRy
 BugReports: https://github.com/rich-iannone/stationaRy/issues
 Suggests:
     testthat
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
