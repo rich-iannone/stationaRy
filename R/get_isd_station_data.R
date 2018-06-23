@@ -114,10 +114,9 @@
 #'     startyear = 2013,
 #'     endyear = 2014,
 #'     use_local_files = TRUE,
-#'     local_file_dir = system.file(package = "stationaRy")
-#' )
+#'     local_file_dir = system.file(package = "stationaRy"))
 #' }
-#' @import dplyr readr downloader progress
+#' @import readr dplyr downloader progress
 #' @importFrom stringr str_detect str_extract
 #' @importFrom plyr round_any
 #' @importFrom lubridate year month mday hour minute
@@ -133,12 +132,12 @@ get_isd_station_data <- function(station_id,
   
   usaf <- wban <- year <- NA
   
-  # Check whether 'startyear' and 'endyear' are both numeric
+  # Check whether `startyear` and `endyear` are both numeric
   if (!is.numeric(startyear) | !is.numeric(endyear)) {
     stop("Please enter numeric values for the starting and ending years")
   }
   
-  # Check whether 'startyear' and 'endyear' are in the correct order
+  # Check whether `startyear` and `endyear` are in the correct order
   if (startyear > endyear) {
     stop("Please enter the starting and ending years in the correct order")
   }
@@ -146,7 +145,7 @@ get_isd_station_data <- function(station_id,
   # Obtain the GMT offset value for this ISD station
   gmt_offset <- 
     as.numeric(
-      filter(
+      dplyr::filter(
         get_isd_stations(),
         usaf == as.numeric(unlist(strsplit(station_id,
                                            "-"))[1]),
@@ -161,7 +160,8 @@ get_isd_station_data <- function(station_id,
   # end of series
   if (gmt_offset < 0 & year(Sys.time()) != endyear) endyear <- endyear + 1
   
-  if (use_local_files == TRUE){
+  if (use_local_files){
+    
     for (i in startyear:endyear){
       if (i == startyear){
         data_files <- vector(mode = "character")
@@ -170,13 +170,15 @@ get_isd_station_data <- function(station_id,
       data_files <- 
         c(data_files,
           paste0(
-            sprintf("%06d",
-                    as.numeric(unlist(strsplit(station_id,
-                                               "-"))[1])),
+            sprintf(
+              "%06d",
+              as.numeric(unlist(strsplit(station_id,
+                                         "-"))[1])),
             "-",
-            sprintf("%05d",
-                    as.numeric(unlist(strsplit(station_id,
-                                               "-"))[2])),
+            sprintf(
+              "%05d",
+              as.numeric(unlist(strsplit(station_id,
+                                         "-"))[2])),
             "-", i, ".gz"))
     }
     
@@ -185,7 +187,7 @@ get_isd_station_data <- function(station_id,
       all(file.exists(paste0(local_file_dir, "/", data_files)))
   }
   
-  if (use_local_files == FALSE){
+  if (use_local_files == FALSE) {
     
     # Create a temporary folder to deposit downloaded files
     temp_folder <- tempdir()
@@ -224,7 +226,7 @@ get_isd_station_data <- function(station_id,
     }
   }
   
-  if (add_data_report == TRUE){
+  if (add_data_report) {
     
     # Create vector of additional data categories
     data_categories <-
@@ -307,19 +309,18 @@ get_isd_station_data <- function(station_id,
       5, 1, 1, 1, 6, 1, 1, 1, 5, 1,
       5, 1, 5, 1)
   
-  if (use_local_files == TRUE){
+  if (use_local_files) {
     
-    data_files <- file.path(local_file_dir,
-                            data_files)
+    data_files <- 
+      file.path(local_file_dir, data_files)
+    
+  } else {
+    
+    data_files <- 
+      file.path(temp_folder, data_files)
   }
   
-  if (use_local_files == FALSE){
-    
-    data_files <- file.path(temp_folder,
-                            data_files)
-  }
-  
-  for (i in 1:length(data_files)){
+  for (i in seq(data_files)){
     
     if (file.exists(data_files[i])){
       
@@ -393,11 +394,11 @@ get_isd_station_data <- function(station_id,
       # Add RH values to the data frame
       data$rh <- rh
       
-      if (i == 1){
+      if (i == 1) {
         large_data_frame <- data
       }
       
-      if (i > 1){
+      if (i > 1) {
         large_data_frame <- bind_rows(large_data_frame, data)
       }
     }
@@ -405,13 +406,15 @@ get_isd_station_data <- function(station_id,
   
   # Create POSIXct time values from the time elements
   large_data_frame$time <- 
-    ISOdatetime(year = large_data_frame$year,
-                month = large_data_frame$month,
-                day = large_data_frame$day,
-                hour = large_data_frame$hour,
-                min = large_data_frame$minute,
-                sec = 0,
-                tz = "GMT") + (gmt_offset * 3600)
+    ISOdatetime(
+      year = large_data_frame$year,
+      month = large_data_frame$month,
+      day = large_data_frame$day,
+      hour = large_data_frame$hour,
+      min = large_data_frame$minute,
+      sec = 0,
+      tz = "GMT") + 
+    (gmt_offset * 3600)
   
   # Update time component columns to reflect corrected dates/times
   large_data_frame$year <- year(large_data_frame$time)
@@ -452,7 +455,7 @@ get_isd_station_data <- function(station_id,
   if (full_data == FALSE){
     
     # Filter data frame to only include data for requested years
-    large_data_frame <- filter(large_data_frame, year >= startyear &
+    large_data_frame <- dplyr::filter(large_data_frame, year >= startyear &
                                  year <= endyear)
     
     return(large_data_frame)
@@ -2378,7 +2381,7 @@ get_isd_station_data <- function(station_id,
     
     # Filter data frame to only include data for requested years
     large_data_frame <- 
-      filter(large_data_frame, 
+      dplyr::filter(large_data_frame, 
              year >= startyear &
                year <= endyear)
     
