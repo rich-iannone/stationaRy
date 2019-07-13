@@ -211,7 +211,7 @@ get_isd_station_data <- function(station_id,
           "-", i, ".gz")
       
       try(download(
-        url = paste0("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/", i,
+        url = paste0("https://www1.ncdc.noaa.gov/pub/data/noaa/", i,
                      "/", data_file_to_download),
         destfile = file.path(temp_folder, data_file_to_download)),
         silent = TRUE)
