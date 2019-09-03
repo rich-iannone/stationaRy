@@ -20,6 +20,7 @@ Imports:
     readr (>= 0.2.0),
     downloader (>= 0.4),
     lubridate (>= 1.3.3),
+    lutz (>= 0.3.1),
     progress (>= 1.0.2),
     stringr (>= 1.0.0),
     tidyr (>= 0.6.0),
