@@ -130,8 +130,6 @@ get_isd_station_data <- function(station_id,
                                  use_local_files = FALSE,
                                  local_file_dir = NULL){
   
-  usaf <- wban <- year <- NA
-  
   # Check whether `startyear` and `endyear` are both numeric
   if (!is.numeric(startyear) | !is.numeric(endyear)) {
     stop("Please enter numeric values for the starting and ending years")
@@ -147,10 +145,10 @@ get_isd_station_data <- function(station_id,
     as.numeric(
       dplyr::filter(
         get_isd_stations(),
-        usaf == as.numeric(unlist(strsplit(station_id,
-                                           "-"))[1]),
-        wban == as.numeric(unlist(strsplit(station_id,
-                                           "-"))[2]))[,11])
+        usaf == as.numeric(unlist(strsplit(station_id, "-"))[1]),
+        wban == as.numeric(unlist(strsplit(station_id, "-"))[2])
+      )[,11]
+    )
   
   # if 'gmt_offset' is positive, then also download year of data previous to
   # beginning of series
@@ -160,7 +158,7 @@ get_isd_station_data <- function(station_id,
   # end of series
   if (gmt_offset < 0 & year(Sys.time()) != endyear) endyear <- endyear + 1
   
-  if (use_local_files){
+  if (isTRUE(use_local_files)) {
     
     for (i in startyear:endyear){
       if (i == startyear){
