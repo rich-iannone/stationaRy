@@ -54,15 +54,16 @@
 #'   lower_lat = 49.000,
 #'   upper_lat = 49.500,
 #'   lower_lon = -123.500,
-#'   upper_lon = -123.000)
+#'   upper_lon = -123.000
+#'   )
 #'  
 #' # List all ISD stations with data available for the 2005
 #' # and 2006 years
 #' get_isd_stations(
 #'   startyear = 2005,
-#'   endyear = 2006)
+#'   endyear = 2006
+#'   )
 #' }
-#' @import dplyr
 #' @export get_isd_stations
 
 get_isd_stations <- function(startyear = NULL,
@@ -72,20 +73,17 @@ get_isd_stations <- function(startyear = NULL,
                              lower_lon = NULL,
                              upper_lon = NULL){
   
-  begin <- end <- lon <- lat <- NA
-  
   # Load the 'stn_df' data frame
   load(system.file("stations.rda", package = "stationary"))
-
+  
   stn_df <-
     stn_df %>%
     dplyr::as_tibble()
-    
+  
   # If no filtering is performed, return entire data frame
-  if (is.null(c(startyear, endyear,
-                lower_lat, upper_lat,
-                lower_lon, upper_lon))){
-    
+  if (is.null(
+    c(startyear, endyear, lower_lat, upper_lat, lower_lon, upper_lon)
+  )){
     return(stn_df)
   }
   
@@ -94,12 +92,7 @@ get_isd_stations <- function(startyear = NULL,
       is.null(c(lower_lat, upper_lat,
                 lower_lon, upper_lon))){
     
-    stn_df <- 
-      dplyr::filter(stn_df, 
-             begin <= startyear &
-               end >= endyear)
-    
-    row.names(stn_df) <- NULL
+    stn_df <- stn_df %>% dplyr::filter(begin <= startyear & end >= endyear)
     
     return(stn_df)
   }
@@ -110,32 +103,30 @@ get_isd_stations <- function(startyear = NULL,
                  lower_lon, upper_lon))){
     
     stn_df <- 
-      dplyr::filter(stn_df,
-             lon >= lower_lon & 
-               lon <= upper_lon &
-               lat >= lower_lat &
-               lat <= upper_lat)
-    
-    row.names(stn_df) <- NULL
+      stn_df %>%
+      dplyr::filter(
+        lon >= lower_lon & lon <= upper_lon &
+          lat >= lower_lat & lat <= upper_lat
+      )
     
     return(stn_df)
   }
   
   # If filtering by date and bounding box
-  if (!is.null(c(startyear, endyear,
-                 lower_lat, upper_lat,
-                 lower_lon, upper_lon))){
+  if (!is.null(
+    c(startyear, endyear, lower_lat, upper_lat, lower_lon, upper_lon)
+  )){
     
     stn_df <- 
-      dplyr::filter(stn_df,
-             lon >= lower_lon & 
-               lon <= upper_lon &
-               lat >= lower_lat &
-               lat <= upper_lat &
-               begin <= startyear &
-               end >= endyear)
-    
-    row.names(stn_df) <- NULL
+      stn_df %>%
+      dplyr::filter(
+        lon >= lower_lon & 
+          lon <= upper_lon &
+          lat >= lower_lat &
+          lat <= upper_lat &
+          begin <= startyear &
+          end >= endyear
+      )
     
     return(stn_df)
   }
