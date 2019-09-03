@@ -4,3 +4,4 @@
 ^README\.Rmd$
 ^CODE_OF_CONDUCT\.md$
 ^scripts$
+^data-cached$
