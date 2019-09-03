@@ -11,9 +11,5 @@
 .Rproj.user/
 .Rproj.user
 
-# Output files
-*.csv
-*.CSV
-
 # .DS_Store
 .DS_Store
