@@ -8,7 +8,8 @@ test_that("get_isd_station_data returns correct number of columns", {
       station_id = "722315-53917",
       startyear = 2014,
       endyear = 2015,
-      full_data = FALSE)
+      full_data = FALSE
+    )
   
   # Get data frame of met data with both the mandatory fields and
   # additional fields for two categories: AA1 and AB1
