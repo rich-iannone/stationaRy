@@ -119,7 +119,6 @@
 #' @import readr dplyr downloader progress
 #' @importFrom stringr str_detect str_extract
 #' @importFrom plyr round_any
-#' @importFrom lubridate year month mday hour minute
 #' @export
 get_isd_station_data <- function(station_id,
                                  startyear,
@@ -145,16 +144,6 @@ get_isd_station_data <- function(station_id,
     history_tbl %>%
     dplyr::filter(id == station_id) %>%
     dplyr::pull(tz_name)
-  
-  # # Obtain the GMT offset value for this ISD station
-  # gmt_offset <- 
-  #   as.numeric(
-  #     dplyr::filter(
-  #       get_isd_stations(),
-  #       usaf == as.numeric(unlist(strsplit(station_id, "-"))[1]),
-  #       wban == as.numeric(unlist(strsplit(station_id, "-"))[2])
-  #     )[,11]
-  #   )
   
   # # if 'gmt_offset' is positive, then also download year of data previous to
   # # beginning of series
@@ -206,31 +195,30 @@ get_isd_station_data <- function(station_id,
       data_file_to_download <- 
         paste0(
           sprintf("%06d",
-                  as.numeric(unlist(strsplit(station_id,
-                                             "-"))[1])),
+                  as.numeric(unlist(strsplit(station_id, "-"))[1])),
           "-",
           sprintf("%05d",
-                  as.numeric(unlist(strsplit(station_id,
-                                             "-"))[2])),
+                  as.numeric(unlist(strsplit(station_id, "-"))[2])),
           "-", i, ".gz")
       
-      try(download(
-        url = paste0("https://www1.ncdc.noaa.gov/pub/data/noaa/", i,
-                     "/", data_file_to_download),
-        destfile = file.path(temp_folder, data_file_to_download)),
-        silent = TRUE)
+      try(
+        downloader::download(
+          url = paste0("https://www1.ncdc.noaa.gov/pub/data/noaa/", i,
+                       "/", data_file_to_download),
+          destfile = file.path(temp_folder, data_file_to_download)
+        ),
+        silent = TRUE
+      )
       
       if (file.info(
-        file.path(temp_folder,
-                  data_file_to_download))$size > 1){
+        file.path(temp_folder, data_file_to_download))$size > 1){
         
-        data_files <- c(data_files,
-                        data_file_to_download)
+        data_files <- c(data_files, data_file_to_download)
       }
     }
   }
   
-  if (add_data_report) {
+  if (isTRUE(add_data_report)) {
     
     # Create vector of additional data categories
     data_categories <-
@@ -257,15 +245,11 @@ get_isd_station_data <- function(station_id,
     for (i in 1:length(data_files)){
       
       if (use_local_files == FALSE){
-        add_data <- 
-          readLines(file.path(temp_folder,
-                              data_files[i]))
+        add_data <- readLines(file.path(temp_folder, data_files[i]))
       }
       
       if (use_local_files == TRUE){
-        add_data <- 
-          readLines(file.path(local_file_dir,
-                              data_files[i]))
+        add_data <- readLines(file.path(local_file_dir, data_files[i]))
       }
       
       if (i == 1){
@@ -281,12 +265,11 @@ get_isd_station_data <- function(station_id,
     for (i in 1:length(data_categories)){
       if (i == 1){
         data_categories_counts <-
-          vector(mode = "numeric",
-                 length = length(data_categories))
+          vector(mode = "numeric", length = length(data_categories))
       }
       
       data_categories_counts[i] <-
-        sum(str_detect(all_add_data, data_categories[i]))
+        sum(stringr::str_detect(all_add_data, data_categories[i]))
     }
     
     # Determine which data categories have data
@@ -299,8 +282,10 @@ get_isd_station_data <- function(station_id,
     
     # Create a data frame composed of categories and their counts
     data_categories_df <- 
-      data.frame(category = data_categories_available,
-                 total_count = data_categories_counts)
+      data.frame(
+        category = data_categories_available,
+        total_count = data_categories_counts
+      )
     
     return(data_categories_df)
   }
@@ -315,13 +300,11 @@ get_isd_station_data <- function(station_id,
   
   if (use_local_files) {
     
-    data_files <- 
-      file.path(local_file_dir, data_files)
+    data_files <- file.path(local_file_dir, data_files)
     
   } else {
     
-    data_files <- 
-      file.path(temp_folder, data_files)
+    data_files <- file.path(temp_folder, data_files)
   }
   
   for (i in seq(data_files)){
@@ -331,10 +314,11 @@ get_isd_station_data <- function(station_id,
       # Read data from mandatory data section of each file,
       # which is a fixed-width string
       data <- 
-        read_fwf(
+        readr::read_fwf(
           data_files[i],
           fwf_widths(column_widths),
-          col_types = "ccciiiiiciicicciccicicccccccicicic")
+          col_types = "ccciiiiiciicicciccicicccccccicicic"
+        )
       
       # Remove select columns from data frame
       data <- 
@@ -354,28 +338,23 @@ get_isd_station_data <- function(station_id,
       data$lon <- data$lon/1000
       
       # Correct the wind direction values
-      data$wd <- 
-        ifelse(data$wd == 999, NA, data$wd)
+      data$wd <- ifelse(data$wd == 999, NA_integer_, data$wd)
       
       # Correct the wind speed values
-      data$ws <- 
-        ifelse(data$ws == 9999, NA, data$ws/10)
+      data$ws <- ifelse(data$ws == 9999, NA_real_, data$ws/10)
       
       # Correct the temperature values
-      data$temp <- 
-        ifelse(data$temp == 9999, NA, data$temp/10)
+      data$temp <- ifelse(data$temp == 9999, NA_real_, data$temp/10)
       
       # Correct the dew point values
-      data$dew_point <- 
-        ifelse(data$dew_point == 9999, NA, data$dew_point/10)
+      data$dew_point <- ifelse(data$dew_point == 9999, NA_real_, data$dew_point/10)
       
       # Correct the atmospheric pressure values
       data$atmos_pres <- 
-        ifelse(data$atmos_pres == 99999, NA, data$atmos_pres/10)
+        ifelse(data$atmos_pres == 99999, NA_real_, data$atmos_pres/10)
       
       # Correct the ceiling height values
-      data$ceil_hgt <- 
-        ifelse(data$ceil_hgt == 99999, NA, data$ceil_hgt)
+      data$ceil_hgt <- ifelse(data$ceil_hgt == 99999, NA_integer_, data$ceil_hgt)
       
       # Calculate RH values using the August-Roche-Magnus approximation
       for (j in 1:nrow(data)){
@@ -403,7 +382,7 @@ get_isd_station_data <- function(station_id,
       }
       
       if (i > 1) {
-        large_data_frame <- bind_rows(large_data_frame, data)
+        large_data_frame <- dplyr::bind_rows(large_data_frame, data)
       }
     }
   }
@@ -417,7 +396,8 @@ get_isd_station_data <- function(station_id,
       hour = large_data_frame$hour,
       min = large_data_frame$minute,
       sec = 0,
-      tz = "GMT")
+      tz = "GMT"
+    )
   
   # Adjust to local time if the time zone had been resolved
   if (!is.na(tz_name)) {
@@ -433,34 +413,13 @@ get_isd_station_data <- function(station_id,
       dplyr::mutate(time = dplyr::case_when(
         !is.na(tz_offset) ~ time + (3600 * tz_offset),
         TRUE ~ time
-      )) %>%
-      dplyr::mutate(
-        year   = lubridate::year(time),
-        month  = lubridate::month(time),
-        day    = lubridate::day(time),
-        hour   = lubridate::hour(time),
-        minute = lubridate::minute(time)
-      )
+      ))
   }
   
-  # Ensure that data frame columns are correctly classed
-  large_data_frame$usaf <- as.character(large_data_frame$usaf)
-  large_data_frame$wban <- as.character(large_data_frame$wban) 
-  large_data_frame$year <- as.numeric(large_data_frame$year)
-  large_data_frame$month <- as.numeric(large_data_frame$month)
-  large_data_frame$day <- as.numeric(large_data_frame$day)
-  large_data_frame$hour <- as.numeric(large_data_frame$hour)
-  large_data_frame$minute <- as.numeric(large_data_frame$minute)
-  large_data_frame$lat <- as.numeric(large_data_frame$lat)
-  large_data_frame$lon <- as.numeric(large_data_frame$lon)
-  large_data_frame$elev <- as.numeric(large_data_frame$elev)
-  large_data_frame$wd <- as.numeric(large_data_frame$wd)
-  large_data_frame$ws <- as.numeric(large_data_frame$ws)
-  large_data_frame$ceil_hgt <- as.numeric(large_data_frame$ceil_hgt)
-  large_data_frame$temp <- as.numeric(large_data_frame$temp)
-  large_data_frame$dew_point <- as.numeric(large_data_frame$dew_point)
-  large_data_frame$atmos_pres <- as.numeric(large_data_frame$atmos_pres)
-  large_data_frame$rh <- as.numeric(large_data_frame$rh)
+  large_data_frame <-
+    large_data_frame %>%
+    dplyr::mutate(id = station_id) %>%
+    dplyr::select(id, time, wd, ws, ceil_hgt, temp, dew_point, atmos_pres, rh)
   
   # # if 'gmt_offset' is positive, add back a year to 'startyear'
   # if (gmt_offset > 0) startyear <- startyear + 1
@@ -474,10 +433,10 @@ get_isd_station_data <- function(station_id,
   
   if (full_data == FALSE){
     
-    # Filter data frame to only include data for requested years
-    large_data_frame <-
-      large_data_frame %>%
-      dplyr::filter(year >= startyear & year <= endyear)
+    # # Filter data frame to only include data for requested years
+    # large_data_frame <-
+    #   large_data_frame %>%
+    #   dplyr::filter(year >= startyear & year <= endyear)
     
     return(large_data_frame)
   }
@@ -547,7 +506,7 @@ get_isd_station_data <- function(station_id,
       }
       
       data_strings <- 
-        str_extract(add_data, paste0(category_key, ".*"))
+        stringr::str_extract(add_data, paste0(category_key, ".*"))
       
       for (i in 1:length(field_lengths)){
         
@@ -605,7 +564,7 @@ get_isd_station_data <- function(station_id,
           }
         }
         
-        df_from_category[,i] <- data_column
+        df_from_category[, i] <- data_column
         
         # Add tick to progress bar
         pb$tick(tokens = list(what = category_key))
@@ -1899,11 +1858,11 @@ get_isd_station_data <- function(station_id,
     #   return(large_data_frame) 
     # }
     
-    # Filter data frame to only include data for requested years
-    large_data_frame <- 
-      dplyr::filter(large_data_frame, 
-                    year >= startyear &
-                      year <= endyear)
+    # # Filter data frame to only include data for requested years
+    # large_data_frame <- 
+    #   dplyr::filter(large_data_frame, 
+    #                 year >= startyear &
+    #                   year <= endyear)
     
     return(large_data_frame)
   }
