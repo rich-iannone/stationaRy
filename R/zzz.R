@@ -1,0 +1,11 @@
+utils::globalVariables(
+  c(
+    "begin",
+    "end",
+    "lat",
+    "lon",
+    "usaf",
+    "wban",
+    "year"
+  )
+)
