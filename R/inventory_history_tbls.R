@@ -86,20 +86,47 @@ station_data_files <- function(inventory_tbl,
       stop("The inventory table file must be a CSV.", call. = FALSE)
     }
   }
-    
-    tbl <- 
-      tbl %>%
-      dplyr::filter(id == id_)
-    
-    if (nrow(tbl) == 0) {
-      return(character(0))
-    }
-
-    tbl %>%    
-      dplyr::mutate(file = paste0(year, "/", id, "-", year, ".gz")) %>%
-      dplyr::pull(file)
-}
   
+  tbl <- 
+    tbl %>%
+    dplyr::filter(id == id_)
+  
+  if (nrow(tbl) == 0) {
+    return(character(0))
+  }
+  
+  tbl %>%    
+    dplyr::mutate(file = paste0(year, "/", id, "-", year, ".gz")) %>%
+    dplyr::pull(file)
+}
+
+station_data_years <- function(inventory_tbl,
+                               id) {
+  
+  id_ <- id
+  
+  if (inherits(inventory_tbl, "tbl_df")) {
+    tbl <- inventory_tbl
+  } else if (inherits(inventory_tbl, "character")) {
+    
+    if (grepl(".csv$", inventory_tbl)) {
+      tbl <- readr::read_csv(inventory_tbl)
+    } else {
+      stop("The inventory table file must be a CSV.", call. = FALSE)
+    }
+  }
+  
+  tbl <- 
+    tbl %>%
+    dplyr::filter(id == id_)
+  
+  if (nrow(tbl) == 0) {
+    return(integer(0))
+  }
+  
+  tbl %>% dplyr::pull(year)
+}
+
 all_station_ids <- function(inventory_tbl) {
   
   if (inherits(inventory_tbl, "tbl_df")) {
