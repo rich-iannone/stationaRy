@@ -77,6 +77,10 @@ get_isd_stations <- function(startyear = NULL,
   # Load the 'stn_df' data frame
   load(system.file("stations.rda", package = "stationary"))
 
+  stn_df <-
+    stn_df %>%
+    dplyr::as_tibble()
+    
   # If no filtering is performed, return entire data frame
   if (is.null(c(startyear, endyear,
                 lower_lat, upper_lat,
@@ -91,7 +95,7 @@ get_isd_stations <- function(startyear = NULL,
                 lower_lon, upper_lon))){
     
     stn_df <- 
-      filter(stn_df, 
+      dplyr::filter(stn_df, 
              begin <= startyear &
                end >= endyear)
     
@@ -106,7 +110,7 @@ get_isd_stations <- function(startyear = NULL,
                  lower_lon, upper_lon))){
     
     stn_df <- 
-      filter(stn_df,
+      dplyr::filter(stn_df,
              lon >= lower_lon & 
                lon <= upper_lon &
                lat >= lower_lat &
@@ -123,7 +127,7 @@ get_isd_stations <- function(startyear = NULL,
                  lower_lon, upper_lon))){
     
     stn_df <- 
-      filter(stn_df,
+      dplyr::filter(stn_df,
              lon >= lower_lon & 
                lon <= upper_lon &
                lat >= lower_lat &
