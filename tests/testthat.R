@@ -1,4 +1,4 @@
 library(testthat)
-library(stationaRy)
+library(stationary)
 
-test_check("stationaRy")
+test_check("stationary")

@@ -14,30 +14,27 @@ knitr::opts_chunk$set(
 ```
 
 ```{r packages, include=FALSE}
-library(stationaRy)
+library(stationary)
 library(tidyverse)
 ```
 
-<img src="man/figures/stationaRy_2x.png" width = 100%>
+[![Travis-CI Build Status](https://travis-ci.org/rich-iannone/stationary.svg?branch=master)](https://travis-ci.org/rich-iannone/stationary)
 
-[![Travis-CI Build Status](https://travis-ci.org/rich-iannone/stationaRy.svg?branch=master)](https://travis-ci.org/rich-iannone/stationaRy) 
-![](http://cranlogs.r-pkg.org/badges/grand-total/stationaRy?color=brightgreen) 
-[![codecov.io](https://codecov.io/github/rich-iannone/stationaRy/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/stationaRy?branch=master) 
+# stationary
 
-Get hourly meteorological data from global met stations.
+Get hourly meteorological data from met stations all over the world.
 
 ## Examples
 
 Get data from a station in Norway (with a **USAF** code of `13860`, and a **WBAN** code of `99999`). Specify the `station_id` as a string in the format `[USAF]-[WBAN]`, and, provide beginning and ending years for data collection to `startyear` and `endyear`, respectively.
 
 ```R
-library(stationaRy)
-
 met_data <- 
   get_isd_station_data(
     station_id = "13860-99999",
     startyear = 2010,
-    endyear = 2011)
+    endyear = 2011
+    )
     
 # Display part of the meteorological dataset
 met_data
@@ -61,9 +58,6 @@ met_data
 This is useful if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't readily have this information. However, you can examine station metadata using the `get_isd_stations()` function (which has those ID values). Without providing any arguments, it provides a tibble for all available stations (with many variables to filter on). All stations in Norway, for example, can be isolated easily by using the `filter()` function from the **dplyr** package after the pipe (`%>%`).
 
 ```R
-library(stationaRy)
-library(dplyr)
-
 # Get a tibble with all stations in Norway
 stations_norway <- 
   get_isd_stations() %>% 
@@ -91,9 +85,6 @@ stations_norway
 This table can be greatly reduced to isolate the stations of interest. For example, another use of `filter()` could be used to get only high-altitude stations (above 1000 meters). 
 
 ```R
-library(stationaRy)
-library(dplyr)
-
 # Filter the table with met stations
 # in Norway to only those with elevation
 # greater than 1000 m
@@ -126,9 +117,6 @@ norway_high_elev
 The station IDs from the tibble can be transformed into a vector with the `get_station_ids()` function.
 
 ```R
-library(stationaRy)
-library(dplyr)
-
 # With the filtered table of high-elevation
 # sites in Norway, create a vector of
 # station ID values
@@ -146,14 +134,11 @@ norway_high_elev_ids
 Suppose you'd like to collect several years of met data from a particular station and get only a listing of parameters that meet some criterion. Here's an example of obtaining temperatures above 37 degrees Celsius from the Bergen Point station:
 
 ```R
-library(stationaRy)
-library(dplyr)
-
 # Get high temperatures from 2006 to the end of 2015
 # recorded at the Bergen Point met station
 high_temps_at_bergen_point_stn <- 
   get_isd_stations() %>%
-  filter(name == "BERGEN POINT") %>%
+  dplyr::filter(name == "BERGEN POINT") %>%
   get_station_ids %>%
   get_isd_station_data(startyear = 2006, endyear = 2015) %>%
   select(time, wd, ws, temp) %>% 
@@ -669,9 +654,6 @@ More information about these variables can be found in [this PDF document](http:
 To find out which categories are available for a station, set the `add_data_report` argument of the `get_isd_station_data()` function to `TRUE`. This will provide a tibble with the available additional categories with their counts in the dataset.
 
 ```R
-library(stationaRy)
-library(dplyr)
-
 # Get information on which additional met data
 # is available at the Bergen Point station
 bergen_pt_add_data <-
@@ -693,9 +675,6 @@ bergen_pt_add_data
 The `MD1` category deals with atmospheric pressure change and the `SA1` category provides sea surface temperature. For `SA1`, the `sa1_1` and `sa1_2` variables represent the sea surface temperature and it's quality code (where `1` is the ideal quality code value). Using functions from **dplyr** (`select()`, `filter()`, `group_by()`, and `summarize()`) one can create a table of the mean ambient and sea-surface temperatures by month from the met data table. The additional data is included in the met data table by using the `select_additional_data` argument and specifying the `SA1` category (multiple categories can be included). 
 
 ```R
-library(stationaRy)
-library(dplyr)
-
 # Get the average ambient temperature and the
 # average sea-surface temperatures (sst) from
 # the Bergen Point station for every month
@@ -736,9 +715,6 @@ bergen_point_temps
 Here's an example where rainfall amounts (over 6 hour periods) are summed by month for the year of 2015. The `aa1_1` column is the duration in hours when the liquid precipitation was observed, and, the `aa1_2` column is quantity of rain. With `group_by()` and `summarize()`, we can get the monthly total precipitation amounts in mm units.
 
 ```R
-library(stationaRy)
-library(dplyr)
-
 # Get the total monthly rainfall amounts
 # by month for the Abbotsford station
 # during 2015
@@ -779,13 +755,7 @@ monthly_rainfall
 To install the development **R** package, use the following:
 
 ```R
-devtools::install_github("rich-iannone/stationaRy")
-```
-
-The package is also available in CRAN:
-
-```R
-install.packages("stationaRy")
+remotes::install_github("rich-iannone/stationary")
 ```
 
 ## Code of Conduct

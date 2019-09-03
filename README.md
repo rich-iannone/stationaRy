@@ -1,14 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="man/figures/stationaRy_2x.png" width = 100%>
-
 [![Travis-CI Build
-Status](https://travis-ci.org/rich-iannone/stationaRy.svg?branch=master)](https://travis-ci.org/rich-iannone/stationaRy)
-![](http://cranlogs.r-pkg.org/badges/grand-total/stationaRy?color=brightgreen)
-[![codecov.io](https://codecov.io/github/rich-iannone/stationaRy/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/stationaRy?branch=master)
+Status](https://travis-ci.org/rich-iannone/stationary.svg?branch=master)](https://travis-ci.org/rich-iannone/stationary)
 
-Get hourly meteorological data from global met stations.
+# stationary
+
+Get hourly meteorological data from met stations all over the world.
 
 ## Examples
 
@@ -18,13 +16,12 @@ format `[USAF]-[WBAN]`, and, provide beginning and ending years for data
 collection to `startyear` and `endyear`, respectively.
 
 ``` r
-library(stationaRy)
-
 met_data <- 
   get_isd_station_data(
     station_id = "13860-99999",
     startyear = 2010,
-    endyear = 2011)
+    endyear = 2011
+    )
     
 # Display part of the meteorological dataset
 met_data
@@ -55,9 +52,6 @@ can be isolated easily by using the `filter()` function from the
 **dplyr** package after the pipe (`%>%`).
 
 ``` r
-library(stationaRy)
-library(dplyr)
-
 # Get a tibble with all stations in Norway
 stations_norway <- 
   get_isd_stations() %>% 
@@ -87,9 +81,6 @@ For example, another use of `filter()` could be used to get only
 high-altitude stations (above 1000 meters).
 
 ``` r
-library(stationaRy)
-library(dplyr)
-
 # Filter the table with met stations
 # in Norway to only those with elevation
 # greater than 1000 m
@@ -123,9 +114,6 @@ The station IDs from the tibble can be transformed into a vector with
 the `get_station_ids()` function.
 
 ``` r
-library(stationaRy)
-library(dplyr)
-
 # With the filtered table of high-elevation
 # sites in Norway, create a vector of
 # station ID values
@@ -146,14 +134,11 @@ criterion. Here’s an example of obtaining temperatures above 37 degrees
 Celsius from the Bergen Point station:
 
 ``` r
-library(stationaRy)
-library(dplyr)
-
 # Get high temperatures from 2006 to the end of 2015
 # recorded at the Bergen Point met station
 high_temps_at_bergen_point_stn <- 
   get_isd_stations() %>%
-  filter(name == "BERGEN POINT") %>%
+  dplyr::filter(name == "BERGEN POINT") %>%
   get_station_ids %>%
   get_isd_station_data(startyear = 2006, endyear = 2015) %>%
   select(time, wd, ws, temp) %>% 
@@ -679,9 +664,6 @@ To find out which categories are available for a station, set the
 categories with their counts in the dataset.
 
 ``` r
-library(stationaRy)
-library(dplyr)
-
 # Get information on which additional met data
 # is available at the Bergen Point station
 bergen_pt_add_data <-
@@ -711,9 +693,6 @@ met data table by using the `select_additional_data` argument and
 specifying the `SA1` category (multiple categories can be included).
 
 ``` r
-library(stationaRy)
-library(dplyr)
-
 # Get the average ambient temperature and the
 # average sea-surface temperatures (sst) from
 # the Bergen Point station for every month
@@ -758,9 +737,6 @@ column is quantity of rain. With `group_by()` and `summarize()`, we can
 get the monthly total precipitation amounts in mm units.
 
 ``` r
-library(stationaRy)
-library(dplyr)
-
 # Get the total monthly rainfall amounts
 # by month for the Abbotsford station
 # during 2015
@@ -801,13 +777,7 @@ monthly_rainfall
 To install the development **R** package, use the following:
 
 ``` r
-devtools::install_github("rich-iannone/stationaRy")
-```
-
-The package is also available in CRAN:
-
-``` r
-install.packages("stationaRy")
+remotes::install_github("rich-iannone/stationary")
 ```
 
 ## Code of Conduct

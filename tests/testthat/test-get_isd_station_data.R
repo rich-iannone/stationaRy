@@ -84,7 +84,7 @@ test_that("error messages are provided in certain situations", {
       startyear = 2015,
       endyear = 2015,
       use_local_files = TRUE,
-      local_file_dir = system.file(package = "stationaRy"),
+      local_file_dir = system.file(package = "stationary"),
       add_data_report = TRUE)
   
   # Expect the report to be a data frame
@@ -107,7 +107,7 @@ test_that("error messages are provided in certain situations", {
       endyear = 2015,
       full_data = TRUE,
       use_local_files = TRUE,
-      local_file_dir = system.file(package = "stationaRy"))
+      local_file_dir = system.file(package = "stationary"))
   
   # Expect that the resulting data frame will be very wide
   expect_gt(

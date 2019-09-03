@@ -114,7 +114,7 @@
 #'     startyear = 2013,
 #'     endyear = 2014,
 #'     use_local_files = TRUE,
-#'     local_file_dir = system.file(package = "stationaRy"))
+#'     local_file_dir = system.file(package = "stationary"))
 #' }
 #' @import readr dplyr downloader progress
 #' @importFrom stringr str_detect str_extract

@@ -75,7 +75,7 @@ get_isd_stations <- function(startyear = NULL,
   begin <- end <- lon <- lat <- NA
   
   # Load the 'stn_df' data frame
-  load(system.file("stations.rda", package = "stationaRy"))
+  load(system.file("stations.rda", package = "stationary"))
 
   # If no filtering is performed, return entire data frame
   if (is.null(c(startyear, endyear,
