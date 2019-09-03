@@ -73,12 +73,14 @@ get_isd_stations(
   lower_lat = 49.000,
   upper_lat = 49.500,
   lower_lon = -123.500,
-  upper_lon = -123.000)
+  upper_lon = -123.000
+  )
  
 # List all ISD stations with data available for the 2005
 # and 2006 years
 get_isd_stations(
   startyear = 2005,
-  endyear = 2006)
+  endyear = 2006
+  )
 }
 }
