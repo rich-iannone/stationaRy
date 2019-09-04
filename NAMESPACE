@@ -2,8 +2,8 @@
 
 export("%>%")
 export(get_isd_station_data)
-export(get_isd_stations)
 export(get_station_ids)
+export(get_station_metadata)
 export(map_isd_stations)
 export(select_isd_station)
 import(downloader)
