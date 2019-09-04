@@ -20,22 +20,22 @@ library(tidyverse)
 
 [![Travis-CI Build Status](https://travis-ci.org/rich-iannone/stationary.svg?branch=master)](https://travis-ci.org/rich-iannone/stationary)
 
-# stationary
+# stationary <img src="man/figures/logo.svg" align="right" height="250px" />
 
 Get hourly meteorological data from met stations all over the world.
 
 ## Examples
 
-Get data from a station in Norway (with a **USAF** code of `13860`, and a **WBAN** code of `99999`). Specify the `station_id` as a string in the format `[USAF]-[WBAN]`, and, provide beginning and ending years for data collection to `startyear` and `endyear`, respectively.
+Let's get some met data from La Guardia Airport! (the ID value for that one is `"725030-14732"`). This station has a pretty long history (starting operations in 1973) but we'll just grab data from the years of 2017 and 2018.
 
 ```{r echo=TRUE, results="hide"}
 library(stationary)
 
 met_data <- 
   get_isd_station_data(
-    station_id = "13860-99999",
-    startyear = 2010,
-    endyear = 2011
+    station_id = "725030-14732",
+    startyear = 2017,
+    endyear = 2018
   )
 ```
 
@@ -43,15 +43,13 @@ met_data <-
 met_data
 ```
 
-This is useful if you know the `USAF` and `WBAN` numbers for a particular met station. Most of the time, however, you won't readily have this information. However, you can examine station metadata using the `get_isd_stations()` function (which has those ID values). Without providing any arguments, it provides a tibble for all available stations (with many variables to filter on). All stations in Norway, for example, can be isolated easily by using the `filter()` function from the **dplyr** package.
+There are lots of stations and we at least need an identifier to access met data. We can examine station metadata using the `get_station_metadata()` function (which has those ID values in the first column). Let's get all of the stations located in Norway.
 
-```{r}
+```{r stations_norway}
 stations_norway <- 
-  get_isd_stations() %>% 
-  dplyr::filter(country == "NO")
-```
+  get_station_metadata() %>%
+  filter(country == "NO")
 
-```{r}
 stations_norway
 ```
 
@@ -65,31 +63,31 @@ norway_high_elev <-
 norway_high_elev
 ```
 
-The station IDs from the tibble can be transformed into a vector of station IDs with the `get_station_ids()` function.
+The station IDs from the tibble can be transformed into a vector of station IDs with `dplyr::pull()`.
 
 ```{r}
-norway_high_elev %>% get_station_ids()
+norway_high_elev %>% pull(id)
 ```
 
-Suppose you'd like to collect several years of met data from a particular station and get only a listing of parameters that meet some criterion. Here's an example of obtaining temperatures above 37 degrees Celsius from the Bergen Point station:
+Suppose you'd like to collect several years of met data from a particular station and get only a listing of parameters that meet some criterion. Here's an example of obtaining temperatures above 15 degrees Celsius from the high-altitude `"JUVVASSHOE"` station in Norway:
 
-```r
-high_temps_at_bergen_point_stn <- 
-  get_isd_stations() %>%
-  dplyr::filter(name == "BERGEN POINT") %>%
-  get_station_ids() %>%
-  get_isd_station_data(startyear = 2006, endyear = 2015) %>%
-  dplyr::select(time, wd, ws, temp) %>% 
-  dplyr::filter(temp > 37) %>%
-  dplyr::mutate(temp_f = (temp * (9/5)) + 32)
+```{r echo=TRUE, results="hide"}
+station_data <- 
+  get_station_metadata() %>%
+  filter(name == "JUVVASSHOE") %>%
+  pull(id) %>%
+  get_isd_station_data(startyear = 2011, endyear = 2019)
 
-high_temps_at_bergen_point_stn
-#> # A tibble: 3 × 5
-#>                  time    wd    ws  temp temp_f
-#>                <dttm> <dbl> <dbl> <dbl>  <dbl>
-#> 1 2012-07-18 12:00:00   230   1.5  37.2  98.96
-#> 2 2012-07-18 13:00:00   220   2.6  37.8 100.04
-#> 3 2012-07-18 14:00:00   230   4.1  37.9 100.22
+high_temp_data <-
+  station_data %>%
+  select(time, wd, ws, temp) %>% 
+  filter(temp > 16) %>%
+  mutate(temp_f = (temp * (9/5)) + 32) %>%
+  arrange(desc(temp_f))
+```
+
+```{r}
+high_temp_data
 ```
 
 There can actually be a lot of additional met data beyond wind speed, temperatures, etc. It can vary greatly depending on the selected station. These additional categories are denoted 'two-letter + digit' identifiers (e.g., `AA1`, `GA1`, etc.). Within each category are numerous variables (coded as `[identifer]_[index]`). Here is the complete list of the different parameters:
@@ -590,27 +588,25 @@ More information about these variables can be found in [this PDF document](http:
 
 To find out which categories are available for a station, set the `add_data_report` argument of the `get_isd_station_data()` function to `TRUE`. This will provide a tibble with the available additional categories with their counts in the dataset.
 
-```r
+```{r echo=TRUE, results="hide"}
 # Get information on which additional met data
-# is available at the Bergen Point station
-bergen_pt_add_data <-
-  get_isd_stations() %>%
-  filter(name == "BERGEN POINT") %>%
-  get_station_ids() %>%
+# fields are available at the Juvvasshoe station
+additional_data_fields <-
+  get_station_metadata() %>%
+  filter(name == "JUVVASSHOE") %>%
+  pull(id) %>%
   get_isd_station_data(
     startyear = 2015,
     endyear = 2015,
     add_data_report = TRUE
   )
-
-# Preview the dataset
-bergen_pt_add_data
-#>   category total_count
-#> 1      MD1       13170
-#> 2      SA1       14479
 ```
 
-The `MD1` category deals with atmospheric pressure change and the `SA1` category provides sea surface temperature. For `SA1`, the `sa1_1` and `sa1_2` variables represent the sea surface temperature and it's quality code (where `1` is the ideal quality code value). Using functions from **dplyr** (`select()`, `filter()`, `group_by()`, and `summarize()`) one can create a table of the mean ambient and sea-surface temperatures by month from the met data table. The additional data is included in the met data table by using the `select_additional_data` argument and specifying the `SA1` category (multiple categories can be included). 
+```{r}
+additional_data_fields
+```
+
+For another station, `"BERGEN POINT"`, additional fields are available. Its `MD1` field category deals with atmospheric pressure change and the `SA1` category provides sea surface temperature. For `SA1`, the `sa1_1` and `sa1_2` variables represent the sea surface temperature and it's quality code (where `1` is the ideal quality code value). Using functions from **dplyr** (`select()`, `filter()`, `group_by()`, and `summarize()`) one can create a table of the mean ambient and sea-surface temperatures by month from the met data table. The additional data is included in the met data table by using the `select_additional_data` argument and specifying the `SA1` category (multiple categories can be included). 
 
 ```r
 # Get the average ambient temperature and the
@@ -618,18 +614,21 @@ The `MD1` category deals with atmospheric pressure change and the `SA1` category
 # the Bergen Point station for every month
 # during 2015
 bergen_point_temps <- 
-  get_isd_stations() %>%
+  get_station_metadata() %>%
   filter(name == "BERGEN POINT") %>%
-  get_station_ids %>%
+  pull(id) %>%
   get_isd_station_data(
     startyear = 2015,
     endyear = 2015,
-    select_additional_data = "SA1") %>%
+    select_additional_data = "SA1"
+  ) %>%
   select(month, temp, sa1_1, sa1_2) %>%
   filter(sa1_2 == 1) %>%
   group_by(month) %>%
-  summarize(avg_temp = mean(temp, na.rm = TRUE),
-            avg_sst = mean(sa1_1, na.rm = TRUE))
+  summarize(
+    avg_temp = mean(temp, na.rm = TRUE),
+    avg_sst = mean(sa1_1, na.rm = TRUE)
+  )
 
 bergen_point_temps
 #> # A tibble: 12 × 3
@@ -647,26 +646,6 @@ bergen_point_temps
 #> 10    10 13.83142077 17.038115
 #> 11    11 10.65389507 13.158805
 #> 12    12 10.03515850 10.445389
-```
-
-Here's an example where rainfall amounts (over 6 hour periods) are summed by month for the year of 2015. The `aa1_1` column is the duration in hours when the liquid precipitation was observed, and, the `aa1_2` column is quantity of rain. With `group_by()` and `summarize()`, we can get the monthly total precipitation amounts in mm units.
-
-```{r echo=TRUE, results="hide"}
-monthly_rainfall <- 
-  get_isd_stations() %>%
-  dplyr::filter(name == "ABBOTSFORD") %>%
-  get_station_ids() %>%
-  get_isd_station_data(
-    startyear = 2015,
-    endyear = 2015,
-    select_additional_data = "AA1"
-  ) %>%
-  dplyr::filter(aa1_1 == 6, aa1_2 < 800) %>% 
-  dplyr::select(month, aa1_2) %>%
-  dplyr::group_by(month) %>%
-  dplyr::summarize(mm_per_month = sum(aa1_2))
-
-monthly_rainfall
 ```
 
 ## Installation

@@ -4,80 +4,73 @@
 [![Travis-CI Build
 Status](https://travis-ci.org/rich-iannone/stationary.svg?branch=master)](https://travis-ci.org/rich-iannone/stationary)
 
-# stationary
+# stationary <img src="man/figures/logo.svg" align="right" height="250px" />
 
 Get hourly meteorological data from met stations all over the world.
 
 ## Examples
 
-Get data from a station in Norway (with a **USAF** code of `13860`, and
-a **WBAN** code of `99999`). Specify the `station_id` as a string in the
-format `[USAF]-[WBAN]`, and, provide beginning and ending years for data
-collection to `startyear` and `endyear`, respectively.
+Let’s get some met data from La Guardia Airport\! (the ID value for that
+one is `"725030-14732"`). This station has a pretty long history
+(starting operations in 1973) but we’ll just grab data from the years of
+2017 and 2018.
 
 ``` r
 library(stationary)
 
 met_data <- 
   get_isd_station_data(
-    station_id = "13860-99999",
-    startyear = 2010,
-    endyear = 2011
+    station_id = "725030-14732",
+    startyear = 2017,
+    endyear = 2018
   )
 ```
 
 ``` r
 met_data
-#> # A tibble: 16,474 x 18
-#>    usaf  wban   year month   day  hour minute   lat   lon  elev    wd    ws
-#>    <chr> <chr> <dbl> <dbl> <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-#>  1 0138… 99999  2010     1     1     0      0  60.8  11.1   132    NA    NA
-#>  2 0138… 99999  2010     1     1     1      0  60.8  11.1   132    NA    NA
-#>  3 0138… 99999  2010     1    21    15      0  60.8  11.1   132    NA    NA
-#>  4 0138… 99999  2010     1    21    16      0  60.8  11.1   132    NA    NA
-#>  5 0138… 99999  2010     1    21    17      0  60.8  11.1   132    NA    NA
-#>  6 0138… 99999  2010     1    21    18      0  60.8  11.1   132    NA    NA
-#>  7 0138… 99999  2010     1    21    19      0  60.8  11.1   132    NA    NA
-#>  8 0138… 99999  2010     1    21    20      0  60.8  11.1   132    NA    NA
-#>  9 0138… 99999  2010     1    21    21      0  60.8  11.1   132    NA    NA
-#> 10 0138… 99999  2010     1    21    22      0  60.8  11.1   132    NA    NA
-#> # … with 16,464 more rows, and 6 more variables: ceil_hgt <dbl>,
-#> #   temp <dbl>, dew_point <dbl>, atmos_pres <dbl>, rh <dbl>, time <dttm>
+#> # A tibble: 28,254 x 9
+#>    id    time                   wd    ws ceil_hgt  temp dew_point
+#>    <chr> <dttm>              <int> <dbl>    <int> <dbl>     <dbl>
+#>  1 7250… 2016-12-31 19:00:00   200   7.7       NA   6.7      -2.8
+#>  2 7250… 2016-12-31 19:51:00   220   5.1     2743   6.7      -3.9
+#>  3 7250… 2016-12-31 20:51:00   210   5.1     3048   6.7      -4.4
+#>  4 7250… 2016-12-31 21:51:00   200   5.1     2591   6.7      -4.4
+#>  5 7250… 2016-12-31 22:00:00   200   5.1       NA   6.7      -4.4
+#>  6 7250… 2016-12-31 22:51:00   210   5.1     2134   7.2      -4.4
+#>  7 7250… 2016-12-31 23:51:00   230   5.7     2286   7.2      -4.4
+#>  8 7250… 2016-12-31 23:59:00    NA  NA         NA  NA        NA  
+#>  9 7250… 2016-12-31 23:59:00    NA  NA         NA  NA        NA  
+#> 10 7250… 2017-01-01 00:51:00   230   4.6     1402   7.8      -3.9
+#> # … with 28,244 more rows, and 2 more variables: atmos_pres <dbl>,
+#> #   rh <dbl>
 ```
 
-This is useful if you know the `USAF` and `WBAN` numbers for a
-particular met station. Most of the time, however, you won’t readily
-have this information. However, you can examine station metadata using
-the `get_isd_stations()` function (which has those ID values). Without
-providing any arguments, it provides a tibble for all available stations
-(with many variables to filter on). All stations in Norway, for example,
-can be isolated easily by using the `filter()` function from the
-**dplyr** package.
+There are lots of stations and we at least need an identifier to access
+met data. We can examine station metadata using the
+`get_station_metadata()` function (which has those ID values in the
+first column). Let’s get all of the stations located in Norway.
 
 ``` r
 stations_norway <- 
-  get_isd_stations() %>% 
-  dplyr::filter(country == "NO")
-```
+  get_station_metadata() %>%
+  filter(country == "NO")
 
-``` r
 stations_norway
-#> # A tibble: 398 x 16
-#>     usaf  wban name  country state   lat   lon  elev begin   end gmt_offset
-#>    <dbl> <dbl> <chr> <chr>   <chr> <dbl> <dbl> <dbl> <dbl> <dbl>      <dbl>
-#>  1 10010 99999 JAN … NO      ""     70.9 -8.67   9    1931  2015          1
-#>  2 10014 99999 SORS… NO      ""     59.8  5.34  48.8  1986  2015          1
-#>  3 10015 99999 BRIN… NO      ""     61.4  5.87 327    1987  2011          1
-#>  4 10016 99999 RORV… NO      ""     64.8 11.2   14    1987  1991          1
-#>  5 10017 99999 FRIGG NO      ""     60.0  2.25  48    1988  2005          0
-#>  6 10020 99999 VERL… NO      ""     80.0 16.2    8    1986  2015          1
-#>  7 10030 99999 HORN… NO      ""     77   15.5   12    1985  2015          1
-#>  8 10040 99999 NY-A… NO      ""     78.9 11.9    8    1973  2014          1
-#>  9 10060 99999 EDGE… NO      ""     78.2 22.8   14    1973  2015          1
-#> 10 10100 99999 ANDO… NO      ""     69.3 16.1   13.1  1931  2015          1
-#> # … with 388 more rows, and 5 more variables: time_zone_id <chr>,
-#> #   country_name <chr>, country_code <chr>, iso3166_2_subd <chr>,
-#> #   fips10_4_subd <chr>
+#> # A tibble: 405 x 15
+#>    id    usaf  wban  name  country state icao    lat   lon  elev begin_date
+#>    <chr> <chr> <chr> <chr> <chr>   <chr> <chr> <dbl> <dbl> <dbl> <date>    
+#>  1 0100… 0100… 99999 BOGU… NO      <NA>  ENRS   NA   NA     NA   2001-09-27
+#>  2 0100… 0100… 99999 JAN … NO      <NA>  ENJA   70.9 -8.67   9   1931-01-01
+#>  3 0100… 0100… 99999 ROST  NO      <NA>  <NA>   NA   NA     NA   1986-11-20
+#>  4 0100… 0100… 99999 SORS… NO      <NA>  ENSO   59.8  5.34  48.8 1986-11-20
+#>  5 0100… 0100… 99999 BRIN… NO      <NA>  <NA>   61.4  5.87 327   1987-01-17
+#>  6 0100… 0100… 99999 RORV… NO      <NA>  <NA>   64.8 11.2   14   1987-01-16
+#>  7 0100… 0100… 99999 FRIGG NO      <NA>  ENFR   60.0  2.25  48   1988-03-20
+#>  8 0100… 0100… 99999 VERL… NO      <NA>  <NA>   80.0 16.2    8   1986-11-09
+#>  9 0100… 0100… 99999 HORN… NO      <NA>  <NA>   77   15.5   12   1985-06-01
+#> 10 0100… 0100… 99999 NY-A… NO      <NA>  ENAS   78.9 11.9    8   1973-01-01
+#> # … with 395 more rows, and 4 more variables: end_date <date>,
+#> #   begin_year <int>, end_year <int>, tz_name <chr>
 ```
 
 This table can be greatly reduced to isolate the stations of interest.
@@ -90,60 +83,71 @@ norway_high_elev <-
   dplyr::filter(elev > 1000)
 
 norway_high_elev
-#> # A tibble: 13 x 16
-#>      usaf  wban name  country state   lat   lon  elev begin   end
-#>     <dbl> <dbl> <chr> <chr>   <chr> <dbl> <dbl> <dbl> <dbl> <dbl>
-#>  1  12200 99999 MANN… NO      ""     62.4  7.77 1294   2010  2015
-#>  2  12390 99999 HJER… NO      ""     62.2  9.55 1012   2010  2015
-#>  3  13460 99999 MIDT… NO      ""     60.6  7.27 1162   2011  2015
-#>  4  13500 99999 FINS… NO      ""     60.6  7.53 1208   2003  2015
-#>  5  13510 99999 FINS… NO      ""     60.6  7.5  1224   1973  2001
-#>  6  13520 99999 SAND… NO      ""     60.2  7.48 1250   2004  2015
-#>  7  13620 99999 JUVV… NO      ""     61.7  8.37 1894   2009  2015
-#>  8  13660 99999 SOGN… NO      ""     61.6  8    1413   1979  2015
-#>  9  13750 99999 KVIT… NO      ""     61.5 10.1  1028   1973  2015
-#> 10  14330 99999 MIDT… NO      ""     59.8  6.98 1081   1973  2015
-#> 11  14400 99999 BLAS… NO      ""     59.3  6.87 1105.  1973  2015
-#> 12  14611 99999 GAUS… NO      ""     59.8  8.65 1804.  2014  2015
-#> 13 895040 99999 TROL… NO      ""    -72.0  2.38 1270   1994  2015
-#> # … with 6 more variables: gmt_offset <dbl>, time_zone_id <chr>,
-#> #   country_name <chr>, country_code <chr>, iso3166_2_subd <chr>,
-#> #   fips10_4_subd <chr>
+#> # A tibble: 12 x 15
+#>    id    usaf  wban  name  country state icao    lat   lon  elev begin_date
+#>    <chr> <chr> <chr> <chr> <chr>   <chr> <chr> <dbl> <dbl> <dbl> <date>    
+#>  1 0122… 0122… 99999 MANN… NO      <NA>  <NA>   62.4  7.77 1294  2010-03-15
+#>  2 0123… 0123… 99999 HJER… NO      <NA>  <NA>   62.2  9.55 1012  2010-09-07
+#>  3 0134… 0134… 99999 MIDT… NO      <NA>  <NA>   60.6  7.27 1162  2011-11-25
+#>  4 0135… 0135… 99999 FINS… NO      <NA>  <NA>   60.6  7.53 1208  2003-03-30
+#>  5 0135… 0135… 99999 FINS… NO      <NA>  <NA>   60.6  7.5  1224  1973-01-02
+#>  6 0135… 0135… 99999 SAND… NO      <NA>  <NA>   60.2  7.48 1250  2004-01-07
+#>  7 0136… 0136… 99999 JUVV… NO      <NA>  <NA>   61.7  8.37 1894  2009-06-26
+#>  8 0136… 0136… 99999 SOGN… NO      <NA>  <NA>   61.6  8    1413  1979-03-01
+#>  9 0137… 0137… 99999 KVIT… NO      <NA>  <NA>   61.5 10.1  1028  1973-01-01
+#> 10 0143… 0143… 99999 MIDT… NO      <NA>  <NA>   59.8  6.98 1081  1973-01-01
+#> 11 0144… 0144… 99999 BLAS… NO      <NA>  <NA>   59.3  6.87 1105. 1973-01-01
+#> 12 0146… 0146… 99999 GAUS… NO      <NA>  <NA>   59.8  8.65 1804. 2014-06-05
+#> # … with 4 more variables: end_date <date>, begin_year <int>,
+#> #   end_year <int>, tz_name <chr>
 ```
 
 The station IDs from the tibble can be transformed into a vector of
-station IDs with the `get_station_ids()` function.
+station IDs with `dplyr::pull()`.
 
 ``` r
-norway_high_elev %>% get_station_ids()
-#>  [1] "12200-99999"  "12390-99999"  "13460-99999"  "13500-99999" 
-#>  [5] "13510-99999"  "13520-99999"  "13620-99999"  "13660-99999" 
-#>  [9] "13750-99999"  "14330-99999"  "14400-99999"  "14611-99999" 
-#> [13] "895040-99999"
+norway_high_elev %>% pull(id)
+#>  [1] "012200-99999" "012390-99999" "013460-99999" "013500-99999"
+#>  [5] "013510-99999" "013520-99999" "013620-99999" "013660-99999"
+#>  [9] "013750-99999" "014330-99999" "014400-99999" "014611-99999"
 ```
 
 Suppose you’d like to collect several years of met data from a
 particular station and get only a listing of parameters that meet some
-criterion. Here’s an example of obtaining temperatures above 37 degrees
-Celsius from the Bergen Point station:
+criterion. Here’s an example of obtaining temperatures above 15 degrees
+Celsius from the high-altitude `"JUVVASSHOE"` station in Norway:
 
 ``` r
-high_temps_at_bergen_point_stn <- 
-  get_isd_stations() %>%
-  dplyr::filter(name == "BERGEN POINT") %>%
-  get_station_ids() %>%
-  get_isd_station_data(startyear = 2006, endyear = 2015) %>%
-  dplyr::select(time, wd, ws, temp) %>% 
-  dplyr::filter(temp > 37) %>%
-  dplyr::mutate(temp_f = (temp * (9/5)) + 32)
+station_data <- 
+  get_station_metadata() %>%
+  filter(name == "JUVVASSHOE") %>%
+  pull(id) %>%
+  get_isd_station_data(startyear = 2011, endyear = 2019)
 
-high_temps_at_bergen_point_stn
-#> # A tibble: 3 × 5
-#>                  time    wd    ws  temp temp_f
-#>                <dttm> <dbl> <dbl> <dbl>  <dbl>
-#> 1 2012-07-18 12:00:00   230   1.5  37.2  98.96
-#> 2 2012-07-18 13:00:00   220   2.6  37.8 100.04
-#> 3 2012-07-18 14:00:00   230   4.1  37.9 100.22
+high_temp_data <-
+  station_data %>%
+  select(time, wd, ws, temp) %>% 
+  filter(temp > 16) %>%
+  mutate(temp_f = (temp * (9/5)) + 32) %>%
+  arrange(desc(temp_f))
+```
+
+``` r
+high_temp_data
+#> # A tibble: 50 x 5
+#>    time                   wd    ws  temp temp_f
+#>    <dttm>              <int> <dbl> <dbl>  <dbl>
+#>  1 2019-07-26 15:00:00   160     5  18.5   65.3
+#>  2 2019-07-26 17:00:00   210     3  18.4   65.1
+#>  3 2019-07-26 18:00:00   180     2  18.3   64.9
+#>  4 2019-07-26 16:00:00   180     4  18.2   64.8
+#>  5 2014-07-23 16:00:00   270     2  17.6   63.7
+#>  6 2019-07-26 14:00:00   150     4  17.5   63.5
+#>  7 2014-07-23 17:00:00   300     4  17.3   63.1
+#>  8 2019-07-28 16:00:00   130     6  17.3   63.1
+#>  9 2014-07-23 18:00:00   280     3  17.2   63.0
+#> 10 2018-07-04 15:00:00   340     2  17.2   63.0
+#> # … with 40 more rows
 ```
 
 There can actually be a lot of additional met data beyond wind speed,
@@ -656,33 +660,39 @@ categories with their counts in the dataset.
 
 ``` r
 # Get information on which additional met data
-# is available at the Bergen Point station
-bergen_pt_add_data <-
-  get_isd_stations() %>%
-  filter(name == "BERGEN POINT") %>%
-  get_station_ids() %>%
+# fields are available at the Juvvasshoe station
+additional_data_fields <-
+  get_station_metadata() %>%
+  filter(name == "JUVVASSHOE") %>%
+  pull(id) %>%
   get_isd_station_data(
     startyear = 2015,
     endyear = 2015,
     add_data_report = TRUE
   )
-
-# Preview the dataset
-bergen_pt_add_data
-#>   category total_count
-#> 1      MD1       13170
-#> 2      SA1       14479
 ```
 
-The `MD1` category deals with atmospheric pressure change and the `SA1`
-category provides sea surface temperature. For `SA1`, the `sa1_1` and
-`sa1_2` variables represent the sea surface temperature and it’s quality
-code (where `1` is the ideal quality code value). Using functions from
-**dplyr** (`select()`, `filter()`, `group_by()`, and `summarize()`) one
-can create a table of the mean ambient and sea-surface temperatures by
-month from the met data table. The additional data is included in the
-met data table by using the `select_additional_data` argument and
-specifying the `SA1` category (multiple categories can be included).
+``` r
+additional_data_fields
+#>   category total_count
+#> 1      AJ1         194
+#> 2      KA1         715
+#> 3      MA1        5769
+#> 4      MD1        8083
+#> 5      OC1         485
+```
+
+For another station, `"BERGEN POINT"`, additional fields are available.
+Its `MD1` field category deals with atmospheric pressure change and the
+`SA1` category provides sea surface temperature. For `SA1`, the `sa1_1`
+and `sa1_2` variables represent the sea surface temperature and it’s
+quality code (where `1` is the ideal quality code value). Using
+functions from **dplyr** (`select()`, `filter()`, `group_by()`, and
+`summarize()`) one can create a table of the mean ambient and
+sea-surface temperatures by month from the met data table. The
+additional data is included in the met data table by using the
+`select_additional_data` argument and specifying the `SA1` category
+(multiple categories can be included).
 
 ``` r
 # Get the average ambient temperature and the
@@ -690,18 +700,21 @@ specifying the `SA1` category (multiple categories can be included).
 # the Bergen Point station for every month
 # during 2015
 bergen_point_temps <- 
-  get_isd_stations() %>%
+  get_station_metadata() %>%
   filter(name == "BERGEN POINT") %>%
-  get_station_ids %>%
+  pull(id) %>%
   get_isd_station_data(
     startyear = 2015,
     endyear = 2015,
-    select_additional_data = "SA1") %>%
+    select_additional_data = "SA1"
+  ) %>%
   select(month, temp, sa1_1, sa1_2) %>%
   filter(sa1_2 == 1) %>%
   group_by(month) %>%
-  summarize(avg_temp = mean(temp, na.rm = TRUE),
-            avg_sst = mean(sa1_1, na.rm = TRUE))
+  summarize(
+    avg_temp = mean(temp, na.rm = TRUE),
+    avg_sst = mean(sa1_1, na.rm = TRUE)
+  )
 
 bergen_point_temps
 #> # A tibble: 12 × 3
@@ -719,30 +732,6 @@ bergen_point_temps
 #> 10    10 13.83142077 17.038115
 #> 11    11 10.65389507 13.158805
 #> 12    12 10.03515850 10.445389
-```
-
-Here’s an example where rainfall amounts (over 6 hour periods) are
-summed by month for the year of 2015. The `aa1_1` column is the duration
-in hours when the liquid precipitation was observed, and, the `aa1_2`
-column is quantity of rain. With `group_by()` and `summarize()`, we can
-get the monthly total precipitation amounts in mm units.
-
-``` r
-monthly_rainfall <- 
-  get_isd_stations() %>%
-  dplyr::filter(name == "ABBOTSFORD") %>%
-  get_station_ids() %>%
-  get_isd_station_data(
-    startyear = 2015,
-    endyear = 2015,
-    select_additional_data = "AA1"
-  ) %>%
-  dplyr::filter(aa1_1 == 6, aa1_2 < 800) %>% 
-  dplyr::select(month, aa1_2) %>%
-  dplyr::group_by(month) %>%
-  dplyr::summarize(mm_per_month = sum(aa1_2))
-
-monthly_rainfall
 ```
 
 ## Installation
