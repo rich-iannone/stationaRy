@@ -212,7 +212,7 @@ get_isd_station_data <- function(station_id,
       
       if (file.info(
         file.path(temp_folder, data_file_to_download))$size > 1){
-        
+
         data_files <- c(data_files, data_file_to_download)
       }
     }
