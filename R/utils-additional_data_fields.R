@@ -493,7 +493,7 @@ additional_data_fields <- function() {
   )
 }
 
-additional_data_categories <- function() {
+field_categories <- function() {
   
   c("AA1", "AB1", "AC1", "AD1", "AE1", "AG1", "AH1", "AI1", "AJ1",
     "AK1", "AL1", "AM1", "AN1", "AO1", "AP1", "AU1", "AW1", "AX1",
