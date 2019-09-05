@@ -267,7 +267,7 @@ get_met_data <- function(station_id,
   
   # Create POSIXct time values from the time elements
   tbl$time <- 
-    ISOdatetime(
+    base::ISOdatetime(
       year = tbl$year,
       month = tbl$month,
       day = tbl$day,
