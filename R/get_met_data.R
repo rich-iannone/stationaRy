@@ -1,20 +1,20 @@
-#' Get met station data from the ISD dataset
-#' @description Obtain one or more years of meteorological data for a station
+#' Get data from a meteorological station
+#' 
+#' Obtain one or more years of meteorological data for a station
 #' from the NCEI Integrated Surface Dataset (ISD).
-#' @param station_id a station identifier composed of the station's USAF and
+#' 
+#' @param station_id A station identifier composed of the station's USAF and
 #' WBAN numbers, separated by a hyphen.
-#' @param startyear the starting year for the collected data.
-#' @param endyear the ending year for the collected data.
-#' @param full_data include additional meteorological data found in the
+#' @param startyear The starting year for the collected data.
+#' @param endyear The ending year for the collected data.
+#' @param full_data Include additional meteorological data found in the
 #' dataset's additional data section?
-#' @param add_data_report selecting TRUE will provide a data frame with
-#' information on which additional data categories are available for the
-#' selected station during the specified years.
-#' @param select_additional_data a vector of categories for additional
+#' @param add_fields A vector of categories for additional
 #' meteorological data to include (instead of all available categories).
-#' @param use_local_files option to use data files already available locally.
-#' @param local_file_dir path to local meteorological data files.
-#' @return Returns a data frame with 18 variables. Times are recorded 
+#' @param use_local_files Option to use data files already available locally.
+#' @param local_file_dir Path to local meteorological data files.
+#' 
+#' @return Returns a tibble with 18 variables. Times are recorded 
 #' using the Universal Time Code (UTC) in the source data. Times are adjusted
 #' to local standard time for the station's locale.
 #' \describe{
@@ -71,63 +71,31 @@
 #' 
 #' Calculating Humidity: \cr
 #' \url{https://en.wikipedia.org/wiki/Clausius\%E2\%80\%93Clapeyron_relation#Meteorology_and_climatology}
-#' @examples 
+#'
+#'@examples 
 #' \dontrun{
-#' # Obtain a listing of all stations within a bounding box and
-#' # then isolate a single station and obtain a string with the
-#' # \code{usaf} and \code{wban} identifiers.
-#' # Pass that identifier string to the \code{get_isd_station_data}
-#' # function to obtain a data frame of meteorological data for
-#' # the year 2010
-#' stations_within_domain <-
-#'   get_isd_stations(
-#'     lower_lat = 49.000,
-#'     upper_lat = 49.500,
-#'     lower_lon = -123.500,
-#'     upper_lon = -123.000)
-#'                         
-#' cypress_bowl_snowboard_stn <-
-#'   select_isd_station(
-#'     stn_df = stations_within_domain,
-#'     name = "cypress bowl snowboard")
-#' 
-#' cypress_bowl_snowboard_stn_met_data <-
-#'   get_isd_station_data(
-#'     station_id = cypress_bowl_snowboard_stn,
-#'     startyear = 2010,
-#'     endyear = 2010)
-#'  
-#' # Get a vector of available additional data categories for a station
-#' # during the specied years
-#' additional_data_categories <- 
-#'   get_isd_station_data(
-#'     station_id = "722315-53917",
-#'     startyear = 2014,
-#'     endyear = 2015,
-#'     add_data_report = TRUE)
-#'  
 #' # Obtain two years of data from data files stored on disk (in this
 #' # case, inside the package itself)
 #' df_mandatory_data_local <- 
-#'   get_isd_station_data(
+#'   get_met_data(
 #'     station_id = "999999-63897",
 #'     startyear = 2013,
 #'     endyear = 2014,
 #'     use_local_files = TRUE,
-#'     local_file_dir = system.file(package = "stationary"))
+#'     local_file_dir = system.file(package = "stationary")
+#'   )
 #' }
 #' @import readr dplyr downloader progress
 #' @importFrom stringr str_detect str_extract
 #' @importFrom plyr round_any
 #' @export
-get_isd_station_data <- function(station_id,
-                                 startyear,
-                                 endyear,
-                                 full_data = FALSE,
-                                 add_data_report = FALSE,
-                                 select_additional_data = NULL,
-                                 use_local_files = FALSE,
-                                 local_file_dir = NULL){
+get_met_data <- function(station_id,
+                         startyear,
+                         endyear,
+                         full_data = FALSE,
+                         add_fields = NULL,
+                         use_local_files = FALSE,
+                         local_file_dir = NULL) {
   
   # Check whether `startyear` and `endyear` are both numeric
   if (!is.numeric(startyear) | !is.numeric(endyear)) {
@@ -139,155 +107,83 @@ get_isd_station_data <- function(station_id,
     stop("Please enter the starting and ending years in the correct order")
   }
   
+  years <- seq(startyear, endyear, by = 1)
+  
   # Get the tz name
   tz_name <- 
     history_tbl %>%
     dplyr::filter(id == station_id) %>%
     dplyr::pull(tz_name)
   
-  # # if 'gmt_offset' is positive, then also download year of data previous to
-  # # beginning of series
-  # if (gmt_offset > 0) startyear <- startyear - 1
-  # 
-  # # if 'gmt_offset' is negative, then also download year of data following the
-  # # end of series
-  # if (gmt_offset < 0 & year(Sys.time()) != endyear) endyear <- endyear + 1
-  # 
-  # if (isTRUE(use_local_files)) {
-  #   
-  #   for (i in startyear:endyear){
-  #     if (i == startyear){
-  #       data_files <- vector(mode = "character")
-  #     }
-  #     
-  #     data_files <- 
-  #       c(data_files,
-  #         paste0(
-  #           sprintf(
-  #             "%06d",
-  #             as.numeric(unlist(strsplit(station_id,
-  #                                        "-"))[1])),
-  #           "-",
-  #           sprintf(
-  #             "%05d",
-  #             as.numeric(unlist(strsplit(station_id,
-  #                                        "-"))[2])),
-  #           "-", i, ".gz"))
-  #   }
-  #   
-  #   # Verify that local files are available
-  #   all_local_files_available <-
-  #     all(file.exists(paste0(local_file_dir, "/", data_files)))
-  # }
-  
   if (use_local_files == FALSE) {
+    
+    years_available <-
+      inventory_tbl %>%
+      dplyr::filter(id == station_id) %>%
+      dplyr::pull(year)
+    
+    years_intersected <- 
+      years_available %>%
+      base::intersect(years)
+    
+    if (length(years_intersected) == 0) {
+      stop("The station provided doesn't have data for the years requested:\n")
+    }
+    
+    files_required <- paste0(station_id, "-", years_intersected, ".gz")
     
     # Create a temporary folder to deposit downloaded files
     temp_folder <- tempdir()
     
-    # If a station ID string provided,
-    # download the gzip-compressed data files for the years specified
-    for (i in startyear:endyear){
-      if (i == startyear){
-        data_files <- vector(mode = "character")
-      }
-      
-      data_file_to_download <- 
-        paste0(
-          sprintf("%06d",
-                  as.numeric(unlist(strsplit(station_id, "-"))[1])),
-          "-",
-          sprintf("%05d",
-                  as.numeric(unlist(strsplit(station_id, "-"))[2])),
-          "-", i, ".gz")
+    # If a station ID is provided, download the
+    # gzip-compressed data files for the years specified
+    data_files <- c()
+    for (i in seq_along(files_required)){
       
       try(
         downloader::download(
-          url = paste0("https://www1.ncdc.noaa.gov/pub/data/noaa/", i,
-                       "/", data_file_to_download),
-          destfile = file.path(temp_folder, data_file_to_download)
+          url = file.path(data_base_url(), years_intersected[i], files_required[i]),
+          destfile = file.path(temp_folder, files_required[i])
         ),
         silent = TRUE
       )
       
       if (file.info(
-        file.path(temp_folder, data_file_to_download))$size > 1){
-
-        data_files <- c(data_files, data_file_to_download)
-      }
-    }
-  }
-  
-  if (isTRUE(add_data_report)) {
-    
-    # Create vector of additional data categories
-    data_categories <-
-      c("AA1", "AB1", "AC1", "AD1", "AE1",
-        "AG1", "AH1", "AI1", "AJ1", "AK1",
-        "AL1", "AM1", "AN1", "AO1", "AP1",
-        "AU1", "AW1", "AX1", "AY1", "AZ1",
-        "CB1", "CF1", "CG1", "CH1", "CI1",
-        "CN1", "CN2", "CN3", "CN4", "CR1",
-        "CT1", "CU1", "CV1", "CW1", "CX1",
-        "CO1", "CO2", "ED1", "GA1", "GD1",
-        "GF1", "GG1", "GH1", "GJ1", "GK1",
-        "GL1", "GM1", "GN1", "GO1", "GP1",
-        "GQ1", "GR1", "HL1", "IA1", "IA2",
-        "IB1", "IB2", "IC1", "KA1", "KB1",
-        "KC1", "KD1", "KE1", "KF1", "KG1",
-        "MA1", "MD1", "ME1", "MF1", "MG1",
-        "MH1", "MK1", "MV1", "MW1", "OA1",
-        "OB1", "OC1", "OE1", "RH1", "SA1",
-        "ST1", "UA1", "UG1", "UG2", "WA1",
-        "WD1", "WG1")
-    
-    # Get additional data portions of records, exluding remarks
-    for (i in 1:length(data_files)){
-      
-      if (use_local_files == FALSE){
-        add_data <- readLines(file.path(temp_folder, data_files[i]))
-      }
-      
-      if (use_local_files == TRUE){
-        add_data <- readLines(file.path(local_file_dir, data_files[i]))
-      }
-      
-      if (i == 1){
-        all_add_data <- add_data
-      }
-      
-      if (i > 1){
-        all_add_data <- c(all_add_data, add_data)
+        file.path(temp_folder, files_required[i]))$size > 1){
+        
+        data_files <- c(data_files, files_required[i])
       }
     }
     
-    # Obtain data counts for all additional parameters
-    for (i in 1:length(data_categories)){
-      if (i == 1){
-        data_categories_counts <-
-          vector(mode = "numeric", length = length(data_categories))
-      }
-      
-      data_categories_counts[i] <-
-        sum(stringr::str_detect(all_add_data, data_categories[i]))
+  } else {
+    
+    years_available <-
+      inventory_tbl %>%
+      dplyr::filter(id == station_id) %>%
+      dplyr::pull(year)
+    
+    years_intersected <- 
+      years_available %>%
+      base::intersect(years)
+    
+    if (length(years_intersected) == 0) {
+      stop("The station provided doesn't have data for the years requested:\n")
     }
     
-    # Determine which data categories have data
-    data_categories_available <-
-      data_categories[which(data_categories_counts > 0)]
+    files_required <- paste0(station_id, "-", years_intersected, ".gz")
     
-    # Get those data counts that are greater than 0
-    data_categories_counts <-
-      data_categories_counts[which(data_categories_counts > 0)]
-    
-    # Create a data frame composed of categories and their counts
-    data_categories_df <- 
-      data.frame(
-        category = data_categories_available,
-        total_count = data_categories_counts
-      )
-    
-    return(data_categories_df)
+    # If a station ID is provided, determine whether the
+    # gzip-compressed data files for the years specified
+    # are available at the `local_file_dir`
+    data_files <- c()
+    for (i in seq_along(files_required)){
+      
+      if (file.info(
+        file.path(local_file_dir, files_required[i]))$size > 1){
+        
+        data_files <- c(data_files, files_required[i])
+      }
+    }
   }
   
   # Define column widths for fixed-width data in the mandatory section of
@@ -307,94 +203,78 @@ get_isd_station_data <- function(station_id,
     data_files <- file.path(temp_folder, data_files)
   }
   
+  tbl <- dplyr::tibble()
+  
   for (i in seq(data_files)){
     
     if (file.exists(data_files[i])){
       
       # Read data from mandatory data section of each file,
       # which is a fixed-width string
-      data <- 
+      tbl_i <- 
         readr::read_fwf(
           data_files[i],
           fwf_widths(column_widths),
           col_types = "ccciiiiiciicicciccicicccccccicicic"
         )
       
-      # Remove select columns from data frame
-      data <- 
-        data[, c(2:8, 10:11, 13, 16, 19, 21, 29, 31, 33)]
+      # Remove specific columns from data frame
+      tbl_i <- 
+        tbl_i[, c(2:8, 10:11, 13, 16, 19, 21, 29, 31, 33)]
       
       # Apply new names to the data frame columns
-      names(data) <-
+      names(tbl_i) <-
         c("usaf", "wban", "year", "month",
           "day", "hour", "minute", "lat", "lon",
           "elev", "wd", "ws", "ceil_hgt",
           "temp", "dew_point", "atmos_pres")
       
-      # Correct the latitude values
-      data$lat <- data$lat/1000
+      tbl_i <-
+        tbl_i %>%
+        dplyr::mutate(lat = lat/1000, lon = lon/1000) %>%
+        dplyr::mutate(wd = dplyr::case_when(
+          wd == 999 ~ NA_integer_,
+          TRUE ~ wd
+        )) %>%
+        dplyr::mutate(ws = dplyr::case_when(
+          ws == 9999 ~ NA_real_,
+          TRUE ~ ws / 10
+        )) %>%
+        dplyr::mutate(temp = dplyr::case_when(
+          temp == 9999 ~ NA_real_,
+          TRUE ~ temp / 10
+        )) %>%
+        dplyr::mutate(dew_point = dplyr::case_when(
+          dew_point == 9999 ~ NA_real_,
+          TRUE ~ dew_point / 10
+        )) %>%
+        dplyr::mutate(atmos_pres = dplyr::case_when(
+          atmos_pres == 99999 ~ NA_real_,
+          TRUE ~ atmos_pres / 10
+        )) %>%
+        dplyr::mutate(ceil_hgt = dplyr::case_when(
+          ceil_hgt == 99999 ~ NA_integer_,
+          TRUE ~ ceil_hgt
+        )) %>%
+        dplyr::mutate(
+          rh = 100 * (
+            exp((17.625 * dew_point) /(243.04 + dew_point)) /
+              exp((17.625 * (temp)) / (243.04 + (temp)))
+          )
+        )
       
-      # Correct the longitude values
-      data$lon <- data$lon/1000
-      
-      # Correct the wind direction values
-      data$wd <- ifelse(data$wd == 999, NA_integer_, data$wd)
-      
-      # Correct the wind speed values
-      data$ws <- ifelse(data$ws == 9999, NA_real_, data$ws/10)
-      
-      # Correct the temperature values
-      data$temp <- ifelse(data$temp == 9999, NA_real_, data$temp/10)
-      
-      # Correct the dew point values
-      data$dew_point <- ifelse(data$dew_point == 9999, NA_real_, data$dew_point/10)
-      
-      # Correct the atmospheric pressure values
-      data$atmos_pres <- 
-        ifelse(data$atmos_pres == 99999, NA_real_, data$atmos_pres/10)
-      
-      # Correct the ceiling height values
-      data$ceil_hgt <- ifelse(data$ceil_hgt == 99999, NA_integer_, data$ceil_hgt)
-      
-      # Calculate RH values using the August-Roche-Magnus approximation
-      for (j in 1:nrow(data)){
-        
-        if (j == 1) rh <- vector("numeric")
-        
-        rh_j <- 
-          ifelse(is.na(data$temp[j]) | is.na(data$dew_point[j]), NA,
-                 100 * (exp((17.625 * data$dew_point[j]) /
-                              (243.04 + data$dew_point[j]))/
-                          exp((17.625 * (data$temp[j])) /
-                                (243.04 + (data$temp[j])))))
-        
-        # Round data to the nearest 0.1
-        rh_j <- round_any(as.numeric(rh_j), 0.1, f = round)
-        
-        rh <- c(rh, rh_j)
-      }
-      
-      # Add RH values to the data frame
-      data$rh <- rh
-      
-      if (i == 1) {
-        large_data_frame <- data
-      }
-      
-      if (i > 1) {
-        large_data_frame <- dplyr::bind_rows(large_data_frame, data)
-      }
+      tbl <- dplyr::bind_rows(tbl, tbl_i)
     }
   }
   
   # Create POSIXct time values from the time elements
-  large_data_frame$time <- 
+  tbl$time <- 
     ISOdatetime(
-      year = large_data_frame$year,
-      month = large_data_frame$month,
-      day = large_data_frame$day,
-      hour = large_data_frame$hour,
-      min = large_data_frame$minute,
+      year = tbl$year,
+      month = tbl$month,
+      day = tbl$day,
+      hour = tbl$hour,
+      min = tbl$minute,
       sec = 0,
       tz = "GMT"
     )
@@ -403,178 +283,69 @@ get_isd_station_data <- function(station_id,
   if (!is.na(tz_name)) {
     
     tz_offsets <- 
-      lutz::tz_offset(dt = as.Date(large_data_frame$time), tz = tz_name) %>%
+      lutz::tz_offset(dt = as.Date(tbl$time), tz = tz_name) %>%
       dplyr::pull(utc_offset_h)
     
-    large_data_frame$tz_offset <- tz_offsets
+    tbl$tz_offset <- tz_offsets
     
-    large_data_frame <- 
-      large_data_frame %>%
+    tbl <- 
+      tbl %>%
       dplyr::mutate(time = dplyr::case_when(
         !is.na(tz_offset) ~ time + (3600 * tz_offset),
         TRUE ~ time
       ))
   }
   
-  large_data_frame <-
-    large_data_frame %>%
+  tbl <-
+    tbl %>%
     dplyr::mutate(id = station_id) %>%
     dplyr::select(id, time, wd, ws, ceil_hgt, temp, dew_point, atmos_pres, rh)
   
-  # # if 'gmt_offset' is positive, add back a year to 'startyear'
-  # if (gmt_offset > 0) startyear <- startyear + 1
-  # 
-  # # if 'gmt_offset' is negative, subtract the added year from 'endyear'
-  # if (gmt_offset < 0 & year(Sys.time()) != endyear) endyear <- endyear - 1
+  
   
   # If additional data categories specified, then set 'full_data' to TRUE
   # to enter that conditional block
-  if (!is.null(select_additional_data)) full_data <- TRUE
-  
-  if (full_data == FALSE){
-    
-    # # Filter data frame to only include data for requested years
-    # large_data_frame <-
-    #   large_data_frame %>%
-    #   dplyr::filter(year >= startyear & year <= endyear)
-    
-    return(large_data_frame)
+  if (!is.null(add_fields)) {
+    full_data <- TRUE
   }
   
-  if (full_data == TRUE){
+  if (full_data == FALSE){
+    return(tbl)
+  }
+  
+  if (isTRUE(full_data)){
     
-    # Get additional data portions of records, exluding remarks
-    for (i in 1:length(data_files)){
+    add_data <- c()
+    
+    # Get additional data portions of records, excluding remarks
+    for (i in seq(data_files)){
       
       if (use_local_files == FALSE){
         
-        add_data <- 
-          readLines(data_files[i])
+        add_data_i <- readLines(data_files[i])
       }
       
       if (use_local_files == TRUE){
         
-        add_data <- 
-          readLines(data_files[i])
+        add_data_i <- readLines(data_files[i])
       }
       
-      if (i == 1){
-        all_add_data <- add_data
-      }
-      
-      if (i > 1){
-        all_add_data <- c(all_add_data, add_data)
-      }
+      add_data <- 
+        c(
+          add_data,
+          add_data_i %>%
+            strsplit("REM") %>%
+            vapply(function(x) x[[1]], character(1))
+        )
     }
     
     # Create vector of additional data categories
-    data_categories <- additional_data_categories()
+    data_categories <- field_categories()
     
     expanded_column_names <- additional_data_fields()
     
-    # Function for getting data from an additional data category
-    get_df_from_category <- function(category_key,
-                                     field_lengths,
-                                     scale_factor,
-                                     data_types,
-                                     add_data) {
-      
-      # Parse string of characters representing data types
-      if (class(data_types) == "character" &
-          length(data_types) == 1 &
-          all(unique(unlist(strsplit(data_types, ""))) %in% c("c", "n"))) {
-        
-        for (i in 1:nchar(data_types)){
-          
-          if (i == 1){
-            subst_data_types <- vector(mode = "character")
-            
-            # Create a progress bar object
-            pb <- progress_bar$new(
-              format = "  processing :what [:bar] :percent",
-              total = nchar(data_types))
-            
-          }
-          subst_data_types <- 
-            c(subst_data_types,
-              ifelse(substr(data_types, i, i) == "n",
-                     "numeric", "character"))
-          
-        }
-        
-        data_types <- subst_data_types
-      }
-      
-      data_strings <- 
-        stringr::str_extract(add_data, paste0(category_key, ".*"))
-      
-      for (i in 1:length(field_lengths)){
-        
-        if (i == 1){
-          df_from_category <-
-            as.data.frame(mat.or.vec(nr = length(data_strings),
-                                     nc = length(field_lengths)))
-          
-          colnames(df_from_category) <- 
-            paste(tolower(category_key),
-                  rep = 1:length(field_lengths),
-                  sep = "_")
-          
-          substr_start <- 4
-          substr_end <- substr_start + (field_lengths[i] - 1)
-        }
-        
-        if (i > 1){
-          
-          substr_start <- substr_end + 1
-          substr_end <- substr_start + (field_lengths[i] - 1)
-        }
-        
-        if (data_types[i] == "numeric"){
-          
-          for (j in 1:length(data_strings)){
-            
-            if (j == 1) data_column <- vector(mode = data_types[i])
-            
-            data_element <-
-              ifelse(!is.na(data_strings[j]),
-                     as.numeric(substr(data_strings[j],
-                                       substr_start,
-                                       substr_end))/scale_factor[i],
-                     NA)
-            
-            data_column <- c(data_column, data_element)
-          }
-        }
-        
-        if (data_types[i] == "character"){
-          
-          for (j in 1:length(data_strings)){
-            
-            if (j == 1) data_column <- vector(mode = data_types[i])
-            
-            data_element <-
-              ifelse(!is.na(data_strings[j]),
-                     substr(data_strings[j],
-                            substr_start,
-                            substr_end),
-                     NA)
-            
-            data_column <- c(data_column, data_element)
-          }
-        }
-        
-        df_from_category[, i] <- data_column
-        
-        # Add tick to progress bar
-        pb$tick(tokens = list(what = category_key))
-      }
-      
-      return(df_from_category)
-    }
-    
     # Determine which additional parameters have been measured
-    for (i in 1:length(data_categories)){
+    for (i in seq(data_categories)){
       
       if (i == 1){
         data_categories_counts <-
@@ -583,18 +354,17 @@ get_isd_station_data <- function(station_id,
       }
       
       data_categories_counts[i] <-
-        sum(str_detect(all_add_data, data_categories[i]))
+        sum(stringr::str_detect(add_data, data_categories[i]))
     }
     
     # Filter those measured parameters and obtain string of identifiers
     significant_params <- data_categories[which(data_categories_counts >= 1)]
     
     # Filter the significantly available extra parameters by those specified
-    if (!is.null(select_additional_data)){
+    if (!is.null(add_fields)){
       
       significant_params <-
-        significant_params[which(significant_params %in%
-                                   select_additional_data)]
+        significant_params[which(significant_params %in% add_fields)]
     }
     
     # AA1 - liquid precipitation: period quantity, depth dimension
@@ -602,13 +372,14 @@ get_isd_station_data <- function(station_id,
       
       additional_data <-
         get_df_from_category(
-          "AA1",
-          c(2, 4, 1, 1),
-          c(1, 10, NA, NA),
-          "nncc",
-          all_add_data)
+          category_key = "AA1",
+          field_lengths = c(2, 4, 1, 1),
+          scale_factor = c(1, 10, NA, NA),
+          data_types =  "nncc",
+          add_data = add_data
+        )
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AB1 - liquid precipitation: monthly total
@@ -620,9 +391,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 1),
           c(10, NA, NA),
           "ncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AC1 - precipitation observation history
@@ -634,9 +405,9 @@ get_isd_station_data <- function(station_id,
           c(1, 1, 1),
           c(NA, NA, NA),
           "ccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AD1 - liquid precipitation, greatest amount in 24 hours, for the month
@@ -648,9 +419,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 4, 4, 4, 1),
           c(10, NA, NA, NA, NA, NA),
           "nccccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AE1 - liquid precipitation, number of days with specific 
@@ -663,9 +434,9 @@ get_isd_station_data <- function(station_id,
           c(2, 1, 2, 1, 2, 1, 2, 1),
           rep(NA, 8),
           "cccccccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AG1 - precipitation estimated observation
@@ -677,9 +448,9 @@ get_isd_station_data <- function(station_id,
           c(1, 3),
           c(NA, 1),
           "cn",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AH1 - liquid precipitation maximum short duration, for the month (1)
@@ -691,9 +462,9 @@ get_isd_station_data <- function(station_id,
           c(3, 4, 1, 6, 1),
           c(1, 10, NA, NA, NA),
           "nnccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AI1 - liquid precipitation maximum short duration, for the month (2)
@@ -705,9 +476,9 @@ get_isd_station_data <- function(station_id,
           c(4, 1, 6, 1),
           c(10, NA, NA, NA),
           "nccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AJ1 - snow depth
@@ -719,9 +490,9 @@ get_isd_station_data <- function(station_id,
           c(4, 1, 1, 6, 1, 1),
           c(1, NA, NA, 10, NA, NA),
           "nccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AK1 - snow depth greatest depth on the ground, for the month
@@ -733,9 +504,9 @@ get_isd_station_data <- function(station_id,
           c(4, 1, 6, 1),
           c(1, NA, NA, NA),
           "nccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AL1 - snow accumulation
@@ -747,9 +518,9 @@ get_isd_station_data <- function(station_id,
           c(2, 3, 1, 1),
           c(1, 1, NA, NA),
           "nncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AM1 - snow accumulation greatest amount in 24 hours, for the month
@@ -761,9 +532,9 @@ get_isd_station_data <- function(station_id,
           c(4, 1, 4, 4, 4, 1),
           c(10, NA, NA, NA, NA, NA),
           "nccccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AN1 - snow accumulation for the month
@@ -775,9 +546,9 @@ get_isd_station_data <- function(station_id,
           c(3, 4, 1, 1),
           c(1, 10, NA, NA),
           "nncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AO1 - liquid precipitation
@@ -789,9 +560,9 @@ get_isd_station_data <- function(station_id,
           c(2, 4, 1, 1),
           c(1, 10, NA, NA),
           "nncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AP1 - 15-minute liquid precipitation
@@ -803,9 +574,9 @@ get_isd_station_data <- function(station_id,
           c(4, 1, 1),
           c(10, NA, NA),
           "ncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AU1 - present weather observation
@@ -818,9 +589,9 @@ get_isd_station_data <- function(station_id,
           c(NA, NA, NA, NA,
             NA, NA, NA),
           "ccccccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AW1 - present weather observation 
@@ -832,9 +603,9 @@ get_isd_station_data <- function(station_id,
           c(2, 1),
           c(NA, NA),
           "cc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AX1 - past weather observation (1)
@@ -846,9 +617,9 @@ get_isd_station_data <- function(station_id,
           c(2, 1, 2, 1),
           c(NA, NA, 1, NA),
           "ccnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AY1 - past weather observation (2)
@@ -860,9 +631,9 @@ get_isd_station_data <- function(station_id,
           c(1, 1, 2, 1),
           c(NA, NA, 1, NA),
           "ccnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # AZ1 - past weather observation (3)
@@ -874,9 +645,9 @@ get_isd_station_data <- function(station_id,
           c(1, 1, 2, 1),
           c(NA, NA, 1, NA),
           "ccnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CB1 - subhourly observed liquid precipitation: secondary sensor
@@ -888,9 +659,9 @@ get_isd_station_data <- function(station_id,
           c(2, 6, 1, 1),
           c(1, 10, NA, NA),
           "nncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CF1 - hourly fan speed
@@ -902,9 +673,9 @@ get_isd_station_data <- function(station_id,
           c(4, 1, 1),
           c(10, NA, NA),
           "ncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CG1 - subhourly observed liquid precipitation: primary sensor
@@ -916,9 +687,9 @@ get_isd_station_data <- function(station_id,
           c(6, 1, 1),
           c(10, NA, NA),
           "ncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CH1 - hourly/subhourly RH/temperatures
@@ -930,9 +701,9 @@ get_isd_station_data <- function(station_id,
           c(2, 5, 1, 1, 4, 1, 1),
           c(1, 10, NA, NA, 10, NA, NA),
           "nnccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CI1 - hourly RH/temperatures
@@ -946,9 +717,9 @@ get_isd_station_data <- function(station_id,
           c(10, NA, NA, 10, NA, NA,
             10, NA, NA, 10, NA, NA),
           "nccnccnccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CN1 - hourly battery voltage
@@ -962,9 +733,9 @@ get_isd_station_data <- function(station_id,
           c(10, NA, NA, 10, NA, NA,
             10, NA, NA),
           "nccnccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CN2 - hourly diagnostics
@@ -978,9 +749,9 @@ get_isd_station_data <- function(station_id,
           c(10, NA, NA, 10, NA, NA,
             1, NA, NA),
           "nccnccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CN3 - secondary hourly diagnostics (1)
@@ -992,9 +763,9 @@ get_isd_station_data <- function(station_id,
           c(6, 1, 1, 6, 1, 1),
           c(10, NA, NA, 10, NA, NA),
           "nccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CN4 - secondary hourly diagnostics (2)
@@ -1008,9 +779,9 @@ get_isd_station_data <- function(station_id,
           c(NA, NA, NA, NA, NA, NA,
             10, NA, NA, 10, NA, NA),
           "ccccccnccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CR1 - CRN control
@@ -1022,9 +793,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 1),
           c(1000, NA, NA),
           "ncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CT1 - subhourly temperatures
@@ -1036,9 +807,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 1),
           c(10, NA, NA),
           "ncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CU1 - hourly temperatures
@@ -1050,9 +821,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 1, 4, 1, 1),
           c(10, NA, NA, 10, NA, NA),
           "nccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CV1 - hourly temperature extremes
@@ -1066,9 +837,9 @@ get_isd_station_data <- function(station_id,
           c(10, NA, NA, NA, NA, NA,
             10, NA, NA, NA, NA, NA),
           "ncccccnccccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CW1 - subhourly wetness
@@ -1080,9 +851,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 1, 5, 1, 1),
           c(10, NA, NA, 10, NA, NA),
           "nccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CX1 - hourly geonor vibrating wire summary
@@ -1096,9 +867,9 @@ get_isd_station_data <- function(station_id,
           c(10, NA, NA, 1, NA, NA,
             1, NA, NA, 1, NA, NA),
           "nccnccnccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CO1 - network metadata
@@ -1110,9 +881,9 @@ get_isd_station_data <- function(station_id,
           c(2, 3),
           c(1, 1),
           "nn",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # CO2 - US cooperative network element time offset
@@ -1124,9 +895,9 @@ get_isd_station_data <- function(station_id,
           c(3, 5),
           c(NA, 10),
           "cn",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # ED1 - runway visual range
@@ -1138,9 +909,9 @@ get_isd_station_data <- function(station_id,
           c(2, 1, 4, 1),
           c(0.1, NA, 1, NA),
           "ncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GA1 - sky cover layer
@@ -1152,9 +923,9 @@ get_isd_station_data <- function(station_id,
           c(2, 1, 6, 1, 2, 1),
           c(NA, NA, 1, NA, NA, NA),
           "ccnccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GD1 - sky cover summation state
@@ -1166,9 +937,9 @@ get_isd_station_data <- function(station_id,
           c(1, 2, 1, 6, 1, 1),
           c(NA, NA, NA, 1, NA, NA),
           "cccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GF1 - sky condition observation
@@ -1182,9 +953,9 @@ get_isd_station_data <- function(station_id,
           c(NA, NA, NA, NA, NA, NA, NA,
             1, NA, NA, NA, NA, NA),
           "cccccccnccccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GG1 - below station cloud layer
@@ -1196,9 +967,9 @@ get_isd_station_data <- function(station_id,
           c(2, 1, 5, 1, 2, 1, 2, 1),
           c(NA, NA, 1, NA, NA, NA, NA, NA),
           "ccnccccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GH1 - hourly solar radiation
@@ -1212,9 +983,9 @@ get_isd_station_data <- function(station_id,
           c(10, NA, NA, 10, NA, NA,
             10, NA, NA, 10, NA, NA),
           "nccnccnccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GJ1 - sunshine observation (1)
@@ -1226,9 +997,9 @@ get_isd_station_data <- function(station_id,
           c(4, 1),
           c(1, NA),
           "nc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GK1 - sunshine observation (2)
@@ -1240,9 +1011,9 @@ get_isd_station_data <- function(station_id,
           c(3, 1),
           c(1, NA),
           "nc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GL1 - sunshine observation for the month
@@ -1254,9 +1025,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1),
           c(1, NA),
           "nc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GM1 - solar irradiance
@@ -1270,9 +1041,9 @@ get_isd_station_data <- function(station_id,
           c(1, 1, NA, NA, 1, NA, NA,
             1, NA, NA, 1, NA),
           "nnccnccnccnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GN1 - solar radiation
@@ -1286,9 +1057,9 @@ get_isd_station_data <- function(station_id,
           c(1, 1, NA, NA, 1, NA, NA,
             1, NA, NA, 1, NA),
           "nnccnccnccnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GO1 - net solar radiation
@@ -1300,9 +1071,9 @@ get_isd_station_data <- function(station_id,
           c(4, 4, 1, 4, 1, 4, 1),
           c(1, 1, NA, 1, NA, 1, NA),
           "nncncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GP1 - modeled solar irradiance
@@ -1316,9 +1087,9 @@ get_isd_station_data <- function(station_id,
           c(1, 1, NA, 1, 1, NA,
             1, 1, NA, 1),
           "nncnncnncn",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GQ1 - hourly solar angle
@@ -1330,9 +1101,9 @@ get_isd_station_data <- function(station_id,
           c(4, 4, 1, 4, 1),
           c(1, 10, NA, 10, NA),
           "nncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # GR1 - hourly extraterrestrial radiation
@@ -1344,9 +1115,9 @@ get_isd_station_data <- function(station_id,
           c(4, 4, 1, 4, 1),
           c(1, 1, NA, 1, NA),
           "nncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # HL1 - hail data
@@ -1358,9 +1129,9 @@ get_isd_station_data <- function(station_id,
           c(3, 1),
           c(10, NA),
           "nc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # IA1 - ground surface data
@@ -1372,9 +1143,9 @@ get_isd_station_data <- function(station_id,
           c(2, 1),
           c(NA, NA),
           "cc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # IA2 - ground surface observation
@@ -1386,9 +1157,9 @@ get_isd_station_data <- function(station_id,
           c(3, 5, 1),
           c(10, 10, NA),
           "nnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # IB1 - hourly surface temperature
@@ -1402,9 +1173,9 @@ get_isd_station_data <- function(station_id,
           c(10, NA, NA, 10, NA, NA,
             10, NA, NA, 10, NA, NA),
           "nccnccnccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # IB2 - hourly surface temperature sensor
@@ -1416,9 +1187,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 1, 4, 1, 1),
           c(10, NA, NA, 10, NA, NA),
           "nccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # IC1 - ground surface observation - pan evaporation
@@ -1432,9 +1203,9 @@ get_isd_station_data <- function(station_id,
           c(1, 1, NA, NA, 100, NA, NA,
             10, NA, NA, 10, NA, NA),
           "nnccnccnccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # KA1 - temperature data
@@ -1446,9 +1217,9 @@ get_isd_station_data <- function(station_id,
           c(3, 1, 5, 1),
           c(10, NA, 10, NA),
           "ncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # KB1 - average air temperature
@@ -1460,9 +1231,9 @@ get_isd_station_data <- function(station_id,
           c(3, 1, 5, 1),
           c(10, NA, 10, NA),
           "ncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # KC1 - extreme air temperature for the month
@@ -1474,9 +1245,9 @@ get_isd_station_data <- function(station_id,
           c(1, 1, 5, 6, 1),
           c(NA, NA, 10, NA, NA),
           "ccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # KD1 - heating/cooling degree days
@@ -1488,9 +1259,9 @@ get_isd_station_data <- function(station_id,
           c(3, 1, 4, 1),
           c(1, NA, 1, NA),
           "ncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # KE1 - extreme temperatures, number of days exceeding criteria, for the month
@@ -1504,9 +1275,9 @@ get_isd_station_data <- function(station_id,
           c(1, NA, 1, NA,
             1, NA, 1, NA),
           "ncncncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # KF1 - hourly calculated temperature
@@ -1518,9 +1289,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1),
           c(10, NA),
           "nc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # KG1 - average dew point and wet bulb temperature
@@ -1532,9 +1303,9 @@ get_isd_station_data <- function(station_id,
           c(3, 1, 5, 1, 1),
           c(1, NA, 100, NA, NA),
           "ncncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # MA1 - atmospheric pressure observation
@@ -1546,9 +1317,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 5, 1),
           c(10, NA, 10, NA),
           "ncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # MD1 - atmospheric pressure change
@@ -1560,9 +1331,9 @@ get_isd_station_data <- function(station_id,
           c(1, 1, 3, 1, 4, 1),
           c(NA, NA, 10, NA, 10, NA),
           "ccncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # ME1 - geopotential height isobaric level
@@ -1574,9 +1345,9 @@ get_isd_station_data <- function(station_id,
           c(1, 4, 1),
           c(NA, 1, NA),
           "cnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # MF1 - atmospheric pressure observation (STP/SLP)
@@ -1588,9 +1359,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 5, 1),
           c(10, NA, 10, NA),
           "ncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # MG1 - atmospheric pressure observation
@@ -1602,9 +1373,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 5, 1),
           c(10, NA, 10, NA),
           "ncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # MH1 - atmospheric pressure observation - average station pressure
@@ -1617,9 +1388,9 @@ get_isd_station_data <- function(station_id,
           c(5, 1, 5, 1),
           c(10, NA, 10, NA),
           "ncnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # MK1 - atmospheric pressure observation - maximum sea level pressure
@@ -1632,9 +1403,9 @@ get_isd_station_data <- function(station_id,
           c(5, 6, 1, 5, 6, 1),
           c(10, NA, NA, 10, NA, NA),
           "nccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # MV1 - present weather in vicinity observation
@@ -1646,9 +1417,9 @@ get_isd_station_data <- function(station_id,
           c(2, 1),
           c(NA, NA),
           "cc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # MW1 - present weather observation 
@@ -1660,9 +1431,9 @@ get_isd_station_data <- function(station_id,
           c(2, 1),
           c(NA, NA),
           "cc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # OA1 - supplementary wine observation 
@@ -1674,9 +1445,9 @@ get_isd_station_data <- function(station_id,
           c(1, 2, 4, 1),
           c(NA, 1, 10, NA),
           "cnnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # OB1 - hourly/sub-hourly wind section
@@ -1690,9 +1461,9 @@ get_isd_station_data <- function(station_id,
           c(1, 10, NA, NA, 1, NA, NA,
             100, NA, NA, 100, NA, NA),
           "nnccnccnccncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # OC1 - wind gust observation
@@ -1704,9 +1475,9 @@ get_isd_station_data <- function(station_id,
           c(4, 1),
           c(10, NA),
           "nc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # OE1 - summary of day wind observation
@@ -1718,9 +1489,9 @@ get_isd_station_data <- function(station_id,
           c(1, 2, 5, 3, 4, 1),
           c(NA, 1, 100, 1, 10, NA),
           "cnnnnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # RH1 - relative humidity
@@ -1732,9 +1503,9 @@ get_isd_station_data <- function(station_id,
           c(3, 1, 3, 1, 1),
           c(1, NA, 1, NA, NA),
           "ncncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # SA1 - sea surface temperature observation
@@ -1746,9 +1517,9 @@ get_isd_station_data <- function(station_id,
           c(4, 1),
           c(10, NA),
           "nc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # ST1 - soil temperature
@@ -1762,9 +1533,9 @@ get_isd_station_data <- function(station_id,
           c(NA, 10, NA, 10, NA,
             NA, NA, NA, NA),
           "cncnccccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # UA1 - wave measurement
@@ -1776,9 +1547,9 @@ get_isd_station_data <- function(station_id,
           c(1, 2, 3, 1, 2, 1),
           c(NA, 1, 10, NA, NA, NA),
           "cnnccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # UG1 - wave measurement primary swell
@@ -1790,9 +1561,9 @@ get_isd_station_data <- function(station_id,
           c(2, 3, 3, 1),
           c(1, 10, 1, NA),
           "nnnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # UG2 - wave measurement secondary swell
@@ -1804,9 +1575,9 @@ get_isd_station_data <- function(station_id,
           c(2, 3, 3, 1),
           c(1, 10, 1, NA),
           "nnnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # WA1 - platform ice accretion
@@ -1818,9 +1589,9 @@ get_isd_station_data <- function(station_id,
           c(1, 3, 1, 1),
           c(NA, 10, NA, NA),
           "cncc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # WD1 - water surface ice observation
@@ -1834,9 +1605,9 @@ get_isd_station_data <- function(station_id,
           c(NA, 1, NA, NA, NA, NA,
             NA, NA, 1, 1, NA),
           "cnccccccnnc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # WG1 - water surface ice historical observation
@@ -1848,22 +1619,101 @@ get_isd_station_data <- function(station_id,
           c(2, 2, 2, 2, 2, 1),
           c(NA, 1, NA, NA, NA, NA),
           "cncccc",
-          all_add_data)
+          add_data)
       
-      large_data_frame <- bind_cols(large_data_frame, additional_data)
+      tbl <- dplyr::bind_cols(tbl, additional_data)
     }
     
     # # If the tz offset is 0, return the data frame without filtering it
     # if (gmt_offset == 0){
-    #   return(large_data_frame) 
+    #   return(tbl) 
     # }
     
     # # Filter data frame to only include data for requested years
-    # large_data_frame <- 
-    #   dplyr::filter(large_data_frame, 
+    #  tbl <- 
+    #   dplyr::filter(tbl, 
     #                 year >= startyear &
     #                   year <= endyear)
     
-    return(large_data_frame)
+    return(tbl)
   }
+}
+
+# Function for getting data from an additional data category
+get_df_from_category <- function(category_key,
+                                 field_lengths,
+                                 scale_factor,
+                                 data_types,
+                                 add_data) {
+  
+  # Create a progress bar object
+  pb <- 
+    progress::progress_bar$new(
+      format = "  processing :what [:bar] :percent",
+      total  = nchar(data_types)
+    )
+  
+  column_names <- paste0(category_key %>% tolower(), "_", seq(field_lengths))
+  
+  dtypes <- c()
+  
+  for (i in seq(nchar(data_types))) {
+    
+    dtypes <- 
+      c(dtypes, ifelse(substr(data_types, i, i) == "n", "numeric", "character"))
+  }
+  
+  data_strings <- 
+    add_data %>%
+    stringr::str_extract(paste0(category_key, ".*"))
+  
+  res_list <- list()
+  
+  for (i in seq(field_lengths)){
+    
+    if (i == 1) {
+      substr_start <- 4
+      substr_end <- substr_start + (field_lengths[i] - 1)
+    } else {
+      substr_start <- substr_end + 1
+      substr_end <- substr_start + (field_lengths[i] - 1)
+    }
+    
+    if (dtypes[i] == "numeric") {
+      
+      data_column <- rep(NA_real_, length(data_strings))
+      
+      for (j in seq(data_strings)) {
+        
+        if (!is.na(data_strings[j])) {
+          
+          data_column[j] <-
+            (substr(data_strings[j], substr_start, substr_end) %>%
+               as.numeric()) / scale_factor[i]
+        }
+      }
+    }
+    
+    if (dtypes[i] == "character"){
+      
+      data_column <- rep(NA_character_, length(data_strings))
+      
+      for (j in seq(data_strings)) {
+        
+        if (!is.na(data_strings[j])) {
+          data_column[j] <- 
+            substr(data_strings[j], substr_start, substr_end)
+        }
+      }
+    }
+    
+    res_list <- res_list %>% append(list(data_column))
+    
+    # Add tick to progress bar
+    pb$tick(tokens = list(what = category_key))
+  }
+  
+  names(res_list) <- column_names
+  
+  res_list %>% dplyr::as_tibble()
 }
