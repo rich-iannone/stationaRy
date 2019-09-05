@@ -16,7 +16,7 @@
 #'     WBAN is an acronym for Weather Bureau, Air Force and Navy.}
 #'   \item{name}{A character string with the station name.}
 #'   \item{country}{A character string with the two character country 
-#'     code where the station is located. Not identical to \code{country_code}.}
+#'     code where the station is located. Not identical to `country_code`.}
 #'   \item{state}{Character string of the two character abbreviation of a US 
 #'     state (when applicable).}
 #'   \item{icao}{The ICAO identifier for the station.}
@@ -24,7 +24,7 @@
 #'   \item{lon}{Longitude (degrees) rounded to three decimal places.}
 #'   \item{elev}{Numeric value for the elevation as measured in meters. 
 #'     The minimum value is -400 with a maximum of 8850. Elevation in feet
-#'     can be approximated by \code{elev * 3.28084}}
+#'     can be approximated by `elev * 3.28084`}
 #'   \item{begin_date}{The earliest date for which data are available.}
 #'   \item{end_date}{The latest date for which data are available.}
 #'   \item{begin_year}{The earliest year for which data are available.}
