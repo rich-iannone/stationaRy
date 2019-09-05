@@ -39,22 +39,22 @@
 #'   \item{lon}{Longitude (degrees) rounded to three decimal places.}
 #'   \item{elev}{Numeric value for the elevation as measured in meters. 
 #'     The minimum value is -400 with a maximum of 8850. Elevation in feet
-#'     can be approximated by \code{elev * 3.28084}}
+#'     can be approximated by `elev * 3.28084`}
 #'   \item{wd}{The angle of wind direction, measured in a clockwise 
 #'     direction, between true north and the direction from which
-#'     the wind is blowing. For example, \code{wd = 90} indicates the 
-#'     wind is blowing from due east. \code{wd = 225} indicates the 
+#'     the wind is blowing. For example, `wd = 90` indicates the 
+#'     wind is blowing from due east. `wd = 225` indicates the 
 #'     wind is blowing from the south west. The minimum value is 1, and the
 #'     maximum value is 360.}
 #'   \item{ws}{Wind speed in meters per second.  Wind speed in feet per 
-#'     second can be estimated by \code{ws * 3.28084}}
+#'     second can be estimated by `ws * 3.28084`}
 #'   \item{ceil_hgt}{The height above ground level of the lowest clould cover
 #'     or other obscuring phenomena amounting to at least 5/8 sky 
 #'     coverate.  Measured in meters.  Unlimited height (no obstruction)
 #'     is denoted by the value 22000}
 #'   \item{temp}{Air temperature measured in degrees Celsius. Conversions 
 #'     to degrees Farenheit may be calculated with 
-#'     \code{(temp * 9) / 5 + 32}}.
+#'     `(temp * 9) / 5 + 32`}.
 #'   \item{dew_point}{The temperature in degrees Celsius to which a 
 #'     given parcel of air must be cooled at constant pressure and 
 #'     water vapor content in order for saturation to occur.}
@@ -65,18 +65,12 @@
 #'   \item{time}{A POSIXct object with the date-time of the observation.}
 #' }
 #' 
-#' @source 
-#' \url{http://www.ncdc.noaa.gov/isd}\cr
-#' \url{http://www1.ncdc.noaa.gov/pub/data/ish/ish-format-document.pdf}
-#' 
-#' Calculating Humidity: \cr
-#' \url{https://en.wikipedia.org/wiki/Clausius\%E2\%80\%93Clapeyron_relation#Meteorology_and_climatology}
-#'
 #'@examples 
 #' \dontrun{
-#' # Obtain two years of data from data files stored on disk (in this
+#' # Obtain two years of data from
+#' # data files stored on disk (in this
 #' # case, inside the package itself)
-#' df_mandatory_data_local <- 
+#' met_data_local <- 
 #'   get_met_data(
 #'     station_id = "999999-63897",
 #'     startyear = 2013,
