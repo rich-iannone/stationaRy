@@ -1,11 +1,37 @@
 utils::globalVariables(
   c(
+    "atmos_pres",
     "begin",
+    "begin_date",
+    "category",
+    "ceil_hgt",
+    "dew_point",
     "end",
+    "end_date",
+    "id",
     "lat",
     "lon",
+    "rh",
+    "temp",
+    "time",
+    "total_count",
     "usaf",
+    "utc_offset_h",
     "wban",
-    "year"
+    "wd",
+    "ws",
+    "year",
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec"
   )
 )
