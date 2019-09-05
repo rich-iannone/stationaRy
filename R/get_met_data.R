@@ -85,9 +85,7 @@
 #'     local_file_dir = system.file(package = "stationary")
 #'   )
 #' }
-#' @import readr dplyr downloader progress
-#' @importFrom stringr str_detect str_extract
-#' @importFrom plyr round_any
+#' 
 #' @export
 get_met_data <- function(station_id,
                          startyear,

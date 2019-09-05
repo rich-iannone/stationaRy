@@ -155,5 +155,6 @@ station_coverage <- function(station_id,
       tidyr::spread(key = category, value = total_count)
     
   }
+  
   data_categories_tbl
 }
