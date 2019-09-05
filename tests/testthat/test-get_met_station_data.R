@@ -43,16 +43,43 @@ test_that("The `get_met_data()` fcn can provide an additional data report", {
   # Get vector of available additional data categories for the station
   # during the specied years
   additional_data_categories <- 
-    get_met_data(
+    station_coverage(
       station_id = "722315-53917",
       startyear = 2014,
-      endyear = 2015,
-      add_data_report = TRUE
+      endyear = 2015
     )
   
   # Expect that a tibble is returned
   expect_is(
     additional_data_categories, "tbl_df")
+  
+  # Get an additional data report df from a local test file
+  df_data_report_data_local_test <- 
+    station_coverage(
+      station_id = "999999-63897",
+      startyear = 2015,
+      endyear = 2015,
+      use_local_files = TRUE,
+      local_file_dir = system.file(package = "stationary")
+    )
+  
+  # Expect the report to be a data frame
+  expect_is(df_data_report_data_local_test, "tbl_df")
+  
+  # Expect a specific number of additional
+  # data categories to be present
+  expect_equal(nrow(df_data_report_data_local_test), 25)
+  
+  # Expect specific numbers of records for
+  # each additional data category
+  df_data_report_data_local_test$total_count %>%
+    expect_equal(
+      c(
+        4498, 6, 6, 6, 6, 51817, 4325, 51889, 4325, 4325,
+        4325, 4325, 4325, 51889, 4325, 4325, 51889, 52075,
+        4503, 6, 6, 6, 6, 4312, 51889
+      )
+    )
 })
 
 test_that("Error messages are provided in certain situations", {
@@ -83,35 +110,6 @@ test_that("Error messages are provided in certain situations", {
       endyear = 2010
     )
   )
-  
-  # Get an additional data report df from a local test file
-  df_data_report_data_local_test <- 
-    get_met_data(
-      station_id = "999999-63897",
-      startyear = 2015,
-      endyear = 2015,
-      use_local_files = TRUE,
-      local_file_dir = system.file(package = "stationary"),
-      add_data_report = TRUE
-    )
-  
-  # Expect the report to be a data frame
-  expect_is(df_data_report_data_local_test, "tbl_df")
-  
-  # Expect a specific number of additional
-  # data categories to be present
-  expect_equal(nrow(df_data_report_data_local_test), 25)
-  
-  # Expect specific numbers of records for
-  # each additional data category
-  df_data_report_data_local_test$total_count %>%
-    expect_equal(
-      c(
-        4498, 6, 6, 6, 6, 51817, 4325, 51889, 4325, 4325,
-        4325, 4325, 4325, 51889, 4325, 4325, 51889, 52075,
-        4503, 6, 6, 6, 6, 4312, 51889
-      )
-    )
   
   # Get all possible data from the test station file
   df_data_additional_data_local_test <- 
