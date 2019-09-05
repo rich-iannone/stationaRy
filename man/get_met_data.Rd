@@ -101,4 +101,5 @@ df_mandatory_data_local <-
     local_file_dir = system.file(package = "stationary")
   )
 }
+
 }
