@@ -100,7 +100,7 @@ get_met_data <- function(station_id,
   }
   
   years <- seq(startyear, endyear, by = 1)
-  
+
   # Get the tz name
   tz_name <- 
     history_tbl %>%
@@ -119,7 +119,20 @@ get_met_data <- function(station_id,
       base::intersect(years)
     
     if (length(years_intersected) == 0) {
-      stop("The station provided doesn't have data for the years requested:\n")
+      
+      return( 
+        dplyr::tibble(
+          id = NA_character_,
+          time = lubridate::ymd_hms("1970-01-01 00:00:00"),
+          wd = NA_integer_,
+          ws = NA_real_,
+          ceil_hgt = NA_integer_,
+          temp = NA_real_,
+          dew_point = NA_real_,
+          atmos_pres = NA_real_,
+          rh = NA_real_
+        )[-1, ]
+      )
     }
     
     files_required <- paste0(station_id, "-", years_intersected, ".gz")
@@ -270,6 +283,8 @@ get_met_data <- function(station_id,
       sec = 0,
       tz = "GMT"
     )
+  
+  
   
   # Adjust to local time if the time zone had been resolved
   if (!is.na(tz_name)) {
