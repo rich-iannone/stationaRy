@@ -101,41 +101,17 @@ get_met_data <- function(station_id,
   
   years <- seq(startyear, endyear, by = 1)
 
-  # Get the tz name in the local `history_tbl`
-  station_info <- 
-    history_tbl %>%
-    dplyr::filter(id == station_id)
-  
-  if (nrow(station_info) == 0) {
-    station_info <- 
-      stationary:::get_history_tbl() %>%
-      dplyr::filter(id == station_id)
-  }
-  
-  if (nrow(station_info) == 0) {
-    
+  # Get the time zone name
+  tz_name <- get_tz_for_station(station_id)
+
+  # If the time zone isn't available, then the station wasn't
+  # found, so, an empty met table should be returned
+  if (is.na(tz_name)) {
     message("The `station_id` provided (\"", station_id,
             "\") doesn't have a record in the `get_station_metadata()` table.")
     
-    return( 
-      dplyr::tibble(
-        id = NA_character_,
-        time = lubridate::ymd_hms("1970-01-01 00:00:00"),
-        wd = NA_integer_,
-        ws = NA_real_,
-        ceil_hgt = NA_integer_,
-        temp = NA_real_,
-        dew_point = NA_real_,
-        atmos_pres = NA_real_,
-        rh = NA_real_
-      )[-1, ]
-    )
+    return(empty_met_tbl())
   }
-  
-  # Get the time zone name
-  tz_name <-
-    station_info %>%
-    dplyr::pull(tz_name)
   
   if (use_local_files == FALSE) {
     
