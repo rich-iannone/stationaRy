@@ -6,8 +6,7 @@ test_that("The `get_met_data()` fcn returns correct number of columns", {
   df_mandatory_data <- 
     get_met_data(
       station_id = "722315-53917",
-      startyear = 2014,
-      endyear = 2015,
+      years = 2014:2015,
       full_data = FALSE
     )
   
@@ -16,8 +15,7 @@ test_that("The `get_met_data()` fcn returns correct number of columns", {
   df_aa1_ab1 <- 
     get_met_data(
       station_id = "722315-53917",
-      startyear = 2014,
-      endyear = 2015,
+      years = 2014:2015,
       add_fields = c("AA1", "AB1")
     )
   
@@ -45,8 +43,7 @@ test_that("The `get_met_data()` fcn can provide an additional data report", {
   additional_data_categories <- 
     station_coverage(
       station_id = "722315-53917",
-      startyear = 2014,
-      endyear = 2015
+      years = 2014:2015
     )
   
   # Expect that a tibble is returned
@@ -57,8 +54,7 @@ test_that("The `get_met_data()` fcn can provide an additional data report", {
   df_data_report_data_local_test <- 
     station_coverage(
       station_id = "999999-63897",
-      startyear = 2015,
-      endyear = 2015,
+      years = 2015,
       use_local_files = TRUE,
       local_file_dir = system.file(package = "stationary")
     )
@@ -89,8 +85,7 @@ test_that("Error messages are provided in certain situations", {
   expect_error(
     get_met_data(
       station_id = "722315-53917",
-      startyear = "2010",
-      endyear = "2014"
+      years = 2010:2014,
     )
   )
   
@@ -115,8 +110,7 @@ test_that("Error messages are provided in certain situations", {
   df_data_additional_data_local_test <- 
     get_met_data(
       station_id = "999999-63897",
-      startyear = 2015,
-      endyear = 2015,
+      years = 2015,
       full_data = TRUE,
       use_local_files = TRUE,
       local_file_dir = system.file(package = "stationary")
