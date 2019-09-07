@@ -17,6 +17,24 @@ empty_met_tbl <- function() {
   )[-1, ]
 }
 
+get_buffered_years <- function(years) {
+  
+  buffered_years <- c()
+  for (year in years) {
+    buffered_years <-
+      c(buffered_years, seq(year - 1, year + 1, 1))
+  }
+  buffered_years %>% unique()
+}
+
+trim_tbl_to_years <- function(tbl, years) {
+  
+  tbl %>%
+    dplyr::mutate(year = lubridate::year(time)) %>%
+    dplyr::filter(year %in% years) %>%
+    dplyr::select(-year)
+}
+
 # Define column widths of the fixed-width data
 # in the mandatory section of the data files
 column_widths <- function() {
