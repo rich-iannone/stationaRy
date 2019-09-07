@@ -78,33 +78,7 @@ test_that("The `get_met_data()` fcn can provide an additional data report", {
     )
 })
 
-test_that("Error messages are provided in certain situations", {
-  
-  # Expect an error if numeric values aren't provided for both
-  # "startyear" and "endyear"
-  expect_error(
-    get_met_data(
-      station_id = "722315-53917",
-      years = 2010:2014,
-    )
-  )
-  
-  # Expect an error if values aren't provided at all for both
-  # "startyear" and "endyear"
-  expect_error(
-    get_met_data(
-      station_id = "722315-53917"
-    )
-  )
-  
-  # Expect an error if the "startyear" is later than the "endyear"
-  expect_error(
-    get_met_data(
-      station_id = "722315-53917",
-      startyear = 2014,
-      endyear = 2010
-    )
-  )
+test_that("The `get_met_data()` fcn can provide all additional data fields", { 
   
   # Get all possible data from the test station file
   df_data_additional_data_local_test <- 
@@ -118,4 +92,14 @@ test_that("Error messages are provided in certain situations", {
   
   # Expect that the resulting data frame will be very wide
   df_data_additional_data_local_test %>% ncol() %>% expect_equal(151)
+})
+
+test_that("Error messages are provided in certain situations", {
+  
+  # Expect an error if the `station_id` isn't valid
+  expect_error(
+    get_met_data(
+      station_id = "722315-53917"
+    )
+  )
 })
