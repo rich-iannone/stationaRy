@@ -39,7 +39,7 @@ lga_met_data <-
 lga_met_data
 ```
 
-There are lots of stations and we at least need an identifier to access met data. We can examine station metadata using the `get_station_metadata()` function (which has those ID values in the first column). Let's get all of the stations located in Norway.
+There are lots of stations and we at least need an identifier to access the met data. We can examine station metadata using the `get_station_metadata()` function (which has those ID values in the first column). Let's get all of the stations located in Norway.
 
 ```{r stations_norway}
 stations_norway <- 

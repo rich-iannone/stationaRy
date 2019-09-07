@@ -26,25 +26,25 @@ lga_met_data <-
 
 ``` r
 lga_met_data
-#> # A tibble: 28,254 x 9
+#> # A tibble: 28,262 x 9
 #>    id    time                   wd    ws ceil_hgt  temp dew_point
 #>    <chr> <dttm>              <int> <dbl>    <int> <dbl>     <dbl>
-#>  1 7250… 2016-12-31 19:00:00   200   7.7       NA   6.7      -2.8
-#>  2 7250… 2016-12-31 19:51:00   220   5.1     2743   6.7      -3.9
-#>  3 7250… 2016-12-31 20:51:00   210   5.1     3048   6.7      -4.4
-#>  4 7250… 2016-12-31 21:51:00   200   5.1     2591   6.7      -4.4
-#>  5 7250… 2016-12-31 22:00:00   200   5.1       NA   6.7      -4.4
-#>  6 7250… 2016-12-31 22:51:00   210   5.1     2134   7.2      -4.4
-#>  7 7250… 2016-12-31 23:51:00   230   5.7     2286   7.2      -4.4
-#>  8 7250… 2016-12-31 23:59:00    NA  NA         NA  NA        NA  
-#>  9 7250… 2016-12-31 23:59:00    NA  NA         NA  NA        NA  
-#> 10 7250… 2017-01-01 00:51:00   230   4.6     1402   7.8      -3.9
-#> # … with 28,244 more rows, and 2 more variables: atmos_pres <dbl>,
+#>  1 7250… 2017-01-01 00:51:00   230   4.6     1402   7.8      -3.9
+#>  2 7250… 2017-01-01 01:00:00   230   4.6       NA   7.8      -3.9
+#>  3 7250… 2017-01-01 01:51:00   230   3.6     2591   7.2      -2.2
+#>  4 7250… 2017-01-01 02:51:00   240   5.7     3048   7.8      -3.3
+#>  5 7250… 2017-01-01 03:51:00   240   4.6    22000   7.8      -3.9
+#>  6 7250… 2017-01-01 04:00:00   240   4.6       NA   7.8      -3.9
+#>  7 7250… 2017-01-01 04:51:00   240   4.6     1524   8.3      -4.4
+#>  8 7250… 2017-01-01 05:51:00   250   5.1    22000   8.3      -3.9
+#>  9 7250… 2017-01-01 06:51:00   260   5.7    22000   8.3      -3.3
+#> 10 7250… 2017-01-01 07:00:00   260   5.7       NA   8.3      -3.3
+#> # … with 28,252 more rows, and 2 more variables: atmos_pres <dbl>,
 #> #   rh <dbl>
 ```
 
 There are lots of stations and we at least need an identifier to access
-met data. We can examine station metadata using the
+the met data. We can examine station metadata using the
 `get_station_metadata()` function (which has those ID values in the
 first column). Let’s get all of the stations located in Norway.
 
@@ -176,11 +176,11 @@ additional_data_fields
 #> # A tibble: 5 x 3
 #>   id           category total_count
 #>   <chr>        <chr>          <int>
-#> 1 013620-99999 AJ1              194
-#> 2 013620-99999 KA1              715
-#> 3 013620-99999 MA1             5769
-#> 4 013620-99999 MD1             8083
-#> 5 013620-99999 OC1              485
+#> 1 013620-99999 AJ1             1709
+#> 2 013620-99999 KA1             2267
+#> 3 013620-99999 MA1            19241
+#> 4 013620-99999 MD1            25284
+#> 5 013620-99999 OC1             1329
 ```
 
 We can use **purrr**’s `map_df()` function to get additional data field
@@ -212,29 +212,29 @@ coverage_tbl <-
 
 ``` r
 coverage_tbl
-#> # A tibble: 124 x 65
-#>    id       GA1   GF1   MA1   MW1   OC1   AA1   AJ1   AY1   AZ1   ED1   IA1
-#>    <chr>  <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
-#>  1 01023…   524   526  9095   227    74    NA    NA    NA    NA    NA    NA
-#>  2 04063… 16139 16229 14640  5045   734   604   231  1397   187     3   236
-#>  3 06209…    NA    NA    NA    NA   544    NA    NA    NA    NA    NA    NA
-#>  4 06229…    NA    NA    NA    NA    25    NA    NA    NA    NA    NA    NA
-#>  5 06235… 57648 65189 65565    NA  2677 12647     4    NA  5798    19    NA
-#>  6 06239… 30739 39468 39544    NA   610    NA    NA    NA  3533    NA    NA
-#>  7 06270… 56375 63326 63427    NA  2013 10656    NA    NA  3941    25    NA
-#>  8 06277…    NA    NA    NA    NA   781  3065     9    NA    NA    NA    NA
-#>  9 06285…    NA    NA    NA    NA  7013    NA    NA    NA    NA    NA    NA
-#> 10 06286…    NA    NA    NA    NA   727  3102    12    NA    NA    NA    NA
-#> # … with 114 more rows, and 53 more variables: KA1 <int>, MD1 <int>,
-#> #   AW1 <int>, IA2 <int>, GG1 <int>, ME1 <int>, AU1 <int>, GD1 <int>,
-#> #   AL1 <int>, AN1 <int>, AX1 <int>, MG1 <int>, MV1 <int>, OE1 <int>,
-#> #   AB1 <int>, AD1 <int>, AE1 <int>, AH1 <int>, AI1 <int>, KB1 <int>,
-#> #   KC1 <int>, KD1 <int>, KE1 <int>, KG1 <int>, MF1 <int>, MH1 <int>,
-#> #   MK1 <int>, RH1 <int>, AK1 <int>, AM1 <int>, WA1 <int>, UA1 <int>,
-#> #   UG2 <int>, SA1 <int>, AO1 <int>, CB1 <int>, CF1 <int>, CG1 <int>,
-#> #   CH1 <int>, CI1 <int>, CN1 <int>, CN2 <int>, CN3 <int>, CO1 <int>,
-#> #   CR1 <int>, CT1 <int>, CU1 <int>, CV1 <int>, CW1 <int>, GH1 <int>,
-#> #   IB2 <int>, KF1 <int>, OB1 <int>
+#> # A tibble: 124 x 66
+#>    id      GA1    GF1    MA1   MW1   OC1   AA1   AJ1   AY1   AZ1   ED1
+#>    <chr> <int>  <int>  <int> <int> <int> <int> <int> <int> <int> <int>
+#>  1 0102…  1441   1446  26280   687   391    NA    NA    NA    NA    NA
+#>  2 0406… 26147  26373  23600  8226  1265   976   318  2250   303   189
+#>  3 0620…    NA     NA     NA    NA   637    NA    NA    NA    NA    NA
+#>  4 0622…    NA     NA     NA    NA    25    NA    NA    NA    NA    NA
+#>  5 0623… 95108 106059 106556    NA  4218 20757     4    NA  9876  2946
+#>  6 0623… 52352  65236  65325    NA  1042    NA    NA    NA  6490    NA
+#>  7 0627… 95562 105697 105827    NA  3262 18833   148    NA  7698  4409
+#>  8 0627…    NA     NA     NA    NA   876  4613     9    NA    NA    NA
+#>  9 0628…    NA     NA     NA    NA 10953    NA    NA    NA    NA    NA
+#> 10 0628…    NA     NA     NA    NA   824  4658    13    NA    NA    NA
+#> # … with 114 more rows, and 55 more variables: IA1 <int>, KA1 <int>,
+#> #   MD1 <int>, AW1 <int>, IA2 <int>, GG1 <int>, ME1 <int>, HL1 <int>,
+#> #   AU1 <int>, GD1 <int>, AL1 <int>, AN1 <int>, AX1 <int>, MG1 <int>,
+#> #   MV1 <int>, OE1 <int>, AB1 <int>, AD1 <int>, AE1 <int>, AH1 <int>,
+#> #   AI1 <int>, KB1 <int>, KC1 <int>, KD1 <int>, KE1 <int>, KG1 <int>,
+#> #   MF1 <int>, MH1 <int>, MK1 <int>, RH1 <int>, AK1 <int>, AM1 <int>,
+#> #   WA1 <int>, UA1 <int>, UG2 <int>, SA1 <int>, AO1 <int>, CB1 <int>,
+#> #   CF1 <int>, CG1 <int>, CH1 <int>, CI1 <int>, CN1 <int>, CN2 <int>,
+#> #   CN3 <int>, CO1 <int>, CR1 <int>, CT1 <int>, CU1 <int>, CV1 <int>,
+#> #   CW1 <int>, GH1 <int>, IB2 <int>, KF1 <int>, OB1 <int>
 ```
 
 For the `"KAWAIHAE"` station in Hawaii, some interesting data fields are
@@ -272,7 +272,7 @@ kawaihae_sst <-
 
 ``` r
 kawaihae_sst
-#> # A tibble: 5 x 4
+#> # A tibble: 6 x 4
 #> # Groups:   year [2]
 #>    year month avg_temp avg_sst
 #>   <dbl> <dbl>    <dbl>   <dbl>
@@ -281,6 +281,7 @@ kawaihae_sst
 #> 3  2018     2     23.7    25.1
 #> 4  2018     3     23.8    25.0
 #> 5  2018     4     25.6    26.3
+#> 6  2018    12     26.5    25.9
 ```
 
 ## Installation
