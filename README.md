@@ -20,8 +20,7 @@ one is `"725030-14732"`). This station has a pretty long history
 lga_met_data <- 
   get_met_data(
     station_id = "725030-14732",
-    startyear = 2017,
-    endyear = 2018
+    years = 2017:2018
   )
 ```
 
@@ -79,7 +78,7 @@ stations (above 1000 meters) in Norway.
 ``` r
 norway_high_elev <-
   stations_norway %>% 
-  dplyr::filter(elev > 1000)
+  filter(elev > 1000)
 
 norway_high_elev
 #> # A tibble: 12 x 15
@@ -121,13 +120,13 @@ station_data <-
   get_station_metadata() %>%
   filter(name == "JUVVASSHOE") %>%
   pull(id) %>%
-  get_met_data(startyear = 2011, endyear = 2019)
+  get_met_data(years = 2011:2019)
 
 high_temp_data <-
   station_data %>%
   select(id, time, wd, ws, temp) %>% 
   filter(temp > 16) %>%
-  mutate(temp_f = (temp * (9/5)) + 32) %>%
+  mutate(temp_f = ((temp * (9/5)) + 32) %>% round(1)) %>%
   arrange(desc(temp_f))
 ```
 
@@ -144,8 +143,8 @@ high_temp_data
 #>  6 013620-99999 2019-07-26 14:00:00   150     4  17.5   63.5
 #>  7 013620-99999 2014-07-23 17:00:00   300     4  17.3   63.1
 #>  8 013620-99999 2019-07-28 16:00:00   130     6  17.3   63.1
-#>  9 013620-99999 2014-07-23 18:00:00   280     3  17.2   63.0
-#> 10 013620-99999 2018-07-04 15:00:00   340     2  17.2   63.0
+#>  9 013620-99999 2014-07-23 18:00:00   280     3  17.2   63  
+#> 10 013620-99999 2018-07-04 15:00:00   340     2  17.2   63  
 #> # … with 40 more rows
 ```
 
@@ -169,17 +168,14 @@ additional_data_fields <-
   get_station_metadata() %>%
   filter(name == "JUVVASSHOE") %>%
   pull(id) %>%
-  station_coverage(
-    startyear = 2015,
-    endyear = 2015
-  )
+  station_coverage(years = 2015)
 ```
 
 ``` r
 additional_data_fields
 #> # A tibble: 5 x 3
 #>   id           category total_count
-#>   <chr>        <chr>          <dbl>
+#>   <chr>        <chr>          <int>
 #> 1 013620-99999 AJ1              194
 #> 2 013620-99999 KA1              715
 #> 3 013620-99999 MA1             5769
@@ -207,38 +203,38 @@ coverage_tbl <-
         pull(id) %>%
         .[[x]] %>%
         station_coverage(
-          startyear = 2018,
-          endyear = 2019,
+          years = 2018:2019,
           wide_tbl = TRUE
         )
-    })
+    }
+  )
 ```
 
 ``` r
 coverage_tbl
 #> # A tibble: 124 x 65
 #>    id       GA1   GF1   MA1   MW1   OC1   AA1   AJ1   AY1   AZ1   ED1   IA1
-#>    <chr>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#>    <chr>  <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
 #>  1 01023…   524   526  9095   227    74    NA    NA    NA    NA    NA    NA
-#>  2 04063… 16054 16144 14562  5026   734   600   231  1392   187     3   236
+#>  2 04063… 16139 16229 14640  5045   734   604   231  1397   187     3   236
 #>  3 06209…    NA    NA    NA    NA   544    NA    NA    NA    NA    NA    NA
-#>  4 06229…    NA    NA    NA    NA    24    NA    NA    NA    NA    NA    NA
-#>  5 06235… 57233 64763 65139    NA  2627 12577     4    NA  5762    19    NA
-#>  6 06239… 30553 39281 39357    NA   609    NA    NA    NA  3507    NA    NA
-#>  7 06270… 56047 62986 63087    NA  2007 10613    NA    NA  3918    25    NA
-#>  8 06277…    NA    NA    NA    NA   781  3053     9    NA    NA    NA    NA
-#>  9 06285…    NA    NA    NA    NA  6942    NA    NA    NA    NA    NA    NA
-#> 10 06286…    NA    NA    NA    NA   727  3090    12    NA    NA    NA    NA
-#> # … with 114 more rows, and 53 more variables: KA1 <dbl>, MD1 <dbl>,
-#> #   AW1 <dbl>, IA2 <dbl>, GG1 <dbl>, ME1 <dbl>, AU1 <dbl>, GD1 <dbl>,
-#> #   AL1 <dbl>, AN1 <dbl>, AX1 <dbl>, MG1 <dbl>, MV1 <dbl>, OE1 <dbl>,
-#> #   AB1 <dbl>, AD1 <dbl>, AE1 <dbl>, AH1 <dbl>, AI1 <dbl>, KB1 <dbl>,
-#> #   KC1 <dbl>, KD1 <dbl>, KE1 <dbl>, KG1 <dbl>, MF1 <dbl>, MH1 <dbl>,
-#> #   MK1 <dbl>, RH1 <dbl>, AK1 <dbl>, AM1 <dbl>, WA1 <dbl>, UA1 <dbl>,
-#> #   UG2 <dbl>, SA1 <dbl>, AO1 <dbl>, CB1 <dbl>, CF1 <dbl>, CG1 <dbl>,
-#> #   CH1 <dbl>, CI1 <dbl>, CN1 <dbl>, CN2 <dbl>, CN3 <dbl>, CO1 <dbl>,
-#> #   CR1 <dbl>, CT1 <dbl>, CU1 <dbl>, CV1 <dbl>, CW1 <dbl>, GH1 <dbl>,
-#> #   IB2 <dbl>, KF1 <dbl>, OB1 <dbl>
+#>  4 06229…    NA    NA    NA    NA    25    NA    NA    NA    NA    NA    NA
+#>  5 06235… 57648 65189 65565    NA  2677 12647     4    NA  5798    19    NA
+#>  6 06239… 30739 39468 39544    NA   610    NA    NA    NA  3533    NA    NA
+#>  7 06270… 56375 63326 63427    NA  2013 10656    NA    NA  3941    25    NA
+#>  8 06277…    NA    NA    NA    NA   781  3065     9    NA    NA    NA    NA
+#>  9 06285…    NA    NA    NA    NA  7013    NA    NA    NA    NA    NA    NA
+#> 10 06286…    NA    NA    NA    NA   727  3102    12    NA    NA    NA    NA
+#> # … with 114 more rows, and 53 more variables: KA1 <int>, MD1 <int>,
+#> #   AW1 <int>, IA2 <int>, GG1 <int>, ME1 <int>, AU1 <int>, GD1 <int>,
+#> #   AL1 <int>, AN1 <int>, AX1 <int>, MG1 <int>, MV1 <int>, OE1 <int>,
+#> #   AB1 <int>, AD1 <int>, AE1 <int>, AH1 <int>, AI1 <int>, KB1 <int>,
+#> #   KC1 <int>, KD1 <int>, KE1 <int>, KG1 <int>, MF1 <int>, MH1 <int>,
+#> #   MK1 <int>, RH1 <int>, AK1 <int>, AM1 <int>, WA1 <int>, UA1 <int>,
+#> #   UG2 <int>, SA1 <int>, AO1 <int>, CB1 <int>, CF1 <int>, CG1 <int>,
+#> #   CH1 <int>, CI1 <int>, CN1 <int>, CN2 <int>, CN3 <int>, CO1 <int>,
+#> #   CR1 <int>, CT1 <int>, CU1 <int>, CV1 <int>, CW1 <int>, GH1 <int>,
+#> #   IB2 <int>, KF1 <int>, OB1 <int>
 ```
 
 For the `"KAWAIHAE"` station in Hawaii, some interesting data fields are
@@ -259,14 +255,13 @@ categories can be included).
 kawaihae_sst <- 
   get_met_data(
     station_id = "997173-99999",
-    startyear = 2017,
-    endyear = 2018,
+    years = 2017:2018,
     add_fields = "SA1"
   ) %>%
   mutate(
     year = lubridate::year(time),
     month = lubridate::month(time)
-    ) %>%
+  ) %>%
   filter(sa1_2 == 1) %>%
   group_by(year, month) %>%
   summarize(

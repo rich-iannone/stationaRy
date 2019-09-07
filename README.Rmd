@@ -31,8 +31,7 @@ Let's get some met data from La Guardia Airport! (the ID value for that one is `
 lga_met_data <- 
   get_met_data(
     station_id = "725030-14732",
-    startyear = 2017,
-    endyear = 2018
+    years = 2017:2018
   )
 ```
 
@@ -55,7 +54,7 @@ This table can be greatly reduced to isolate the stations of interest. For examp
 ```{r norway_high_elev}
 norway_high_elev <-
   stations_norway %>% 
-  dplyr::filter(elev > 1000)
+  filter(elev > 1000)
 
 norway_high_elev
 ```
@@ -73,13 +72,13 @@ station_data <-
   get_station_metadata() %>%
   filter(name == "JUVVASSHOE") %>%
   pull(id) %>%
-  get_met_data(startyear = 2011, endyear = 2019)
+  get_met_data(years = 2011:2019)
 
 high_temp_data <-
   station_data %>%
   select(id, time, wd, ws, temp) %>% 
   filter(temp > 16) %>%
-  mutate(temp_f = (temp * (9/5)) + 32) %>%
+  mutate(temp_f = ((temp * (9/5)) + 32) %>% round(1)) %>%
   arrange(desc(temp_f))
 ```
 
@@ -98,10 +97,7 @@ additional_data_fields <-
   get_station_metadata() %>%
   filter(name == "JUVVASSHOE") %>%
   pull(id) %>%
-  station_coverage(
-    startyear = 2015,
-    endyear = 2015
-  )
+  station_coverage(years = 2015)
 ```
 
 ```{r additional_data_fields}
@@ -123,11 +119,11 @@ coverage_tbl <-
         pull(id) %>%
         .[[x]] %>%
         station_coverage(
-          startyear = 2018,
-          endyear = 2019,
+          years = 2018:2019,
           wide_tbl = TRUE
         )
-    })
+    }
+  )
 ```
 
 ```{r coverage_tbl}
@@ -145,14 +141,13 @@ Combining the use of `get_met_data()` with functions from **dplyr**, we can crea
 kawaihae_sst <- 
   get_met_data(
     station_id = "997173-99999",
-    startyear = 2017,
-    endyear = 2018,
+    years = 2017:2018,
     add_fields = "SA1"
   ) %>%
   mutate(
     year = lubridate::year(time),
     month = lubridate::month(time)
-    ) %>%
+  ) %>%
   filter(sa1_2 == 1) %>%
   group_by(year, month) %>%
   summarize(
@@ -169,7 +164,7 @@ kawaihae_sst
 
 To install the development version of **stationary**, use the following:
 
-```R
+```r
 remotes::install_github("rich-iannone/stationary")
 ```
 
