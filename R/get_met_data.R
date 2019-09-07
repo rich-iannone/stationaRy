@@ -69,10 +69,12 @@ get_met_data <- function(station_id,
   }
   
   if (is.null(years)) {
-    years <- 1900:2100
+    years <- 1800:2200
   }
   
   years <- sort(years)
+  
+  buffered_years <- years %>% get_buffered_years()
   
   if (isTRUE(full_data)) {
     add_fields <- NULL
@@ -95,13 +97,13 @@ get_met_data <- function(station_id,
   data_files <- 
     get_local_file_list(
       station_id = station_id,
-      years = years,
+      years = buffered_years,
       local_file_dir = local_file_dir
     )
   
   tbl <- empty_met_tbl()
   
-  for (i in seq(data_files)){
+  for (i in seq(data_files)) {
     
     # Read data from mandatory data section of each file,
     # which is a fixed-width string
@@ -185,7 +187,8 @@ get_met_data <- function(station_id,
   }
   
   if (is.null(add_fields) & full_data == FALSE) {
-    return(tbl)
+    
+    return(tbl %>% trim_tbl_to_years(years = years))
   }
   
   add_data <- c()
@@ -254,5 +257,5 @@ get_met_data <- function(station_id,
     }
   }
   
-  tbl
+  tbl %>% trim_tbl_to_years(years = years)
 }
