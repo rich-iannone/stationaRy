@@ -5,4 +5,5 @@
 ^CODE_OF_CONDUCT\.md$
 ^scripts$
 ^data-cached$
+^data-raw$
 ^LICENSE\.md$
