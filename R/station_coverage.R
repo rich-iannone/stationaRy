@@ -2,10 +2,11 @@
 station_coverage <- function(station_id,
                              years,
                              wide_tbl = FALSE,
+                             grouping = NULL,
                              use_local_files = FALSE,
                              local_file_dir = NULL) {
   
-  data_categories_counts <- 
+  add_data_tbl <- 
     get_met_data(
       station_id,
       years = years,
@@ -14,28 +15,69 @@ station_coverage <- function(station_id,
       local_file_dir = local_file_dir
     )
   
+  add_data_vec <- add_data_tbl %>% dplyr::pull(add_data)
+  
+  add_data_tbl <-
+    add_data_tbl %>%
+    dplyr::select(-add_data)
+  
   data_categories <- field_categories() %>% toupper()
   
-  # Determine which data categories have data
-  data_categories_available <- data_categories[data_categories_counts > 0]
-  
-  # Get those data counts that are greater than 0
-  data_categories_counts <- data_categories_counts[data_categories_counts > 0]
-  
-  # Create a data frame composed of categories and their counts
-  data_categories_tbl <- 
-    dplyr::tibble(
-      id = station_id,
-      category = data_categories_available,
-      total_count = data_categories_counts
-    )
-  
-  if (isTRUE(wide_tbl)) {
+  for (i in seq_along(data_categories)) {
     
-    data_categories_tbl <- 
-      data_categories_tbl %>% 
-      tidyr::spread(key = category, value = total_count)
+    counts <-
+      stringr::str_detect(add_data_vec, data_categories[i]) %>%
+      as.integer()
+    
+    add_data_tbl[, data_categories[i]] <- counts
   }
   
-  data_categories_tbl
+  summarized_cols <- colnames(add_data_tbl) %>% base::setdiff(c("id", "time"))
+
+  if (is.null(grouping)) {
+    
+    add_data_tbl <- 
+      add_data_tbl %>%
+      dplyr::group_by() %>%
+      dplyr::summarize_at(summarized_cols, sum) %>%
+      dplyr::ungroup() %>%
+      dplyr::mutate(id = station_id) %>%
+      dplyr::select(id, dplyr::everything())
+  }
+  
+  if (!is.null(grouping) && grouping == "year") {
+    
+    add_data_tbl <- 
+      add_data_tbl %>%
+      dplyr::mutate(year = lubridate::year(time)) %>%
+      dplyr::group_by(year) %>%
+      dplyr::summarize_at(summarized_cols, sum) %>%
+      dplyr::ungroup() %>%
+      dplyr::mutate(id = station_id) %>%
+      dplyr::select(id, dplyr::everything())
+  }
+  
+  if (!is.null(grouping) && grouping == "month") {
+    
+    add_data_tbl <- 
+      add_data_tbl %>%
+      dplyr::mutate(
+        year = lubridate::year(time),
+        month = lubridate::month(time)
+      ) %>%
+      dplyr::group_by(year, month) %>%
+      dplyr::summarize_at(summarized_cols, sum) %>%
+      dplyr::ungroup() %>% 
+      dplyr::mutate(id = station_id) %>%
+      dplyr::select(id, dplyr::everything())
+  }
+  
+  if (!isTRUE(wide_tbl)) {
+    
+    add_data_tbl <- 
+      add_data_tbl %>%
+      tidyr::gather(key = "category", value = "count", summarized_cols)
+  }
+  
+  add_data_tbl
 }
