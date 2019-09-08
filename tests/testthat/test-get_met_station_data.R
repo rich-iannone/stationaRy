@@ -261,61 +261,6 @@ test_that("The `get_inventory_tbl()` fcn provides the expected table", {
     expect_equal(c(rep("character", 3), rep("integer", 14)))
 })
 
-test_that("The `get_history_tbl()` fcn provides the expected table", {
-  
-  history_tbl <- get_history_tbl()
-  
-  history_tbl %>% expect_is("tbl_df")
-  
-  history_tbl %>%
-    colnames() %>%
-    expect_equal(
-      c(
-        "id", "usaf", "wban", "name", "country", "state", "icao", "lat", "lon",
-        "elev", "begin_date", "end_date", "begin_year", "end_year"
-      )
-    )
-  
-  history_tbl %>%
-    nrow() %>%
-    expect_gt(25000)
-  
-  history_tbl %>%
-    lapply(class) %>% unlist() %>% unname() %>%
-    expect_equal(
-      c(
-        rep("character", 7), rep("numeric", 3), "Date", "Date",
-        "integer", "integer"
-      )
-    )
-  
-  history_tbl_with_tz <- get_history_tbl(perform_tz_lookup = TRUE)
-  
-  history_tbl_with_tz %>% expect_is("tbl_df")
-  
-  history_tbl_with_tz %>%
-    colnames() %>%
-    expect_equal(
-      c(
-        "id", "usaf", "wban", "name", "country", "state", "icao", "lat", "lon",
-        "elev", "begin_date", "end_date", "begin_year", "end_year", "tz_name"
-      )
-    )
-  
-  history_tbl_with_tz %>%
-    nrow() %>%
-    expect_gt(25000)
-  
-  history_tbl_with_tz %>%
-    lapply(class) %>% unlist() %>% unname() %>%
-    expect_equal(
-      c(
-        rep("character", 7), rep("numeric", 3), "Date", "Date",
-        "integer", "integer", "character"
-      )
-    )
-})
-
 test_that("Messages or errors occur in certain situations", {
   
   get_met_data(
