@@ -205,6 +205,14 @@ get_met_data <- function(station_id,
       )
   }
   
+  add_data_tbl <- 
+    tbl %>%
+    dplyr::select(id, time) %>%
+    dplyr::mutate(add_data = add_data) %>%
+    trim_tbl_to_years(years = years)
+  
+  add_data_vec <- add_data_tbl %>% dplyr::pull(add_data)
+  
   # Create vector of additional data categories
   data_categories <- field_categories() %>% toupper()
   
@@ -214,11 +222,11 @@ get_met_data <- function(station_id,
   for (i in seq_along(data_categories)) {
     
     data_categories_counts[i] <-
-      stringr::str_detect(add_data, data_categories[i]) %>% sum()
+      stringr::str_detect(add_data_vec, data_categories[i]) %>% sum()
   }
   
   if (!inherits(full_data, "logical") && full_data == "report") {
-    return(data_categories_counts)
+    return(add_data_tbl)
   }
   
   # Filter those measured parameters and obtain string of identifiers
@@ -231,14 +239,16 @@ get_met_data <- function(station_id,
     add_fields <- data_categories[data_categories %in% add_fields]
   }
   
-  if (length(add_fields)) {
+  tbl <- tbl %>% trim_tbl_to_years(years = years)
+  
+  if (length(add_fields) > 0) {
     
     for (field in add_fields) {
       
       tbl <- 
         tbl %>%
         bind_additional_data(
-          add_data = add_data,
+          add_data = add_data_vec,
           category_key = field
         )
     }
@@ -251,11 +261,11 @@ get_met_data <- function(station_id,
       tbl <- 
         tbl %>%
         bind_additional_data(
-          add_data = add_data,
+          add_data = add_data_vec,
           category_key = category
         )
     }
   }
   
-  tbl %>% trim_tbl_to_years(years = years)
+  tbl
 }
