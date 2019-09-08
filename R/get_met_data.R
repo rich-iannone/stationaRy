@@ -64,7 +64,7 @@ get_met_data <- function(station_id,
                          local_file_dir = NULL) {
   
   # Check whether `years` is numeric
-  if (!is.numeric(years)) {
+  if (!is.null(years) && !is.numeric(years)) {
     stop("Please provide numeric values for `years`.", call. = FALSE)
   }
   
