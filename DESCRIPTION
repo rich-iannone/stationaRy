@@ -2,8 +2,9 @@ Type: Package
 Package: stationary
 Title: Detailed Meteorological Data from Stations All Over the World
 Version: 0.4.2
-Description: Acquire hourly meteorological data from station located all over
-    the world.
+Description: Acquire hourly meteorological data from stations located all over
+    the world. There is a wealth of data available, with historic weather data
+    accessible from nearly 30,000 stations.
 Authors@R:
     person("Richard", "Iannone", , "riannone@me.com", c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X"))

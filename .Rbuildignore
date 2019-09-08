@@ -7,3 +7,4 @@
 ^data-cached$
 ^data-raw$
 ^LICENSE\.md$
+^codecov\.yml$
