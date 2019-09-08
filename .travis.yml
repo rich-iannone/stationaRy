@@ -6,3 +6,38 @@ warnings_are_errors: false
 
 after_success:
   - Rscript -e 'covr::codecov()'
+  
+jobs:
+  include:
+    - stage: "R CMD check"
+      r: oldrel
+    - r: release
+    - r: devel
+
+    - stage: deploy
+      name: covr
+      r: release
+      r_binary_packages:
+        - covr
+      script:
+        - Rscript -e "covr::codecov()"
+
+    - stage: deploy
+      name: pkgdown
+      r: release
+      if: branch IN (master)
+      script:
+      - Rscript -e "remotes::install_cran(c('pkgdown', 'devtools'))"
+      - Rscript -e "devtools::install()"
+      - Rscript -e "Sys.setenv(FULLNAME = 'Richard Iannone'); pkgdown::build_site()"
+      - Rscript -e "remove.packages(devtools::as.package('.')$package)"
+      deploy:
+        provider: pages
+        script: Rscript -e 'devtools::install()'
+        local-dir: docs
+        skip-cleanup: true
+        keep-history: false
+        on:
+          all_branches: true
+        github-token:
+          secure: "wf/xifnc+TFgF00dGtWG2NxyeXJvS0gWhqBB3MvvxLRFglgpqMu3nxmjB73/h4UuKT9U2Q/nTCKTRK7mgfIH7MCib+bQaFe3LfmpVW24YWZyQTCu0kEQdU6h6mPx5CNA2TcfBlRf4uRgNRfA0+B5HMYAbirdnWIfXcQCm14W3M/nTzC0UFvr2Z5+iqvDLhF+4exMYAFc2bQOwJDCN4KxPPdAkX23arJOyd+OvXqxZTYabAAq+FucCH8HQz8QVXEEq9scFaZxM35Y+xhDayBS44C58+2zwNPySNiq8LBXcAgehX6dO4hemz/LvGq8wIMb/zzMXoQ5aA0yTUjFoXG0b56qQH/4Lm8thOEDevnKK96eNENxiGkkYtmtuu1/r7d8mh4ADdfmRss1OnX6xULJ4VO2njQhw9lRWAzsXqjvra6UQ8wI2uOGtYNmNt1kajVJNBf8eDadCB/DwbwrBySj0bVdAS9zRqBS8qg78hkILoAGrGlMPx9sp6NkW/EZiWB4U1yrLrMf7n3PMTIJ/xChqdNy9eacOVSXEFh1h5g0jdAU+QZGMEC+GEmW+t9EeaA12Zdvg7FT0cuoPIfis6xZgoYTB17rSUyjA+ofKs3iKQneGqCTsvn0qbd9qHEUaYNFOUh8JsE3hm4/CB4v4KImHL4khHCJK4U/yBcnR5Um39Y="
