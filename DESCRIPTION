@@ -20,7 +20,6 @@ Imports:
     progress (>= 1.2.2),
     stringr (>= 1.4.0),
     tidyr (>= 0.8.3),
-    leaflet (>= 2.0.2),
     magrittr
 Suggests:
     testthat
