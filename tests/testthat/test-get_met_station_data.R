@@ -37,7 +37,7 @@ test_that("The `get_met_data()` fcn returns correct number of columns", {
   
   met_tbl <- get_met_data(station_id = "999999-63897")
   
-  met_tbl %>% expect_type("tbl_df")
+  met_tbl %>% expect_type("list")
   
   met_tbl %>% 
     dplyr::pull(id) %>%
@@ -125,7 +125,7 @@ test_that("The `station_coverage()` fcn can provide an additional data report", 
   
   stn_coverage_tbl_year %>%
     dplyr::pull(year) %>%
-    expect_type("numeric")
+    expect_is("numeric")
   
   stn_coverage_tbl_year %>%
     dplyr::pull(count) %>%
@@ -152,11 +152,11 @@ test_that("The `station_coverage()` fcn can provide an additional data report", 
   
   stn_coverage_tbl_month %>%
     dplyr::pull(year) %>%
-    expect_type("numeric")
+    expect_is("numeric")
   
   stn_coverage_tbl_month %>%
     dplyr::pull(month) %>%
-    expect_type("numeric")
+    expect_is("numeric")
   
   stn_coverage_tbl_month %>%
     dplyr::pull(count) %>%
@@ -318,12 +318,11 @@ test_that("The `get_history_tbl()` fcn provides the expected table", {
 
 test_that("Messages or errors occur in certain situations", {
   
-  # Expect an error if the `station_id` isn't valid
-  expect_error(
-    get_met_data(
-      station_id = "722315-53917"
-    )
-  )
+  get_met_data(
+    station_id = "722315-539173"
+  ) %>%
+    nrow() %>%
+    expect_equal(0)
   
   expect_message(
     get_met_data(
