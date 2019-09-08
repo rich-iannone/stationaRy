@@ -109,7 +109,7 @@ We can use **purrr**'s `map_df()` function to get additional data field coverage
 ```{r many_stations_fields, echo=TRUE, results="hide"}
 stns <- 
   get_station_metadata() %>%
-  filter(elev >= 0 & elev < 2 & end_year == 2019)
+  filter(country == "NO", elev <= 5 & end_year == 2019)
 
 coverage_tbl <- 
   purrr::map_df(
@@ -119,7 +119,7 @@ coverage_tbl <-
         pull(id) %>%
         .[[x]] %>%
         station_coverage(
-          years = 2018:2019,
+          years = 2019,
           wide_tbl = TRUE
         )
     }

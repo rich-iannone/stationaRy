@@ -173,14 +173,20 @@ additional_data_fields <-
 
 ``` r
 additional_data_fields
-#> # A tibble: 5 x 3
-#>   id           category total_count
-#>   <chr>        <chr>          <int>
-#> 1 013620-99999 AJ1             1709
-#> 2 013620-99999 KA1             2267
-#> 3 013620-99999 MA1            19241
-#> 4 013620-99999 MD1            25284
-#> 5 013620-99999 OC1             1329
+#> # A tibble: 87 x 3
+#>    id           category count
+#>    <chr>        <chr>    <int>
+#>  1 013620-99999 AA1          0
+#>  2 013620-99999 AB1          0
+#>  3 013620-99999 AC1          0
+#>  4 013620-99999 AD1          0
+#>  5 013620-99999 AE1          0
+#>  6 013620-99999 AG1          0
+#>  7 013620-99999 AH1          0
+#>  8 013620-99999 AI1          0
+#>  9 013620-99999 AJ1        194
+#> 10 013620-99999 AK1          0
+#> # … with 77 more rows
 ```
 
 We can use **purrr**’s `map_df()` function to get additional data field
@@ -193,7 +199,7 @@ stations have the particular fields we need.
 ``` r
 stns <- 
   get_station_metadata() %>%
-  filter(elev >= 0 & elev < 2 & end_year == 2019)
+  filter(country == "NO", elev <= 5 & end_year == 2019)
 
 coverage_tbl <- 
   purrr::map_df(
@@ -203,7 +209,7 @@ coverage_tbl <-
         pull(id) %>%
         .[[x]] %>%
         station_coverage(
-          years = 2018:2019,
+          years = 2019,
           wide_tbl = TRUE
         )
     }
@@ -212,29 +218,38 @@ coverage_tbl <-
 
 ``` r
 coverage_tbl
-#> # A tibble: 124 x 66
-#>    id      GA1    GF1    MA1   MW1   OC1   AA1   AJ1   AY1   AZ1   ED1
-#>    <chr> <int>  <int>  <int> <int> <int> <int> <int> <int> <int> <int>
-#>  1 0102…  1441   1446  26280   687   391    NA    NA    NA    NA    NA
-#>  2 0406… 26147  26373  23600  8226  1265   976   318  2250   303   189
-#>  3 0620…    NA     NA     NA    NA   637    NA    NA    NA    NA    NA
-#>  4 0622…    NA     NA     NA    NA    25    NA    NA    NA    NA    NA
-#>  5 0623… 95108 106059 106556    NA  4218 20757     4    NA  9876  2946
-#>  6 0623… 52352  65236  65325    NA  1042    NA    NA    NA  6490    NA
-#>  7 0627… 95562 105697 105827    NA  3262 18833   148    NA  7698  4409
-#>  8 0627…    NA     NA     NA    NA   876  4613     9    NA    NA    NA
-#>  9 0628…    NA     NA     NA    NA 10953    NA    NA    NA    NA    NA
-#> 10 0628…    NA     NA     NA    NA   824  4658    13    NA    NA    NA
-#> # … with 114 more rows, and 55 more variables: IA1 <int>, KA1 <int>,
-#> #   MD1 <int>, AW1 <int>, IA2 <int>, GG1 <int>, ME1 <int>, HL1 <int>,
-#> #   AU1 <int>, GD1 <int>, AL1 <int>, AN1 <int>, AX1 <int>, MG1 <int>,
-#> #   MV1 <int>, OE1 <int>, AB1 <int>, AD1 <int>, AE1 <int>, AH1 <int>,
-#> #   AI1 <int>, KB1 <int>, KC1 <int>, KD1 <int>, KE1 <int>, KG1 <int>,
-#> #   MF1 <int>, MH1 <int>, MK1 <int>, RH1 <int>, AK1 <int>, AM1 <int>,
-#> #   WA1 <int>, UA1 <int>, UG2 <int>, SA1 <int>, AO1 <int>, CB1 <int>,
+#> # A tibble: 16 x 88
+#>    id       AA1   AB1   AC1   AD1   AE1   AG1   AH1   AI1   AJ1   AK1   AL1
+#>    <chr>  <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+#>  1 01023…     0     0     0     0     0     0     0     0     0     0     0
+#>  2 01046…     0     0     0     0     0     0     0     0     0     0     0
+#>  3 01049…  5409     0     0     0     0     0     0     0     0     0     0
+#>  4 01107…   976     0     0     0     0     0     0     0     0     0     0
+#>  5 01139…     0     0     0     0     0     0     0     0     0     0     0
+#>  6 01146…  5620     0     0     0     0     0     0     0     0     0     0
+#>  7 01162…     1     0     0     0     0     0     0     0     0     0     0
+#>  8 01167…   347     0     0     0     0     0     0     0   120     0     0
+#>  9 01217…     0     0     0     0     0     0     0     0     0     0     0
+#> 10 01225…     0     0     0     0     0     0     0     0     0     0     0
+#> 11 01234…   975     0     0     0     0     0     0     0     0     0     0
+#> 12 01290…     0     0     0     0     0     0     0     0     0     0     0
+#> 13 01332…  5859     0     0     0     0     0     0     0     0     0     0
+#> 14 01355…  5701     0     0     0     0     0     0     0     0     0     0
+#> 15 01467…     0     0     0     0     0     0     0     0     0     0     0
+#> 16 01476…     0     0     0     0     0     0     0     0     0     0     0
+#> # … with 76 more variables: AM1 <int>, AN1 <int>, AO1 <int>, AP1 <int>,
+#> #   AU1 <int>, AW1 <int>, AX1 <int>, AY1 <int>, AZ1 <int>, CB1 <int>,
 #> #   CF1 <int>, CG1 <int>, CH1 <int>, CI1 <int>, CN1 <int>, CN2 <int>,
-#> #   CN3 <int>, CO1 <int>, CR1 <int>, CT1 <int>, CU1 <int>, CV1 <int>,
-#> #   CW1 <int>, GH1 <int>, IB2 <int>, KF1 <int>, OB1 <int>
+#> #   CN3 <int>, CN4 <int>, CR1 <int>, CT1 <int>, CU1 <int>, CV1 <int>,
+#> #   CW1 <int>, CX1 <int>, CO1 <int>, CO2 <int>, ED1 <int>, GA1 <int>,
+#> #   GD1 <int>, GF1 <int>, GG1 <int>, GH1 <int>, GJ1 <int>, GK1 <int>,
+#> #   GL1 <int>, GM1 <int>, GN1 <int>, GO1 <int>, GP1 <int>, GQ1 <int>,
+#> #   GR1 <int>, HL1 <int>, IA1 <int>, IA2 <int>, IB1 <int>, IB2 <int>,
+#> #   IC1 <int>, KA1 <int>, KB1 <int>, KC1 <int>, KD1 <int>, KE1 <int>,
+#> #   KF1 <int>, KG1 <int>, MA1 <int>, MD1 <int>, ME1 <int>, MF1 <int>,
+#> #   MG1 <int>, MH1 <int>, MK1 <int>, MV1 <int>, MW1 <int>, OA1 <int>,
+#> #   OB1 <int>, OC1 <int>, OE1 <int>, RH1 <int>, SA1 <int>, ST1 <int>,
+#> #   UA1 <int>, UG1 <int>, UG2 <int>, WA1 <int>, WD1 <int>, WG1 <int>
 ```
 
 For the `"KAWAIHAE"` station in Hawaii, some interesting data fields are
