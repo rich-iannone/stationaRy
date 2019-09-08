@@ -52,14 +52,6 @@ get_tz_for_station <- function(station_id) {
     history_tbl %>%
     dplyr::filter(id == station_id)
   
-  # If it isn't found, try to get the tz name
-  # from the remote `history_tbl`
-  if (nrow(station_info) == 0) {
-    station_info <- 
-      get_history_tbl(perform_tz_lookup = TRUE) %>%
-      dplyr::filter(id == station_id)
-  }
-  
   # If the station cannot be located in both
   # datasets, return NA; otherwise, get the
   # `tz_name`
