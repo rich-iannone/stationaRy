@@ -8,3 +8,4 @@
 ^data-raw$
 ^LICENSE\.md$
 ^codecov\.yml$
+^appveyor\.yml$
