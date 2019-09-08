@@ -23,7 +23,8 @@ Imports:
     tidyr (>= 0.8.3),
     magrittr
 Suggests:
-    testthat
+    testthat,
+    covr
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
