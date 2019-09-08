@@ -47,8 +47,7 @@ test_that("The `get_met_data()` fcn can provide an additional data report", {
     )
   
   # Expect that a tibble is returned
-  expect_is(
-    additional_data_categories, "tbl_df")
+  expect_is(additional_data_categories, "tbl_df")
   
   # Get an additional data report df from a local test file
   df_data_report_data_local_test <- 
@@ -64,34 +63,34 @@ test_that("The `get_met_data()` fcn can provide an additional data report", {
   
   # Expect a specific number of additional
   # data categories to be present
-  expect_equal(nrow(df_data_report_data_local_test), 25)
+  expect_equal(nrow(df_data_report_data_local_test), 87)
   
   # Expect specific numbers of records for
   # each additional data category
-  # df_data_report_data_local_test$total_count %>%
-  #   expect_equal(
-  #     c(
-  #       4498, 6, 6, 6, 6, 51817, 4325, 51889, 4325, 4325,
-  #       4325, 4325, 4325, 51889, 4325, 4325, 51889, 52075,
-  #       4503, 6, 6, 6, 6, 4312, 51889
-  #     )
-  #   )
+  df_data_report_data_local_test$count[df_data_report_data_local_test$count != 0] %>%
+    expect_equal(
+      c(
+        9105, 12, 12, 12, 12, 104940, 8757, 105084, 8757, 8757,
+        8757, 8757, 8757, 105084, 8757, 8757, 105084, 105460, 9115, 12,
+        12, 12, 12, 8750, 105084
+      )
+    )
 })
 
 test_that("The `get_met_data()` fcn can provide all additional data fields", { 
   
-  # # Get all possible data from the test station file
-  # df_data_additional_data_local_test <- 
-  #   get_met_data(
-  #     station_id = "999999-63897",
-  #     years = 2014,
-  #     full_data = TRUE,
-  #     use_local_files = TRUE,
-  #     local_file_dir = system.file(package = "stationary")
-  #   )
-  # 
-  # # Expect that the resulting data frame will be very wide
-  # df_data_additional_data_local_test %>% ncol() %>% expect_equal(151)
+  # Get all possible data from the test station file
+  df_data_additional_data_local_test <-
+    get_met_data(
+      station_id = "999999-63897",
+      years = 2014,
+      full_data = TRUE,
+      use_local_files = TRUE,
+      local_file_dir = system.file(package = "stationary")
+    )
+
+  # Expect that the resulting data frame will be very wide
+  df_data_additional_data_local_test %>% ncol() %>% expect_equal(151)
 })
 
 test_that("Error messages are provided in certain situations", {
