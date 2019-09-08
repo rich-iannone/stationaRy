@@ -19,6 +19,8 @@ get_inventory_tbl <- function() {
     dplyr::select(id, dplyr::everything())
 }
 
+#nocov start
+
 get_history_tbl <- function(perform_tz_lookup = FALSE) {
   
   file_location <- file.path(data_base_url(), "isd-history.csv")
@@ -70,6 +72,8 @@ get_history_tbl <- function(perform_tz_lookup = FALSE) {
   
   tbl
 }
+
+#nocov end
 
 station_data_files <- function(inventory_tbl,
                                id) {
