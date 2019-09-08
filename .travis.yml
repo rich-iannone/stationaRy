@@ -10,8 +10,7 @@ after_success:
 jobs:
   include:
     - stage: "R CMD check"
-      r: oldrel
-    - r: release
+      r: release
     - r: devel
 
     - stage: deploy
