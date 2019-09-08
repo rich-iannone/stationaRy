@@ -3,6 +3,8 @@
 
 [![Travis-CI Build
 Status](https://travis-ci.org/rich-iannone/stationary.svg?branch=master)](https://travis-ci.org/rich-iannone/stationary)
+[![Codecov test
+coverage](https://codecov.io/gh/rich-iannone/stationary/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/stationary?branch=master)
 
 # stationary <img src="man/figures/logo.svg" align="right" height="250px" />
 
