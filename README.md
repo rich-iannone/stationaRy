@@ -1,8 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/stationary)](https://CRAN.R-project.org/package=stationary)
 [![Travis-CI Build
 Status](https://travis-ci.org/rich-iannone/stationary.svg?branch=master)](https://travis-ci.org/rich-iannone/stationary)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/rich-iannone/stationary?branch=master&svg=true)](https://ci.appveyor.com/project/rich-iannone/stationary)
 [![Codecov test
 coverage](https://codecov.io/gh/rich-iannone/stationary/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/stationary?branch=master)
 
