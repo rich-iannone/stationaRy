@@ -6,12 +6,11 @@ warnings_are_errors: false
 
 after_success:
   - Rscript -e 'covr::codecov()'
-  
+
 jobs:
   include:
     - stage: "R CMD check"
-      r: oldrel
-    - r: release
+      r: release
     - r: devel
 
     - stage: deploy
