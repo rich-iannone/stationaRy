@@ -13,21 +13,24 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r packages, include=FALSE}
+```{r packages, message=FALSE, warning=FALSE, include=FALSE}
 library(stationary)
 library(tidyverse)
 library(lubridate)
 ```
 
+# stationary <a href='http://rich-iannone.github.io/stationary/'><img src="man/figures/logo.svg" align="right" height="139px" /></a>
 
 [![CRAN status](https://www.r-pkg.org/badges/version/stationary)](https://CRAN.R-project.org/package=stationary)
 [![Travis-CI Build Status](https://travis-ci.org/rich-iannone/stationary.svg?branch=master)](https://travis-ci.org/rich-iannone/stationary)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rich-iannone/stationary?branch=master&svg=true)](https://ci.appveyor.com/project/rich-iannone/stationary)
 [![Codecov test coverage](https://codecov.io/gh/rich-iannone/stationary/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/stationary?branch=master)
 
-# stationary <img src="man/figures/logo.svg" align="right" height="250px" />
+## Overview
 
 Get hourly meteorological data from met stations all over the world. That's what you can do with this **R** package. There are *LOTS* of stations too (29,729 available in this dataset) and many have data that goes way back.
+
+### Retrieving Met Data with a `station_id`
 
 Let's get some met data from La Guardia Airport! (the ID value for that one is `"725030-14732"`). This station has a pretty long history (starting operations in 1973) but we'll just grab data from the years of 2017 and 2018.
 
@@ -42,6 +45,8 @@ lga_met_data <-
 ```{r lga_met_data}
 lga_met_data
 ```
+
+### Discovering Met Stations
 
 There are lots of stations and we at least need an identifier to access the met data. We can examine station metadata using the `get_station_metadata()` function (which has those ID values in the first column). Let's get all of the stations located in Norway.
 
@@ -89,6 +94,8 @@ high_temp_data <-
 ```{r high_temp_data}
 high_temp_data
 ```
+
+### Additional Data Fields
 
 There can actually be a lot of additional met data beyond wind speed, temperatures, etc. It can vary greatly depending on the selected station. These additional categories are denoted 'two-letter + digit' identifiers (e.g., `AA1`, `GA1`, etc.). Within each category are numerous variables (coded as `[identifer]_[index]`). More information about these variables can be found in [this PDF document](http://www1.ncdc.noaa.gov/pub/data/ish/ish-format-document.pdf).
 
@@ -168,13 +175,16 @@ kawaihae_sst
 
 To install the development version of **stationary**, use the following:
 
-```r
+```{r install_github, eval=FALSE}
+install.packages("devtools")
 remotes::install_github("rich-iannone/stationary")
 ```
 
+If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an [issue](https://github.com/rich-iannone/stationary/issues).
+
 ## Code of Conduct
 
-Please note that the 'stationary' project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
+Please note that the **stationary** project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
 
 ## License
 

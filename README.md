@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# stationary <a href='http://rich-iannone.github.io/stationary/'><img src="man/figures/logo.svg" align="right" height="139px" /></a>
+
 [![CRAN
 status](https://www.r-pkg.org/badges/version/stationary)](https://CRAN.R-project.org/package=stationary)
 [![Travis-CI Build
@@ -10,12 +12,14 @@ status](https://ci.appveyor.com/api/projects/status/github/rich-iannone/stationa
 [![Codecov test
 coverage](https://codecov.io/gh/rich-iannone/stationary/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/stationary?branch=master)
 
-# stationary <img src="man/figures/logo.svg" align="right" height="250px" />
+## Overview
 
 Get hourly meteorological data from met stations all over the world.
 That’s what you can do with this **R** package. There are *LOTS* of
 stations too (29,729 available in this dataset) and many have data that
 goes way back.
+
+### Retrieving Met Data with a `station_id`
 
 Let’s get some met data from La Guardia Airport\! (the ID value for that
 one is `"725030-14732"`). This station has a pretty long history
@@ -48,6 +52,8 @@ lga_met_data
 #> # … with 28,252 more rows, and 2 more variables: atmos_pres <dbl>,
 #> #   rh <dbl>
 ```
+
+### Discovering Met Stations
 
 There are lots of stations and we at least need an identifier to access
 the met data. We can examine station metadata using the
@@ -154,6 +160,8 @@ high_temp_data
 #> # … with 40 more rows
 ```
 
+### Additional Data Fields
+
 There can actually be a lot of additional met data beyond wind speed,
 temperatures, etc. It can vary greatly depending on the selected
 station. These additional categories are denoted ‘two-letter + digit’
@@ -229,18 +237,18 @@ coverage_tbl
 #>    <chr>  <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
 #>  1 01023…     0     0     0     0     0     0     0     0     0     0     0
 #>  2 01046…     0     0     0     0     0     0     0     0     0     0     0
-#>  3 01049…  5409     0     0     0     0     0     0     0     0     0     0
-#>  4 01107…   976     0     0     0     0     0     0     0     0     0     0
+#>  3 01049…  5492     0     0     0     0     0     0     0     0     0     0
+#>  4 01107…   992     0     0     0     0     0     0     0     0     0     0
 #>  5 01139…     0     0     0     0     0     0     0     0     0     0     0
-#>  6 01146…  5620     0     0     0     0     0     0     0     0     0     0
+#>  6 01146…  5693     0     0     0     0     0     0     0     0     0     0
 #>  7 01162…     1     0     0     0     0     0     0     0     0     0     0
-#>  8 01167…   347     0     0     0     0     0     0     0   120     0     0
+#>  8 01167…   354     0     0     0     0     0     0     0   120     0     0
 #>  9 01217…     0     0     0     0     0     0     0     0     0     0     0
 #> 10 01225…     0     0     0     0     0     0     0     0     0     0     0
-#> 11 01234…   975     0     0     0     0     0     0     0     0     0     0
+#> 11 01234…   991     0     0     0     0     0     0     0     0     0     0
 #> 12 01290…     0     0     0     0     0     0     0     0     0     0     0
-#> 13 01332…  5859     0     0     0     0     0     0     0     0     0     0
-#> 14 01355…  5701     0     0     0     0     0     0     0     0     0     0
+#> 13 01332…  5955     0     0     0     0     0     0     0     0     0     0
+#> 14 01355…  5797     0     0     0     0     0     0     0     0     0     0
 #> 15 01467…     0     0     0     0     0     0     0     0     0     0     0
 #> 16 01476…     0     0     0     0     0     0     0     0     0     0     0
 #> # … with 76 more variables: AM1 <int>, AN1 <int>, AO1 <int>, AP1 <int>,
@@ -310,12 +318,17 @@ kawaihae_sst
 To install the development version of **stationary**, use the following:
 
 ``` r
+install.packages("devtools")
 remotes::install_github("rich-iannone/stationary")
 ```
 
+If you encounter a bug, have usage questions, or want to share ideas to
+make this package better, feel free to file an
+[issue](https://github.com/rich-iannone/stationary/issues).
+
 ## Code of Conduct
 
-Please note that the ‘stationary’ project is released with a
+Please note that the **stationary** project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
 this project, you agree to abide by its terms.
 
