@@ -35,22 +35,28 @@ to local standard time for the station's locale.
 \item{id}{A character string identifying the fixed weather station
 from the USAF Master Station Catalog identifier and the WBAN identifier.}
 \item{time}{A datetime value representing the observation time.}
+\item{temp}{Air temperature measured in degrees Celsius. Conversions to
+degrees Farenheit may be calculated with \code{(temp * 9) / 5 + 32}.}
 \item{wd}{The angle of wind direction, measured in a clockwise direction,
 between true north and the direction from which the wind is blowing. For
 example, \code{wd = 90} indicates the wind is blowing from due east. \code{wd = 225}
 indicates the wind is blowing from the south west. The minimum value is \code{1},
-and the maximum value is \code{360}.} \item{ws}{Wind speed in meters per second.
-Wind speed in feet per second can be estimated by \code{ws * 3.28084}.}
-\item{ceil_hgt}{The height above ground level of the lowest clould cover or
-other obscuring phenomena amounting to at least 5/8 sky coverate. Measured in
-meters. Unlimited height (no obstruction) is denoted by the value \code{22000}.}
-\item{temp}{Air temperature measured in degrees Celsius. Conversions to
-degrees Farenheit may be calculated with \code{(temp * 9) / 5 + 32}.}
+and the maximum value is \code{360}.}
+\item{ws}{Wind speed in meters per second. Wind speed in feet per second can
+be estimated by \code{ws * 3.28084}.}
+\item{atmos_pres}{The air pressure in hectopascals relative to Mean Sea Level
+(MSL).}
 \item{dew_point}{The temperature in degrees Celsius to which a given parcel
 of air must be cooled at constant pressure and water vapor content in order
-for saturation to occur.} \item{atmos_pres}{The air pressure in hectopascals
-relative to Mean Sea Level (MSL).} \item{rh}{Relative humidity, measured as a
-percentage, as calculated using the August-Roche-Magnus approximation.}
+for saturation to occur.}
+\item{rh}{Relative humidity, measured as a percentage, as calculated using
+the August-Roche-Magnus approximation.}
+\item{ceil_hgt}{The height above ground level of the lowest clould cover or
+other obscuring phenomena amounting to at least 5/8 sky coverage. Measured in
+meters. Unlimited height (no obstruction) is denoted by the value \code{22000}.}
+\item{visibility}{The horizontal distance at which an object can be seen and
+identified. Measured in meters. Values greater than \code{160000} are entered as
+\code{160000}.}
 }
 }
 \description{
