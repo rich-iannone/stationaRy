@@ -28,7 +28,7 @@ library(lubridate)
 
 ## Overview
 
-Get hourly meteorological data from met stations all over the world. That's what you can do with this **R** package. There are *LOTS* of stations too (29,729 available in this dataset) and many have data that goes way back.
+Get meteorological data from met stations located all over the world. That's what you can do with this **R** package. There are *LOTS* of stations too (29,729 available in this dataset) and many have data that goes way back.
 
 ### Retrieving Met Data with a `station_id`
 
