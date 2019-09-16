@@ -20,19 +20,19 @@ test_that("The `get_met_data()` fcn returns correct number of columns", {
     )
   
   # Expect that, for the mandatory met data df, the number of columns
-  # will be exactly 9
-  df_mandatory_data %>% ncol() %>% expect_equal(9)
+  # will be exactly 10
+  df_mandatory_data %>% ncol() %>% expect_equal(10)
   
   # Expect that, for the df with both mandatory and two additional data
-  # categories, the number of columns will be 16
-  df_aa1_ab1 %>% ncol() %>% expect_equal(16)
+  # categories, the number of columns will be 17
+  df_aa1_ab1 %>% ncol() %>% expect_equal(17)
   
   # Expect that, for the mandatory met data df, the column names will
   # be from a specified set
   expect_named(
     df_mandatory_data,
-    c("id", "time", "wd", "ws", "ceil_hgt", "temp",
-      "dew_point", "atmos_pres", "rh")
+    c("id", "time", "temp", "wd", "ws", "atmos_pres",
+      "dew_point","rh", "ceil_hgt", "visibility")
   )
   
   met_tbl <- get_met_data(station_id = "999999-63897")
@@ -203,7 +203,7 @@ test_that("The `get_met_data()` fcn can provide all additional data fields", {
     )
 
   # Expect that the resulting data frame will be very wide
-  df_data_additional_data_local_test %>% ncol() %>% expect_equal(151)
+  df_data_additional_data_local_test %>% ncol() %>% expect_equal(152)
 })
 
 test_that("The `get_station_metadata()` fcn provides the expected table", { 
