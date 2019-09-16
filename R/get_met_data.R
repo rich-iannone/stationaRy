@@ -23,22 +23,28 @@
 #' \item{id}{A character string identifying the fixed weather station
 #' from the USAF Master Station Catalog identifier and the WBAN identifier.}
 #' \item{time}{A datetime value representing the observation time.}
+#' \item{temp}{Air temperature measured in degrees Celsius. Conversions to
+#' degrees Farenheit may be calculated with `(temp * 9) / 5 + 32`.}
 #' \item{wd}{The angle of wind direction, measured in a clockwise direction,
 #' between true north and the direction from which the wind is blowing. For
 #' example, `wd = 90` indicates the wind is blowing from due east. `wd = 225`
 #' indicates the wind is blowing from the south west. The minimum value is `1`,
-#' and the maximum value is `360`.} \item{ws}{Wind speed in meters per second.
-#' Wind speed in feet per second can be estimated by `ws * 3.28084`.}
-#' \item{ceil_hgt}{The height above ground level of the lowest clould cover or
-#' other obscuring phenomena amounting to at least 5/8 sky coverate. Measured in
-#' meters. Unlimited height (no obstruction) is denoted by the value `22000`.}
-#' \item{temp}{Air temperature measured in degrees Celsius. Conversions to
-#' degrees Farenheit may be calculated with `(temp * 9) / 5 + 32`.}
+#' and the maximum value is `360`.}
+#' \item{ws}{Wind speed in meters per second. Wind speed in feet per second can
+#' be estimated by `ws * 3.28084`.}
+#' \item{atmos_pres}{The air pressure in hectopascals relative to Mean Sea Level
+#' (MSL).}
 #' \item{dew_point}{The temperature in degrees Celsius to which a given parcel
 #' of air must be cooled at constant pressure and water vapor content in order
-#' for saturation to occur.} \item{atmos_pres}{The air pressure in hectopascals
-#' relative to Mean Sea Level (MSL).} \item{rh}{Relative humidity, measured as a
-#' percentage, as calculated using the August-Roche-Magnus approximation.}
+#' for saturation to occur.}
+#' \item{rh}{Relative humidity, measured as a percentage, as calculated using
+#' the August-Roche-Magnus approximation.}
+#' \item{ceil_hgt}{The height above ground level of the lowest clould cover or
+#' other obscuring phenomena amounting to at least 5/8 sky coverage. Measured in
+#' meters. Unlimited height (no obstruction) is denoted by the value `22000`.}
+#' \item{visibility}{The horizontal distance at which an object can be seen and
+#' identified. Measured in meters. Values greater than `160000` are entered as
+#'  `160000`.}
 #' }
 #' 
 #'@examples 
@@ -111,17 +117,17 @@ get_met_data <- function(station_id,
       readr::read_fwf(
         data_files[i],
         readr::fwf_widths(column_widths()),
-        col_types = "ccciiiiiciicicciccicicccccccicicic"
+        col_types = "ccciiiiiciicicciccicicccicccicicic"
       )
     
     # Keep specific columns from the table
-    tbl_i <- tbl_i[, c(4:8, 16, 19, 21, 29, 31, 33)]
+    tbl_i <- tbl_i[, c(4:8, 16, 19, 21, 25, 29, 31, 33)]
     
     # Apply names to the columns
     names(tbl_i) <-
       c(
         "year", "month", "day", "hour", "minute", "wd", "ws",
-        "ceil_hgt", "temp", "dew_point", "atmos_pres"
+        "ceil_hgt", "visibility", "temp", "dew_point", "atmos_pres"
       )
     
     tbl_i <-
@@ -149,6 +155,10 @@ get_met_data <- function(station_id,
       dplyr::mutate(ceil_hgt = dplyr::case_when(
         ceil_hgt == 99999 ~ NA_integer_,
         TRUE ~ ceil_hgt
+      )) %>%
+      dplyr::mutate(visibility = dplyr::case_when(
+        visibility == 999999 ~ NA_integer_,
+        TRUE ~ visibility
       )) %>%
       dplyr::mutate(
         rh = 100 * (
@@ -181,7 +191,7 @@ get_met_data <- function(station_id,
           TRUE ~ time
         )
       ) %>%
-      dplyr::select(id, time, wd, ws, ceil_hgt, temp, dew_point, atmos_pres, rh)
+      dplyr::select(id, time, temp, wd, ws, atmos_pres, dew_point, rh, ceil_hgt, visibility)
     
     tbl <- dplyr::bind_rows(tbl, tbl_i)
   }
