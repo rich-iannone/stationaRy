@@ -7,13 +7,14 @@ empty_met_tbl <- function() {
   dplyr::tibble(
     id = NA_character_,
     time = lubridate::ymd_hms("1970-01-01 00:00:00"),
+    temp = NA_real_,
     wd = NA_integer_,
     ws = NA_real_,
-    ceil_hgt = NA_integer_,
-    temp = NA_real_,
-    dew_point = NA_real_,
     atmos_pres = NA_real_,
-    rh = NA_real_
+    dew_point = NA_real_,
+    rh = NA_real_,
+    ceil_hgt = NA_integer_,
+    visibility = NA_integer_
   )[-1, ]
 }
 
@@ -122,5 +123,3 @@ get_local_file_list <- function(station_id,
   
   file.path(file_dir, data_files)
 }
-
-
