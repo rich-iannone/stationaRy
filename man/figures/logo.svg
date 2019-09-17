@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Keyshape -->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="736px" height="850px" viewBox="0 0 736 850">
     <style>
 @keyframes station_5_o { 0% { opacity: 0; } 78% { opacity: 0; } 80% { opacity: 1; } 98% { opacity: 1; } 100% { opacity: 0; } }
@@ -17,7 +16,6 @@
 @keyframes wr_center_hex-5_t { 0% { transform: translate(-102.9494px,-101.3459px); } 100% { transform: translate(-102.9494px,-101.3459px); } }
     </style>
     <title>stationary_anim</title>
-    <desc>Created with Sketch.</desc>
     <defs>
         <path id="path-1" d="M126.894,85.7009L107.22,74.7448L102.949,72.3678L98.6789,74.7448L79.0049,85.7009L76.9298,86.8552L76.9298,115.837L79.0049,116.991L98.9197,128.084L102.949,130.324L106.979,128.084L126.894,116.991L128.969,115.837L128.969,86.8552Z"/>
         <filter id="filter-2" x="-4.8%" y="-4.7%" width="109.6%" height="109.4%" filterUnits="objectBoundingBox">
@@ -372,7 +370,6 @@
                     </g>
                     <g id="wr_center_hex" transform="translate(102.949,101.346) translate(-102.949,-101.346)" style="animation: 25s linear infinite both wr_center_hex_t;">
                         <use fill="#4A4A4A" fill-rule="evenodd" xlink:href="#path-1"/>
-                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"/>
                         <use stroke="#C2B937" stroke-width="3" xlink:href="#path-1"/>
                     </g>
                     <rect id="wr_border" stroke="#4A4A4A" stroke-width="2" width="203" height="203" rx="6" transform="translate(0,0) translate(1.5,1.5)"/>
@@ -701,7 +698,6 @@
                     </g>
                     <g id="wr_center_hex-2" transform="translate(102.949,101.346) translate(-102.949,-101.346)" style="animation: 25s linear infinite both wr_center_hex-2_t;">
                         <use fill="#4A4A4A" fill-rule="evenodd" xlink:href="#path-3"/>
-                        <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"/>
                         <use stroke="#E169C1" stroke-width="3" xlink:href="#path-3"/>
                     </g>
                     <rect id="wr_border-2" stroke="#4A4A4A" stroke-width="2" width="203" height="203" rx="6" transform="translate(0,0) translate(1.5,1.5)"/>
@@ -1030,7 +1026,6 @@
                     </g>
                     <g id="wr_center_hex-3" transform="translate(102.949,101.346) translate(-102.949,-101.346)" style="animation: 25s linear infinite both wr_center_hex-3_t;">
                         <use fill="#4A4A4A" fill-rule="evenodd" xlink:href="#path-5"/>
-                        <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"/>
                         <use stroke="#00AE4E" stroke-width="3" xlink:href="#path-5"/>
                     </g>
                     <rect id="wr_border-3" stroke="#4A4A4A" stroke-width="2" width="203" height="203" rx="6" transform="translate(0,0) translate(1.5,1.5)"/>
@@ -1359,7 +1354,6 @@
                     </g>
                     <g id="wr_center_hex-4" transform="translate(102.949,101.346) translate(-102.949,-101.346)" style="animation: 25s linear infinite both wr_center_hex-4_t;">
                         <use fill="#4A4A4A" fill-rule="evenodd" xlink:href="#path-7"/>
-                        <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"/>
                         <use stroke="#F7911F" stroke-width="3" xlink:href="#path-7"/>
                     </g>
                     <rect id="wr_border-4" stroke="#4A4A4A" stroke-width="2" width="203" height="203" rx="6" transform="translate(0,0) translate(1.5,1.5)"/>
@@ -1655,14 +1649,14 @@
                         <path id="in_220-5" opacity="0.048234" d="M10.0359,139.536L15.3133,133.246L21.3673,133.246L12.9104,143.325Z"/>
                         <path id="in_210-5" opacity="0.048234" d="M37.2377,133.246L30.8382,144.33L25.4832,144.33L31.8826,133.246Z"/>
                         <path id="in_200-5" opacity="0.048234" d="M50.2503,133.246L46.216,144.33L41.2808,144.33L45.3151,133.246Z"/>
-                        <path id="in_190-5" opacity="0.048234" d="M61.7718,133.246L59.8173,144.33L55.1082,144.33L57.0626,133.246L61.7718,133.246Z"/>
+                        <path id="in_190-5" opacity="1" d="M61.7718,133.246L59.8173,144.33L55.1082,144.33L57.0626,133.246L61.7718,133.246Z"/>
                         <path id="in_180-5" opacity="0.048234" d="M72.6557,128.778L72.6557,144.33L68.0181,144.33L68.0181,128.778Z"/>
                         <path id="in_170-5" opacity="0.048234" d="M78.8989,133.246L83.608,133.246L85.5625,144.33L80.8533,144.33L78.8989,133.246Z"/>
                         <path id="in_160-5" opacity="0.048234" d="M90.4235,133.246L95.3587,133.246L99.393,144.33L94.4578,144.33Z"/>
                         <path id="in_150-5" opacity="0.048234" d="M103.339,133.246L108.836,133.246L115.235,144.33L109.738,144.33Z"/>
                         <path id="in_140-5" opacity="0.048234" d="M130.683,139.651L127.809,143.44L119.255,133.246L125.309,133.246Z"/>
                         <path id="in_130-5" opacity="0.048234" d="M137.51,130.652L128.302,122.925L128.302,116.871L140.317,126.953Z"/>
-                        <path id="in_120-5" d="M128.302,107.415L128.302,102.06L140.674,109.203L140.674,114.558Z"/>
+                        <path id="in_120-5" d="M128.302,107.415L128.302,102.06L140.674,109.203L140.674,114.558Z" opacity="0.05"/>
                         <path id="in_110-5" opacity="0.048234" d="M128.302,94.834L128.302,89.8987L140.674,94.4018L140.674,99.337L128.302,94.834Z"/>
                         <path id="in_100-5" opacity="0.048234" d="M128.302,83.8584L128.302,79.1492L140.674,81.3308L140.674,86.0399Z"/>
                         <path id="in_090-5" opacity="0.048234" d="M124.433,73.5979L124.433,68.9603L140.674,68.9603L140.674,73.5979L124.433,73.5979Z"/>
@@ -1690,7 +1684,6 @@
                         <g style="animation: 25s linear infinite both a1_t;">
                             <g transform="translate(102.949,101.346) translate(-102.949,-101.346)" style="animation: 25s linear infinite both wr_center_hex-5_t;">
                                 <use fill="#4A4A4A" fill-rule="evenodd" xlink:href="#path-9"/>
-                                <use fill="black" fill-opacity="1" filter="url(#filter-10)" xlink:href="#path-9"/>
                                 <use stroke="#00A3DA" stroke-width="3" xlink:href="#path-9"/>
                             </g>
                         </g>
