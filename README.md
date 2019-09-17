@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# stationary <a href='http://rich-iannone.github.io/stationary/'><img src="man/figures/logo.svg" align="right" height="139px" /></a>
+# stationary <a href='http://rich-iannone.github.io/stationary/'><img src="man/figures/logo.svg" align="right" height="250px" /></a>
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/stationary)](https://CRAN.R-project.org/package=stationary)
@@ -55,15 +55,16 @@ lga_met_data
 
 ### Discovering Met Stations
 
-There are lots of stations and we at least need an identifier to access
-the met data. We can examine station metadata using the
-`get_station_metadata()` function (which has those ID values in the
-first column). Let’s get all of the stations located in Norway.
+There are lots of stations and we need a station’s identifier to access
+its met data. We can examine the entire catalog of station metadata
+using the `get_station_metadata()` function. The output tibble has
+station `id` values in the first column. Let’s get all of the stations
+that are located in Norway.
 
 ``` r
 stations_norway <- 
   get_station_metadata() %>%
-  filter(country == "NO")
+  dplyr::filter(country == "NO")
 
 stations_norway
 #> # A tibble: 405 x 15
@@ -84,13 +85,13 @@ stations_norway
 ```
 
 This table can be greatly reduced to isolate the stations of interest.
-For example, with `dplyr::filter()` we could get only high-altitude
-stations (above 1000 meters) in Norway.
+For example, we could elect to get only high-altitude stations (above
+1000 meters) in Norway.
 
 ``` r
 norway_high_elev <-
   stations_norway %>% 
-  filter(elev > 1000)
+  dplyr::filter(elev > 1000)
 
 norway_high_elev
 #> # A tibble: 12 x 15
@@ -116,30 +117,31 @@ The station IDs from the tibble can be transformed into a vector of
 station IDs with `dplyr::pull()`.
 
 ``` r
-norway_high_elev %>% pull(id)
+norway_high_elev %>% dplyr::pull(id)
 #>  [1] "012200-99999" "012390-99999" "013460-99999" "013500-99999"
 #>  [5] "013510-99999" "013520-99999" "013620-99999" "013660-99999"
 #>  [9] "013750-99999" "014330-99999" "014400-99999" "014611-99999"
 ```
 
 Suppose you’d like to collect several years of met data from a
-particular station and get only a listing of parameters that meet some
-criterion. Here’s an example of obtaining temperatures above 15 degrees
-Celsius from the high-altitude `"JUVVASSHOE"` station in Norway:
+particular station and fetch only the observations that meet some
+condition. Here’s an example of obtaining temperatures above 15 degrees
+Celsius from the high-altitude `"JUVVASSHOE"` station in Norway and
+adding a column with temperatures in degrees Fahrenheit.
 
 ``` r
 station_data <- 
   get_station_metadata() %>%
-  filter(name == "JUVVASSHOE") %>%
-  pull(id) %>%
+  dplyr::filter(name == "JUVVASSHOE") %>%
+  dplyr::pull(id) %>%
   get_met_data(years = 2011:2019)
 
 high_temp_data <-
   station_data %>%
-  select(id, time, wd, ws, temp) %>% 
-  filter(temp > 16) %>%
-  mutate(temp_f = ((temp * (9/5)) + 32) %>% round(1)) %>%
-  arrange(desc(temp_f))
+  dplyr::select(id, time, wd, ws, temp) %>% 
+  dplyr::filter(temp > 16) %>%
+  dplyr::mutate(temp_f = ((temp * (9/5)) + 32) %>% round(1)) %>%
+  dplyr::arrange(dplyr::desc(temp_f))
 ```
 
 ``` r
@@ -171,17 +173,15 @@ about these variables can be found in [this PDF
 document](http://www1.ncdc.noaa.gov/pub/data/ish/ish-format-document.pdf).
 
 To find out which categories of additional met fields are available for
-a station, use the `station_coverage()` function. You’ll get a tibble
-with the available additional categories and their counts over the
-specified period.
+a station, we can use the `station_coverage()` function. You’ll get a
+tibble with the available additional categories and their counts over
+the specified period.
 
 ``` r
-# Get information on which additional met data
-# fields are available at the Juvvasshoe station
 additional_data_fields <-
   get_station_metadata() %>%
-  filter(name == "JUVVASSHOE") %>%
-  pull(id) %>%
+  dplyr::filter(name == "JUVVASSHOE") %>%
+  dplyr::pull(id) %>%
   station_coverage(years = 2015)
 ```
 
@@ -213,14 +213,14 @@ stations have the particular fields we need.
 ``` r
 stns <- 
   get_station_metadata() %>%
-  filter(country == "NO", elev <= 5 & end_year == 2019)
+  dplyr::filter(country == "NO", elev <= 5 & end_year == 2019)
 
 coverage_tbl <- 
   purrr::map_df(
     seq(nrow(stns)),
     function(x) {
       stns %>%
-        pull(id) %>%
+        dplyr::pull(id) %>%
         .[[x]] %>%
         station_coverage(
           years = 2019,
@@ -237,18 +237,18 @@ coverage_tbl
 #>    <chr>  <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
 #>  1 01023…     0     0     0     0     0     0     0     0     0     0     0
 #>  2 01046…     0     0     0     0     0     0     0     0     0     0     0
-#>  3 01049…  5580     0     0     0     0     0     0     0     0     0     0
-#>  4 01107…  1008     0     0     0     0     0     0     0     0     0     0
+#>  3 01049…  5603     0     0     0     0     0     0     0     0     0     0
+#>  4 01107…  1012     0     0     0     0     0     0     0     0     0     0
 #>  5 01139…     0     0     0     0     0     0     0     0     0     0     0
-#>  6 01146…  5783     0     0     0     0     0     0     0     0     0     0
+#>  6 01146…  5807     0     0     0     0     0     0     0     0     0     0
 #>  7 01162…     1     0     0     0     0     0     0     0     0     0     0
-#>  8 01167…   361     0     0     0     0     0     0     0   121     0     0
+#>  8 01167…   362     0     0     0     0     0     0     0   121     0     0
 #>  9 01217…     0     0     0     0     0     0     0     0     0     0     0
 #> 10 01225…     0     0     0     0     0     0     0     0     0     0     0
-#> 11 01234…  1007     0     0     0     0     0     0     0     0     0     0
+#> 11 01234…  1011     0     0     0     0     0     0     0     0     0     0
 #> 12 01290…     0     0     0     0     0     0     0     0     0     0     0
-#> 13 01332…  6050     0     0     0     0     0     0     0     0     0     0
-#> 14 01355…  5892     0     0     0     0     0     0     0     0     0     0
+#> 13 01332…  6074     0     0     0     0     0     0     0     0     0     0
+#> 14 01355…  5916     0     0     0     0     0     0     0     0     0     0
 #> 15 01467…     0     0     0     0     0     0     0     0     0     0     0
 #> 16 01476…     0     0     0     0     0     0     0     0     0     0     0
 #> # … with 76 more variables: AM1 <int>, AN1 <int>, AO1 <int>, AP1 <int>,
@@ -278,22 +278,19 @@ the `add_fields` argument and specifying the `"SA1"` category (multiple
 categories can be included).
 
 ``` r
-# Get the average ambient temperature and the
-# average sea-surface temperatures (sst) from
-# the "KAWAIHAE" station for every available month
 kawaihae_sst <- 
   get_met_data(
     station_id = "997173-99999",
     years = 2017:2018,
     add_fields = "SA1"
   ) %>%
-  mutate(
+  dplyr::mutate(
     year = lubridate::year(time),
     month = lubridate::month(time)
   ) %>%
-  filter(sa1_2 == 1) %>%
-  group_by(year, month) %>%
-  summarize(
+  dplyr::filter(sa1_2 == 1) %>%
+  dplyr::group_by(year, month) %>%
+  dplyr::summarize(
     avg_temp = mean(temp, na.rm = TRUE),
     avg_sst = mean(sa1_1, na.rm = TRUE)
   )
