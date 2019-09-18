@@ -168,13 +168,13 @@ test_that("The `get_met_data()` fcn can provide all additional data fields", {
   # Get all possible data from the test station file
   tbl_additional_data_fields <-
     get_met_data(
-      station_id = "999999-63897",
+      station_id = "725030-14732",
       years = 2014,
       full_data = TRUE
     )
   
   # Expect that the resulting tibble will be very wide
-  tbl_additional_data_fields %>% ncol() %>% expect_gt(140)
+  tbl_additional_data_fields %>% ncol() %>% expect_gt(170)
 })
 
 test_that("The `get_station_metadata()` fcn provides the expected table", { 
