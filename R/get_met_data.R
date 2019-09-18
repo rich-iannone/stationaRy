@@ -11,12 +11,17 @@
 #'   dataset's additional data section?
 #' @param add_fields A vector of categories for additional meteorological data
 #'   to include (instead of all available categories).
+#' @param make_hourly Transforms data to force values to the start of each hour.
+#'   All data is bucketized by hour and missing hours are filled in. This
+#'   regularizes each year of data, where the number of records per year of data
+#'   will be either 8760 or 8784 (depending on whether a year is a leap year).
+#'   By default this is `FALSE`.
 #' @param use_local_files Option to use data files already available locally.
 #' @param local_file_dir Path to local meteorological data files. If specified,
 #'   then data files will be obtained from this location and not from the remote
 #'   data store.
 #' 
-#' @return Returns a tibble with 18 variables. Times are recorded 
+#' @return Returns a tibble with at least 10 variables. Times are recorded 
 #' using the Universal Time Code (UTC) in the source data. Times are adjusted
 #' to local standard time for the station's locale.
 #' \describe{
@@ -43,21 +48,19 @@
 #' other obscuring phenomena amounting to at least 5/8 sky coverage. Measured in
 #' meters. Unlimited height (no obstruction) is denoted by the value `22000`.}
 #' \item{visibility}{The horizontal distance at which an object can be seen and
-#' identified. Measured in meters. Values greater than `160000` are entered as
-#'  `160000`.}
+#' identified. Measured in meters. Values greater than `16000` are entered as
+#'  `16000` (which constitutes 10 mile visibility).}
 #' }
 #' 
-#'@examples 
+#' @examples 
 #' \dontrun{
-#' # Obtain two years of data from
-#' # data files stored on disk (in this
-#' # case, inside the package itself)
-#' met_data_local <- 
+#' # Obtain two years of data from the
+#' # met station with the ID value of
+#' # "999999-63897" 
+#' met_data <- 
 #'   get_met_data(
 #'     station_id = "999999-63897",
-#'     years = 2013:2014,
-#'     use_local_files = TRUE,
-#'     local_file_dir = system.file(package = "stationary")
+#'     years = 2013:2014
 #'   )
 #' }
 #' 
@@ -66,6 +69,7 @@ get_met_data <- function(station_id,
                          years = NULL,
                          full_data = FALSE,
                          add_fields = NULL,
+                         make_hourly = FALSE,
                          use_local_files = FALSE,
                          local_file_dir = NULL) {
   
@@ -198,7 +202,19 @@ get_met_data <- function(station_id,
   
   if (is.null(add_fields) & full_data == FALSE) {
     
-    return(tbl %>% trim_tbl_to_years(years = years))
+    if (isTRUE(make_hourly)) {
+      
+      tbl <-
+        tbl %>%
+        bucketize_data() %>%
+        fill_missing_hours()
+    }
+    
+    tbl <- 
+      tbl %>%
+      trim_tbl_to_years(years = years)
+    
+    return(tbl)
   }
   
   add_data <- c()
@@ -218,8 +234,7 @@ get_met_data <- function(station_id,
   add_data_tbl <- 
     tbl %>%
     dplyr::select(id, time) %>%
-    dplyr::mutate(add_data = add_data) %>%
-    trim_tbl_to_years(years = years)
+    dplyr::mutate(add_data = add_data)
   
   add_data_vec <- add_data_tbl %>% dplyr::pull(add_data)
   
@@ -236,6 +251,11 @@ get_met_data <- function(station_id,
   }
   
   if (!inherits(full_data, "logical") && full_data == "report") {
+    
+    add_data_tbl <-
+      add_data_tbl %>%
+      trim_tbl_to_years(years = years)
+    
     return(add_data_tbl)
   }
   
@@ -248,8 +268,6 @@ get_met_data <- function(station_id,
     add_fields <- toupper(add_fields)
     add_fields <- data_categories[data_categories %in% add_fields]
   }
-  
-  tbl <- tbl %>% trim_tbl_to_years(years = years)
   
   if (length(add_fields) > 0) {
     
@@ -277,5 +295,13 @@ get_met_data <- function(station_id,
     }
   }
   
-  tbl
+  if (isTRUE(make_hourly)) {
+    
+    tbl <-
+      tbl %>%
+      bucketize_data() %>%
+      fill_missing_hours()
+  }
+  
+  tbl %>% trim_tbl_to_years(years = years)
 }
