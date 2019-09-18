@@ -32,7 +32,7 @@
 #' 
 #' @export
 station_coverage <- function(station_id,
-                             years,
+                             years = NULL,
                              wide_tbl = FALSE,
                              grouping = NULL,
                              use_local_files = FALSE,
