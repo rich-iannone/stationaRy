@@ -69,7 +69,7 @@ get_met_data <- function(station_id,
                          years = NULL,
                          full_data = FALSE,
                          add_fields = NULL,
-                         make_hourly = FALSE,
+                         make_hourly = TRUE,
                          use_local_files = FALSE,
                          local_file_dir = NULL) {
   
