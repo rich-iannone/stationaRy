@@ -2,7 +2,7 @@ context("get_met_data")
 
 test_that("The `get_met_data()` fcn returns correct number of columns", {
   
-  # Get data frame of met data with just the mandatory fields
+  # Get a tibble of met data with just the standard fields
   df_mandatory_data <- 
     get_met_data(
       station_id = "722315-53917",
@@ -10,8 +10,8 @@ test_that("The `get_met_data()` fcn returns correct number of columns", {
       full_data = FALSE
     )
   
-  # Get data frame of met data with both the mandatory fields and
-  # additional fields for two categories: AA1 and AB1
+  # Get a tibble of met data with both the standard fields and
+  # additional fields (for the two categories of AA1 and AB1)
   df_aa1_ab1 <- 
     get_met_data(
       station_id = "722315-53917",
@@ -161,49 +161,20 @@ test_that("The `station_coverage()` fcn can provide an additional data report", 
   stn_coverage_tbl_month %>%
     dplyr::pull(count) %>%
     expect_type("integer")
-  
-  # Get an additional data report df from a local test file
-  df_data_report_data_local_test <- 
-    station_coverage(
-      station_id = "999999-63897",
-      years = 2014,
-      use_local_files = TRUE,
-      local_file_dir = system.file(package = "stationary")
-    )
-  
-  # Expect the report to be a data frame
-  expect_is(df_data_report_data_local_test, "tbl_df")
-  
-  # Expect a specific number of additional
-  # data categories to be present
-  expect_equal(nrow(df_data_report_data_local_test), 87)
-  
-  # Expect specific numbers of records for
-  # each additional data category
-  df_data_report_data_local_test$count[df_data_report_data_local_test$count != 0] %>%
-    expect_equal(
-      c(
-        9105, 12, 12, 12, 12, 104940, 8757, 105084, 8757, 8757,
-        8757, 8757, 8757, 105084, 8757, 8757, 105084, 105460, 9115, 12,
-        12, 12, 12, 8750, 105084
-      )
-    )
 })
 
 test_that("The `get_met_data()` fcn can provide all additional data fields", { 
   
   # Get all possible data from the test station file
-  df_data_additional_data_local_test <-
+  tbl_additional_data_fields <-
     get_met_data(
       station_id = "999999-63897",
       years = 2014,
-      full_data = TRUE,
-      use_local_files = TRUE,
-      local_file_dir = system.file(package = "stationary")
+      full_data = TRUE
     )
-
-  # Expect that the resulting data frame will be very wide
-  df_data_additional_data_local_test %>% ncol() %>% expect_equal(152)
+  
+  # Expect that the resulting tibble will be very wide
+  tbl_additional_data_fields %>% ncol() %>% expect_gt(140)
 })
 
 test_that("The `get_station_metadata()` fcn provides the expected table", { 
