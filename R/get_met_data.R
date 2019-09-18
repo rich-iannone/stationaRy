@@ -7,15 +7,15 @@
 #' @param years The years for which station met data will be collected. If not
 #'   specified then all records for all available years will be obtained for the
 #'   station.
-#' @param full_data Include additional meteorological data found in the
+#' @param full_data Include all additional meteorological data found in the
 #'   dataset's additional data section?
 #' @param add_fields A vector of categories for additional meteorological data
 #'   to include (instead of all available categories).
 #' @param make_hourly Transforms data to force values to the start of each hour.
-#'   All data is bucketized by hour and missing hours are filled in. This
-#'   regularizes each year of data, where the number of records per year of data
-#'   will be either 8760 or 8784 (depending on whether a year is a leap year).
-#'   By default this is `FALSE`.
+#'   All data is bucketed by hour and all missing hours are filled with `NA`s.
+#'   This regularizes each year of data, where the number of records per year of
+#'   data will be either 8760 or 8784 (depending on whether a year is a leap
+#'   year). By default to this is `TRUE`.
 #' @param use_local_files Option to use data files already available locally.
 #' @param local_file_dir Path to local meteorological data files. If specified,
 #'   then data files will be obtained from this location and not from the remote
