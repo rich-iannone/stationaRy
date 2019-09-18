@@ -11,6 +11,7 @@ utils::globalVariables(
     "end",
     "end_date",
     "hour",
+    "hour_bin",
     "id",
     "lat",
     "lon",
