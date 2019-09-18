@@ -5,7 +5,7 @@
 \title{Get data from a meteorological station}
 \usage{
 get_met_data(station_id, years = NULL, full_data = FALSE,
-  add_fields = NULL, make_hourly = FALSE, use_local_files = FALSE,
+  add_fields = NULL, make_hourly = TRUE, use_local_files = FALSE,
   local_file_dir = NULL)
 }
 \arguments{
@@ -16,17 +16,17 @@ WBAN numbers, separated by a hyphen.}
 specified then all records for all available years will be obtained for the
 station.}
 
-\item{full_data}{Include additional meteorological data found in the
+\item{full_data}{Include all additional meteorological data found in the
 dataset's additional data section?}
 
 \item{add_fields}{A vector of categories for additional meteorological data
 to include (instead of all available categories).}
 
 \item{make_hourly}{Transforms data to force values to the start of each hour.
-All data is bucketized by hour and missing hours are filled in. This
-regularizes each year of data, where the number of records per year of data
-will be either 8760 or 8784 (depending on whether a year is a leap year).
-By default this is \code{FALSE}.}
+All data is bucketed by hour and all missing hours are filled with \code{NA}s.
+This regularizes each year of data, where the number of records per year of
+data will be either 8760 or 8784 (depending on whether a year is a leap
+year). By default to this is \code{TRUE}.}
 
 \item{use_local_files}{Option to use data files already available locally.}
 
