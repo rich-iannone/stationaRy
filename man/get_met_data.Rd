@@ -5,7 +5,8 @@
 \title{Get data from a meteorological station}
 \usage{
 get_met_data(station_id, years = NULL, full_data = FALSE,
-  add_fields = NULL, use_local_files = FALSE, local_file_dir = NULL)
+  add_fields = NULL, make_hourly = FALSE, use_local_files = FALSE,
+  local_file_dir = NULL)
 }
 \arguments{
 \item{station_id}{A station identifier composed of the station's USAF and
@@ -21,6 +22,12 @@ dataset's additional data section?}
 \item{add_fields}{A vector of categories for additional meteorological data
 to include (instead of all available categories).}
 
+\item{make_hourly}{Transforms data to force values to the start of each hour.
+All data is bucketized by hour and missing hours are filled in. This
+regularizes each year of data, where the number of records per year of data
+will be either 8760 or 8784 (depending on whether a year is a leap year).
+By default this is \code{FALSE}.}
+
 \item{use_local_files}{Option to use data files already available locally.}
 
 \item{local_file_dir}{Path to local meteorological data files. If specified,
@@ -28,7 +35,7 @@ then data files will be obtained from this location and not from the remote
 data store.}
 }
 \value{
-Returns a tibble with 18 variables. Times are recorded
+Returns a tibble with at least 10 variables. Times are recorded
 using the Universal Time Code (UTC) in the source data. Times are adjusted
 to local standard time for the station's locale.
 \describe{
@@ -55,8 +62,8 @@ the August-Roche-Magnus approximation.}
 other obscuring phenomena amounting to at least 5/8 sky coverage. Measured in
 meters. Unlimited height (no obstruction) is denoted by the value \code{22000}.}
 \item{visibility}{The horizontal distance at which an object can be seen and
-identified. Measured in meters. Values greater than \code{160000} are entered as
-\code{160000}.}
+identified. Measured in meters. Values greater than \code{16000} are entered as
+\code{16000} (which constitutes 10 mile visibility).}
 }
 }
 \description{
@@ -64,15 +71,13 @@ Obtain one or more years of meteorological data for a particular station.
 }
 \examples{
 \dontrun{
-# Obtain two years of data from
-# data files stored on disk (in this
-# case, inside the package itself)
-met_data_local <- 
+# Obtain two years of data from the
+# met station with the ID value of
+# "999999-63897" 
+met_data <- 
   get_met_data(
     station_id = "999999-63897",
-    years = 2013:2014,
-    use_local_files = TRUE,
-    local_file_dir = system.file(package = "stationary")
+    years = 2013:2014
   )
 }
 
