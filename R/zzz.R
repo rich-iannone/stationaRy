@@ -1,5 +1,6 @@
 utils::globalVariables(
   c(
+    "add_data",
     "atmos_pres",
     "begin",
     "begin_date",
@@ -21,6 +22,7 @@ utils::globalVariables(
     "total_count",
     "usaf",
     "utc_offset_h",
+    "visibility",
     "wban",
     "wd",
     "ws",
