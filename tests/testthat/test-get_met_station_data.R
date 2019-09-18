@@ -7,7 +7,8 @@ test_that("The `get_met_data()` fcn returns correct number of columns", {
     get_met_data(
       station_id = "722315-53917",
       years = 2014:2015,
-      full_data = FALSE
+      full_data = FALSE,
+      make_hourly = FALSE
     )
   
   # Get a tibble of met data with both the standard fields and
@@ -16,7 +17,8 @@ test_that("The `get_met_data()` fcn returns correct number of columns", {
     get_met_data(
       station_id = "722315-53917",
       years = 2014:2015,
-      add_fields = c("AA1", "AB1")
+      add_fields = c("AA1", "AB1"),
+      make_hourly = FALSE
     )
   
   # Expect that, for the mandatory met data df, the number of columns
@@ -35,7 +37,12 @@ test_that("The `get_met_data()` fcn returns correct number of columns", {
       "dew_point","rh", "ceil_hgt", "visibility")
   )
   
-  met_tbl <- get_met_data(station_id = "999999-63897")
+  met_tbl <- 
+    get_met_data(
+      station_id = "999999-63897",
+      years = 2008,
+      make_hourly = FALSE
+    )
   
   met_tbl %>% expect_type("list")
   
@@ -48,7 +55,7 @@ test_that("The `get_met_data()` fcn returns correct number of columns", {
 test_that("The `station_coverage()` fcn can provide an additional data report", {
   
   # Get vector of available additional data categories for the station
-  # during the specied years
+  # during the specified years
   stn_coverage_tbl <- 
     station_coverage(
       station_id = "722315-53917",
@@ -170,7 +177,8 @@ test_that("The `get_met_data()` fcn can provide all additional data fields", {
     get_met_data(
       station_id = "725030-14732",
       years = 2014,
-      full_data = TRUE
+      full_data = TRUE,
+      make_hourly = FALSE
     )
   
   # Expect that the resulting tibble will be very wide
@@ -235,7 +243,8 @@ test_that("The `get_inventory_tbl()` fcn provides the expected table", {
 test_that("Messages or errors occur in certain situations", {
   
   get_met_data(
-    station_id = "722315-539173"
+    station_id = "722315-539173",
+    make_hourly = FALSE
   ) %>%
     nrow() %>%
     expect_equal(0)
