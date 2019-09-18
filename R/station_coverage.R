@@ -1,3 +1,35 @@
+#' Find out which additional data fields a station has recorded
+#' 
+#' Get a tibble of information on which additional data fields a particular
+#' station has during a specified year range.
+#' 
+#' @inheritParams get_met_data
+#' @param wide_tbl A wide table of a single row for the station can be generated
+#'   by setting this to `TRUE`. In this arrangement, additional data field
+#'   categories will appear as columns (having counts of observations as values
+#'   for the period of `years`). This is useful when collecting station coverage
+#'   tables for multiple stations, since the rows can be safely bound together.
+#'   By default, this is set to `FALSE`.
+#' @param grouping An option to group and summarize counts of observations by
+#'   `"year"` or by `"month"`. If these keywords aren't provided then
+#'   summarization will occur over the entire period specified by `years`.
+#'
+#' @return A tibble.
+#' 
+#' @examples 
+#' \dontrun{
+#' # Obtain a coverage report of the
+#' # additional data that the met
+#' # station with the ID value of
+#' # "999999-63897" has over a two-
+#' # year period
+#' met_data <- 
+#'   station_coverage(
+#'     station_id = "999999-63897",
+#'     years = 2013:2014
+#'   )
+#' }
+#' 
 #' @export
 station_coverage <- function(station_id,
                              years,
