@@ -70,6 +70,14 @@ get_tz_for_station <- function(station_id) {
   tz_name
 }
 
+get_years_available_for_station <- function(station_id) {
+  
+  history_tbl %>%
+    dplyr::filter(id == station_id) %>%
+    dplyr::pull(years) %>%
+    unlist()
+}
+
 get_local_file_list <- function(station_id,
                                 years,
                                 local_file_dir) {
