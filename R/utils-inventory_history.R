@@ -70,6 +70,16 @@ get_history_tbl <- function(perform_tz_lookup = FALSE) {
       )
   }
   
+  years_per_station <- 
+    stationary:::get_inventory_tbl() %>%
+    dplyr::select(id, year) %>%
+    dplyr::group_by(id) %>%
+    dplyr::summarize(years = list(year))
+  
+  tbl <-
+    tbl %>%
+    dplyr::left_join(years_per_station, by = "id")
+    
   tbl
 }
 
