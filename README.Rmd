@@ -32,7 +32,7 @@ Get meteorological data from met stations located all over the world. That's wha
 
 ### Retrieving Met Data with a `station_id`
 
-Let's get some met data from La Guardia Airport! (the ID value for that one is `"725030-14732"`). This station has a pretty long history (starting operations in 1973) but we'll just grab data from the years of 2017 and 2018.
+Let's get some met data from La Guardia Airport in New York City (the ID value for that one is `"725030-14732"`). This station has a pretty long history (starting operations in 1973) but we'll just grab data from the years of 2017 and 2018.
 
 ```{r get_met_data, echo=TRUE, results="hide"}
 lga_met_data <- 
