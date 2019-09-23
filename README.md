@@ -55,12 +55,12 @@ lga_met_data
 
 ### Discovering Met Stations
 
-At a minimum we need a station’s identifier to obtaining its met data.
-We can start the process of getting an identifier by accessing the
-entire catalog of station metadata with the `get_station_metadata()`
-function. The output tibble has station `id` values in the first column.
-Let’s get a subset of stations from that: those stations that are
-located in Norway.
+At a minimum we need a station’s identifier to obtain its met data. We
+can start the process of getting an identifier by accessing the entire
+catalog of station metadata with the `get_station_metadata()` function.
+The output tibble has station `id` values in the first column. Let’s get
+a subset of stations from that: those stations that are located in
+Norway.
 
 ``` r
 stations_norway <- 
@@ -125,8 +125,8 @@ norway_high_elev %>% dplyr::pull(id)
 ```
 
 Suppose you’d like to collect several years of met data from a
-particular station and fetch only the observations that meet some
-condition. Here’s an example of obtaining temperatures above 15 degrees
+particular station and fetch only the observations that meet some set of
+conditions. Here’s an example of obtaining temperatures above 15 degrees
 Celsius from the high-altitude `"JUVVASSHOE"` station in Norway and
 adding a column with temperatures in degrees Fahrenheit.
 
