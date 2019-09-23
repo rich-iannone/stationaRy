@@ -10,4 +10,5 @@
 ^codecov\.yml$
 ^appveyor\.yml$
 ^pkgdown$
+^_pkgdown$
 ^cran-comments\.md$
