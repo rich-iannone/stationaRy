@@ -1,6 +1,7 @@
 library(stationary)
 library(tidyverse)
 library(here)
+library(zip)
 
 output_dir <- here::here("data-cached")
 
@@ -10,15 +11,15 @@ all_stations <- stationary:::all_station_ids(inventory_tbl = inventory_tbl)
 
 get_data_for_year <- function(id, year) {
   
-  get_isd_station_data(
+  get_met_data(
     station_id = id,
-    startyear = year,
-    endyear = year)
+    years = year,
+  )
 }
 
 for (station in all_stations) {
   
-  if (!(paste0(station, ".csv") %in% list.files(output_dir))) {
+  if (!(paste0(station, ".zip") %in% list.files(output_dir))) {
     
     data_years <- 
       stationary:::station_data_years(
@@ -40,6 +41,15 @@ for (station in all_stations) {
     station_data %>%
       readr::write_csv(path = file.path(output_dir, paste0(station, ".csv")))
     
-    Sys.sleep(2)
+    zip::zipr(
+      zipfile = file.path(output_dir, paste0(station, ".zip")),
+      files = file.path(output_dir, paste0(station, ".csv"))
+      )
+    
+    if (file.exists(file.path(output_dir, paste0(station, ".csv")))) {
+      res <- file.remove(file.path(output_dir, paste0(station, ".csv")))
+    }
+    
+    Sys.sleep(1)
   }
 }
