@@ -195,8 +195,9 @@ test_that("The `get_station_metadata()` fcn provides the expected table", {
     colnames() %>%
     expect_equal(
       c(
-        "id", "usaf", "wban", "name", "country", "state", "icao", "lat", "lon",
-        "elev", "begin_date", "end_date", "begin_year", "end_year", "tz_name"
+        "id", "usaf", "wban", "name", "country", "state", "icao",
+        "lat", "lon", "elev", "begin_date", "end_date",
+        "begin_year", "end_year", "tz_name", "years"
       )
     )
   
@@ -209,7 +210,7 @@ test_that("The `get_station_metadata()` fcn provides the expected table", {
     expect_equal(
       c(
         rep("character", 7), rep("numeric", 3), "Date", "Date",
-        "integer", "integer", "character"
+        "integer", "integer", "character", "list"
       )
     )
 })
