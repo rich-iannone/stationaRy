@@ -28,6 +28,7 @@ utils::globalVariables(
     "wd",
     "ws",
     "year",
+    "years",
     "jan",
     "feb",
     "mar",
