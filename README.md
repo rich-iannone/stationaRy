@@ -17,14 +17,14 @@ coverage](https://codecov.io/gh/rich-iannone/stationary/branch/master/graph/badg
 Get meteorological data from met stations located all over the world.
 That’s what you can do with this **R** package. There are *LOTS* of
 stations too (29,729 available in this dataset) and many have data that
-goes way back.
+go pretty far back in time.
 
 ### Retrieving Met Data with a `station_id`
 
-Let’s get some met data from La Guardia Airport in New York City (the ID
-value for that one is `"725030-14732"`). This station has a pretty long
-history (starting operations in 1973) but we’ll just grab data from the
-years of 2017 and 2018.
+Let’s get some met data from La Guardia Airport in New York City (the
+station ID value is `"725030-14732"`). This station has a pretty long
+history (starting operations in 1973) but we’ll just obtain data from
+the years of 2017 and 2018.
 
 ``` r
 lga_met_data <- 
@@ -55,11 +55,12 @@ lga_met_data
 
 ### Discovering Met Stations
 
-There are lots of stations and we need a station’s identifier to access
-its met data. We can examine the entire catalog of station metadata
-using the `get_station_metadata()` function. The output tibble has
-station `id` values in the first column. Let’s get all of the stations
-that are located in Norway.
+At a minimum we need a station’s identifier to obtaining its met data.
+We can start the process of getting an identifier by accessing the
+entire catalog of station metadata with the `get_station_metadata()`
+function. The output tibble has station `id` values in the first column.
+Let’s get a subset of stations from that: those stations that are
+located in Norway.
 
 ``` r
 stations_norway <- 
@@ -67,7 +68,7 @@ stations_norway <-
   dplyr::filter(country == "NO")
 
 stations_norway
-#> # A tibble: 405 x 15
+#> # A tibble: 405 x 16
 #>    id    usaf  wban  name  country state icao    lat   lon  elev begin_date
 #>    <chr> <chr> <chr> <chr> <chr>   <chr> <chr> <dbl> <dbl> <dbl> <date>    
 #>  1 0100… 0100… 99999 BOGU… NO      <NA>  ENRS   NA   NA     NA   2001-09-27
@@ -80,13 +81,13 @@ stations_norway
 #>  8 0100… 0100… 99999 VERL… NO      <NA>  <NA>   80.0 16.2    8   1986-11-09
 #>  9 0100… 0100… 99999 HORN… NO      <NA>  <NA>   77   15.5   12   1985-06-01
 #> 10 0100… 0100… 99999 NY-A… NO      <NA>  ENAS   78.9 11.9    8   1973-01-01
-#> # … with 395 more rows, and 4 more variables: end_date <date>,
-#> #   begin_year <int>, end_year <int>, tz_name <chr>
+#> # … with 395 more rows, and 5 more variables: end_date <date>,
+#> #   begin_year <int>, end_year <int>, tz_name <chr>, years <list>
 ```
 
-This table can be greatly reduced to isolate the stations of interest.
-For example, we could elect to get only high-altitude stations (above
-1000 meters) in Norway.
+This table can be even more greatly reduced to isolate the stations of
+interest. For example, we could elect to get only high-altitude stations
+(above 1000 meters) in Norway.
 
 ``` r
 norway_high_elev <-
@@ -94,7 +95,7 @@ norway_high_elev <-
   dplyr::filter(elev > 1000)
 
 norway_high_elev
-#> # A tibble: 12 x 15
+#> # A tibble: 12 x 16
 #>    id    usaf  wban  name  country state icao    lat   lon  elev begin_date
 #>    <chr> <chr> <chr> <chr> <chr>   <chr> <chr> <dbl> <dbl> <dbl> <date>    
 #>  1 0122… 0122… 99999 MANN… NO      <NA>  <NA>   62.4  7.77 1294  2010-03-15
@@ -109,8 +110,8 @@ norway_high_elev
 #> 10 0143… 0143… 99999 MIDT… NO      <NA>  <NA>   59.8  6.98 1081  1973-01-01
 #> 11 0144… 0144… 99999 BLAS… NO      <NA>  <NA>   59.3  6.87 1105. 1973-01-01
 #> 12 0146… 0146… 99999 GAUS… NO      <NA>  <NA>   59.8  8.65 1804. 2014-06-05
-#> # … with 4 more variables: end_date <date>, begin_year <int>,
-#> #   end_year <int>, tz_name <chr>
+#> # … with 5 more variables: end_date <date>, begin_year <int>,
+#> #   end_year <int>, tz_name <chr>, years <list>
 ```
 
 The station IDs from the tibble can be transformed into a vector of
@@ -164,15 +165,16 @@ high_temp_data
 
 ### Additional Data Fields
 
-There can actually be a lot of additional met data beyond wind speed,
-temperatures, etc. It can vary greatly depending on the selected
-station. These additional categories are denoted ‘two-letter + digit’
-identifiers (e.g., `AA1`, `GA1`, etc.). Within each category are
-numerous variables (coded as `[identifer]_[index]`). More information
-about these variables can be found in [this PDF
+There can be a substantial amount of additional met data beyond wind
+speed, ambient temperature, etc. However, these additional fields can
+vary greatly across stations. These nomenclature for the additional
+categories of data uses ‘two-letter + digit’ identifiers (e.g., `AA1`,
+`GA1`, etc.). Within each category are numerous fields, where the
+variables are coded as `[identifer]_[index]`). More information about
+these additional data fields can be found in [this PDF
 document](http://www1.ncdc.noaa.gov/pub/data/ish/ish-format-document.pdf).
 
-To find out which categories of additional met fields are available for
+To find out which categories of additional data fields are available for
 a station, we can use the `station_coverage()` function. You’ll get a
 tibble with the available additional categories and their counts over
 the specified period.
