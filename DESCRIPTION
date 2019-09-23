@@ -1,7 +1,7 @@
 Type: Package
 Package: stationary
 Title: Detailed Meteorological Data from Stations All Over the World
-Version: 0.4.2
+Version: 0.4.2.9000
 Description: Acquire hourly meteorological data from stations located all over
     the world. There is a wealth of data available, with historic weather data
     accessible from nearly 30,000 stations.
