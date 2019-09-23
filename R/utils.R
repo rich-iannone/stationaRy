@@ -82,14 +82,11 @@ get_local_file_list <- function(station_id,
                                 years,
                                 local_file_dir) {
   
-  years_available <-
-    inventory_tbl %>%
-    dplyr::filter(id == station_id) %>%
-    dplyr::pull(year)
+
   
-  years_intersected <- 
-    years_available %>%
-    base::intersect(years)
+  years_available <- get_years_available_for_station(station_id = station_id)
+
+  years_intersected <- years_available %>% base::intersect(years)
   
   if (length(years_intersected) == 0) {
     #stop("The station provided doesn't have data for the years requested:\n")
