@@ -1,0 +1,24 @@
+home:
+  strip_header: true
+
+reference:
+  - title: Get Met Data
+    desc: >
+      The `get_met_data()` function gets meteorological data from a station.
+      Specify the station ID, the years of data required, and the **stationary**
+      package will do the rest (i.e., give you a tibble of met data).
+    contents:
+    - get_met_data
+
+  - title: Metadata
+    desc: >
+      Two functions provide some useful information. The
+      `get_station_metadata()` function yields a tibble that is essentially a 
+      catalog of all the met stations available. The all-important station ID
+      values are in here, along with location information and years for which
+      data is available. The `station_coverage()` function makes it easy to
+      determine which additional data fields (above and beyond the standard set
+      of observations) are available for a given station.
+    contents:
+    - get_station_metadata
+    - station_coverage
