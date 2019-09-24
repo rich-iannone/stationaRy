@@ -5,7 +5,7 @@ reference:
   - title: Get Met Data
     desc: >
       The `get_met_data()` function gets meteorological data from a station.
-      Specify the station ID, the years of data required, and the **stationary**
+      Specify the station ID, the years of data required, and the **stationaRy**
       package will do the rest (i.e., give you a tibble of met data).
     contents:
     - get_met_data

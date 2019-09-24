@@ -1,4 +1,4 @@
-# stationary 0.5.0
+# stationaRy 0.5.0
 
 * Complete rewrite of package.
 
@@ -20,7 +20,7 @@
 
 * A **pkgdown** site has been generated.
 
-# stationary 0.3
+# stationaRy 0.3
 
 * Removes the `get_tz_offset()` function, the large shapefile object, and the dependencies on the **lubridate**, **sp**, and **proj4** packages.
 
@@ -28,12 +28,12 @@
 
 * Functions are resilient to missing years of data within year ranges provided.
 
-# stationary 0.2
+# stationaRy 0.2
 
 * Added function `get_ncdc_station_info()` to obtain data frame of all known met stations, and, to filter list of stations by geographic bounding box and/or by years of available data.
 
 * Added function `select_ncdc_station()` to take the data frame produced by `get_ncdc_station_info()` and aid in obtaining a selection of a single station; the resulting identifier string can be passed to `get_ncdc_station_data()` to fetch data for the selected station.
 
-# stationary 0.1
+# stationaRy 0.1
 
 * Contains function `get_ncdc_station_data()` (to fetch data and create a data frame) and helper function `get_tz_offset()` (to determine time zone offset and correct times to local time).

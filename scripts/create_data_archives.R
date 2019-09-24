@@ -1,13 +1,13 @@
-library(stationary)
+library(stationaRy)
 library(tidyverse)
 library(here)
 library(zip)
 
 output_dir <- here::here("data-cached")
 
-inventory_tbl <- stationary:::get_inventory_tbl()
+inventory_tbl <- stationaRy:::get_inventory_tbl()
 
-all_stations <- stationary:::all_station_ids(inventory_tbl = inventory_tbl)
+all_stations <- stationaRy:::all_station_ids(inventory_tbl = inventory_tbl)
 
 get_data_for_year <- function(id, year) {
   
@@ -22,7 +22,7 @@ for (station in all_stations) {
   if (!(paste0(station, ".zip") %in% list.files(output_dir))) {
     
     data_years <- 
-      stationary:::station_data_years(
+      stationaRy:::station_data_years(
         inventory_tbl = inventory_tbl,
         id = station
       )
