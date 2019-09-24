@@ -82,8 +82,6 @@ get_local_file_list <- function(station_id,
                                 years,
                                 local_file_dir) {
   
-
-  
   years_available <- get_years_available_for_station(station_id = station_id)
 
   years_intersected <- years_available %>% base::intersect(years)
@@ -110,7 +108,7 @@ get_local_file_list <- function(station_id,
   data_files <- c()
   for (i in seq_along(files_required)){
     
-    if (is.null(local_file_dir)) {
+    if (!(files_required[i] %in% list.files(file_dir))) {
       
       try(
         downloader::download(
