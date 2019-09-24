@@ -14,17 +14,17 @@ knitr::opts_chunk$set(
 ```
 
 ```{r packages, message=FALSE, warning=FALSE, include=FALSE}
-library(stationary)
+library(stationaRy)
 library(tidyverse)
 library(lubridate)
 ```
 
-# stationary <a href='http://rich-iannone.github.io/stationary/'><img src="man/figures/logo.svg" align="right" height="250px" /></a>
+# stationaRy <a href='http://rich-iannone.github.io/stationaRy/'><img src="man/figures/logo.svg" align="right" height="250px" /></a>
 
-[![CRAN status](https://www.r-pkg.org/badges/version/stationary)](https://CRAN.R-project.org/package=stationary)
-[![Travis-CI Build Status](https://travis-ci.org/rich-iannone/stationary.svg?branch=master)](https://travis-ci.org/rich-iannone/stationary)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rich-iannone/stationary?branch=master&svg=true)](https://ci.appveyor.com/project/rich-iannone/stationary)
-[![Codecov test coverage](https://codecov.io/gh/rich-iannone/stationary/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/stationary?branch=master)
+[![CRAN status](https://www.r-pkg.org/badges/version/stationaRy)](https://CRAN.R-project.org/package=stationaRy)
+[![Travis-CI Build Status](https://travis-ci.org/rich-iannone/stationaRy.svg?branch=master)](https://travis-ci.org/rich-iannone/stationaRy)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rich-iannone/stationaRy?branch=master&svg=true)](https://ci.appveyor.com/project/rich-iannone/stationaRy)
+[![Codecov test coverage](https://codecov.io/gh/rich-iannone/stationaRy/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/stationaRy?branch=master)
 
 ## Overview
 
@@ -168,14 +168,14 @@ kawaihae_sst
 
 ## Installation
 
-To install the development version of **stationary**, use the following:
+To install the development version of **stationaRy**, use the following:
 
 ```{r install_github, eval=FALSE}
 install.packages("devtools")
-remotes::install_github("rich-iannone/stationary")
+remotes::install_github("rich-iannone/stationaRy")
 ```
 
-If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an [issue](https://github.com/rich-iannone/stationary/issues).
+If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an [issue](https://github.com/rich-iannone/stationaRy/issues).
 
 ## License
 

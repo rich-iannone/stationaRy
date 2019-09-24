@@ -1,16 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# stationary <a href='http://rich-iannone.github.io/stationary/'><img src="man/figures/logo.svg" align="right" height="250px" /></a>
+# stationaRy <a href='http://rich-iannone.github.io/stationaRy/'><img src="man/figures/logo.svg" align="right" height="250px" /></a>
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/stationary)](https://CRAN.R-project.org/package=stationary)
+status](https://www.r-pkg.org/badges/version/stationaRy)](https://CRAN.R-project.org/package=stationaRy)
 [![Travis-CI Build
-Status](https://travis-ci.org/rich-iannone/stationary.svg?branch=master)](https://travis-ci.org/rich-iannone/stationary)
+Status](https://travis-ci.org/rich-iannone/stationaRy.svg?branch=master)](https://travis-ci.org/rich-iannone/stationaRy)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/rich-iannone/stationary?branch=master&svg=true)](https://ci.appveyor.com/project/rich-iannone/stationary)
+status](https://ci.appveyor.com/api/projects/status/github/rich-iannone/stationaRy?branch=master&svg=true)](https://ci.appveyor.com/project/rich-iannone/stationaRy)
 [![Codecov test
-coverage](https://codecov.io/gh/rich-iannone/stationary/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/stationary?branch=master)
+coverage](https://codecov.io/gh/rich-iannone/stationaRy/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/stationaRy?branch=master)
 
 ## Overview
 
@@ -314,16 +314,16 @@ kawaihae_sst
 
 ## Installation
 
-To install the development version of **stationary**, use the following:
+To install the development version of **stationaRy**, use the following:
 
 ``` r
 install.packages("devtools")
-remotes::install_github("rich-iannone/stationary")
+remotes::install_github("rich-iannone/stationaRy")
 ```
 
 If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, feel free to file an
-[issue](https://github.com/rich-iannone/stationary/issues).
+[issue](https://github.com/rich-iannone/stationaRy/issues).
 
 ## License
 
