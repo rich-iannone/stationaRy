@@ -3,53 +3,56 @@ context("get_met_data")
 test_that("The `get_met_data()` fcn returns correct number of columns", {
   
   # Get a tibble of met data with just the standard fields
-  df_mandatory_data <- 
+  df_standard_data <- 
     get_met_data(
-      station_id = "722315-53917",
+      station_id = "710633-99999",
       years = 2014:2015,
-      full_data = FALSE,
-      make_hourly = FALSE
+      make_hourly = FALSE,
+      local_file_dir = system.file(package = "stationaRy")
     )
   
   # Get a tibble of met data with both the standard fields and
   # additional fields (for the two categories of AA1 and AB1)
-  df_aa1_ab1 <- 
+  df_add_data <- 
     get_met_data(
-      station_id = "722315-53917",
+      station_id = "710633-99999",
       years = 2014:2015,
-      add_fields = c("AA1", "AB1"),
-      make_hourly = FALSE
+      add_fields = c("GF1", "MA1"),
+      make_hourly = FALSE,
+      local_file_dir = system.file(package = "stationaRy")
     )
   
-  # Expect that, for the mandatory met data df, the number of columns
+  # Expect that, for the standard met data df, the number of columns
   # will be exactly 10
-  df_mandatory_data %>% ncol() %>% expect_equal(10)
+  df_standard_data %>% ncol() %>% expect_equal(10)
   
   # Expect that, for the df with both mandatory and two additional data
-  # categories, the number of columns will be 17
-  df_aa1_ab1 %>% ncol() %>% expect_equal(17)
+  # categories, the number of columns will be `27`
+  df_add_data %>% ncol() %>% expect_equal(27)
   
   # Expect that, for the mandatory met data df, the column names will
   # be from a specified set
   expect_named(
-    df_mandatory_data,
+    df_standard_data,
     c("id", "time", "temp", "wd", "ws", "atmos_pres",
       "dew_point","rh", "ceil_hgt", "visibility")
   )
   
-  met_tbl <- 
-    get_met_data(
-      station_id = "999999-63897",
-      years = 2008,
-      make_hourly = FALSE
-    )
+  df_standard_data %>% expect_type("list")
+  df_add_data %>% expect_type("list")
   
-  met_tbl %>% expect_type("list")
+  expect_is(df_standard_data, "tbl_df")
+  expect_is(df_add_data, "tbl_df")
   
-  met_tbl %>% 
+  df_standard_data %>%
     dplyr::pull(id) %>%
     unique() %>%
-    expect_equal("999999-63897")
+    expect_equal("710633-99999")
+  
+  df_add_data %>%
+    dplyr::pull(id) %>%
+    unique() %>%
+    expect_equal("710633-99999")
 })
 
 test_that("The `station_coverage()` fcn can provide an additional data report", {
@@ -58,17 +61,18 @@ test_that("The `station_coverage()` fcn can provide an additional data report", 
   # during the specified years
   stn_coverage_tbl <- 
     station_coverage(
-      station_id = "722315-53917",
-      years = 2014:2015
+      station_id = "710633-99999",
+      years = 2014:2015,
+      local_file_dir = system.file(package = "stationaRy")
     )
   
-  # Expect that a tibble is returned
   expect_is(stn_coverage_tbl, "tbl_df")
+  stn_coverage_tbl %>% expect_type("list")
   
   stn_coverage_tbl %>%
     dplyr::pull(id) %>%
     unique() %>%
-    expect_equal("722315-53917")
+    expect_equal("710633-99999")
   
   stn_coverage_tbl %>%
     dplyr::pull(category) %>%
@@ -84,15 +88,16 @@ test_that("The `station_coverage()` fcn can provide an additional data report", 
   
   stn_coverage_wide <- 
     station_coverage(
-      station_id = "722315-53917",
+      station_id = "710633-99999",
       years = 2014:2015,
-      wide_tbl = TRUE
+      wide_tbl = TRUE,
+      local_file_dir = system.file(package = "stationaRy")
     )
   
   stn_coverage_wide %>%
     dplyr::pull(id) %>%
     unique() %>%
-    expect_equal("722315-53917")
+    expect_equal("710633-99999")
   
   stn_coverage_wide %>%
     colnames() %>%
@@ -108,15 +113,16 @@ test_that("The `station_coverage()` fcn can provide an additional data report", 
   
   stn_coverage_tbl_year <- 
     station_coverage(
-      station_id = "722315-53917",
+      station_id = "710633-99999",
       years = 2014:2015,
-      grouping = "year"
+      grouping = "year",
+      local_file_dir = system.file(package = "stationaRy")
     )
-  
+
   stn_coverage_tbl_year %>%
     dplyr::pull(id) %>%
     unique() %>%
-    expect_equal("722315-53917")
+    expect_equal("710633-99999")
   
   stn_coverage_tbl_year %>%
     colnames() %>%
@@ -140,9 +146,10 @@ test_that("The `station_coverage()` fcn can provide an additional data report", 
   
   stn_coverage_tbl_month <- 
     station_coverage(
-      station_id = "722315-53917",
+      station_id = "710633-99999",
       years = 2014:2015,
-      grouping = "month"
+      grouping = "month",
+      local_file_dir = system.file(package = "stationaRy")
     )
   
   stn_coverage_tbl_month %>%
@@ -173,16 +180,16 @@ test_that("The `station_coverage()` fcn can provide an additional data report", 
 test_that("The `get_met_data()` fcn can provide all additional data fields", { 
   
   # Get all possible data from the test station file
-  tbl_additional_data_fields <-
+  df_all_add_data <-
     get_met_data(
-      station_id = "725030-14732",
+      station_id = "710633-99999",
       years = 2014,
       full_data = TRUE,
-      make_hourly = FALSE
+      local_file_dir = system.file(package = "stationaRy")
     )
   
   # Expect that the resulting tibble will be very wide
-  tbl_additional_data_fields %>% ncol() %>% expect_gt(170)
+  df_all_add_data %>% ncol() %>% expect_gt(40)
 })
 
 test_that("The `get_station_metadata()` fcn provides the expected table", { 
@@ -242,13 +249,6 @@ test_that("The `get_inventory_tbl()` fcn provides the expected table", {
 })
 
 test_that("Messages or errors occur in certain situations", {
-  
-  get_met_data(
-    station_id = "722315-539173",
-    make_hourly = FALSE
-  ) %>%
-    nrow() %>%
-    expect_equal(0)
   
   expect_message(
     get_met_data(
