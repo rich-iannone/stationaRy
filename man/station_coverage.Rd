@@ -5,7 +5,7 @@
 \title{Find out which additional data fields a station has recorded}
 \usage{
 station_coverage(station_id, years = NULL, wide_tbl = FALSE,
-  grouping = NULL, use_local_files = FALSE, local_file_dir = NULL)
+  grouping = NULL, local_file_dir = NULL)
 }
 \arguments{
 \item{station_id}{A station identifier composed of the station's USAF and
@@ -26,11 +26,9 @@ By default, this is set to \code{FALSE}.}
 \code{"year"} or by \code{"month"}. If these keywords aren't provided then
 summarization will occur over the entire period specified by \code{years}.}
 
-\item{use_local_files}{Option to use data files already available locally.}
-
 \item{local_file_dir}{Path to local meteorological data files. If specified,
-then data files will be obtained from this location and not from the remote
-data store.}
+then data files will be downloaded to and retrieved from this location and
+not from the remote data store.}
 }
 \value{
 A tibble.

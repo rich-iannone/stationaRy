@@ -5,8 +5,7 @@
 \title{Get data from a meteorological station}
 \usage{
 get_met_data(station_id, years = NULL, full_data = FALSE,
-  add_fields = NULL, make_hourly = TRUE, use_local_files = FALSE,
-  local_file_dir = NULL)
+  add_fields = NULL, make_hourly = TRUE, local_file_dir = NULL)
 }
 \arguments{
 \item{station_id}{A station identifier composed of the station's USAF and
@@ -28,22 +27,20 @@ This regularizes each year of data, where the number of records per year of
 data will be either 8760 or 8784 (depending on whether a year is a leap
 year). By default to this is \code{TRUE}.}
 
-\item{use_local_files}{Option to use data files already available locally.}
-
 \item{local_file_dir}{Path to local meteorological data files. If specified,
-then data files will be obtained from this location and not from the remote
-data store.}
+then data files will be downloaded to and retrieved from this location and
+not from the remote data store.}
 }
 \value{
-Returns a tibble with at least 10 variables. Times are recorded
-using the Universal Time Code (UTC) in the source data. Times are adjusted
-to local standard time for the station's locale.
+Returns a tibble with at least 10 variables. While times are recorded
+using the Universal Time Code (UTC) in the source data, they are adjusted
+here to local standard time for the station's locale.
 \describe{
 \item{id}{A character string identifying the fixed weather station
 from the USAF Master Station Catalog identifier and the WBAN identifier.}
 \item{time}{A datetime value representing the observation time.}
 \item{temp}{Air temperature measured in degrees Celsius. Conversions to
-degrees Farenheit may be calculated with \code{(temp * 9) / 5 + 32}.}
+degrees Fahrenheit may be calculated with \code{(temp * 9) / 5 + 32}.}
 \item{wd}{The angle of wind direction, measured in a clockwise direction,
 between true north and the direction from which the wind is blowing. For
 example, \code{wd = 90} indicates the wind is blowing from due east. \code{wd = 225}
