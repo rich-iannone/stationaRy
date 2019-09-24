@@ -6,7 +6,9 @@ Description: Acquire hourly meteorological data from stations located all over
     the world. There is a wealth of data available, with historic weather data
     accessible from nearly 30,000 stations. The available data is automatically
     downloaded from a data repository and processed into a 'tibble' for the
-    exact range of years requested.
+    exact range of years requested. A relative humidity approximation is
+    provided using the August-Roche-Magnus formula 
+    ('https://doi.org/10.1175/1520-0450(1996)035<0601:IMFAOS>2.0.CO;2').
 Authors@R:
     person("Richard", "Iannone", , "riannone@me.com", c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X"))
