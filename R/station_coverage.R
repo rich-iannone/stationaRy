@@ -35,7 +35,6 @@ station_coverage <- function(station_id,
                              years = NULL,
                              wide_tbl = FALSE,
                              grouping = NULL,
-                             use_local_files = FALSE,
                              local_file_dir = NULL) {
   
   add_data_tbl <- 
@@ -43,7 +42,6 @@ station_coverage <- function(station_id,
       station_id,
       years = years,
       full_data = "report",
-      use_local_files = use_local_files,
       local_file_dir = local_file_dir
     )
   
