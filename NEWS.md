@@ -1,4 +1,4 @@
-# stationary 0.4.2.9000
+# stationary 0.5.0
 
 * Complete rewrite of package.
 
