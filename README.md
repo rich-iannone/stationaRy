@@ -239,18 +239,18 @@ coverage_tbl
 #>    <chr>  <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
 #>  1 01023…     0     0     0     0     0     0     0     0     0     0     0
 #>  2 01046…     0     0     0     0     0     0     0     0     0     0     0
-#>  3 01049…  5741     0     0     0     0     0     0     0     0     0     0
-#>  4 01107…  1036     0     0     0     0     0     0     0     0     0     0
+#>  3 01049…  5764     0     0     0     0     0     0     0     0     0     0
+#>  4 01107…  1040     0     0     0     0     0     0     0     0     0     0
 #>  5 01139…     0     0     0     0     0     0     0     0     0     0     0
-#>  6 01146…  5944     0     0     0     0     0     0     0     0     0     0
+#>  6 01146…  5967     0     0     0     0     0     0     0     0     0     0
 #>  7 01162…     1     0     0     0     0     0     0     0     0     0     0
-#>  8 01167…   372     0     0     0     0     0     0     0   122     0     0
+#>  8 01167…   374     0     0     0     0     0     0     0   122     0     0
 #>  9 01217…     0     0     0     0     0     0     0     0     0     0     0
 #> 10 01225…     0     0     0     0     0     0     0     0     0     0     0
-#> 11 01234…  1035     0     0     0     0     0     0     0     0     0     0
+#> 11 01234…  1039     0     0     0     0     0     0     0     0     0     0
 #> 12 01290…     0     0     0     0     0     0     0     0     0     0     0
-#> 13 01332…  6216     0     0     0     0     0     0     0     0     0     0
-#> 14 01355…  6053     0     0     0     0     0     0     0     0     0     0
+#> 13 01332…  6240     0     0     0     0     0     0     0     0     0     0
+#> 14 01355…  6077     0     0     0     0     0     0     0     0     0     0
 #> 15 01467…     0     0     0     0     0     0     0     0     0     0     0
 #> 16 01476…     0     0     0     0     0     0     0     0     0     0     0
 #> # … with 76 more variables: AM1 <int>, AN1 <int>, AO1 <int>, AP1 <int>,
@@ -324,12 +324,6 @@ remotes::install_github("rich-iannone/stationary")
 If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, feel free to file an
 [issue](https://github.com/rich-iannone/stationary/issues).
-
-## Code of Conduct
-
-Please note that the **stationary** project is released with a
-[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
-this project, you agree to abide by its terms.
 
 ## License
 
