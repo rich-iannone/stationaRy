@@ -1,3 +1,5 @@
+# stationaRy (development version)
+
 # stationaRy 0.5.0
 
 * Complete rewrite of package.
