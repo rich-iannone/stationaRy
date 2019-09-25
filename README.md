@@ -314,6 +314,12 @@ kawaihae_sst
 
 ## Installation
 
+The **stationaRy** package can be easily installed from CRAN.
+
+``` r
+install.packages("stationaRy")
+```
+
 To install the development version of **stationaRy**, use the following:
 
 ``` r
