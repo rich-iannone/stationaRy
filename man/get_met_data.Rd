@@ -55,7 +55,7 @@ of air must be cooled at constant pressure and water vapor content in order
 for saturation to occur.}
 \item{rh}{Relative humidity, measured as a percentage, as calculated using
 the August-Roche-Magnus approximation.}
-\item{ceil_hgt}{The height above ground level of the lowest clould cover or
+\item{ceil_hgt}{The height above ground level of the lowest cloud cover or
 other obscuring phenomena amounting to at least 5/8 sky coverage. Measured in
 meters. Unlimited height (no obstruction) is denoted by the value \code{22000}.}
 \item{visibility}{The horizontal distance at which an object can be seen and
