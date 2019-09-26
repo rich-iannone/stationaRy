@@ -17,7 +17,9 @@ coverage](https://codecov.io/gh/rich-iannone/stationaRy/branch/master/graph/badg
 Get meteorological data from met stations located all over the world.
 That’s what you can do with this **R** package. There are *LOTS* of
 stations too (29,729 available in this dataset) and many have data that
-go pretty far back in time.
+go pretty far back in time. The data comes from the Integrated Surface
+Dataset (ISD), which is maintained by the National Oceanic and
+Atmospheric Administration (NOAA).
 
 ### Retrieving Met Data with a `station_id`
 
@@ -167,7 +169,7 @@ high_temp_data
 
 There can be a substantial amount of additional met data beyond wind
 speed, ambient temperature, etc. However, these additional fields can
-vary greatly across stations. These nomenclature for the additional
+vary greatly across stations. The nomenclature for the additional
 categories of data uses ‘two-letter + digit’ identifiers (e.g., `AA1`,
 `GA1`, etc.). Within each category are numerous fields, where the
 variables are coded as `[identifer]_[index]`). More information about
@@ -239,18 +241,18 @@ coverage_tbl
 #>    <chr>  <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
 #>  1 01023…     0     0     0     0     0     0     0     0     0     0     0
 #>  2 01046…     0     0     0     0     0     0     0     0     0     0     0
-#>  3 01049…  5764     0     0     0     0     0     0     0     0     0     0
-#>  4 01107…  1040     0     0     0     0     0     0     0     0     0     0
+#>  3 01049…  5810     0     0     0     0     0     0     0     0     0     0
+#>  4 01107…  1048     0     0     0     0     0     0     0     0     0     0
 #>  5 01139…     0     0     0     0     0     0     0     0     0     0     0
-#>  6 01146…  5967     0     0     0     0     0     0     0     0     0     0
+#>  6 01146…  6014     0     0     0     0     0     0     0     0     0     0
 #>  7 01162…     1     0     0     0     0     0     0     0     0     0     0
-#>  8 01167…   374     0     0     0     0     0     0     0   122     0     0
+#>  8 01167…   376     0     0     0     0     0     0     0   122     0     0
 #>  9 01217…     0     0     0     0     0     0     0     0     0     0     0
 #> 10 01225…     0     0     0     0     0     0     0     0     0     0     0
-#> 11 01234…  1039     0     0     0     0     0     0     0     0     0     0
+#> 11 01234…  1047     0     0     0     0     0     0     0     0     0     0
 #> 12 01290…     0     0     0     0     0     0     0     0     0     0     0
-#> 13 01332…  6240     0     0     0     0     0     0     0     0     0     0
-#> 14 01355…  6077     0     0     0     0     0     0     0     0     0     0
+#> 13 01332…  6288     0     0     0     0     0     0     0     0     0     0
+#> 14 01355…  6125     0     0     0     0     0     0     0     0     0     0
 #> 15 01467…     0     0     0     0     0     0     0     0     0     0     0
 #> 16 01476…     0     0     0     0     0     0     0     0     0     0     0
 #> # … with 76 more variables: AM1 <int>, AN1 <int>, AO1 <int>, AP1 <int>,
