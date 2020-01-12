@@ -1,3 +1,5 @@
+#nocov start
+
 get_inventory_tbl <- function() {
   
   file_location <- file.path(data_base_url(), "isd-inventory.csv")
@@ -18,8 +20,6 @@ get_inventory_tbl <- function() {
     dplyr::mutate(id = paste0(usaf, "-", wban)) %>%
     dplyr::select(id, dplyr::everything())
 }
-
-#nocov start
 
 get_history_tbl <- function(perform_tz_lookup = FALSE) {
   
