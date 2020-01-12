@@ -222,32 +222,6 @@ test_that("The `get_station_metadata()` fcn provides the expected table", {
     )
 })
 
-test_that("The `get_inventory_tbl()` fcn provides the expected table", {
-  
-  inventory_tbl <- get_inventory_tbl()
-  
-  inventory_tbl %>% expect_is("tbl_df")
-  
-  inventory_tbl %>%
-    colnames() %>%
-    expect_equal(
-      c(
-        "id", "usaf", "wban", "year",
-        "jan", "feb", "mar", "apr", "may", "jun",
-        "jul", "aug", "sep", "oct", "nov", "dec",
-        "total"
-      )
-    )
-  
-  inventory_tbl %>%
-    nrow() %>%
-    expect_gt(25000)
-  
-  inventory_tbl %>%
-    lapply(class) %>% unlist() %>% unname() %>%
-    expect_equal(c(rep("character", 3), rep("integer", 14)))
-})
-
 test_that("Messages or errors occur in certain situations", {
   
   expect_message(
