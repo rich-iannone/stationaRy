@@ -1,5 +1,9 @@
 # stationaRy (development version)
 
+* Update the internal `history_tbl` object
+
+* Eliminate *testthat* tests that get data from the NOAA server 
+
 # stationaRy 0.5.0
 
 * Complete rewrite of package.
