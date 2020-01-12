@@ -1,8 +1,8 @@
-# stationaRy (development version)
+# stationaRy 0.5.1
 
 * Update the internal `history_tbl` object
 
-* Eliminate *testthat* tests that get data from the NOAA server 
+* Eliminate *testthat* tests that get data from the NOAA server to consistently pass CRAN checks
 
 # stationaRy 0.5.0
 
