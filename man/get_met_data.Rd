@@ -4,8 +4,14 @@
 \alias{get_met_data}
 \title{Get data from a meteorological station}
 \usage{
-get_met_data(station_id, years = NULL, full_data = FALSE,
-  add_fields = NULL, make_hourly = TRUE, local_file_dir = NULL)
+get_met_data(
+  station_id,
+  years = NULL,
+  full_data = FALSE,
+  add_fields = NULL,
+  make_hourly = TRUE,
+  local_file_dir = NULL
+)
 }
 \arguments{
 \item{station_id}{A station identifier composed of the station's USAF and

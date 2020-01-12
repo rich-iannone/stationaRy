@@ -4,8 +4,13 @@
 \alias{station_coverage}
 \title{Find out which additional data fields a station has recorded}
 \usage{
-station_coverage(station_id, years = NULL, wide_tbl = FALSE,
-  grouping = NULL, local_file_dir = NULL)
+station_coverage(
+  station_id,
+  years = NULL,
+  wide_tbl = FALSE,
+  grouping = NULL,
+  local_file_dir = NULL
+)
 }
 \arguments{
 \item{station_id}{A station identifier composed of the station's USAF and
