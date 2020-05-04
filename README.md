@@ -5,10 +5,8 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/stationaRy)](https://CRAN.R-project.org/package=stationaRy)
-[![Travis-CI Build
-Status](https://travis-ci.org/rich-iannone/stationaRy.svg?branch=master)](https://travis-ci.org/rich-iannone/stationaRy)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/rich-iannone/stationaRy?branch=master&svg=true)](https://ci.appveyor.com/project/rich-iannone/stationaRy)
+[![R build
+status](https://github.com/rich-iannone/stationaRy/workflows/R-CMD-check/badge.svg)](https://github.com/rich-iannone/stationaRy/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/rich-iannone/stationaRy/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/stationaRy?branch=master)
 
@@ -112,8 +110,8 @@ norway_high_elev
 #> 10 0143… 0143… 99999 MIDT… NO      <NA>  <NA>   59.8  6.98 1081  1973-01-01
 #> 11 0144… 0144… 99999 BLAS… NO      <NA>  <NA>   59.3  6.87 1105. 1973-01-01
 #> 12 0146… 0146… 99999 GAUS… NO      <NA>  <NA>   59.8  8.65 1804. 2014-06-05
-#> # … with 5 more variables: end_date <date>, begin_year <int>,
-#> #   end_year <int>, tz_name <chr>, years <list>
+#> # … with 5 more variables: end_date <date>, begin_year <int>, end_year <int>,
+#> #   tz_name <chr>, years <list>
 ```
 
 The station IDs from the tibble can be transformed into a vector of
@@ -121,9 +119,9 @@ station IDs with `dplyr::pull()`.
 
 ``` r
 norway_high_elev %>% dplyr::pull(id)
-#>  [1] "012200-99999" "012390-99999" "013460-99999" "013500-99999"
-#>  [5] "013510-99999" "013520-99999" "013620-99999" "013660-99999"
-#>  [9] "013750-99999" "014330-99999" "014400-99999" "014611-99999"
+#>  [1] "012200-99999" "012390-99999" "013460-99999" "013500-99999" "013510-99999"
+#>  [6] "013520-99999" "013620-99999" "013660-99999" "013750-99999" "014330-99999"
+#> [11] "014400-99999" "014611-99999"
 ```
 
 Suppose you’d like to collect several years of met data from a
@@ -236,38 +234,23 @@ coverage_tbl <-
 
 ``` r
 coverage_tbl
-#> # A tibble: 16 x 88
-#>    id       AA1   AB1   AC1   AD1   AE1   AG1   AH1   AI1   AJ1   AK1   AL1
-#>    <chr>  <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
-#>  1 01023…     0     0     0     0     0     0     0     0     0     0     0
-#>  2 01046…     0     0     0     0     0     0     0     0     0     0     0
-#>  3 01049…  5810     0     0     0     0     0     0     0     0     0     0
-#>  4 01107…  1048     0     0     0     0     0     0     0     0     0     0
-#>  5 01139…     0     0     0     0     0     0     0     0     0     0     0
-#>  6 01146…  6014     0     0     0     0     0     0     0     0     0     0
-#>  7 01162…     1     0     0     0     0     0     0     0     0     0     0
-#>  8 01167…   376     0     0     0     0     0     0     0   122     0     0
-#>  9 01217…     0     0     0     0     0     0     0     0     0     0     0
-#> 10 01225…     0     0     0     0     0     0     0     0     0     0     0
-#> 11 01234…  1047     0     0     0     0     0     0     0     0     0     0
-#> 12 01290…     0     0     0     0     0     0     0     0     0     0     0
-#> 13 01332…  6288     0     0     0     0     0     0     0     0     0     0
-#> 14 01355…  6125     0     0     0     0     0     0     0     0     0     0
-#> 15 01467…     0     0     0     0     0     0     0     0     0     0     0
-#> 16 01476…     0     0     0     0     0     0     0     0     0     0     0
-#> # … with 76 more variables: AM1 <int>, AN1 <int>, AO1 <int>, AP1 <int>,
-#> #   AU1 <int>, AW1 <int>, AX1 <int>, AY1 <int>, AZ1 <int>, CB1 <int>,
-#> #   CF1 <int>, CG1 <int>, CH1 <int>, CI1 <int>, CN1 <int>, CN2 <int>,
-#> #   CN3 <int>, CN4 <int>, CR1 <int>, CT1 <int>, CU1 <int>, CV1 <int>,
-#> #   CW1 <int>, CX1 <int>, CO1 <int>, CO2 <int>, ED1 <int>, GA1 <int>,
-#> #   GD1 <int>, GF1 <int>, GG1 <int>, GH1 <int>, GJ1 <int>, GK1 <int>,
-#> #   GL1 <int>, GM1 <int>, GN1 <int>, GO1 <int>, GP1 <int>, GQ1 <int>,
-#> #   GR1 <int>, HL1 <int>, IA1 <int>, IA2 <int>, IB1 <int>, IB2 <int>,
-#> #   IC1 <int>, KA1 <int>, KB1 <int>, KC1 <int>, KD1 <int>, KE1 <int>,
-#> #   KF1 <int>, KG1 <int>, MA1 <int>, MD1 <int>, ME1 <int>, MF1 <int>,
-#> #   MG1 <int>, MH1 <int>, MK1 <int>, MV1 <int>, MW1 <int>, OA1 <int>,
-#> #   OB1 <int>, OC1 <int>, OE1 <int>, RH1 <int>, SA1 <int>, ST1 <int>,
-#> #   UA1 <int>, UG1 <int>, UG2 <int>, WA1 <int>, WD1 <int>, WG1 <int>
+#> # A tibble: 1 x 88
+#>   id       AA1   AB1   AC1   AD1   AE1   AG1   AH1   AI1   AJ1   AK1   AL1   AM1
+#> * <chr>  <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+#> 1 01167…   491     0     0     0     0     0     0     0   167     0     0     0
+#> # … with 75 more variables: AN1 <int>, AO1 <int>, AP1 <int>, AU1 <int>,
+#> #   AW1 <int>, AX1 <int>, AY1 <int>, AZ1 <int>, CB1 <int>, CF1 <int>,
+#> #   CG1 <int>, CH1 <int>, CI1 <int>, CN1 <int>, CN2 <int>, CN3 <int>,
+#> #   CN4 <int>, CR1 <int>, CT1 <int>, CU1 <int>, CV1 <int>, CW1 <int>,
+#> #   CX1 <int>, CO1 <int>, CO2 <int>, ED1 <int>, GA1 <int>, GD1 <int>,
+#> #   GF1 <int>, GG1 <int>, GH1 <int>, GJ1 <int>, GK1 <int>, GL1 <int>,
+#> #   GM1 <int>, GN1 <int>, GO1 <int>, GP1 <int>, GQ1 <int>, GR1 <int>,
+#> #   HL1 <int>, IA1 <int>, IA2 <int>, IB1 <int>, IB2 <int>, IC1 <int>,
+#> #   KA1 <int>, KB1 <int>, KC1 <int>, KD1 <int>, KE1 <int>, KF1 <int>,
+#> #   KG1 <int>, MA1 <int>, MD1 <int>, ME1 <int>, MF1 <int>, MG1 <int>,
+#> #   MH1 <int>, MK1 <int>, MV1 <int>, MW1 <int>, OA1 <int>, OB1 <int>,
+#> #   OC1 <int>, OE1 <int>, RH1 <int>, SA1 <int>, ST1 <int>, UA1 <int>,
+#> #   UG1 <int>, UG2 <int>, WA1 <int>, WD1 <int>, WG1 <int>
 ```
 
 For the `"KAWAIHAE"` station in Hawaii, some interesting data fields are

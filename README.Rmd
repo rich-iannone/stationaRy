@@ -22,8 +22,7 @@ library(lubridate)
 # stationaRy <a href='http://rich-iannone.github.io/stationaRy/'><img src="man/figures/logo.svg" align="right" height="250px" /></a>
 
 [![CRAN status](https://www.r-pkg.org/badges/version/stationaRy)](https://CRAN.R-project.org/package=stationaRy)
-[![Travis-CI Build Status](https://travis-ci.org/rich-iannone/stationaRy.svg?branch=master)](https://travis-ci.org/rich-iannone/stationaRy)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rich-iannone/stationaRy?branch=master&svg=true)](https://ci.appveyor.com/project/rich-iannone/stationaRy)
+[![R build status](https://github.com/rich-iannone/stationaRy/workflows/R-CMD-check/badge.svg)](https://github.com/rich-iannone/stationaRy/actions)
 [![Codecov test coverage](https://codecov.io/gh/rich-iannone/stationaRy/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/stationaRy?branch=master)
 
 ## Overview
